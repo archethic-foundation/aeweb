@@ -1,0 +1,23 @@
+name: aeweb
+description: Deploy websites on Archethic decentralized network to avoid censorship, increase security and have high-availability and resiliency.
+publish_to: 'none'
+
+version: 1.0.0+1
+
+environment:
+  sdk: '>=2.19.0 <3.0.0'
+  flutter: '3.7.3'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+
+  flutter_lints: ^2.0.1
+  
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
