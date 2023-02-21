@@ -15,14 +15,22 @@ dependencies:
   flutter_localizations:
     sdk: flutter
 
+  # State management
+  flutter_riverpod: 2.1.1
+
   # Localization
   intl: ^0.17.0
+
+  # A package exposing annotations for riverpod_generator
+  riverpod_annotation: 1.0.6
 
 dev_dependencies:
 
   flutter_lints: ^2.0.1
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.4.1
+  # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
+  riverpod_generator: 1.0.6
 
 flutter:
   uses-material-design: true

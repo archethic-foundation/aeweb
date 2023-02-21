@@ -1,10 +1,19 @@
 import 'package:aeweb/localization.dart';
 import 'package:aeweb/model/available_language.dart';
+import 'package:aeweb/providers_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    ProviderScope(
+      observers: [
+        ProvidersLogger(),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
