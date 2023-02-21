@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:aeweb/localization.dart';
 import 'package:aeweb/model/available_language.dart';
 import 'package:aeweb/model/data/appdb.dart';
 import 'package:aeweb/providers_observer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -16,6 +20,14 @@ Future<void> main() async {
       child: const MyApp(),
     ),
   );
+
+  if (!kIsWeb && Platform.isAndroid) {
+    // Fix LetsEncrypt root certificate for Android<7.1
+    final x1cert = await rootBundle.load('assets/ssl/isrg-root-x1.pem');
+    SecurityContext.defaultContext.setTrustedCertificatesBytes(
+      x1cert.buffer.asUint8List(),
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
