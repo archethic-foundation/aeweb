@@ -1,11 +1,13 @@
 import 'package:aeweb/localization.dart';
 import 'package:aeweb/model/available_language.dart';
+import 'package:aeweb/model/data/appdb.dart';
 import 'package:aeweb/providers_observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-void main() {
+Future<void> main() async {
+  await DBHelper.setupDatabase();
   runApp(
     ProviderScope(
       observers: [
