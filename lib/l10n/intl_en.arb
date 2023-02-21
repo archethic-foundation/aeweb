@@ -1,0 +1,15 @@
+{
+  "@@last_modified": "2021-12-07T12:33:16.270871",
+  "welcomeText": "Welcome to AEWeb",
+  "@welcomeText": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  },
+  "systemDefault": "System Default",
+  "@systemDefault": {
+    "type": "text",
+    "placeholders_order": [],
+    "placeholders": {}
+  }
+}

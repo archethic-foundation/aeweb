@@ -1,4 +1,7 @@
+import 'package:aeweb/localization.dart';
+import 'package:aeweb/model/available_language.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 void main() {
   runApp(const MyApp());
@@ -7,14 +10,23 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    // TODO(reddwarf03): use LanguageProviders
+    const language = AvailableLanguage.french;
+
     return MaterialApp(
       title: 'AEWeb',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      localizationsDelegates: const [
+        AppLocalizationsDelegate(language),
+        GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
       home: const MyHomePage(title: 'AEWeb'),
     );
   }
@@ -32,6 +44,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    final localizations = AppLocalization.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
@@ -39,9 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const <Widget>[
+          children: <Widget>[
             Text(
-              'Welcome to AEWeb (WIP)',
+              localizations.welcomeText,
             ),
           ],
         ),
