@@ -24,12 +24,32 @@ Future<void> main() async {
 
   await DBHelper.setupDatabase();
   setupServiceLocator();
+
+  final endpointResponse = await sl.get<ArchethicDAppClient>().getEndpoint();
+  var endpointUrl = '';
+  endpointResponse.when(
+    failure: (failure) {
+      log(
+        'Transaction failed',
+        error: failure,
+      );
+    },
+    success: (result) {
+      endpointUrl = result.endpointUrl;
+      log(
+        'Transaction succeed : ${json.encode(result)}',
+      );
+    },
+  );
+
   runApp(
     ProviderScope(
       observers: [
         ProvidersLogger(),
       ],
-      child: const MyApp(),
+      child: MyApp(
+        endpoint: endpointUrl,
+      ),
     ),
   );
 
@@ -43,7 +63,9 @@ Future<void> main() async {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({required this.endpoint, super.key});
+
+  final String endpoint;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +87,7 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      home: const MyHomePage(title: 'AEWeb'),
+      home: MyHomePage(title: 'AEWeb - $endpoint'),
       onGenerateRoute: (settings) {
         if ((sl.get<ArchethicDAppClient>() as DeeplinkArchethicDappClient)
             .handleRoute(settings.name)) return;
@@ -120,7 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('AEWeb'),
+        title: Text(widget.title),
         actions: [
           IconButton(
             icon: Icon(_isGrid ? Icons.view_list : Icons.grid_view),
@@ -256,19 +278,19 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _sendTx() async {
     const content = '''
-{
-  "aewebVersion": 1,
-  "hashFunction": "sha1",
-  "metaData": {
-    "index.html": {
-      "addresses": ["0000808d370648759d681c4cf72c32851e3e23bf59c412e1a6251a80f6dd17160231"],
-      "encoding": "gzip",
-      "size": 10000,
-      "hash": "682df00e5daf5e76a0d1d73839e8bde840ee3ab9"
+    {
+      "aewebVersion": 1,
+      "hashFunction": "sha1",
+      "metaData": {
+        "index.html": {
+          "addresses": ["0000808d370648759d681c4cf72c32851e3e23bf59c412e1a6251a80f6dd17160231"],
+          "encoding": "gzip",
+          "size": 10000,
+          "hash": "682df00e5daf5e76a0d1d73839e8bde840ee3ab9"
+        }
+      }  
     }
-  } 
-}
-''';
+    ''';
 
     final transaction =
         Transaction(type: 'hosting', data: Transaction.initData())
