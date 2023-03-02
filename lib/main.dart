@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:aeweb/localization.dart';
@@ -6,6 +8,10 @@ import 'package:aeweb/model/available_language.dart';
 import 'package:aeweb/model/data/appdb.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/providers_observer.dart';
+import 'package:aeweb/util/get_it_instance.dart';
+import 'package:aeweb/util/service_locator.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,7 +20,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
   await DBHelper.setupDatabase();
+  setupServiceLocator();
   runApp(
     ProviderScope(
       observers: [
@@ -57,6 +66,13 @@ class MyApp extends StatelessWidget {
         GlobalWidgetsLocalizations.delegate
       ],
       home: const MyHomePage(title: 'AEWeb'),
+      onGenerateRoute: (settings) {
+        if ((sl.get<ArchethicDAppClient>() as DeeplinkArchethicDappClient)
+            .handleRoute(settings.name)) return;
+
+        //... do everything else needed by your application
+        return null;
+      },
     );
   }
 }
@@ -123,56 +139,57 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildBottomNavigationBar() {
     return BottomNavigationBar(
-        selectedItemColor: Colors.grey,
-        unselectedItemColor: Colors.grey,
-        type: BottomNavigationBarType.fixed,
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.menu, color: Colors.white),
-            label: 'Documentation',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.gavel, color: Colors.white),
-            label: 'Terms of Use',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.privacy_tip, color: Colors.white),
-            label: 'Privacy Policy',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.code, color: Colors.white),
-            label: 'Source Code',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.help_outline, color: Colors.white),
-            label: 'FAQ',
-          ),
-        ],
-        onTap: (int index) {
-          String? url;
-          switch (index) {
-            case 0:
-              url =
-                  'https://archethic-foundation.github.io/archethic-docs/participate/aeweb';
-              break;
-            case 1:
-              url = '#';
-              break;
-            case 2:
-              url = '#';
-              break;
-            case 3:
-              url = 'https://github.com/archethic-foundation/aeweb';
-              break;
-            case 4:
-              url =
-                  'https://archethic-foundation.github.io/archethic-docs/category/FAQ';
-              break;
-          }
-          if (url != null) {
-            launchUrl(Uri.parse(url));
-          }
-        });
+      selectedItemColor: Colors.grey,
+      unselectedItemColor: Colors.grey,
+      type: BottomNavigationBarType.fixed,
+      items: const [
+        BottomNavigationBarItem(
+          icon: Icon(Icons.menu, color: Colors.white),
+          label: 'Documentation',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.gavel, color: Colors.white),
+          label: 'Terms of Use',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.privacy_tip, color: Colors.white),
+          label: 'Privacy Policy',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.code, color: Colors.white),
+          label: 'Source Code',
+        ),
+        BottomNavigationBarItem(
+          icon: Icon(Icons.help_outline, color: Colors.white),
+          label: 'FAQ',
+        ),
+      ],
+      onTap: (int index) {
+        String? url;
+        switch (index) {
+          case 0:
+            url =
+                'https://archethic-foundation.github.io/archethic-docs/participate/aeweb';
+            break;
+          case 1:
+            url = '#';
+            break;
+          case 2:
+            url = '#';
+            break;
+          case 3:
+            url = 'https://github.com/archethic-foundation/aeweb';
+            break;
+          case 4:
+            url =
+                'https://archethic-foundation.github.io/archethic-docs/category/FAQ';
+            break;
+        }
+        if (url != null) {
+          launchUrl(Uri.parse(url));
+        }
+      },
+    );
   }
 
   Widget _buildGrid() {
@@ -205,8 +222,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Widget _buildHeaderRow() {
     return Container(
-      color: Colors.grey[300],
-      padding: const EdgeInsets.symmetric(horizontal: 8),
+      color: Colors.grey[800],
+      padding: const EdgeInsets.only(top: 8, bottom: 8),
       child: Row(
         children: const [
           Expanded(child: Text('Name')),
@@ -237,11 +254,76 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  Future<void> _sendTx() async {
+    final transaction =
+        Transaction(type: 'hosting', data: Transaction.initData())
+            .setContent('test');
+
+    final response = await sl
+        .get<ArchethicDAppClient>()
+        .sendTransaction(jsonDecode(transaction.convertToJSON()));
+    response.when(
+      failure: (failure) {
+        log(
+          'Transaction failed',
+          error: failure,
+        );
+        var message = 'An error occured';
+        switch (failure.code) {
+          case 4901:
+            message = 'Please, connect your Archethic wallet';
+            break;
+          default:
+            message = failure.message ?? 'An error occured';
+            break;
+        }
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(message),
+            duration: const Duration(seconds: 3),
+            action: SnackBarAction(
+              label: 'Ok',
+              onPressed: () {},
+            ),
+          ),
+        );
+      },
+      success: (result) {
+        log(
+          'Transaction succeed : ${json.encode(result)}',
+        );
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(json.encode(result)),
+            duration: const Duration(seconds: 3),
+            action: SnackBarAction(
+              label: 'Ok',
+              onPressed: () {},
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   Widget _popupMenuButton() {
     return PopupMenuButton(
       constraints: const BoxConstraints.expand(width: 300, height: 250),
       itemBuilder: (context) {
         return [
+          PopupMenuItem(
+            value: 'SendTransaction',
+            onTap: _sendTx,
+            child: Row(
+              children: const [
+                Icon(Icons.send),
+                SizedBox(width: 8),
+                Flexible(
+                  child: Text('Send Transaction'),
+                ),
+              ],
+            ),
+          ),
           PopupMenuItem(
             value: 'Explore',
             child: Row(
@@ -314,6 +396,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            const SizedBox(
+              height: 10,
+            ),
             SizedBox(
               height: 100,
               width: 100,
@@ -358,7 +443,7 @@ class _MyHomePageState extends State<MyHomePage> {
               style: TextStyle(fontSize: 12, color: Colors.grey[300]),
               textAlign: TextAlign.center,
             ),
-            const SizedBox(height: 16),
+            const SizedBox(height: 6),
             _popupMenuButton(),
           ],
         ),

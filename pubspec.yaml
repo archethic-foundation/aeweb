@@ -9,6 +9,16 @@ environment:
   flutter: '3.7.3'
 
 dependencies:
+
+  # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
+  archethic_lib_dart: ^3.0.0
+
+  # A client dart library to interact with Archethic Wallet RPC API.
+  #archethic_wallet_client: ^1.0.2
+  archethic_wallet_client:
+    git:
+     url: https://github.com/archethic-foundation/archethic-wallet-client-dart
+     ref: dev
   flutter:
     sdk: flutter
 
@@ -20,7 +30,10 @@ dependencies:
 
   # Annotations for freezed
   freezed_annotation: ^2.2.0
-  
+
+  # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
+  get_it: ^7.2.0
+
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
   hive: ^2.2.3
   hive_flutter: ^1.1.0
@@ -46,6 +59,10 @@ dev_dependencies:
 
 # The following section is specific to Flutter.
 flutter:
+  assets:
+    - assets/ssl/isrg-root-x1.pem
+    - assets/images/
+
   fonts:
     - family: Montserrat
       fonts:
