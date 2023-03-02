@@ -255,13 +255,28 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future<void> _sendTx() async {
+    const content = '''
+{
+  "aewebVersion": 1,
+  "hashFunction": "sha1",
+  "metaData": {
+    "index.html": {
+      "addresses": ["0000808d370648759d681c4cf72c32851e3e23bf59c412e1a6251a80f6dd17160231"],
+      "encoding": "gzip",
+      "size": 10000,
+      "hash": "682df00e5daf5e76a0d1d73839e8bde840ee3ab9"
+    }
+  } 
+}
+''';
+
     final transaction =
         Transaction(type: 'hosting', data: Transaction.initData())
-            .setContent('test');
+            .setContent(content);
 
     final response = await sl
         .get<ArchethicDAppClient>()
-        .sendTransaction(jsonDecode(transaction.convertToJSON()));
+        .sendTransaction(transaction.toJson());
     response.when(
       failure: (failure) {
         log(
