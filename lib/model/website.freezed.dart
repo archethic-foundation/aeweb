@@ -18,10 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Website {
   String get name => throw _privateConstructorUsedError;
   String get genesisAddress => throw _privateConstructorUsedError;
-  String get size => throw _privateConstructorUsedError;
-  String get nbTransactions => throw _privateConstructorUsedError;
-  String get lastPublicationFees => throw _privateConstructorUsedError;
-  String get globalFees => throw _privateConstructorUsedError;
+  List<WebsiteVersion> get websiteVersionList =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WebsiteCopyWith<Website> get copyWith => throw _privateConstructorUsedError;
@@ -35,10 +33,7 @@ abstract class $WebsiteCopyWith<$Res> {
   $Res call(
       {String name,
       String genesisAddress,
-      String size,
-      String nbTransactions,
-      String lastPublicationFees,
-      String globalFees});
+      List<WebsiteVersion> websiteVersionList});
 }
 
 /// @nodoc
@@ -56,10 +51,7 @@ class _$WebsiteCopyWithImpl<$Res, $Val extends Website>
   $Res call({
     Object? name = null,
     Object? genesisAddress = null,
-    Object? size = null,
-    Object? nbTransactions = null,
-    Object? lastPublicationFees = null,
-    Object? globalFees = null,
+    Object? websiteVersionList = null,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -70,22 +62,10 @@ class _$WebsiteCopyWithImpl<$Res, $Val extends Website>
           ? _value.genesisAddress
           : genesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      size: null == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String,
-      nbTransactions: null == nbTransactions
-          ? _value.nbTransactions
-          : nbTransactions // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastPublicationFees: null == lastPublicationFees
-          ? _value.lastPublicationFees
-          : lastPublicationFees // ignore: cast_nullable_to_non_nullable
-              as String,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
-              as String,
+      websiteVersionList: null == websiteVersionList
+          ? _value.websiteVersionList
+          : websiteVersionList // ignore: cast_nullable_to_non_nullable
+              as List<WebsiteVersion>,
     ) as $Val);
   }
 }
@@ -100,10 +80,7 @@ abstract class _$$_WebsiteCopyWith<$Res> implements $WebsiteCopyWith<$Res> {
   $Res call(
       {String name,
       String genesisAddress,
-      String size,
-      String nbTransactions,
-      String lastPublicationFees,
-      String globalFees});
+      List<WebsiteVersion> websiteVersionList});
 }
 
 /// @nodoc
@@ -118,10 +95,7 @@ class __$$_WebsiteCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? genesisAddress = null,
-    Object? size = null,
-    Object? nbTransactions = null,
-    Object? lastPublicationFees = null,
-    Object? globalFees = null,
+    Object? websiteVersionList = null,
   }) {
     return _then(_$_Website(
       name: null == name
@@ -132,22 +106,10 @@ class __$$_WebsiteCopyWithImpl<$Res>
           ? _value.genesisAddress
           : genesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
-      size: null == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String,
-      nbTransactions: null == nbTransactions
-          ? _value.nbTransactions
-          : nbTransactions // ignore: cast_nullable_to_non_nullable
-              as String,
-      lastPublicationFees: null == lastPublicationFees
-          ? _value.lastPublicationFees
-          : lastPublicationFees // ignore: cast_nullable_to_non_nullable
-              as String,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
-              as String,
+      websiteVersionList: null == websiteVersionList
+          ? _value._websiteVersionList
+          : websiteVersionList // ignore: cast_nullable_to_non_nullable
+              as List<WebsiteVersion>,
     ));
   }
 }
@@ -158,27 +120,26 @@ class _$_Website implements _Website {
   const _$_Website(
       {required this.name,
       required this.genesisAddress,
-      required this.size,
-      required this.nbTransactions,
-      required this.lastPublicationFees,
-      required this.globalFees});
+      final List<WebsiteVersion> websiteVersionList = const []})
+      : _websiteVersionList = websiteVersionList;
 
   @override
   final String name;
   @override
   final String genesisAddress;
+  final List<WebsiteVersion> _websiteVersionList;
   @override
-  final String size;
-  @override
-  final String nbTransactions;
-  @override
-  final String lastPublicationFees;
-  @override
-  final String globalFees;
+  @JsonKey()
+  List<WebsiteVersion> get websiteVersionList {
+    if (_websiteVersionList is EqualUnmodifiableListView)
+      return _websiteVersionList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_websiteVersionList);
+  }
 
   @override
   String toString() {
-    return 'Website(name: $name, genesisAddress: $genesisAddress, size: $size, nbTransactions: $nbTransactions, lastPublicationFees: $lastPublicationFees, globalFees: $globalFees)';
+    return 'Website(name: $name, genesisAddress: $genesisAddress, websiteVersionList: $websiteVersionList)';
   }
 
   @override
@@ -189,18 +150,13 @@ class _$_Website implements _Website {
             (identical(other.name, name) || other.name == name) &&
             (identical(other.genesisAddress, genesisAddress) ||
                 other.genesisAddress == genesisAddress) &&
-            (identical(other.size, size) || other.size == size) &&
-            (identical(other.nbTransactions, nbTransactions) ||
-                other.nbTransactions == nbTransactions) &&
-            (identical(other.lastPublicationFees, lastPublicationFees) ||
-                other.lastPublicationFees == lastPublicationFees) &&
-            (identical(other.globalFees, globalFees) ||
-                other.globalFees == globalFees));
+            const DeepCollectionEquality()
+                .equals(other._websiteVersionList, _websiteVersionList));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name, genesisAddress, size,
-      nbTransactions, lastPublicationFees, globalFees);
+  int get hashCode => Object.hash(runtimeType, name, genesisAddress,
+      const DeepCollectionEquality().hash(_websiteVersionList));
 
   @JsonKey(ignore: true)
   @override
@@ -213,23 +169,14 @@ abstract class _Website implements Website {
   const factory _Website(
       {required final String name,
       required final String genesisAddress,
-      required final String size,
-      required final String nbTransactions,
-      required final String lastPublicationFees,
-      required final String globalFees}) = _$_Website;
+      final List<WebsiteVersion> websiteVersionList}) = _$_Website;
 
   @override
   String get name;
   @override
   String get genesisAddress;
   @override
-  String get size;
-  @override
-  String get nbTransactions;
-  @override
-  String get lastPublicationFees;
-  @override
-  String get globalFees;
+  List<WebsiteVersion> get websiteVersionList;
   @override
   @JsonKey(ignore: true)
   _$$_WebsiteCopyWith<_$_Website> get copyWith =>

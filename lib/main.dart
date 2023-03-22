@@ -1,15 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:convert';
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:aeweb/localization.dart';
 import 'package:aeweb/model/available_language.dart';
-import 'package:aeweb/model/data/appdb.dart';
+import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/providers_observer.dart';
 import 'package:aeweb/ui/views/website/website_list.dart';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:aeweb/util/service_locator.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -21,24 +20,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await DBHelper.setupDatabase();
-  setupServiceLocator();
-
-  final endpointResponse = await sl.get<ArchethicDAppClient>().getEndpoint();
-  var endpointUrl = '';
-  endpointResponse.when(
-    failure: (failure) {
-      log(
-        'Transaction failed',
-        error: failure,
-      );
-    },
-    success: (result) {
-      endpointUrl = result.endpointUrl;
-      log(
-        'Transaction succeed : ${json.encode(result)}',
-      );
-    },
-  );
+  await setupServiceLocator();
 
   runApp(
     ProviderScope(
@@ -46,7 +28,7 @@ Future<void> main() async {
         ProvidersLogger(),
       ],
       child: MyApp(
-        endpoint: endpointUrl,
+        endpoint: sl.get<ApiService>().endpoint,
       ),
     ),
   );
@@ -68,7 +50,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(reddwarf03): use LanguageProviders
-    const language = AvailableLanguage.french;
+    const language = AvailableLanguage.english;
 
     return MaterialApp(
       title: 'AEWeb',
@@ -85,12 +67,11 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      home: WebsiteList(title: 'AEWeb - $endpoint'),
+      home: const WebsiteList(),
       onGenerateRoute: (settings) {
         if ((sl.get<ArchethicDAppClient>() as DeeplinkArchethicDappClient)
             .handleRoute(settings.name)) return;
 
-        //... do everything else needed by your application
         return null;
       },
     );

@@ -1,11 +1,14 @@
-import 'dart:convert';
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+/*import 'dart:convert';
 import 'dart:developer';
-
+import 'dart:io';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as path;
+import 'package:glob/glob.dart';
 
 class WebsiteAdd extends StatefulWidget {
   const WebsiteAdd({super.key});
@@ -62,10 +65,10 @@ class WebsiteAddState extends State<WebsiteAdd> {
       return;
     }
 
-    final response = await sl
+    final responseAddService = await sl
         .get<ArchethicDAppClient>()
         .addService({'name': 'aeweb-${websiteNameTextController.text}'});
-    response.when(
+    responseAddService.when(
       failure: (failure) {
         log(
           'Transaction failed',
@@ -91,10 +94,79 @@ class WebsiteAddState extends State<WebsiteAdd> {
           ),
         );
       },
-      success: (result) {
+      success: (result) async {
         log(
           'Transaction succeed : ${json.encode(result)}',
         );
+
+        // Get genesis addresses
+        var baseAddress = '';
+        var refAddress = '';
+        var filesAddress = '';
+
+        const keychainFundingService = 'archethic-wallet-TEST';
+        final keychainWebsiteService =
+            'aeweb-${websiteNameTextController.text}';
+
+        var responseDeriveAddress = await sl
+            .get<ArchethicDAppClient>()
+            .keychainDeriveAddress({'serviceName': keychainFundingService});
+        responseDeriveAddress.when(
+          failure: (failure) {},
+          success: (result) {
+            baseAddress = result.address;
+          },
+        );
+
+        responseDeriveAddress =
+            await sl.get<ArchethicDAppClient>().keychainDeriveAddress(
+          {'serviceName': keychainWebsiteService},
+        )
+              ..when(
+                failure: (failure) {},
+                success: (result) {
+                  refAddress = result.address;
+                },
+              );
+
+        responseDeriveAddress =
+            await sl.get<ArchethicDAppClient>().keychainDeriveAddress(
+          {'serviceName': keychainWebsiteService, 'pathSuffix': 'files'},
+        )
+              ..when(
+                failure: (failure) {},
+                success: (result) {
+                  filesAddress = result.address;
+                },
+              );
+
+        // Get the chains size
+        final transactionIndexMap = await sl
+            .get<ApiService>()
+            .getTransactionIndex([baseAddress, refAddress, filesAddress]);
+        final baseIndex = transactionIndexMap[baseAddress] ?? 0;
+        final refIndex = transactionIndexMap[refAddress] ?? 0;
+        final filesIndex = transactionIndexMap[filesAddress] ?? 0;
+
+        var isWebsiteUpdate = false;
+
+        // Check if website is already deployed
+        if (refIndex > 0) {
+          log('Check last update...');
+          isWebsiteUpdate = true;
+          final lastRefTxMap = await sl
+              .get<ApiService>()
+              .getTransaction([refAddress], request: 'data { content }');
+          final prevRefTxContent = lastRefTxMap[refAddress]!.data!.content!;
+        }
+
+        // Convert directory structure into array of file content
+        log('Analyzing website folder...');
+
+        const folderPath = '';
+        final normalizedFolderPath = _normalizeFolderPath(folderPath);
+        getFolderFiles(normalizedFolderPath);
+
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(json.encode(result)),
@@ -107,6 +179,94 @@ class WebsiteAddState extends State<WebsiteAdd> {
         );
       },
     );
+  }
+
+  String _normalizeFolderPath(String folderPath) {
+    final normalizedPath = folderPath.endsWith(path.separator)
+        ? folderPath.substring(0, folderPath.length - 1)
+        : folderPath;
+    return path.normalize(normalizedPath);
+  }
+
+  void handleDirectory(
+    String folderPath,
+    List<Map<String, dynamic>> files,
+    bool includeGitIgnoredFiles,
+    List<String> filters,
+  ) {
+    if (!includeGitIgnoredFiles) {
+      filters = getFilters(folderPath, filters);
+    }
+
+    if (!filters.contains(folderPath)) {
+      final entity = FileSystemEntity.typeSync(folderPath);
+      if (entity == FileSystemEntityType.directory) {
+        Directory(folderPath).listSync().forEach((child) {
+          handleDirectory(
+            path.join(folderPath, child.path),
+            files,
+            includeGitIgnoredFiles,
+            filters,
+          );
+        });
+      } else if (entity == FileSystemEntityType.file) {
+        handleFile(folderPath, files);
+      }
+    }
+  }
+
+  List<Map<String, dynamic>> getFolderFiles(
+    String folderPath, {
+    bool includeGitIgnoredFiles = false,
+  }) {
+    var files = <Map<String, dynamic>>[];
+    final filters = <String>[];
+
+    final fileSystemEntity = FileSystemEntity.typeSync(folderPath);
+    if (fileSystemEntity == FileSystemEntityType.directory) {
+      handleDirectory(folderPath, files, includeGitIgnoredFiles, filters);
+
+      files = files.map((file) {
+        file['filePath'] = file['filePath'].replaceFirst(folderPath, '');
+        return file;
+      }).toList();
+    } else if (fileSystemEntity == FileSystemEntityType.file) {
+      final data = File(folderPath).readAsBytesSync();
+      final filePath = path.basename(folderPath);
+      files.add({'filePath': filePath, 'data': data});
+    }
+
+    return files;
+  }
+
+  void handleFile(String filePath, List<Map<String, dynamic>> files) {
+    final data = File(filePath).readAsBytesSync();
+    files.add({'filePath': filePath, 'data': data});
+  }
+
+  List<String> getFilters(String folderPath, List<String> filters) {
+    var newFilters = <String>[];
+
+    final gitIgnoreFilePath = path.join(folderPath, '.gitignore');
+    if (File(gitIgnoreFilePath).existsSync()) {
+      log('Ignore files from: $gitIgnoreFilePath');
+      final gitIgnoreContents = File(gitIgnoreFilePath).readAsStringSync();
+      newFilters = parseGitIgnorePatterns(gitIgnoreContents)
+        ..insert(0, '.gitignore')
+        ..insert(0, '.git');
+    }
+
+    return newFilters.fold<List<String>>(filters, (acc, filePath) {
+      final globPattern = Glob(path.join(folderPath, filePath));
+      final matchedPaths =
+          globPattern.listSync().map((entity) => entity.path).toList();
+      return acc..addAll(matchedPaths);
+    });
+  }
+
+  List<String> parseGitIgnorePatterns(String gitIgnoreContents) {
+    // Implement parsing of .gitignore patterns here
+    return [];
   }
 
   @override
@@ -167,3 +327,4 @@ class WebsiteAddState extends State<WebsiteAdd> {
     );
   }
 }
+*/

@@ -1,26 +1,39 @@
 name: aeweb
 description: Deploy websites on Archethic decentralized network to avoid censorship, increase security and have high-availability and resiliency.
-publish_to: 'none'
+publish_to: "none"
 
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.19.0 <3.0.0'
-  flutter: '3.7.3'
+  sdk: ">=2.19.0 <3.0.0"
+  flutter: "3.7.3"
 
 dependencies:
-
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^3.0.0
+  #archethic_lib_dart: ^3.0.2
+  archethic_lib_dart:
+    git:
+      url: https://github.com/archethic-foundation/libdart.git
+      ref: aeweb
 
   # A client dart library to interact with Archethic Wallet RPC API.
+  #archethic_wallet_client: ^1.0.4
   archethic_wallet_client:
     git:
       url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
-      ref: dev
+      ref: aeweb
+
+  # A package to show context menus on right-click or long-press
+  context_menus: ^1.0.2
+
+  # Implementations of SHA, MD5, and HMAC cryptographic functions
+  crypto: ^3.0.2
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
   file_picker: ^5.2.5
+
+  # A package to get humanized file sizes. Translate raw file size into human readable strings
+  filesize: ^2.0.1
 
   flutter:
     sdk: flutter
@@ -31,18 +44,30 @@ dependencies:
   # State management
   flutter_riverpod: 2.1.1
 
+  # A tree widget for Flutter that can be used to display nested, hierarchical data. It includes a number of features like styling labels, icons, and import and export utilities.
+  flutter_treeview: ^1.0.7+1
+
   # Annotations for freezed
   freezed_annotation: ^2.2.0
 
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
   get_it: ^7.2.0
 
+  # A library to perform Bash-style file and directory globbing.
+  glob: ^2.1.1
+
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
   # Localization
-  intl: ^0.17.0
+  intl: ^0.18.0
+
+  # Classes and helper functions that support JSON code generation via the `json_serializable` package.
+  json_annotation: ^4.4.0
+
+  # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
+  path: ^1.8.2
 
   # A package exposing annotations for riverpod_generator
   riverpod_annotation: 1.0.6
@@ -51,12 +76,18 @@ dependencies:
   url_launcher: ^6.1.8
 
 dev_dependencies:
+  # A build system for Dart code generation and modular compilation.
   build_runner: ^2.3.3
+  # Recommended lints for Flutter apps, packages, and plugins to encourage good coding practices
   flutter_lints: ^2.0.1
+  # Code generation for immutable classes that has a simple syntax/API without compromising on the features.
   freezed: ^2.3.2
+  # Extension for Hive. Automatically generates TypeAdapters to store any class.
   hive_generator: ^2.0.0
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl_generator: ^0.4.1
+  # Automatically generate code for converting to and from JSON by annotating Dart classes.
+  json_serializable: ^6.6.1
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: 1.0.6
 

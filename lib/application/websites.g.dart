@@ -52,3 +52,77 @@ final _fetchWebsitesProvider = AutoDisposeFutureProvider<List<Website>>(
       : $_fetchWebsitesHash,
 );
 typedef _FetchWebsitesRef = AutoDisposeFutureProviderRef<List<Website>>;
+String $_fetchWebsiteVersionsHash() =>
+    r'8d92709a0eb444847c6ae196deb4585b7b30bc15';
+
+/// See also [_fetchWebsiteVersions].
+class _FetchWebsiteVersionsProvider
+    extends AutoDisposeFutureProvider<List<WebsiteVersion>> {
+  _FetchWebsiteVersionsProvider(
+    this.genesisAddress,
+  ) : super(
+          (ref) => _fetchWebsiteVersions(
+            ref,
+            genesisAddress,
+          ),
+          from: _fetchWebsiteVersionsProvider,
+          name: r'_fetchWebsiteVersionsProvider',
+          debugGetCreateSourceHash:
+              const bool.fromEnvironment('dart.vm.product')
+                  ? null
+                  : $_fetchWebsiteVersionsHash,
+        );
+
+  final dynamic genesisAddress;
+
+  @override
+  bool operator ==(Object other) {
+    return other is _FetchWebsiteVersionsProvider &&
+        other.genesisAddress == genesisAddress;
+  }
+
+  @override
+  int get hashCode {
+    var hash = _SystemHash.combine(0, runtimeType.hashCode);
+    hash = _SystemHash.combine(hash, genesisAddress.hashCode);
+
+    return _SystemHash.finish(hash);
+  }
+}
+
+typedef _FetchWebsiteVersionsRef
+    = AutoDisposeFutureProviderRef<List<WebsiteVersion>>;
+
+/// See also [_fetchWebsiteVersions].
+final _fetchWebsiteVersionsProvider = _FetchWebsiteVersionsFamily();
+
+class _FetchWebsiteVersionsFamily
+    extends Family<AsyncValue<List<WebsiteVersion>>> {
+  _FetchWebsiteVersionsFamily();
+
+  _FetchWebsiteVersionsProvider call(
+    dynamic genesisAddress,
+  ) {
+    return _FetchWebsiteVersionsProvider(
+      genesisAddress,
+    );
+  }
+
+  @override
+  AutoDisposeFutureProvider<List<WebsiteVersion>> getProviderOverride(
+    covariant _FetchWebsiteVersionsProvider provider,
+  ) {
+    return call(
+      provider.genesisAddress,
+    );
+  }
+
+  @override
+  List<ProviderOrFamily>? get allTransitiveDependencies => null;
+
+  @override
+  List<ProviderOrFamily>? get dependencies => null;
+
+  @override
+  String? get name => r'_fetchWebsiteVersionsProvider';
+}
