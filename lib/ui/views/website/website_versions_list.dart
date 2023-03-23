@@ -1,4 +1,3 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/domain/usecases/website/read_website.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
@@ -204,7 +203,7 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
         case 'Sync':
           // TODO(reddwarf03): Récupérer le path local
           final localFiles = await SyncWebsiteUseCases().listFilesFromPath(
-            '/Volumes/Macintosh HD/Users/..../ARCHETHIC/archethic-website/',
+            '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic_wallet/',
           );
           final remoteFiles = (await ReadWebsiteUseCases()
                   .getRemote(websiteVersion.transactionAddress))!
