@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
-import 'package:aeweb/localization.dart';
 import 'package:aeweb/model/available_language.dart';
 import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/providers_observer.dart';
@@ -13,6 +12,7 @@ import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       localizationsDelegates: const [
-        AppLocalizationsDelegate(language),
+        AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate

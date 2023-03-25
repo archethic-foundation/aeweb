@@ -127,7 +127,7 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
           label: const Text('All', style: TextStyle(color: Colors.white)),
           style: ButtonStyle(
             backgroundColor: _selectedStatus == null
-                ? MaterialStateProperty.all(Colors.blue[100])
+                ? MaterialStateProperty.all(Colors.blue[100]!.withOpacity(0.2))
                 : null,
           ),
         ),
@@ -143,7 +143,9 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
           style: ButtonStyle(
             backgroundColor:
                 _selectedStatus == HostingContentComparisonStatus.localOnly
-                    ? MaterialStateProperty.all(Colors.orange[100])
+                    ? MaterialStateProperty.all(
+                        Colors.orange[100]!.withOpacity(0.2),
+                      )
                     : null,
           ),
         ),
@@ -157,10 +159,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
           label:
               const Text('Remote only', style: TextStyle(color: Colors.white)),
           style: ButtonStyle(
-            backgroundColor:
-                _selectedStatus == HostingContentComparisonStatus.remoteOnly
-                    ? MaterialStateProperty.all(Colors.blue[100])
-                    : null,
+            backgroundColor: _selectedStatus ==
+                    HostingContentComparisonStatus.remoteOnly
+                ? MaterialStateProperty.all(Colors.blue[100]!.withOpacity(0.2))
+                : null,
           ),
         ),
         TextButton.icon(
@@ -174,7 +176,7 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
           style: ButtonStyle(
             backgroundColor: _selectedStatus ==
                     HostingContentComparisonStatus.differentContent
-                ? MaterialStateProperty.all(Colors.red[100])
+                ? MaterialStateProperty.all(Colors.red[100]!.withOpacity(0.2))
                 : null,
           ),
         ),
@@ -187,10 +189,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
           icon: const Icon(Icons.check_circle_outline, color: Colors.green),
           label: const Text('Same', style: TextStyle(color: Colors.white)),
           style: ButtonStyle(
-            backgroundColor:
-                _selectedStatus == HostingContentComparisonStatus.sameContent
-                    ? MaterialStateProperty.all(Colors.green[100])
-                    : null,
+            backgroundColor: _selectedStatus ==
+                    HostingContentComparisonStatus.sameContent
+                ? MaterialStateProperty.all(Colors.green[100]!.withOpacity(0.2))
+                : null,
           ),
         ),
       ],

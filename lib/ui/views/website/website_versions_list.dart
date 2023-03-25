@@ -5,12 +5,13 @@ import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/ui/views/bottom_bar.dart';
 import 'package:aeweb/ui/views/website/explorer.dart';
 import 'package:aeweb/ui/views/website/file_comparison.dart';
+import 'package:aeweb/util/file_util.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-class WebsiteVersionsList extends ConsumerWidget {
+class WebsiteVersionsList extends ConsumerWidget with FileMixin {
   const WebsiteVersionsList({super.key, required this.genesisAddress});
 
   final String genesisAddress;
@@ -202,9 +203,9 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
           break;
         case 'Sync':
           // TODO(reddwarf03): Récupérer le path local
-          final localFiles = await SyncWebsiteUseCases().listFilesFromPath(
-            '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic_wallet/',
-          );
+          // final localFiles = await listFilesFromPath(
+          //   '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/',
+          // );
           final remoteFiles = (await ReadWebsiteUseCases()
                   .getRemote(websiteVersion.transactionAddress))!
               .content!
@@ -216,8 +217,8 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
             context,
             MaterialPageRoute(
               builder: (context) => FileComparisonWidget(
-                comparedFiles: SyncWebsiteUseCases()
-                    .compareFileLists(localFiles ?? {}, remoteFiles),
+                comparedFiles:
+                    SyncWebsiteUseCases().compareFileLists({}, remoteFiles),
               ),
             ),
           );

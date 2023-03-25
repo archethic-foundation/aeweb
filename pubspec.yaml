@@ -23,6 +23,12 @@ dependencies:
       url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
       ref: aeweb
 
+  # Compression
+  archive: ^3.3.6
+
+  # Collections and utilities functions and classes related to collections.
+  collection: ^1.17.1
+
   # A package to show context menus on right-click or long-press
   context_menus: ^1.0.2
 
@@ -60,8 +66,8 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
-  # Localization
-  intl: ^0.18.0
+  # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
+  intl: any
 
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.4.0
@@ -84,15 +90,17 @@ dev_dependencies:
   freezed: ^2.3.2
   # Extension for Hive. Automatically generates TypeAdapters to store any class.
   hive_generator: ^2.0.0
-  # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
-  intl_generator: ^0.4.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.6.1
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: 1.0.6
+  # A full featured library for writing and running Dart tests across platforms.
+  test: ^1.23.0
 
 # The following section is specific to Flutter.
 flutter:
+  generate: true
+  uses-material-design: true
   assets:
     - assets/ssl/isrg-root-x1.pem
     - assets/images/
@@ -116,5 +124,3 @@ flutter:
         - asset: assets/fonts/Montserrat-Regular.ttf
         - asset: assets/fonts/Montserrat-SemiBold.ttf
         - asset: assets/fonts/Montserrat-SemiBoldItalic.ttf
-
-  uses-material-design: true

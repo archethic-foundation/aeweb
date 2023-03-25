@@ -163,10 +163,14 @@ class ExplorerScreenState extends State<ExplorerScreen> {
                 child: Container(
                   padding: const EdgeInsets.only(top: 20),
                   alignment: Alignment.center,
-                  child: Text(
-                    treeViewController.getNode(_selectedNode) == null
-                        ? ''
-                        : treeViewController.getNode(_selectedNode)!.label,
+                  child: Row(
+                    children: [
+                      Text(
+                        treeViewController.getNode(_selectedNode) == null
+                            ? ''
+                            : treeViewController.getNode(_selectedNode)!.label,
+                      ),
+                    ],
                   ),
                 ),
               )

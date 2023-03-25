@@ -48,8 +48,6 @@ import 'package:meta/meta.dart';
 /// [1]: https://git-scm.com/docs/gitignore
 @sealed
 class Ignore {
-  final List<_IgnoreRule> _rules;
-
   /// Create an [Ignore] instance with a set of [`.gitignore` compatible][1]
   /// patterns.
   ///
@@ -101,6 +99,7 @@ class Ignore {
           ignoreCase,
           onInvalidPattern: onInvalidPattern,
         ).toList(growable: false);
+  final List<_IgnoreRule> _rules;
 
   /// Returns `true` if [path] is ignored by the patterns used to create this
   /// [Ignore] instance, assuming those patterns are placed at `.`.
@@ -228,7 +227,10 @@ class Ignore {
         beneath.startsWith('./') ||
         beneath.startsWith('../')) {
       throw ArgumentError.value(
-          'must be relative and normalized', 'beneath', beneath);
+        'must be relative and normalized',
+        'beneath',
+        beneath,
+      );
     }
     if (beneath.endsWith('/')) {
       throw ArgumentError.value('must not end with /', beneath);
@@ -256,7 +258,8 @@ class Ignore {
         return <String>[];
       }
       final ignore = ignoreForDir(
-          partial == '/' ? '.' : partial.substring(1, partial.length - 1));
+        partial == '/' ? '.' : partial.substring(1, partial.length - 1),
+      );
       ignoreStack
           .add(ignore == null ? null : _IgnorePrefixPair(ignore, partial));
     }
@@ -285,10 +288,14 @@ class Ignore {
       }
       if (currentIsDir) {
         final ignore = ignoreForDir(normalizedCurrent);
-        ignoreStack.add(ignore == null
-            ? null
-            : _IgnorePrefixPair(
-                ignore, current == '/' ? current : '$current/'));
+        ignoreStack.add(
+          ignore == null
+              ? null
+              : _IgnorePrefixPair(
+                  ignore,
+                  current == '/' ? current : '$current/',
+                ),
+        );
         // Put all entities in current on the stack to be processed.
         toVisit.add(listDir(normalizedCurrent).map((x) => '/$x').toList());
         if (includeDirs) {
@@ -303,6 +310,12 @@ class Ignore {
 }
 
 class _IgnoreParseResult {
+  _IgnoreParseResult(this.pattern, this.rule) : exception = null;
+  _IgnoreParseResult.empty(this.pattern)
+      : rule = null,
+        exception = null;
+
+  _IgnoreParseResult.invalid(this.pattern, this.exception) : rule = null;
   // The parsed pattern.
   final String pattern;
 
@@ -316,17 +329,11 @@ class _IgnoreParseResult {
 
   // For invalid patterns this contains a description of the problem.
   final FormatException? exception;
-
-  _IgnoreParseResult(this.pattern, this.rule) : exception = null;
-
-  _IgnoreParseResult.invalid(this.pattern, this.exception) : rule = null;
-
-  _IgnoreParseResult.empty(this.pattern)
-      : rule = null,
-        exception = null;
 }
 
 class _IgnoreRule {
+  _IgnoreRule(this.pattern, this.negative, this.original);
+
   /// A regular expression that represents this rule.
   final RegExp pattern;
   final bool negative;
@@ -334,11 +341,8 @@ class _IgnoreRule {
   /// The String this pattern was generated from.
   final String original;
 
-  _IgnoreRule(this.pattern, this.negative, this.original);
-
   @override
   String toString() {
-    // TODO: implement toString
     return '$original -> $pattern';
   }
 }
@@ -388,7 +392,7 @@ _IgnoreParseResult _parseIgnorePattern(String pattern, bool ignoreCase) {
   // Remove trailing whitespace unless escaped
   while (end != 0 &&
       pattern[end - 1] == ' ' &&
-      (end == 1 || pattern[end - 2] != '\\')) {
+      (end == 1 || pattern[end - 2] != r'\')) {
     end--;
   }
   // Empty patterns match nothing.
@@ -410,7 +414,7 @@ _IgnoreParseResult _parseIgnorePattern(String pattern, bool ignoreCase) {
         return null;
       }
       current++;
-      if (nextChar == '\\') {
+      if (nextChar == r'\') {
         final escaped = peekChar();
         if (escaped == null) {
           return null;
@@ -486,22 +490,24 @@ _IgnoreParseResult _parseIgnorePattern(String pattern, bool ignoreCase) {
         return _IgnoreParseResult.invalid(
           pattern,
           FormatException(
-              'Pattern "$pattern" had an invalid `[a-b]` style character range',
-              pattern,
-              current),
+            'Pattern "$pattern" had an invalid `[a-b]` style character range',
+            pattern,
+            current,
+          ),
         );
       }
       expr += '[$characterRange]';
-    } else if (nextChar == '\\') {
+    } else if (nextChar == r'\') {
       // Escapes
       final escaped = peekChar();
       if (escaped == null) {
         return _IgnoreParseResult.invalid(
           pattern,
           FormatException(
-              'Pattern "$pattern" end of pattern inside character escape.',
-              pattern,
-              current),
+            'Pattern "$pattern" end of pattern inside character escape.',
+            pattern,
+            current,
+          ),
         );
       }
       expr += RegExp.escape(escaped);
@@ -531,22 +537,26 @@ _IgnoreParseResult _parseIgnorePattern(String pattern, bool ignoreCase) {
   }
   try {
     return _IgnoreParseResult(
+      pattern,
+      _IgnoreRule(
+        RegExp(expr, caseSensitive: !ignoreCase),
+        negative,
         pattern,
-        _IgnoreRule(
-            RegExp(expr, caseSensitive: !ignoreCase), negative, pattern));
+      ),
+    );
   } on FormatException catch (e) {
     throw AssertionError(
-        'Created broken expression "$expr" from ignore pattern "$pattern" -> $e');
+      'Created broken expression "$expr" from ignore pattern "$pattern" -> $e',
+    );
   }
 }
 
 /// A [Ignore] object, paired with the prefix where it is found in the directory
 /// hierarchy.
 class _IgnorePrefixPair {
+  _IgnorePrefixPair(this.ignore, this.prefix);
   final Ignore ignore;
   final String prefix;
-
-  _IgnorePrefixPair(this.ignore, this.prefix);
 
   @override
   String toString() {
