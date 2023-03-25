@@ -53,7 +53,7 @@ class WebsitesRepository {
             var genesisAddress = '';
             var size = 0;
             final addresses = <String>[];
-            Hosting? hosting;
+            HostingRef? hosting;
             // Get genesis address
             final response = await sl
                 .get<ArchethicDAppClient>()
@@ -76,7 +76,7 @@ class WebsitesRepository {
 
                 log(lastAddressMap[genesisAddress]!.address.toString());
 
-                hosting = Hosting.fromJson(
+                hosting = HostingRef.fromJson(
                   jsonDecode(lastAddressMap[genesisAddress]!.data!.content!),
                 );
                 if (hosting != null) {
@@ -115,7 +115,7 @@ class WebsitesRepository {
     final transactions = transactionChainMap[genesisAddress];
     for (final transaction in transactions!) {
       var size = 0;
-      final hosting = Hosting.fromJson(
+      final hosting = HostingRef.fromJson(
         jsonDecode(transaction.data!.content!),
       );
 

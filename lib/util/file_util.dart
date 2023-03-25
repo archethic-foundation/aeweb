@@ -15,12 +15,13 @@ import 'package:crypto/crypto.dart';
 const kMaxFileSize = 3145728 - 45728;
 
 mixin FileMixin {
-  Future<Map<String, HostingContentMetaData>>? listFilesFromPath(
+  Future<Map<String, HostingRefContentMetaData>>? listFilesFromPath(
     String path, {
     bool applyGitIgnoreRules = true,
   }) async {
-    final hostingContentMetaData = <String, HostingContentMetaData>{};
-    final hostingContentMetaDataFiltered = <String, HostingContentMetaData>{};
+    final hostingRefContentMetaData = <String, HostingRefContentMetaData>{};
+    final hostingRefContentMetaDataFiltered =
+        <String, HostingRefContentMetaData>{};
     try {
       final directory = Directory(path);
       final gitIgnoreContent = StringBuffer();
@@ -41,7 +42,7 @@ mixin FileMixin {
               );
             }
 
-            hostingContentMetaData[filePath] = HostingContentMetaData(
+            hostingRefContentMetaData[filePath] = HostingRefContentMetaData(
               hash: contentHash,
               encoding: 'gzip',
               size: fileSize,
@@ -56,9 +57,9 @@ mixin FileMixin {
             ignoreCase: true,
           );
 
-          hostingContentMetaData.forEach((key, value) {
+          hostingRefContentMetaData.forEach((key, value) {
             if (ignore.ignores(key) == false) {
-              hostingContentMetaDataFiltered[key] = value;
+              hostingRefContentMetaDataFiltered[key] = value;
             }
           });
         }
@@ -66,12 +67,10 @@ mixin FileMixin {
     } catch (e) {
       log('Error while retrieving files and folders : $e');
     }
-    return hostingContentMetaDataFiltered;
+    return hostingRefContentMetaDataFiltered;
   }
 
-  void setContents(String path, List<String> files) {
-    final filesWithEncodedContent = <String, String>{};
-
+  List<Map<String, dynamic>> setContents(String path, List<String> files) {
     var txsContent = <Map<String, dynamic>>[];
     for (final file in files) {
       final fileLoaded = File(path + file);
@@ -82,11 +81,9 @@ mixin FileMixin {
         } else {
           txsContent = handleNormalFile(txsContent, file, encodedContent);
         }
-        filesWithEncodedContent[file] = encodedContent;
       }
     }
-    log(filesWithEncodedContent.toString());
-    return;
+    return txsContent;
   }
 
   String encodeContent(Uint8List rawData) {

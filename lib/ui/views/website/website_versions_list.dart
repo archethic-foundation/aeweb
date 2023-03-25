@@ -1,4 +1,5 @@
 import 'package:aeweb/application/websites.dart';
+import 'package:aeweb/domain/usecases/website/create_website.dart';
 import 'package:aeweb/domain/usecases/website/read_website.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/website_version.dart';
@@ -129,6 +130,18 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
           ),
         ),
         PopupMenuItem(
+          value: 'Create',
+          child: Row(
+            children: const [
+              Icon(Icons.create),
+              SizedBox(width: 8),
+              Flexible(
+                child: Text('Create'),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
           value: 'Upload',
           child: Row(
             children: const [
@@ -200,6 +213,13 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
                   ExplorerScreen(filesAndFolders: websiteVersion.content!),
             ),
           );
+          break;
+        case 'Create':
+          CreateWebsiteUseCases().createWebsite(
+            'test1${DateTime.now().microsecond}',
+            '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/',
+          );
+
           break;
         case 'Sync':
           // TODO(reddwarf03): Récupérer le path local

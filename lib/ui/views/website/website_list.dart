@@ -1,4 +1,5 @@
 import 'package:aeweb/application/websites.dart';
+import 'package:aeweb/domain/usecases/website/create_website.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/bottom_bar.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
@@ -93,14 +94,22 @@ Widget _buildWebsiteAddCard() {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          Icon(
-            Icons.add_circle_outline,
-            size: 40,
-          )
-        ],
+      child: InkWell(
+        onTap: () {
+          CreateWebsiteUseCases().createWebsite(
+            'test1${DateTime.now().microsecond}',
+            '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/',
+          );
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            Icon(
+              Icons.add_circle_outline,
+              size: 40,
+            )
+          ],
+        ),
       ),
     ),
   );

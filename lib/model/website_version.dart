@@ -12,6 +12,6 @@ class WebsiteVersion with _$WebsiteVersion {
     @Default('') String publisher,
     @Default(0) int filesCount,
     @Default(0) int size,
-    Hosting? content,
+    HostingRef? content,
   }) = _WebsiteVersion;
 }

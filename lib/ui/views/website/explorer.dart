@@ -7,7 +7,7 @@ import 'package:flutter_treeview/flutter_treeview.dart';
 class ExplorerScreen extends StatefulWidget {
   const ExplorerScreen({super.key, required this.filesAndFolders});
 
-  final archethic.Hosting filesAndFolders;
+  final archethic.HostingRef filesAndFolders;
 
   @override
   ExplorerScreenState createState() => ExplorerScreenState();
@@ -31,7 +31,8 @@ class ExplorerScreenState extends State<ExplorerScreen> {
     widget.filesAndFolders.metaData.forEach(_addPathToTree);
   }
 
-  void _addPathToTree(String file, archethic.HostingContentMetaData metaData) {
+  void _addPathToTree(
+      String file, archethic.HostingRefContentMetaData metaData) {
     final parts = file.split('/');
     Node? currentNode;
     var siblings = _nodes;

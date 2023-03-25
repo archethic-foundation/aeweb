@@ -58,16 +58,16 @@ class ReadWebsiteUseCases {
       if (website.aewebLocalWebsiteVersionList != null) {
         for (final version in website.aewebLocalWebsiteVersionList!) {
           if (version.transactionAddress == address) {
-            final metaData = <String, HostingContentMetaData>{};
+            final metaData = <String, HostingRefContentMetaData>{};
             if (version.metaData != null) {
               version.metaData!.forEach((key, value) {
-                final hostingContentMetaData = HostingContentMetaData(
+                final hostingRefContentMetaData = HostingRefContentMetaData(
                   hash: value.hash,
                   encoding: value.encoding,
                   size: value.size,
                   addresses: value.addresses,
                 );
-                metaData[key] = hostingContentMetaData;
+                metaData[key] = hostingRefContentMetaData;
               });
             }
 
@@ -76,7 +76,7 @@ class ReadWebsiteUseCases {
               timestamp: version.timestamp,
               filesCount: version.filesCount ?? 0,
               size: version.size ?? 0,
-              content: Hosting(
+              content: HostingRef(
                 aewebVersion: version.structureVersion ?? 1,
                 hashFunction: version.hashFunction ?? '',
                 metaData: metaData,
@@ -101,7 +101,7 @@ class ReadWebsiteUseCases {
         transaction.data != null &&
         transaction.data!.content != null) {
       var size = 0;
-      final hosting = Hosting.fromJson(
+      final hosting = HostingRef.fromJson(
         jsonDecode(transaction.data!.content!),
       );
 

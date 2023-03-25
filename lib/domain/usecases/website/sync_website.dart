@@ -20,8 +20,8 @@ class HostingContentComparison with _$HostingContentComparison {
 
 class SyncWebsiteUseCases {
   List<HostingContentComparison> compareFileLists(
-    Map<String, HostingContentMetaData> localFiles,
-    Map<String, HostingContentMetaData> remoteFiles,
+    Map<String, HostingRefContentMetaData> localFiles,
+    Map<String, HostingRefContentMetaData> remoteFiles,
   ) {
     final comparedFiles = <HostingContentComparison>[];
     localFiles.forEach((localPath, localMetaData) {

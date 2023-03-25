@@ -21,7 +21,7 @@ mixin _$WebsiteVersion {
   String get publisher => throw _privateConstructorUsedError;
   int get filesCount => throw _privateConstructorUsedError;
   int get size => throw _privateConstructorUsedError;
-  Hosting? get content => throw _privateConstructorUsedError;
+  HostingRef? get content => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $WebsiteVersionCopyWith<WebsiteVersion> get copyWith =>
@@ -40,9 +40,9 @@ abstract class $WebsiteVersionCopyWith<$Res> {
       String publisher,
       int filesCount,
       int size,
-      Hosting? content});
+      HostingRef? content});
 
-  $HostingCopyWith<$Res>? get content;
+  $HostingRefCopyWith<$Res>? get content;
 }
 
 /// @nodoc
@@ -89,18 +89,18 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as Hosting?,
+              as HostingRef?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $HostingCopyWith<$Res>? get content {
+  $HostingRefCopyWith<$Res>? get content {
     if (_value.content == null) {
       return null;
     }
 
-    return $HostingCopyWith<$Res>(_value.content!, (value) {
+    return $HostingRefCopyWith<$Res>(_value.content!, (value) {
       return _then(_value.copyWith(content: value) as $Val);
     });
   }
@@ -120,10 +120,10 @@ abstract class _$$_WebsiteVersionCopyWith<$Res>
       String publisher,
       int filesCount,
       int size,
-      Hosting? content});
+      HostingRef? content});
 
   @override
-  $HostingCopyWith<$Res>? get content;
+  $HostingRefCopyWith<$Res>? get content;
 }
 
 /// @nodoc
@@ -168,7 +168,7 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
-              as Hosting?,
+              as HostingRef?,
     ));
   }
 }
@@ -198,7 +198,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
   @JsonKey()
   final int size;
   @override
-  final Hosting? content;
+  final HostingRef? content;
 
   @override
   String toString() {
@@ -240,7 +240,7 @@ abstract class _WebsiteVersion implements WebsiteVersion {
       final String publisher,
       final int filesCount,
       final int size,
-      final Hosting? content}) = _$_WebsiteVersion;
+      final HostingRef? content}) = _$_WebsiteVersion;
 
   @override
   String get transactionAddress;
@@ -253,7 +253,7 @@ abstract class _WebsiteVersion implements WebsiteVersion {
   @override
   int get size;
   @override
-  Hosting? get content;
+  HostingRef? get content;
   @override
   @JsonKey(ignore: true)
   _$$_WebsiteVersionCopyWith<_$_WebsiteVersion> get copyWith =>

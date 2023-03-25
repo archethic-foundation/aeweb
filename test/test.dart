@@ -5,6 +5,7 @@ import 'dart:developer';
 
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/transaction_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:test/test.dart';
 
 void main() {
@@ -19,7 +20,14 @@ void main() {
       );
 
       // Create transactions with file contents
-      TestFileMixin().setContents(path, files!.keys.toList());
+      final contents = TestFileMixin().setContents(path, files!.keys.toList());
+
+      final transactionsList = <Transaction>[];
+      for (final content in contents) {
+        transactionsList.add(
+          TestTransactionMixin().newTransactionFile(content),
+        );
+      }
 
       // Create transaction reference
       final transactionReference =
