@@ -217,7 +217,7 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
         case 'Create':
           CreateWebsiteUseCases().createWebsite(
             'test1${DateTime.now().microsecond}',
-            '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/',
+            '/Volumes/Macintosh HD/Users/SSE/SSE/app/SANDBOX/siteweb/',
           );
 
           break;

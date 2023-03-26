@@ -64,7 +64,7 @@ class CreateWebsiteUseCases with FileMixin, TransactionMixin {
         log('Update ${transactionsList.length} files transactions');
 
         for (var i = 0; i < transactionsList.length; i++) {
-          transactionsList[i]
+          transactionsList[i] = transactionsList[i]
               .setAddress(Address(address: result.signedTxs[i].address))
               .setPreviousSignatureAndPreviousPublicKey(
                 result.signedTxs[i].previousSignature,
@@ -79,13 +79,13 @@ class CreateWebsiteUseCases with FileMixin, TransactionMixin {
 
     log('Create transaction reference');
 
-    final transactionReference = newTransactionReference(filesWithAddress);
+    var transactionReference = newTransactionReference(filesWithAddress);
 
     log('Sign transaction reference');
     final resultSignRef = await sl.get<ArchethicDAppClient>().signTransactions({
       'serviceName': keychainWebsiteService,
       'pathSuffix': 'aeweb_ref',
-      'transactions': transactionReference.toJson(),
+      'transactions': [transactionReference.toJson()],
     });
 
     resultSignRef.when(
@@ -97,10 +97,84 @@ class CreateWebsiteUseCases with FileMixin, TransactionMixin {
         return;
       },
       success: (result) {
-        // Fees estimation
-        log('fees.....');
+        transactionReference = transactionReference
+            .setAddress(Address(address: result.signedTxs[0].address))
+            .setPreviousSignatureAndPreviousPublicKey(
+              result.signedTxs[0].previousSignature,
+              result.signedTxs[0].previousPublicKey,
+            )
+            .setOriginSignature(result.signedTxs[0].originSignature);
       },
     );
+
+    // Fees estimation
+    log('Fees calculation');
+    var feesRef = 0.0;
+    var feesFiles = 0.0;
+    var feesTrf = 0.0;
+    const slippage = 1.01;
+    for (var i = 0; i < transactionsList.length; i++) {
+      try {
+        final transactionFee =
+            await sl.get<ApiService>().getTransactionFee(transactionsList[i]);
+        feesFiles = feesFiles + transactionFee.fee! * slippage;
+        log(
+          'Transaction $i : ${fromBigInt(transactionFee.fee) * slippage} UCO',
+        );
+      } catch (e, stack) {
+        log('Failed to get transaction fees', error: e, stackTrace: stack);
+      }
+    }
+
+    var transactionFee =
+        await sl.get<ApiService>().getTransactionFee(transactionReference);
+    feesRef = transactionFee.fee! * slippage;
+    log(
+      'Transaction ref : ${fromBigInt(transactionFee.fee).toDouble() * slippage} UCO',
+    );
+
+    log('Create transfer transaction fo manage fees');
+
+    var transactionTransfer =
+        Transaction(type: 'transfer', data: Transaction.initData())
+            .addUCOTransfer('', toBigInt(feesRef));
+
+    if (feesFiles > 0) {
+      transactionTransfer.addUCOTransfer('', toBigInt(feesFiles));
+    }
+
+    final resultSignTrf = await sl.get<ArchethicDAppClient>().signTransactions({
+      'serviceName': keychainWebsiteService,
+      'pathSuffix': '',
+      'transactions': [transactionTransfer.toJson()],
+    });
+    resultSignTrf.when(
+      failure: (failure) {
+        log(
+          'Signature trf failed',
+          error: failure,
+        );
+        return;
+      },
+      success: (result) {
+        transactionTransfer = transactionTransfer
+            .setAddress(Address(address: result.signedTxs[0].address))
+            .setPreviousSignatureAndPreviousPublicKey(
+              result.signedTxs[0].previousSignature,
+              result.signedTxs[0].previousPublicKey,
+            )
+            .setOriginSignature(result.signedTxs[0].originSignature);
+      },
+    );
+
+    transactionFee =
+        await sl.get<ApiService>().getTransactionFee(transactionTransfer);
+    feesTrf = transactionFee.fee! * slippage;
+    log(
+      'Transaction trf : $feesTrf UCO',
+    );
+
+    log('Global fees : ${feesFiles + feesTrf + feesRef} UCO');
   }
 
   Future<dynamic> createWebsiteServiceInKeychain(String websiteName) async {

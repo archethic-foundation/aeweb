@@ -98,7 +98,7 @@ Widget _buildWebsiteAddCard() {
         onTap: () {
           CreateWebsiteUseCases().createWebsite(
             'test1${DateTime.now().microsecond}',
-            '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/',
+            '/Volumes/Macintosh HD/Users/SSE/SSE/app/SANDBOX/siteweb/',
           );
         },
         child: Column(

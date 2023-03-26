@@ -62,6 +62,8 @@ mixin FileMixin {
               hostingRefContentMetaDataFiltered[key] = value;
             }
           });
+        } else {
+          return hostingRefContentMetaData;
         }
       }
     } catch (e) {

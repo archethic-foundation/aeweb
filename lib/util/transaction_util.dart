@@ -27,14 +27,18 @@ mixin TransactionMixin {
     var addressesInTxRef = <String, List<String>>{};
 
     for (final transactionSigned in transactionsSigned) {
-      final Map<String, Map<String, String>> content =
+      final Map<String, dynamic> contentMap =
           jsonDecode(transactionSigned.data!.content!);
-      content['content']!.forEach((String key, String value) {
-        addressesInTxRef[key] == null
-            ? addressesInTxRef = {
-                key: [value]
-              }
-            : addressesInTxRef[key]!.add(value);
+
+      contentMap['content'].forEach((key, value) {
+        if (transactionSigned.address != null) {
+          addressesInTxRef.update(
+            key,
+            (existingValue) => List.from(existingValue)
+              ..add(transactionSigned.address!.address!),
+            ifAbsent: () => [transactionSigned.address!.address!],
+          );
+        }
       });
     }
 
