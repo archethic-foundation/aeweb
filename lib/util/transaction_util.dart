@@ -1,7 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
-
+import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
+import 'package:aeweb/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:http/http.dart' as http;
 
 mixin TransactionMixin {
   Transaction newTransactionReference(
@@ -16,21 +20,22 @@ mixin TransactionMixin {
   Transaction newTransactionFile(
     Map<String, dynamic> txsContent,
   ) {
+    final content = txsContent['content'];
     return Transaction(type: 'hosting', data: Transaction.initData())
-        .setContent(jsonEncode(txsContent));
+        .setContent(jsonEncode(content));
   }
 
   Map<String, HostingRefContentMetaData> setAddressesInTxRef(
     List<Transaction> transactionsSigned,
     Map<String, HostingRefContentMetaData> metaData,
   ) {
-    var addressesInTxRef = <String, List<String>>{};
+    final addressesInTxRef = <String, List<String>>{};
 
     for (final transactionSigned in transactionsSigned) {
       final Map<String, dynamic> contentMap =
           jsonDecode(transactionSigned.data!.content!);
 
-      contentMap['content'].forEach((key, value) {
+      contentMap.forEach((key, value) {
         if (transactionSigned.address != null) {
           addressesInTxRef.update(
             key,
@@ -51,5 +56,112 @@ mixin TransactionMixin {
     });
 
     return metaData;
+  }
+
+  Future<List<Transaction>> signTx(
+    String serviceName,
+    String pathSuffix,
+    List<Transaction> transactions,
+  ) async {
+    final newTransactions = <Transaction>[];
+
+    final result = await sl.get<ArchethicDAppClient>().signTransactions({
+      'serviceName': serviceName,
+      'pathSuffix': pathSuffix,
+      'transactions': List<dynamic>.from(
+        transactions.map((Transaction x) => x.toJson()),
+      ),
+    });
+    result.when(
+      failure: (failure) {
+        log(
+          'Signature failed',
+          error: failure,
+        );
+        return;
+      },
+      success: (result) {
+        for (var i = 0; i < transactions.length; i++) {
+          newTransactions.add(
+            transactions[i]
+                .setAddress(Address(address: result.signedTxs[i].address))
+                .setPreviousSignatureAndPreviousPublicKey(
+                  result.signedTxs[i].previousSignature,
+                  result.signedTxs[i].previousPublicKey,
+                )
+                .setOriginSignature(result.signedTxs[i].originSignature),
+          );
+        }
+      },
+    );
+    return newTransactions;
+  }
+
+  Future<double> calculateFees(Transaction transaction) async {
+    const slippage = 1.01;
+    final transactionFee =
+        await sl.get<ApiService>().getTransactionFee(transaction);
+    final fees = fromBigInt(transactionFee.fee) * slippage;
+    log(
+      'Transaction ${transaction.address} : $fees UCO',
+    );
+    return fees;
+  }
+
+  Future<String> getDeriveAddress(String serviceName, String pathSuffix) async {
+    var address = '';
+    (await sl.get<ArchethicDAppClient>().keychainDeriveAddress(
+      {'serviceName': serviceName, 'pathSuffix': pathSuffix},
+    ))
+        .when(
+      failure: (failure) {
+        throw Exception('An error occurs');
+      },
+      success: (result) {
+        address = result.address;
+      },
+    );
+    return address;
+  }
+
+  Future<String> getCurrentAccount() async {
+    var accountName = '';
+    final result = await sl.get<ArchethicDAppClient>().getCurrentAccount();
+
+    result.when(
+      failure: (failure) {
+        throw Exception('An error occurs');
+      },
+      success: (result) {
+        accountName = result.name;
+      },
+    );
+    return accountName;
+  }
+
+  Future<dynamic> createWebsiteServiceInKeychain(String websiteName) async {
+    final responseAddService = await sl
+        .get<ArchethicDAppClient>()
+        .addService({'name': 'aeweb-$websiteName'});
+    responseAddService.when(
+      failure: (failure) {
+        log(
+          'Transaction failed',
+          error: failure,
+        );
+        return failure;
+      },
+      success: (result) {
+        return result;
+      },
+    );
+  }
+
+  ArchethicTransactionSender getArchethicTransactionSender() {
+    return ArchethicTransactionSender(
+      phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
+      websocketEndpoint:
+          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket',
+    );
   }
 }

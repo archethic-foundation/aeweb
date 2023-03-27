@@ -90,11 +90,11 @@ mixin FileMixin {
 
   String encodeContent(Uint8List rawData) {
     final compressedData = GZipEncoder().encode(rawData);
-    return base64.encode(compressedData!);
+    return base64Url.encode(compressedData!);
   }
 
   Uint8List decodeContent(String data) {
-    final compressedData = base64.decode(data);
+    final compressedData = base64Url.decode(data);
     return Uint8List.fromList(
       GZipDecoder().decodeBytes(compressedData),
     );
