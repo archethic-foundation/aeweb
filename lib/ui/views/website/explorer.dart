@@ -32,7 +32,9 @@ class ExplorerScreenState extends State<ExplorerScreen> {
   }
 
   void _addPathToTree(
-      String file, archethic.HostingRefContentMetaData metaData) {
+    String file,
+    archethic.HostingRefContentMetaData metaData,
+  ) {
     final parts = file.split('/');
     Node? currentNode;
     var siblings = _nodes;
@@ -102,18 +104,18 @@ class ExplorerScreenState extends State<ExplorerScreen> {
         type: _expanderType,
         modifier: _expanderModifier,
         position: _expanderPosition,
-        size: 16,
+        size: 12,
       ),
       labelStyle: const TextStyle(
-        fontSize: 16,
+        fontSize: 12,
         letterSpacing: 0.3,
       ),
       parentLabelStyle: const TextStyle(
-        fontSize: 16,
+        fontSize: 12,
         letterSpacing: 0.1,
       ),
       iconTheme: const IconThemeData(
-        size: 18,
+        size: 12,
         color: Colors.white,
       ),
       colorScheme: Theme.of(context).colorScheme,
@@ -127,9 +129,6 @@ class ExplorerScreenState extends State<ExplorerScreen> {
       body: GestureDetector(
         onTap: () {
           FocusScope.of(context).requestFocus(FocusNode());
-        },
-        onLongPress: () {
-          _popupMenuButton(context);
         },
         child: Container(
           padding: const EdgeInsets.all(20),
@@ -152,7 +151,6 @@ class ExplorerScreenState extends State<ExplorerScreen> {
                             treeViewController.copyWith(selectedKey: key);
                       });
                     },
-                    onNodeDoubleTap: (p0) => _popupMenuButton(context),
                     theme: _treeViewTheme,
                   ),
                 ),
@@ -181,89 +179,4 @@ class ExplorerScreenState extends State<ExplorerScreen> {
       ),
     );
   }
-}
-
-Widget _popupMenuButton(
-  BuildContext context,
-) {
-  return PopupMenuButton(
-    constraints: const BoxConstraints.expand(width: 300, height: 250),
-    itemBuilder: (context) {
-      return [
-        PopupMenuItem(
-          value: 'Explore',
-          child: Row(
-            children: const [
-              Icon(Icons.explore),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Explore'),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          value: 'Sync',
-          child: Row(
-            children: const [
-              Icon(Icons.sync),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Sync'),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          value: 'Upload',
-          child: Row(
-            children: const [
-              Icon(Icons.cloud_upload),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Upload'),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          value: 'Delete',
-          child: Row(
-            children: const [
-              Icon(Icons.delete),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Delete files and SSL certificate / key'),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          value: 'Download',
-          child: Row(
-            children: const [
-              Icon(Icons.download),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Download'),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
-          value: 'Certificate',
-          child: Row(
-            children: const [
-              Icon(Icons.security),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Certificate management'),
-              ),
-            ],
-          ),
-        ),
-      ];
-    },
-    onSelected: (value) async {},
-  );
 }

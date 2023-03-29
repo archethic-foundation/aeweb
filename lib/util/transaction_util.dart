@@ -5,7 +5,6 @@ import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
-import 'package:http/http.dart' as http;
 
 mixin TransactionMixin {
   Transaction newTransactionReference(
@@ -32,10 +31,7 @@ mixin TransactionMixin {
     final addressesInTxRef = <String, List<String>>{};
 
     for (final transactionSigned in transactionsSigned) {
-      final Map<String, dynamic> contentMap =
-          jsonDecode(transactionSigned.data!.content!);
-
-      contentMap.forEach((key, value) {
+      jsonDecode(transactionSigned.data!.content!).forEach((key, value) {
         if (transactionSigned.address != null) {
           addressesInTxRef.update(
             key,
@@ -64,6 +60,16 @@ mixin TransactionMixin {
     List<Transaction> transactions,
   ) async {
     final newTransactions = <Transaction>[];
+
+    log(
+      {
+        'serviceName': serviceName,
+        'pathSuffix': pathSuffix,
+        'transactions': List<dynamic>.from(
+          transactions.map((Transaction x) => x.toJson()),
+        ),
+      }.toString(),
+    );
 
     final result = await sl.get<ArchethicDAppClient>().signTransactions({
       'serviceName': serviceName,
@@ -98,7 +104,7 @@ mixin TransactionMixin {
   }
 
   Future<double> calculateFees(Transaction transaction) async {
-    const slippage = 1.01;
+    const slippage = 2.01;
     final transactionFee =
         await sl.get<ApiService>().getTransactionFee(transaction);
     final fees = fromBigInt(transactionFee.fee) * slippage;

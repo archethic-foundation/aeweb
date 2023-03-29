@@ -1,10 +1,13 @@
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/create_website.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/bottom_bar.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
+import 'package:aeweb/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebsiteList extends ConsumerWidget {
   const WebsiteList({super.key});
@@ -33,7 +36,7 @@ class WebsiteList extends ConsumerWidget {
               ),
               itemBuilder: (context, index) {
                 if (index == 0) {
-                  return _buildWebsiteAddCard();
+                  return _buildWebsiteAddCard(context);
                 } else {
                   return _buildWebsiteCard(context, data.value[index - 1]);
                 }
@@ -61,13 +64,9 @@ Widget _buildWebsiteCard(BuildContext context, Website website) {
       ),
       child: InkWell(
         onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => WebsiteVersionsList(
-                genesisAddress: website.genesisAddress,
-              ),
-            ),
+          context.goNamed(
+            'websiteVersions',
+            params: {'genesisAddress': website.genesisAddress},
           );
         },
         child: Column(
@@ -80,6 +79,21 @@ Widget _buildWebsiteCard(BuildContext context, Website website) {
               ),
               textAlign: TextAlign.center,
             ),
+            InkWell(
+              onTap: () {
+                final url =
+                    '${sl.get<ApiService>().endpoint}/api/web_hosting/${website.genesisAddress}';
+                launchUrl(
+                  Uri.parse(
+                    url,
+                  ),
+                );
+              },
+              child: const Icon(
+                Icons.remove_red_eye_outlined,
+                size: 20,
+              ),
+            )
           ],
         ),
       ),
@@ -87,7 +101,7 @@ Widget _buildWebsiteCard(BuildContext context, Website website) {
   );
 }
 
-Widget _buildWebsiteAddCard() {
+Widget _buildWebsiteAddCard(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(left: 40, right: 40),
     child: Card(
@@ -96,10 +110,7 @@ Widget _buildWebsiteAddCard() {
       ),
       child: InkWell(
         onTap: () {
-          CreateWebsiteUseCases().createWebsite(
-            'test1${DateTime.now().microsecond}',
-            '/Volumes/Macintosh HD/Users/SSE/SSE/app/SANDBOX/siteweb/',
-          );
+          context.go('/addWebsite');
         },
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,

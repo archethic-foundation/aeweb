@@ -73,17 +73,18 @@ class WebsitesRepository {
                   [genesisAddress],
                   request: 'address, data {content}',
                 );
+                if (lastAddressMap[genesisAddress] != null) {
+                  log(lastAddressMap[genesisAddress]!.address.toString());
 
-                log(lastAddressMap[genesisAddress]!.address.toString());
-
-                hosting = HostingRef.fromJson(
-                  jsonDecode(lastAddressMap[genesisAddress]!.data!.content!),
-                );
-                if (hosting != null) {
-                  hosting!.metaData.forEach((key, value) {
-                    size = size + value.size;
-                    addresses.addAll(value.addresses);
-                  });
+                  hosting = HostingRef.fromJson(
+                    jsonDecode(lastAddressMap[genesisAddress]!.data!.content!),
+                  );
+                  if (hosting != null) {
+                    hosting!.metaData.forEach((key, value) {
+                      size = size + value.size;
+                      addresses.addAll(value.addresses);
+                    });
+                  }
                 }
               },
             );

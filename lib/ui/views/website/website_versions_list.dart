@@ -1,5 +1,7 @@
+import 'dart:developer';
+import 'dart:io';
+
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/create_website.dart';
 import 'package:aeweb/domain/usecases/website/read_website.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/website_version.dart';
@@ -7,9 +9,11 @@ import 'package:aeweb/ui/views/bottom_bar.dart';
 import 'package:aeweb/ui/views/website/explorer.dart';
 import 'package:aeweb/ui/views/website/file_comparison.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class WebsiteVersionsList extends ConsumerWidget with FileMixin {
@@ -27,27 +31,46 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
       appBar: AppBar(
         title: SelectableText('Version history: $genesisAddress'),
       ),
-      body: websitesList.map(
-        data: (data) {
-          return ListView.builder(
-            itemCount: websitesList.value!.length + 1,
-            itemBuilder: (context, index) {
-              if (index == 0) {
-                return _buildHeaderRow();
-              }
-              return _buildWebsiteRow(
-                context,
-                ref,
-                websitesList.value![index - 1],
-              );
-            },
-          );
-        },
-        error: (error) => const SizedBox(),
-        loading: (loading) => const SizedBox(
-          height: 50,
-          child: CircularProgressIndicator(),
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Expanded(
+            child: websitesList.map(
+              data: (data) {
+                return ListView.builder(
+                  itemCount: websitesList.value!.length + 1,
+                  itemBuilder: (context, index) {
+                    if (index == 0) {
+                      return _buildHeaderRow();
+                    }
+                    return _buildWebsiteRow(
+                      context,
+                      ref,
+                      websitesList.value![index - 1],
+                    );
+                  },
+                );
+              },
+              error: (error) => const SizedBox(),
+              loading: (loading) => const SizedBox(
+                height: 50,
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 30),
+            child: ElevatedButton(
+              onPressed: () {
+                context.go('/');
+              },
+              child: Text(
+                'Back',
+                style: Theme.of(context).textTheme.labelLarge,
+              ),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: const BottomBar(),
     );
@@ -130,18 +153,6 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
           ),
         ),
         PopupMenuItem(
-          value: 'Create',
-          child: Row(
-            children: const [
-              Icon(Icons.create),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Create'),
-              ),
-            ],
-          ),
-        ),
-        PopupMenuItem(
           value: 'Upload',
           child: Row(
             children: const [
@@ -214,24 +225,71 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
             ),
           );
           break;
-        case 'Create':
-          CreateWebsiteUseCases().createWebsite(
-            'test1${DateTime.now().microsecond}',
-            '/Volumes/Macintosh HD/Users/SSE/SSE/app/SANDBOX/siteweb/',
-          );
-
-          break;
         case 'Sync':
-          // TODO(reddwarf03): Récupérer le path local
-          // final localFiles = await listFilesFromPath(
-          //   '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/',
-          // );
+          await showDialog(
+              context: context,
+              builder: (context) {
+                return AlertDialog(
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(
+                        20,
+                      ),
+                    ),
+                  ),
+                  contentPadding: const EdgeInsets.only(
+                    top: 10,
+                  ),
+                  content: SizedBox(
+                    height: 200,
+                    child: SingleChildScrollView(
+                      padding: const EdgeInsets.all(8),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: <Widget>[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: _selectFilePath,
+                                icon: const Icon(Icons.folder),
+                                label: Text(
+                                  'Sélectionnez le dossier racine de votre site web',
+                                  style: Theme.of(context).textTheme.labelLarge,
+                                ),
+                              ),
+                              Text(''),
+                            ],
+                          ),
+                          Container(
+                            width: double.infinity,
+                            height: 60,
+                            padding: const EdgeInsets.all(8),
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              style: ElevatedButton.styleFrom(
+                                primary: Colors.black,
+                              ),
+                              child: const Text(
+                                'Sync',
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
           final remoteFiles = (await ReadWebsiteUseCases()
                   .getRemote(websiteVersion.transactionAddress))!
               .content!
               .metaData;
 
-          //ReadWebsiteUseCases().getLocal(address);
+          ReadWebsiteUseCases().getLocal(websiteVersion.transactionAddress);
 
           Navigator.push(
             context,
@@ -247,4 +305,13 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
       }
     },
   );
+}
+
+Future<void> _selectFilePath() async {
+  try {
+    final result = await FilePicker.platform.getDirectoryPath();
+    if (result != null) {}
+  } on Exception catch (e) {
+    log('Error while picking folder: $e');
+  }
 }

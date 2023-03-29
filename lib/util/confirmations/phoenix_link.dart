@@ -71,7 +71,6 @@ class PhoenixLink extends Link {
         yield _parser
             .parseResponse(pushResponse.response as Map<String, dynamic>);
       } else if (pushResponse.isError) {
-        // TODO(chralu): Analyze GraphQLError behaviour and propoerties (3)
         // ignore: only_throw_errors
         throw _parser.parseError(pushResponse.response as Map<String, dynamic>);
       }

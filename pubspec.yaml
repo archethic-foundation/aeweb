@@ -9,6 +9,9 @@ environment:
   flutter: "3.7.3"
 
 dependencies:
+  # A flutter package to create easily customizable Horizontal and Vertical stepper
+  another_stepper: ^1.2.2
+
   # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
   #archethic_lib_dart: ^3.0.2
   archethic_lib_dart:
@@ -59,8 +62,13 @@ dependencies:
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
   get_it: ^7.2.0
 
-  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter.
+  # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
+  go_router: ^6.5.0
+
+  # GraphQL tools for parsing, transforming and printing GraphQL documents.
   gql: ^0.14.0
+
+  # A GraphQL client for Flutter, bringing all the features from a modern GraphQL client to one easy to use package
   graphql_flutter: ^5.1.2
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart

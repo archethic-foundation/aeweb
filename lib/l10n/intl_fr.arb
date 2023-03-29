@@ -1,5 +1,11 @@
 {
 	"@@last_modified": "2021-11-07T17:33:43.139040",
 	"welcomeText": "Bienvenue sur AEWeb",
-	"systemDefault": "Système par défaut"
+	"systemDefault": "Système par défaut",
+	"addWebsiteNameMissing": "Veuillez renseigner le nom du site web.",
+	"addWebsitePathMissing": "Veuillez resneigner le chemin d'accès contenant les fichiers à télécharger.",
+	"addWebsitePathLabel": "Sélectionnez le dossier racine de votre site web",
+	"addWebsitePublicCertPathLabel": "Ajoutez le fichier PEM du certificat public pour le domaine",
+	"addWebsitePrivateKeyCertLabel": "Ajoutez le fichier PEM de la clé privée liée au certificat pour le domaine",
+	"addWebsiteGitignoreLabel": "Appliquer le règles .gitignore ?"
 }

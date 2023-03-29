@@ -2,6 +2,8 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+// ignore_for_file: comment_references, parameter_assignments
+
 /// Implements an [Ignore] filter compatible with `.gitignore`.
 ///
 /// An [Ignore] instance holds a set of [`.gitignore` rules][1], and allows

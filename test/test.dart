@@ -11,7 +11,7 @@ import 'package:test/test.dart';
 void main() {
   group('useCase', () {
     test('createTxReferenceFromPath', () async {
-      final path =
+      const path =
           '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/';
 
       // Get the list of files in the path

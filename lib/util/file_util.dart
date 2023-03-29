@@ -171,4 +171,26 @@ mixin FileMixin {
       };
     }
   }
+
+  Future<bool> isGitignoreExist({
+    required String path,
+  }) async {
+    const gitignoreExist = false;
+    try {
+      final directory = Directory(path);
+      if (directory.existsSync()) {
+        for (final entity in directory.listSync(recursive: true)) {
+          if (entity is File && entity.path.contains('/.git/') == false) {
+            final filePath = entity.path.replaceAll(path, '');
+            if (filePath.split('/').last == '.gitignore') {
+              return true;
+            }
+          }
+        }
+      }
+    } catch (e) {
+      log('Error while retrieving files and folders : $e');
+    }
+    return gitignoreExist;
+  }
 }

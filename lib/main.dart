@@ -1,20 +1,21 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:io';
 
-import 'package:aeweb/model/available_language.dart';
 import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/providers_observer.dart';
+import 'package:aeweb/ui/views/add_website.dart/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/website/website_list.dart';
+import 'package:aeweb/ui/views/website/website_versions_list.dart';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:aeweb/util/service_locator.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,9 +51,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO(reddwarf03): use LanguageProviders
-    const language = AvailableLanguage.english;
+    //const language = AvailableLanguage.english;
 
-    return MaterialApp(
+    // GoRouter configuration
+    final _router = GoRouter(
+      routes: [
+        GoRoute(
+          path: '/',
+          builder: (context, state) => const WebsiteList(),
+        ),
+        GoRoute(
+          path: '/addWebsite',
+          builder: (context, state) => const AddWebsiteSheet(),
+        ),
+        GoRoute(
+          path: '/websiteVersions/:genesisAddress',
+          name: 'websiteVersions',
+          builder: (context, state) => WebsiteVersionsList(
+            genesisAddress: state.params['genesisAddress'] ?? '',
+          ),
+        ),
+      ],
+    );
+
+    return MaterialApp.router(
+      routerConfig: _router,
       title: 'AEWeb',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -67,13 +90,6 @@ class MyApp extends StatelessWidget {
         GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate
       ],
-      home: const WebsiteList(),
-      onGenerateRoute: (settings) {
-        if ((sl.get<ArchethicDAppClient>() as DeeplinkArchethicDappClient)
-            .handleRoute(settings.name)) return;
-
-        return null;
-      },
     );
   }
 }
