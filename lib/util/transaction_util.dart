@@ -10,8 +10,18 @@ mixin TransactionMixin {
   Transaction newTransactionReference(
     Map<String, HostingRefContentMetaData> metaData,
   ) {
-    final hosting =
-        HostingRef(aewebVersion: 1, hashFunction: 'sha1', metaData: metaData);
+    final metaDataSorted = Map.fromEntries(
+      metaData.entries.toList()
+        ..sort(
+          (e1, e2) => e1.key.compareTo(e2.key),
+        ),
+    );
+
+    final hosting = HostingRef(
+      aewebVersion: 1,
+      hashFunction: 'sha1',
+      metaData: metaDataSorted,
+    );
     return Transaction(type: 'hosting', data: Transaction.initData())
         .setContent(jsonEncode(hosting));
   }

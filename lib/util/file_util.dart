@@ -5,6 +5,7 @@ import 'dart:typed_data';
 
 import 'package:aeweb/util/ignore.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
@@ -15,7 +16,7 @@ import 'package:crypto/crypto.dart';
 const kMaxFileSize = 3145728 - 45728;
 
 mixin FileMixin {
-  Future<Map<String, HostingRefContentMetaData>>? listFilesFromPath(
+  static Future<Map<String, HostingRefContentMetaData>>? listFilesFromPath(
     String path, {
     bool applyGitIgnoreRules = true,
   }) async {

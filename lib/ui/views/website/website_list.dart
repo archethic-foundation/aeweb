@@ -1,7 +1,6 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/bottom_bar.dart';
-import 'package:aeweb/ui/views/website/website_versions_list.dart';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +14,7 @@ class WebsiteList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final websitesList = ref.watch(WebsitesProviders.fetchWebsites);
+
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
@@ -66,7 +66,10 @@ Widget _buildWebsiteCard(BuildContext context, Website website) {
         onTap: () {
           context.goNamed(
             'websiteVersions',
-            params: {'genesisAddress': website.genesisAddress},
+            extra: {
+              'genesisAddress': website.genesisAddress,
+              'websiteName': website.name
+            },
           );
         },
         child: Column(
@@ -93,7 +96,7 @@ Widget _buildWebsiteCard(BuildContext context, Website website) {
                 Icons.remove_red_eye_outlined,
                 size: 20,
               ),
-            )
+            ),
           ],
         ),
       ),

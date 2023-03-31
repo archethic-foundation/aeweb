@@ -126,7 +126,7 @@ class WebsitesRepository {
 
       websiteVersions.add(
         WebsiteVersion(
-          transactionAddress: transaction.address!.address!,
+          transactionRefAddress: transaction.address!.address!,
           timestamp: transaction.validationStamp!.timestamp!,
           filesCount: hosting.metaData.length,
           size: size,

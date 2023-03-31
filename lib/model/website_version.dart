@@ -7,7 +7,7 @@ part 'website_version.freezed.dart';
 @freezed
 class WebsiteVersion with _$WebsiteVersion {
   const factory WebsiteVersion({
-    required String transactionAddress,
+    required String transactionRefAddress,
     required int timestamp,
     @Default('') String publisher,
     @Default(0) int filesCount,

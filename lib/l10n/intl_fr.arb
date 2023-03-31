@@ -7,5 +7,6 @@
 	"addWebsitePathLabel": "Sélectionnez le dossier racine de votre site web",
 	"addWebsitePublicCertPathLabel": "Ajoutez le fichier PEM du certificat public pour le domaine",
 	"addWebsitePrivateKeyCertLabel": "Ajoutez le fichier PEM de la clé privée liée au certificat pour le domaine",
-	"addWebsiteGitignoreLabel": "Appliquer le règles .gitignore ?"
+	"addWebsiteGitignoreLabel": "Appliquer le règles .gitignore ?",
+	"choosePathSyncPathMissing": "Veuillez resneigner le chemin contenant les fichiers à synchroniser avec les fichiers stockés sur la blockchain."
 }

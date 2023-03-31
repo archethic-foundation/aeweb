@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$WebsiteVersion {
-  String get transactionAddress => throw _privateConstructorUsedError;
+  String get transactionRefAddress => throw _privateConstructorUsedError;
   int get timestamp => throw _privateConstructorUsedError;
   String get publisher => throw _privateConstructorUsedError;
   int get filesCount => throw _privateConstructorUsedError;
@@ -35,7 +35,7 @@ abstract class $WebsiteVersionCopyWith<$Res> {
       _$WebsiteVersionCopyWithImpl<$Res, WebsiteVersion>;
   @useResult
   $Res call(
-      {String transactionAddress,
+      {String transactionRefAddress,
       int timestamp,
       String publisher,
       int filesCount,
@@ -58,7 +58,7 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactionAddress = null,
+    Object? transactionRefAddress = null,
     Object? timestamp = null,
     Object? publisher = null,
     Object? filesCount = null,
@@ -66,9 +66,9 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
     Object? content = freezed,
   }) {
     return _then(_value.copyWith(
-      transactionAddress: null == transactionAddress
-          ? _value.transactionAddress
-          : transactionAddress // ignore: cast_nullable_to_non_nullable
+      transactionRefAddress: null == transactionRefAddress
+          ? _value.transactionRefAddress
+          : transactionRefAddress // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: null == timestamp
           ? _value.timestamp
@@ -115,7 +115,7 @@ abstract class _$$_WebsiteVersionCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String transactionAddress,
+      {String transactionRefAddress,
       int timestamp,
       String publisher,
       int filesCount,
@@ -137,7 +137,7 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? transactionAddress = null,
+    Object? transactionRefAddress = null,
     Object? timestamp = null,
     Object? publisher = null,
     Object? filesCount = null,
@@ -145,9 +145,9 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
     Object? content = freezed,
   }) {
     return _then(_$_WebsiteVersion(
-      transactionAddress: null == transactionAddress
-          ? _value.transactionAddress
-          : transactionAddress // ignore: cast_nullable_to_non_nullable
+      transactionRefAddress: null == transactionRefAddress
+          ? _value.transactionRefAddress
+          : transactionRefAddress // ignore: cast_nullable_to_non_nullable
               as String,
       timestamp: null == timestamp
           ? _value.timestamp
@@ -177,7 +177,7 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
 
 class _$_WebsiteVersion implements _WebsiteVersion {
   const _$_WebsiteVersion(
-      {required this.transactionAddress,
+      {required this.transactionRefAddress,
       required this.timestamp,
       this.publisher = '',
       this.filesCount = 0,
@@ -185,7 +185,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
       this.content});
 
   @override
-  final String transactionAddress;
+  final String transactionRefAddress;
   @override
   final int timestamp;
   @override
@@ -202,7 +202,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
 
   @override
   String toString() {
-    return 'WebsiteVersion(transactionAddress: $transactionAddress, timestamp: $timestamp, publisher: $publisher, filesCount: $filesCount, size: $size, content: $content)';
+    return 'WebsiteVersion(transactionRefAddress: $transactionRefAddress, timestamp: $timestamp, publisher: $publisher, filesCount: $filesCount, size: $size, content: $content)';
   }
 
   @override
@@ -210,8 +210,8 @@ class _$_WebsiteVersion implements _WebsiteVersion {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_WebsiteVersion &&
-            (identical(other.transactionAddress, transactionAddress) ||
-                other.transactionAddress == transactionAddress) &&
+            (identical(other.transactionRefAddress, transactionRefAddress) ||
+                other.transactionRefAddress == transactionRefAddress) &&
             (identical(other.timestamp, timestamp) ||
                 other.timestamp == timestamp) &&
             (identical(other.publisher, publisher) ||
@@ -223,7 +223,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, transactionAddress, timestamp,
+  int get hashCode => Object.hash(runtimeType, transactionRefAddress, timestamp,
       publisher, filesCount, size, content);
 
   @JsonKey(ignore: true)
@@ -235,7 +235,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
 
 abstract class _WebsiteVersion implements WebsiteVersion {
   const factory _WebsiteVersion(
-      {required final String transactionAddress,
+      {required final String transactionRefAddress,
       required final int timestamp,
       final String publisher,
       final int filesCount,
@@ -243,7 +243,7 @@ abstract class _WebsiteVersion implements WebsiteVersion {
       final HostingRef? content}) = _$_WebsiteVersion;
 
   @override
-  String get transactionAddress;
+  String get transactionRefAddress;
   @override
   int get timestamp;
   @override

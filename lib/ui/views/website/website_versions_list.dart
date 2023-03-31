@@ -1,15 +1,9 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/read_website.dart';
-import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/ui/views/bottom_bar.dart';
+import 'package:aeweb/ui/views/util/components/choose_path_sync_popup.dart';
 import 'package:aeweb/ui/views/website/explorer.dart';
-import 'package:aeweb/ui/views/website/file_comparison.dart';
 import 'package:aeweb/util/file_util.dart';
-import 'package:file_picker/file_picker.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -17,13 +11,18 @@ import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class WebsiteVersionsList extends ConsumerWidget with FileMixin {
-  const WebsiteVersionsList({super.key, required this.genesisAddress});
+  const WebsiteVersionsList({
+    super.key,
+    required this.websiteName,
+    required this.genesisAddress,
+  });
 
+  final String websiteName;
   final String genesisAddress;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final websitesList =
+    final websiteVersionsList =
         ref.watch(WebsitesProviders.fetchWebsiteVersions(genesisAddress));
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -35,10 +34,10 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: websitesList.map(
+            child: websiteVersionsList.map(
               data: (data) {
                 return ListView.builder(
-                  itemCount: websitesList.value!.length + 1,
+                  itemCount: websiteVersionsList.value!.length + 1,
                   itemBuilder: (context, index) {
                     if (index == 0) {
                       return _buildHeaderRow();
@@ -46,7 +45,10 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                     return _buildWebsiteRow(
                       context,
                       ref,
-                      websitesList.value![index - 1],
+                      index == 1,
+                      websiteVersionsList.value![index - 1],
+                      websiteName,
+                      genesisAddress,
                     );
                   },
                 );
@@ -101,14 +103,17 @@ Widget _buildHeaderRow() {
 Widget _buildWebsiteRow(
   BuildContext context,
   WidgetRef ref,
+  bool lastVersion,
   WebsiteVersion websiteVersion,
+  String websiteName,
+  String genesisAddress,
 ) {
   return Container(
     padding: const EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(child: SelectableText(websiteVersion.transactionAddress)),
+        Expanded(child: SelectableText(websiteVersion.transactionRefAddress)),
         const SizedBox(width: 20),
         Expanded(
           child: SelectableText(
@@ -129,13 +134,27 @@ Widget _buildWebsiteRow(
         Expanded(
           child: SelectableText(filesize(websiteVersion.size.toString())),
         ),
-        _popupMenuButton(context, websiteVersion),
+        _popupMenuButton(
+          context,
+          ref,
+          lastVersion,
+          websiteVersion,
+          websiteName,
+          genesisAddress,
+        ),
       ],
     ),
   );
 }
 
-Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
+Widget _popupMenuButton(
+  BuildContext context,
+  WidgetRef ref,
+  bool lastVersion,
+  WebsiteVersion websiteVersion,
+  String websiteName,
+  String genesisAddress,
+) {
   return PopupMenuButton(
     constraints: const BoxConstraints.expand(width: 300, height: 250),
     itemBuilder: (context) {
@@ -152,30 +171,19 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
             ],
           ),
         ),
-        PopupMenuItem(
-          value: 'Upload',
-          child: Row(
-            children: const [
-              Icon(Icons.cloud_upload),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Upload'),
-              ),
-            ],
+        if (lastVersion)
+          PopupMenuItem(
+            value: 'Sync',
+            child: Row(
+              children: const [
+                Icon(Icons.sync),
+                SizedBox(width: 8),
+                Flexible(
+                  child: Text('Sync from local folder'),
+                ),
+              ],
+            ),
           ),
-        ),
-        PopupMenuItem(
-          value: 'Sync',
-          child: Row(
-            children: const [
-              Icon(Icons.sync),
-              SizedBox(width: 8),
-              Flexible(
-                child: Text('Sync'),
-              ),
-            ],
-          ),
-        ),
         PopupMenuItem(
           value: 'Delete',
           child: Row(
@@ -226,92 +234,16 @@ Widget _popupMenuButton(BuildContext context, WebsiteVersion websiteVersion) {
           );
           break;
         case 'Sync':
-          await showDialog(
-              context: context,
-              builder: (context) {
-                return AlertDialog(
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(
-                        20,
-                      ),
-                    ),
-                  ),
-                  contentPadding: const EdgeInsets.only(
-                    top: 10,
-                  ),
-                  content: SizedBox(
-                    height: 200,
-                    child: SingleChildScrollView(
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: _selectFilePath,
-                                icon: const Icon(Icons.folder),
-                                label: Text(
-                                  'Sélectionnez le dossier racine de votre site web',
-                                  style: Theme.of(context).textTheme.labelLarge,
-                                ),
-                              ),
-                              Text(''),
-                            ],
-                          ),
-                          Container(
-                            width: double.infinity,
-                            height: 60,
-                            padding: const EdgeInsets.all(8),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              style: ElevatedButton.styleFrom(
-                                primary: Colors.black,
-                              ),
-                              child: const Text(
-                                'Sync',
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
-              });
-          final remoteFiles = (await ReadWebsiteUseCases()
-                  .getRemote(websiteVersion.transactionAddress))!
-              .content!
-              .metaData;
-
-          ReadWebsiteUseCases().getLocal(websiteVersion.transactionAddress);
-
-          Navigator.push(
+          PathSyncPopup.getDialog(
             context,
-            MaterialPageRoute(
-              builder: (context) => FileComparisonWidget(
-                comparedFiles:
-                    SyncWebsiteUseCases().compareFileLists({}, remoteFiles),
-              ),
-            ),
+            websiteVersion.transactionRefAddress,
+            websiteName,
+            genesisAddress,
           );
+
           break;
         default:
       }
     },
   );
-}
-
-Future<void> _selectFilePath() async {
-  try {
-    final result = await FilePicker.platform.getDirectoryPath();
-    if (result != null) {}
-  } on Exception catch (e) {
-    log('Error while picking folder: $e');
-  }
 }

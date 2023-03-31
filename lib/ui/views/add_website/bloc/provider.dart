@@ -1,10 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/domain/usecases/website/create_website.dart';
-import 'package:aeweb/ui/views/add_website.dart/bloc/state.dart';
+import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 final _initialAddWebsiteFormProvider = Provider<AddWebsiteFormState>(
   (ref) {
@@ -30,9 +29,9 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
         AddWebsiteFormProvider.initialAddWebsiteForm,
       );
 
-  Future<void> setName(
+  void setName(
     String name,
-  ) async {
+  ) {
     state = state.copyWith(
       name: name,
     );
@@ -110,7 +109,7 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
   }
 
   Future<void> create(BuildContext context, WidgetRef ref) async {
-    CreateWebsiteUseCases().createWebsite(
+    await CreateWebsiteUseCases().createWebsite(
       ref,
       state.name,
       state.path,

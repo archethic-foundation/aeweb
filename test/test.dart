@@ -15,7 +15,7 @@ void main() {
           '/Volumes/Macintosh HD/Users/SSE/SSE/app/ARCHETHIC/archethic-website/';
 
       // Get the list of files in the path
-      final files = await TestFileMixin().listFilesFromPath(
+      final files = await FileMixin.listFilesFromPath(
         path,
       );
 

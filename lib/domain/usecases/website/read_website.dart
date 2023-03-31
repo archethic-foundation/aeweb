@@ -14,10 +14,10 @@ class ReadWebsiteUseCases {
   static const String websitesTable = 'websites';
 
   Future<WebsiteVersion?> getWebsiteVersionFromLocalFirst(
-    String address,
+    String transactionRefAddress,
   ) async {
     try {
-      final localValue = await getLocal(address);
+      final localValue = await getLocal(transactionRefAddress);
       if (localValue != null) {
         log('Using local value');
         return localValue;
@@ -31,7 +31,7 @@ class ReadWebsiteUseCases {
     }
 
     try {
-      final remoteValue = await getRemote(address);
+      final remoteValue = await getRemote(transactionRefAddress);
       if (remoteValue != null) {
         // TODO(reddwarf03): A régler
         // saveLocal(localPath, website);
@@ -49,7 +49,7 @@ class ReadWebsiteUseCases {
     throw Exception('Unable to fetch local or remote value');
   }
 
-  Future<WebsiteVersion?> getLocal(String address) async {
+  Future<WebsiteVersion?> getLocal(String transactionRefAddress) async {
     late WebsiteVersion websiteVersion;
 
     final box = await Hive.openBox<AEWebLocalWebsite>(websitesTable);
@@ -57,7 +57,7 @@ class ReadWebsiteUseCases {
     for (final website in websitesList) {
       if (website.aewebLocalWebsiteVersionList != null) {
         for (final version in website.aewebLocalWebsiteVersionList!) {
-          if (version.transactionAddress == address) {
+          if (version.transactionAddress == transactionRefAddress) {
             final metaData = <String, HostingRefContentMetaData>{};
             if (version.metaData != null) {
               version.metaData!.forEach((key, value) {
@@ -72,7 +72,7 @@ class ReadWebsiteUseCases {
             }
 
             websiteVersion = WebsiteVersion(
-              transactionAddress: version.transactionAddress,
+              transactionRefAddress: version.transactionAddress,
               timestamp: version.timestamp,
               filesCount: version.filesCount ?? 0,
               size: version.size ?? 0,
@@ -89,14 +89,14 @@ class ReadWebsiteUseCases {
     return websiteVersion;
   }
 
-  Future<WebsiteVersion?> getRemote(String address) async {
+  Future<WebsiteVersion?> getRemote(String transactionRefAddress) async {
     late WebsiteVersion websiteVersion;
 
     final transactionMap = await sl.get<ApiService>().getTransaction(
-      [address],
+      [transactionRefAddress],
       request: 'address, validationStamp { timestamp } data { content }',
     );
-    final transaction = transactionMap[address];
+    final transaction = transactionMap[transactionRefAddress];
     if (transaction != null &&
         transaction.data != null &&
         transaction.data!.content != null) {
@@ -110,7 +110,7 @@ class ReadWebsiteUseCases {
       });
 
       websiteVersion = WebsiteVersion(
-        transactionAddress: transaction.address!.address!,
+        transactionRefAddress: transaction.address!.address!,
         timestamp: transaction.validationStamp!.timestamp!,
         filesCount: hosting.metaData.length,
         size: size,
@@ -137,7 +137,7 @@ class ReadWebsiteUseCases {
       final aewebLocalWebsiteVersion = AEWebLocalWebsiteVersion(
         structureVersion: 1,
         timestamp: version.timestamp,
-        transactionAddress: version.transactionAddress,
+        transactionAddress: version.transactionRefAddress,
         filesCount: version.filesCount,
         hashFunction: 'sha1',
         size: version.size,

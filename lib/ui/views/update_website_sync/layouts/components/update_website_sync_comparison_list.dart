@@ -1,16 +1,20 @@
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
+import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class FileComparisonWidget extends StatefulWidget {
-  const FileComparisonWidget({super.key, required this.comparedFiles});
-
-  final List<HostingContentComparison> comparedFiles;
+class UpdateWebsiteSyncComparisonSheet extends ConsumerStatefulWidget {
+  const UpdateWebsiteSyncComparisonSheet({
+    super.key,
+  });
 
   @override
-  FileComparisonWidgetState createState() => FileComparisonWidgetState();
+  UpdateWebsiteSyncComparisonSheetState createState() =>
+      UpdateWebsiteSyncComparisonSheetState();
 }
 
-class FileComparisonWidgetState extends State<FileComparisonWidget> {
+class UpdateWebsiteSyncComparisonSheetState
+    extends ConsumerState<UpdateWebsiteSyncComparisonSheet> {
   final TextEditingController _searchController = TextEditingController();
   String _searchText = '';
   HostingContentComparisonStatus? _selectedStatus;
@@ -27,7 +31,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final filteredFiles = widget.comparedFiles
+    final updateWebsiteSyncProvider =
+        ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm);
+
+    final filteredFiles = updateWebsiteSyncProvider.comparedFiles
         .where(
           (file) =>
               file.path.toLowerCase().contains(_searchText.toLowerCase()) &&
@@ -35,12 +42,8 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
         )
         .toList();
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const SelectableText('Comparison'),
-      ),
-      body: Column(
+    return Expanded(
+      child: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8),
@@ -89,14 +92,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
                 return Card(
                   child: ListTile(
                     leading: Icon(iconData, color: iconColor),
-                    title: Text(file.path),
-                    subtitle: Text(statusText),
-                    trailing: ElevatedButton(
-                      onPressed: () {
-                        // TODO(redDwarf03): à renseigner
-                      },
-                      child: const Text('View content'),
-                    ),
+                    title:
+                        Text(file.path, style: const TextStyle(fontSize: 12)),
+                    subtitle:
+                        Text(statusText, style: const TextStyle(fontSize: 12)),
                   ),
                 );
               },
@@ -124,7 +123,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
             });
           },
           icon: const Icon(Icons.filter_alt_outlined, color: Colors.white),
-          label: const Text('All', style: TextStyle(color: Colors.white)),
+          label: const Text(
+            'All',
+            style: TextStyle(color: Colors.white, fontSize: 12),
+          ),
           style: ButtonStyle(
             backgroundColor: _selectedStatus == null
                 ? MaterialStateProperty.all(Colors.blue[100]!.withOpacity(0.2))
@@ -138,8 +140,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
             });
           },
           icon: const Icon(Icons.cloud_upload, color: Colors.orange),
-          label:
-              const Text('Local only', style: TextStyle(color: Colors.white)),
+          label: const Text(
+            'Local only',
+            style: TextStyle(color: Colors.white, fontSize: 12),
+          ),
           style: ButtonStyle(
             backgroundColor:
                 _selectedStatus == HostingContentComparisonStatus.localOnly
@@ -156,8 +160,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
             });
           },
           icon: const Icon(Icons.cloud_download, color: Colors.blue),
-          label:
-              const Text('Remote only', style: TextStyle(color: Colors.white)),
+          label: const Text(
+            'Remote only',
+            style: TextStyle(color: Colors.white, fontSize: 12),
+          ),
           style: ButtonStyle(
             backgroundColor: _selectedStatus ==
                     HostingContentComparisonStatus.remoteOnly
@@ -172,7 +178,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
             });
           },
           icon: const Icon(Icons.sync_problem, color: Colors.red),
-          label: const Text('Different', style: TextStyle(color: Colors.white)),
+          label: const Text(
+            'Different',
+            style: TextStyle(color: Colors.white, fontSize: 12),
+          ),
           style: ButtonStyle(
             backgroundColor: _selectedStatus ==
                     HostingContentComparisonStatus.differentContent
@@ -187,7 +196,10 @@ class FileComparisonWidgetState extends State<FileComparisonWidget> {
             });
           },
           icon: const Icon(Icons.check_circle_outline, color: Colors.green),
-          label: const Text('Same', style: TextStyle(color: Colors.white)),
+          label: const Text(
+            'Same',
+            style: TextStyle(color: Colors.white, fontSize: 12),
+          ),
           style: ButtonStyle(
             backgroundColor: _selectedStatus ==
                     HostingContentComparisonStatus.sameContent

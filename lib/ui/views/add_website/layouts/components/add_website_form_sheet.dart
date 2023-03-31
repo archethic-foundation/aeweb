@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
 
-import 'package:aeweb/ui/views/add_website.dart/bloc/provider.dart';
+import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/ae_stepper.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:file_picker/file_picker.dart';
