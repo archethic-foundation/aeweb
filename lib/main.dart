@@ -5,8 +5,8 @@ import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/providers_observer.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
+import 'package:aeweb/ui/views/main_screen.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
-import 'package:aeweb/ui/views/website/website_list.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:aeweb/util/service_locator.dart';
@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
       routes: [
         GoRoute(
           path: '/',
-          builder: (context, state) => const WebsiteList(),
+          builder: (context, state) => const MainScreen(),
         ),
         GoRoute(
           path: '/addWebsite',

@@ -1,6 +1,5 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
-import 'package:aeweb/ui/views/bottom_bar.dart';
 import 'package:aeweb/ui/views/util/components/choose_path_sync_popup.dart';
 import 'package:aeweb/ui/views/website/explorer.dart';
 import 'package:aeweb/util/file_util.dart';
@@ -25,11 +24,6 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
     final websiteVersionsList =
         ref.watch(WebsitesProviders.fetchWebsiteVersions(genesisAddress));
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: SelectableText('Version history: $genesisAddress'),
-      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -60,21 +54,8 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 30),
-            child: ElevatedButton(
-              onPressed: () {
-                context.go('/');
-              },
-              child: Text(
-                'Back',
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
-            ),
-          ),
         ],
       ),
-      bottomNavigationBar: const BottomBar(),
     );
   }
 }
@@ -86,8 +67,6 @@ Widget _buildHeaderRow() {
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: const [
-        Expanded(child: Text('Tx address')),
-        SizedBox(width: 20),
         Expanded(child: Text('Date')),
         SizedBox(width: 20),
         Expanded(child: Text('Publisher')),
@@ -113,8 +92,6 @@ Widget _buildWebsiteRow(
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Expanded(child: SelectableText(websiteVersion.transactionRefAddress)),
-        const SizedBox(width: 20),
         Expanded(
           child: SelectableText(
             DateFormat.yMd(
