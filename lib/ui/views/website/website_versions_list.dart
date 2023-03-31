@@ -6,7 +6,6 @@ import 'package:aeweb/util/file_util.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class WebsiteVersionsList extends ConsumerWidget with FileMixin {
@@ -27,31 +26,26 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          _buildHeaderRow(),
           Expanded(
             child: websiteVersionsList.map(
               data: (data) {
                 return ListView.builder(
-                  itemCount: websiteVersionsList.value!.length + 1,
+                  itemCount: websiteVersionsList.value!.length,
                   itemBuilder: (context, index) {
-                    if (index == 0) {
-                      return _buildHeaderRow();
-                    }
                     return _buildWebsiteRow(
                       context,
                       ref,
-                      index == 1,
-                      websiteVersionsList.value![index - 1],
+                      index == 0,
+                      websiteVersionsList.value![index],
                       websiteName,
                       genesisAddress,
                     );
                   },
                 );
               },
-              error: (error) => const SizedBox(),
-              loading: (loading) => const SizedBox(
-                height: 50,
-                child: CircularProgressIndicator(),
-              ),
+              error: (error) => _buildHeaderRow(),
+              loading: (loading) => _buildHeaderRow(),
             ),
           ),
         ],
@@ -62,7 +56,6 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
 
 Widget _buildHeaderRow() {
   return Container(
-    color: Colors.grey[800],
     padding: const EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.center,
@@ -133,7 +126,6 @@ Widget _popupMenuButton(
   String genesisAddress,
 ) {
   return PopupMenuButton(
-    constraints: const BoxConstraints.expand(width: 300, height: 250),
     itemBuilder: (context) {
       return [
         PopupMenuItem(

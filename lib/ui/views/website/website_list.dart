@@ -17,14 +17,14 @@ class WebsiteList extends ConsumerWidget {
     final websitesList = ref.watch(WebsitesProviders.fetchWebsites);
 
     final _scaffoldKey = GlobalKey<ScaffoldState>();
+    late final _colorScheme = Theme.of(context).colorScheme;
+    late final _backgroundColor =
+        Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3);
 
     return Scaffold(
       key: _scaffoldKey,
-      drawer: ConstrainedBox(
-        constraints: const BoxConstraints(maxWidth: 250),
-        child: const SideMenu(),
-      ),
-      body: SizedBox(
+      body: ColoredBox(
+        color: _backgroundColor,
         child: SafeArea(
           right: false,
           child: Column(
@@ -60,7 +60,7 @@ class WebsiteList extends ConsumerWidget {
                   );
                 },
                 error: (error) => const SizedBox(),
-                loading: (loading) => const CircularProgressIndicator(),
+                loading: (loading) => const LinearProgressIndicator(),
               ),
             ],
           ),
@@ -71,52 +71,63 @@ class WebsiteList extends ConsumerWidget {
 }
 
 Widget _buildWebsiteCard(BuildContext context, WidgetRef ref, Website website) {
+  final selectedWebsite =
+      ref.watch(SelectedWebsiteProviders.selectedWebsiteProvider);
   return Container(
     height: 100,
-    padding: const EdgeInsets.only(
-      left: 10,
-      right: 10,
-      top: 10,
-      bottom: 10,
-    ),
-    child: Card(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: InkWell(
-        onTap: () {
-          ref
-              .read(SelectedWebsiteProviders.selectedWebsiteProvider.notifier)
-              .setSelection(website.genesisAddress, website.name);
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              website.name,
-              style: const TextStyle(
-                fontSize: 14,
+    padding: const EdgeInsets.all(10),
+    child: selectedWebsite.genesisAddress != website.genesisAddress
+        ? Card(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              side: BorderSide(
+                color: Theme.of(context).colorScheme.outline.withOpacity(0.3),
               ),
-              textAlign: TextAlign.center,
+              borderRadius: const BorderRadius.all(Radius.circular(12)),
             ),
-            InkWell(
-              onTap: () {
-                final url =
-                    '${sl.get<ApiService>().endpoint}/api/web_hosting/${website.genesisAddress}';
-                launchUrl(
-                  Uri.parse(
-                    url,
-                  ),
-                );
-              },
-              child: const Icon(
-                Icons.remove_red_eye_outlined,
-                size: 20,
-              ),
-            ),
-          ],
+            child: _contentCard(context, ref, website),
+          )
+        : Card(
+            color: Theme.of(context).colorScheme.surfaceVariant,
+            elevation: 0,
+            child: _contentCard(context, ref, website),
+          ),
+  );
+}
+
+Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
+  return InkWell(
+    onTap: () {
+      ref
+          .read(SelectedWebsiteProviders.selectedWebsiteProvider.notifier)
+          .setSelection(website.genesisAddress, website.name);
+    },
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          website.name,
+          style: const TextStyle(
+            fontSize: 14,
+          ),
+          textAlign: TextAlign.center,
         ),
-      ),
+        InkWell(
+          onTap: () {
+            final url =
+                '${sl.get<ApiService>().endpoint}/api/web_hosting/${website.genesisAddress}';
+            launchUrl(
+              Uri.parse(
+                url,
+              ),
+            );
+          },
+          child: const Icon(
+            Icons.remove_red_eye_outlined,
+            size: 20,
+          ),
+        ),
+      ],
     ),
   );
 }

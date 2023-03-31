@@ -4,7 +4,7 @@
   "systemDefault": "System Default",
   "addWebsiteNameMissing": "Please fill in the name of the website.",
   "addWebsitePathMissing": "Please fill the path containing the files to be uploaded.",
-  "addWebsitePathLabel": "Select the root folder of your website",
+  "addWebsitePathLabel": "Select the root folder of your website:",
   "addWebsitePublicCertPathLabel": "Add PEM file of the public certificate for the domain",
   "addWebsitePrivateKeyCertLabel": "Add PEM file of the private key related to the certificate for the domain",
   "addWebsiteGitignoreLabel": "Apply .gitignore rules",

@@ -4,7 +4,7 @@
 	"systemDefault": "Système par défaut",
 	"addWebsiteNameMissing": "Veuillez renseigner le nom du site web.",
 	"addWebsitePathMissing": "Veuillez resneigner le chemin d'accès contenant les fichiers à télécharger.",
-	"addWebsitePathLabel": "Sélectionnez le dossier racine de votre site web",
+	"addWebsitePathLabel": "Sélectionnez le dossier racine de votre site web:",
 	"addWebsitePublicCertPathLabel": "Ajoutez le fichier PEM du certificat public pour le domaine",
 	"addWebsitePrivateKeyCertLabel": "Ajoutez le fichier PEM de la clé privée liée au certificat pour le domaine",
 	"addWebsiteGitignoreLabel": "Appliquer le règles .gitignore ?",

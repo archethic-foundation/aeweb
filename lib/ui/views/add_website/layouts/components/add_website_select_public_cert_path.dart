@@ -39,13 +39,17 @@ class _AddWebsiteSelectPublicCertPathState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ElevatedButton.icon(
-          onPressed: _selectPublicCertFile,
-          icon: const Icon(Icons.upload_file),
-          label: Text(
-            AppLocalizations.of(context)!.addWebsitePublicCertPathLabel,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
+        Row(
+          children: [
+            Text(
+              AppLocalizations.of(context)!.addWebsitePublicCertPathLabel,
+            ),
+            const SizedBox(width: 2),
+            TextButton(
+              onPressed: _selectPublicCertFile,
+              child: const Icon(Icons.upload_file),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         Text(addWebsiteProvider.publicCertPath),

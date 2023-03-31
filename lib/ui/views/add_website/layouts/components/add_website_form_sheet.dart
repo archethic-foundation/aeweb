@@ -2,10 +2,13 @@
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
+import 'package:aeweb/ui/views/util/app_text_field.dart';
 import 'package:aeweb/ui/views/util/components/ae_stepper.dart';
+import 'package:aeweb/ui/views/util/formatters.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -81,22 +84,27 @@ class AddWebsiteFormSheetState extends ConsumerState<AddWebsiteFormSheet>
                         const AddWebsiteSelectPublicCertPath(),
                         const SizedBox(height: 16),
                         const AddWebsiteSelectPrivateKeyPath(),
-                        ElevatedButton(
-                          onPressed: _submitForm,
-                          child: Text(
-                            'Create website',
-                            style: Theme.of(context).textTheme.labelLarge,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                        ElevatedButton(
-                          onPressed: () {
-                            context.go('/');
-                          },
-                          child: Text(
-                            'Back',
-                            style: Theme.of(context).textTheme.labelLarge,
-                          ),
+                        Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                context.go('/');
+                              },
+                              child: const Text(
+                                'Back',
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 10,
+                            ),
+                            ElevatedButton(
+                              onPressed: _submitForm,
+                              child: const Text(
+                                'Create website',
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                          ],
                         ),
                       ],
                     ),

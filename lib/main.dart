@@ -111,11 +111,11 @@ class MyApp extends StatelessWidget {
       routerConfig: _router,
       title: 'AEWeb',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        dialogBackgroundColor: const Color(0xFF000000),
-        primaryColor: const Color(0xFFFFFFFF),
-        fontFamily: 'Montserrat',
-        brightness: Brightness.dark,
+      theme: ThemeData.light(
+        useMaterial3: true,
+      ),
+      darkTheme: ThemeData.dark(
+        useMaterial3: true,
       ),
       localizationsDelegates: const [
         AppLocalizations.delegate,

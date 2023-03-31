@@ -36,13 +36,17 @@ class _AddWebsiteSelectPrivateKeyPathState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ElevatedButton.icon(
-          onPressed: _selectPrivateKeyFile,
-          icon: const Icon(Icons.upload_file),
-          label: Text(
-            AppLocalizations.of(context)!.addWebsitePrivateKeyCertLabel,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
+        Row(
+          children: [
+            Text(
+              AppLocalizations.of(context)!.addWebsitePrivateKeyCertLabel,
+            ),
+            const SizedBox(width: 2),
+            TextButton(
+              onPressed: _selectPrivateKeyFile,
+              child: const Icon(Icons.upload_file),
+            ),
+          ],
         ),
         const SizedBox(height: 16),
         Text(addWebsiteProvider.privateKeyPath),

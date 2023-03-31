@@ -47,22 +47,11 @@ class UpdateWebsiteSyncFormSheet extends ConsumerWidget {
                       ),
                       const SizedBox(height: 16),
                       ElevatedButton(
-                        onPressed: () async {
-                          final updateWebsiteSyncProvider = ref.watch(
-                            UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm,
-                          );
-                          context.goNamed(
-                            'websiteVersions',
-                            extra: {
-                              'genesisAddress':
-                                  updateWebsiteSyncProvider.genesisAddress,
-                              'websiteName': updateWebsiteSyncProvider.name
-                            },
-                          );
+                        onPressed: () {
+                          context.go('/');
                         },
-                        child: Text(
+                        child: const Text(
                           'Back',
-                          style: Theme.of(context).textTheme.labelLarge,
                         ),
                       ),
                     ],

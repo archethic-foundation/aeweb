@@ -20,23 +20,36 @@ class _AddWebsiteSwitchGitignoreState
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
     final addWebsiteProvider = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
+    final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
+      (Set<MaterialState> states) {
+        if (states.contains(MaterialState.selected)) {
+          return const Icon(Icons.check);
+        }
+        return const Icon(Icons.close);
+      },
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
-            Expanded(
-              child: Text(
-                AppLocalizations.of(context)!.addWebsiteGitignoreLabel,
-                style: Theme.of(context).textTheme.labelLarge,
-              ),
+            Text(
+              AppLocalizations.of(context)!.addWebsiteGitignoreLabel,
             ),
-            Switch(
-              value: addWebsiteProvider.applyGitIgnoreRules ?? false,
-              onChanged: addWebsiteProvider.applyGitIgnoreRules == null
-                  ? null
-                  : addWebsiteNotifier.setApplyGitIgnoreRules,
+            const SizedBox(width: 2),
+            SizedBox(
+              height: 30,
+              child: FittedBox(
+                fit: BoxFit.fill,
+                child: Switch(
+                  thumbIcon: thumbIcon,
+                  value: addWebsiteProvider.applyGitIgnoreRules ?? false,
+                  onChanged: addWebsiteProvider.applyGitIgnoreRules == null
+                      ? null
+                      : addWebsiteNotifier.setApplyGitIgnoreRules,
+                ),
+              ),
             ),
           ],
         ),

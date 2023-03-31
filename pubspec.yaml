@@ -56,6 +56,9 @@ dependencies:
   # Provides a collection of Flutter grids layouts (staggered, masonry, quilted, woven, etc.).
   flutter_staggered_grid_view: ^0.6.2
 
+  # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
+  flutter_svg: ^2.0.4
+
   # A tree widget for Flutter that can be used to display nested, hierarchical data. It includes a number of features like styling labels, icons, and import and export utilities.
   flutter_treeview: ^1.0.7+1
 
@@ -121,6 +124,12 @@ flutter:
     - assets/images/
 
   fonts:
+    - family: Caveat
+      fonts:
+        - asset: assets/fonts/Caveat-Bold.ttf
+        - asset: assets/fonts/Caveat-Medium.ttf
+        - asset: assets/fonts/Caveat-Regular.ttf
+        - asset: assets/fonts/Caveat-SemiBold.ttf
     - family: Montserrat
       fonts:
         - asset: assets/fonts/Montserrat-Black.ttf

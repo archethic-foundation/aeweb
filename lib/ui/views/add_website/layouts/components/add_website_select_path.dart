@@ -42,13 +42,17 @@ class _AddWebsiteSelectPathState extends ConsumerState<AddWebsiteSelectPath>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ElevatedButton.icon(
-          onPressed: _selectFilePath,
-          icon: const Icon(Icons.folder),
-          label: Text(
-            AppLocalizations.of(context)!.addWebsitePathLabel,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
+        Row(
+          children: [
+            Text(
+              AppLocalizations.of(context)!.addWebsitePathLabel,
+            ),
+            const SizedBox(width: 2),
+            TextButton(
+              onPressed: _selectFilePath,
+              child: const Icon(Icons.folder),
+            ),
+          ],
         ),
         Text(addWebsiteProvider.path),
       ],

@@ -38,22 +38,23 @@ class _AddWebsiteTextFieldNameState
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Website's name :",
-          style: Theme.of(context).textTheme.labelLarge,
-        ),
-        TextFormField(
-          controller: nameController,
-          onChanged: (text) async {
-            addWebsiteNotifier.setName(
-              text,
-            );
-          },
-        ),
+    return AppTextField(
+      leftMargin: 0,
+      textAlign: TextAlign.left,
+      focusNode: nameFocusNode,
+      controller: nameController,
+      textInputAction: TextInputAction.next,
+      labelText: "Website's name",
+      keyboardType: TextInputType.text,
+      inputFormatters: <TextInputFormatter>[
+        UpperCaseTextFormatter(),
+        LengthLimitingTextInputFormatter(20),
       ],
+      onChanged: (text) async {
+        addWebsiteNotifier.setName(
+          text,
+        );
+      },
     );
   }
 }

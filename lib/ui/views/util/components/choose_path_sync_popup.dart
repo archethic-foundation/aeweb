@@ -16,6 +16,17 @@ class PathSyncPopup with FileMixin {
   ) async {
     String? path;
     bool? applyGitIgnoreRules;
+    late final _colorScheme = Theme.of(context).colorScheme;
+    final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
+      (Set<MaterialState> states) {
+        // Thumb icon when the switch is selected.
+        if (states.contains(MaterialState.selected)) {
+          return const Icon(Icons.check);
+        }
+        return const Icon(Icons.close);
+      },
+    );
+
     return showDialog(
       context: context,
       builder: (context) {
@@ -32,8 +43,8 @@ class PathSyncPopup with FileMixin {
               contentPadding: const EdgeInsets.only(
                 top: 10,
               ),
-              content: SizedBox(
-                height: 200,
+              content: Container(
+                padding: const EdgeInsets.only(left: 10, right: 10),
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(8),
                   child: Column(
@@ -43,58 +54,71 @@ class PathSyncPopup with FileMixin {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ElevatedButton.icon(
-                            onPressed: () async {
-                              try {
-                                final result = await FilePicker.platform
-                                    .getDirectoryPath();
-                                if (result != null) {
-                                  setState(
-                                    () {
-                                      path = '$result/';
-                                    },
-                                  );
-                                }
-                              } on Exception catch (e) {
-                                log('Error while picking folder: $e');
-                              }
-                            },
-                            icon: const Icon(Icons.folder),
-                            label: Text(
-                              'Sélectionnez le dossier racine de votre site web',
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
+                          Row(
+                            children: [
+                              const Text(
+                                'Sélectionnez le dossier racine de votre site web',
+                              ),
+                              const SizedBox(width: 2),
+                              TextButton(
+                                onPressed: () async {
+                                  try {
+                                    final result = await FilePicker.platform
+                                        .getDirectoryPath();
+                                    if (result != null) {
+                                      setState(
+                                        () {
+                                          path = '$result/';
+                                        },
+                                      );
+                                    }
+                                  } on Exception catch (e) {
+                                    log('Error while picking folder: $e');
+                                  }
+                                },
+                                child: const Icon(Icons.folder),
+                              ),
+                            ],
                           ),
                           Text(
                             path ?? '',
-                            style: Theme.of(context).textTheme.labelLarge,
                           ),
                         ],
                       ),
+                      const SizedBox(
+                        height: 20,
+                      ),
                       Row(
                         children: [
-                          Expanded(
-                            child: Text(
-                              'Apply .gitignore rules?',
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
+                          const Text(
+                            'Apply .gitignore rules?',
                           ),
-                          Switch(
-                            value: applyGitIgnoreRules ?? false,
-                            onChanged: (value) {
-                              setState(
-                                () {
-                                  applyGitIgnoreRules = value;
+                          const SizedBox(width: 2),
+                          SizedBox(
+                            height: 30,
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: Switch(
+                                thumbIcon: thumbIcon,
+                                value: applyGitIgnoreRules ?? false,
+                                onChanged: (value) {
+                                  setState(
+                                    () {
+                                      applyGitIgnoreRules = value;
+                                    },
+                                  );
                                 },
-                              );
-                            },
+                              ),
+                            ),
                           ),
                         ],
                       ),
                       Container(
                         width: double.infinity,
-                        height: 60,
-                        padding: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.only(
+                          top: 30,
+                          bottom: 20,
+                        ),
                         child: ElevatedButton(
                           onPressed: () async {
                             final remoteFiles = (await ReadWebsiteUseCases()
@@ -123,8 +147,10 @@ class PathSyncPopup with FileMixin {
                               },
                             );
                           },
-                          child: const Text(
+                          child: Text(
                             'Sync',
+                            style:
+                                TextStyle(color: _colorScheme.onSurfaceVariant),
                           ),
                         ),
                       ),

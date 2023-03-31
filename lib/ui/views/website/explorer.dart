@@ -116,9 +116,7 @@ class ExplorerScreenState extends State<ExplorerScreen> {
       ),
       iconTheme: const IconThemeData(
         size: 12,
-        color: Colors.white,
       ),
-      colorScheme: Theme.of(context).colorScheme,
     );
 
     return Scaffold(
