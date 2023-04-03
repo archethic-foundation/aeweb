@@ -1,11 +1,11 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/ui/views/util/components/choose_path_sync_popup.dart';
-import 'package:aeweb/ui/views/website/explorer.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 
 class WebsiteVersionsList extends ConsumerWidget with FileMixin {
@@ -22,99 +22,112 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
   Widget build(BuildContext context, WidgetRef ref) {
     final websiteVersionsList =
         ref.watch(WebsitesProviders.fetchWebsiteVersions(genesisAddress));
-    return Scaffold(
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _buildHeaderRow(),
-          Expanded(
-            child: websiteVersionsList.map(
-              data: (data) {
-                return ListView.builder(
-                  itemCount: websiteVersionsList.value!.length,
-                  itemBuilder: (context, index) {
-                    return _buildWebsiteRow(
-                      context,
-                      ref,
-                      index == 0,
-                      websiteVersionsList.value![index],
-                      websiteName,
-                      genesisAddress,
-                    );
-                  },
-                );
-              },
-              error: (error) => _buildHeaderRow(),
-              loading: (loading) => _buildHeaderRow(),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-Widget _buildHeaderRow() {
-  return Container(
-    padding: const EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: const [
-        Expanded(child: Text('Date')),
-        SizedBox(width: 20),
-        Expanded(child: Text('Publisher')),
-        SizedBox(width: 20),
-        Expanded(child: Text('Files')),
-        SizedBox(width: 20),
-        Expanded(child: Text('Size')),
-      ],
-    ),
-  );
-}
-
-Widget _buildWebsiteRow(
-  BuildContext context,
-  WidgetRef ref,
-  bool lastVersion,
-  WebsiteVersion websiteVersion,
-  String websiteName,
-  String genesisAddress,
-) {
-  return Container(
-    padding: const EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Expanded(
-          child: SelectableText(
-            DateFormat.yMd(
-              Localizations.localeOf(context).languageCode,
-            ).add_Hms().format(
-                  DateTime.fromMillisecondsSinceEpoch(
-                    websiteVersion.timestamp * 1000,
-                  ).toLocal(),
+          child: websiteVersionsList.when(
+            data: (websiteVersions) {
+              final versions = websiteVersions.cast<WebsiteVersion>();
+              return Theme(
+                data: Theme.of(context)
+                    .copyWith(dividerColor: Colors.transparent),
+                child: DataTable(
+                  dividerThickness: 0,
+                  columns: const [
+                    DataColumn(
+                      label: Expanded(
+                        child: Text(
+                          'Date',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Expanded(
+                        child: Text(
+                          'Files',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                      numeric: true,
+                    ),
+                    DataColumn(
+                      label: Expanded(
+                        child: Text(
+                          'Size',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                    DataColumn(
+                      label: Expanded(
+                        child: Text(
+                          'Options',
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                  rows: versions
+                      .asMap()
+                      .map(
+                        (index, websiteVersion) => MapEntry(
+                          index,
+                          DataRow(
+                            cells: [
+                              DataCell(
+                                SelectableText(
+                                  DateFormat.yMd(
+                                    Localizations.localeOf(context)
+                                        .languageCode,
+                                  ).add_Hms().format(
+                                        DateTime.fromMillisecondsSinceEpoch(
+                                          websiteVersion.timestamp * 1000,
+                                        ).toLocal(),
+                                      ),
+                                ),
+                              ),
+                              DataCell(
+                                SelectableText(
+                                  websiteVersion.filesCount.toString(),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              DataCell(
+                                SelectableText(
+                                  filesize(
+                                    websiteVersion.size.toString(),
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              DataCell(
+                                _popupMenuButton(
+                                  context,
+                                  ref,
+                                  index == 0,
+                                  websiteVersion,
+                                  websiteName,
+                                  genesisAddress,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      )
+                      .values
+                      .toList(),
                 ),
+              );
+            },
+            error: (error, stacktrace) => const SizedBox(),
+            loading: () => const SizedBox(),
           ),
         ),
-        const SizedBox(width: 20),
-        Expanded(child: SelectableText(websiteVersion.publisher)),
-        const SizedBox(width: 20),
-        Expanded(child: SelectableText(websiteVersion.filesCount.toString())),
-        const SizedBox(width: 20),
-        Expanded(
-          child: SelectableText(filesize(websiteVersion.size.toString())),
-        ),
-        _popupMenuButton(
-          context,
-          ref,
-          lastVersion,
-          websiteVersion,
-          websiteName,
-          genesisAddress,
-        ),
       ],
-    ),
-  );
+    );
+  }
 }
 
 Widget _popupMenuButton(
@@ -194,12 +207,9 @@ Widget _popupMenuButton(
     onSelected: (value) async {
       switch (value) {
         case 'Explore':
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) =>
-                  ExplorerScreen(filesAndFolders: websiteVersion.content!),
-            ),
+          context.goNamed(
+            'explorer',
+            extra: {'filesAndFolders': websiteVersion.content!},
           );
           break;
         case 'Sync':

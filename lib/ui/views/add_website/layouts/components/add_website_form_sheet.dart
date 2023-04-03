@@ -65,7 +65,7 @@ class AddWebsiteFormSheetState extends ConsumerState<AddWebsiteFormSheet>
         child: Form(
           key: _formKey,
           child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
                 child: Scrollbar(

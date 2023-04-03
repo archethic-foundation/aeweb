@@ -40,9 +40,12 @@ class _AddWebsiteSelectPublicCertPathState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              AppLocalizations.of(context)!.addWebsitePublicCertPathLabel,
+            Expanded(
+              child: Text(
+                AppLocalizations.of(context)!.addWebsitePublicCertPathLabel,
+              ),
             ),
             const SizedBox(width: 2),
             TextButton(

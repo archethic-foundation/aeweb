@@ -18,49 +18,49 @@ class UpdateWebsiteSyncFormSheet extends ConsumerWidget {
       ),
       body: Padding(
         padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+        child: Column(
           children: [
-            const Expanded(
-              child: UpdateWebsiteSyncComparisonSheet(),
-            ),
             Expanded(
-              child: Scrollbar(
-                thumbVisibility: true,
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ElevatedButton(
-                        onPressed: () async {
-                          final updateWebsiteSyncNotifier = ref.watch(
-                            UpdateWebsiteSyncFormProvider
-                                .updateWebsiteSyncForm.notifier,
-                          );
-
-                          await updateWebsiteSyncNotifier.update(context, ref);
-                        },
-                        child: Text(
-                          'Update website',
-                          style: Theme.of(context).textTheme.labelLarge,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                      ElevatedButton(
-                        onPressed: () {
-                          context.go('/');
-                        },
-                        child: const Text(
-                          'Back',
-                        ),
-                      ),
-                    ],
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: const [
+                  Expanded(
+                    child: UpdateWebsiteSyncComparisonSheet(),
                   ),
-                ),
+                  SizedBox(width: 50),
+                  AEStepper(),
+                ],
               ),
             ),
-            const SizedBox(width: 50),
-            const AEStepper(),
+            Padding(
+              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
+              child: Row(
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      context.go('/');
+                    },
+                    child: const Text(
+                      'Back',
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () async {
+                      final updateWebsiteSyncNotifier = ref.watch(
+                        UpdateWebsiteSyncFormProvider
+                            .updateWebsiteSyncForm.notifier,
+                      );
+                      await updateWebsiteSyncNotifier.update(context, ref);
+                    },
+                    child: Text(
+                      'Update website',
+                      style: Theme.of(context).textTheme.labelLarge,
+                    ),
+                  ),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -43,9 +43,12 @@ class _AddWebsiteSelectPathState extends ConsumerState<AddWebsiteSelectPath>
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              AppLocalizations.of(context)!.addWebsitePathLabel,
+            Expanded(
+              child: Text(
+                AppLocalizations.of(context)!.addWebsitePathLabel,
+              ),
             ),
             const SizedBox(width: 2),
             TextButton(

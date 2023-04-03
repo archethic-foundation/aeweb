@@ -1,3 +1,4 @@
+import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -8,10 +9,6 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme.of(context)
-        .textTheme
-        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
     return Container(
       height: 80,
       padding: const EdgeInsets.only(left: 15, right: 15),
@@ -35,10 +32,7 @@ class Header extends StatelessWidget {
               ),
             ],
           ),
-          OutlinedButton(
-            onPressed: () {},
-            child: Text('connect your wallet', style: textTheme.labelMedium),
-          ),
+          const ConnectionToWalletStatus(),
         ],
       ),
     );

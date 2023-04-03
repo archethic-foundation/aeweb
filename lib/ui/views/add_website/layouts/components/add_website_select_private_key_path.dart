@@ -38,8 +38,10 @@ class _AddWebsiteSelectPrivateKeyPathState
       children: [
         Row(
           children: [
-            Text(
-              AppLocalizations.of(context)!.addWebsitePrivateKeyCertLabel,
+            Expanded(
+              child: Text(
+                AppLocalizations.of(context)!.addWebsitePrivateKeyCertLabel,
+              ),
             ),
             const SizedBox(width: 2),
             TextButton(

@@ -44,6 +44,8 @@ class UpdateWebsiteSyncComparisonSheetState
 
     return Expanded(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.all(8),
@@ -61,6 +63,8 @@ class UpdateWebsiteSyncComparisonSheetState
           ),
           Expanded(
             child: ListView.builder(
+              padding: EdgeInsets.zero,
+              shrinkWrap: true,
               itemCount: filteredFiles.length,
               itemBuilder: (context, index) {
                 final file = filteredFiles[index];
@@ -89,13 +93,23 @@ class UpdateWebsiteSyncComparisonSheetState
                     statusText = 'Same content';
                     break;
                 }
-                return Card(
-                  child: ListTile(
-                    leading: Icon(iconData, color: iconColor),
-                    title:
-                        Text(file.path, style: const TextStyle(fontSize: 12)),
-                    subtitle:
-                        Text(statusText, style: const TextStyle(fontSize: 12)),
+                return Center(
+                  child: Card(
+                    elevation: 0,
+                    color: Theme.of(context).colorScheme.primaryContainer,
+                    clipBehavior: Clip.antiAlias,
+                    child: ListTile(
+                      leading: SizedBox(
+                        height: double.infinity,
+                        child: Icon(iconData, color: iconColor),
+                      ),
+                      title:
+                          Text(file.path, style: const TextStyle(fontSize: 12)),
+                      subtitle: Text(
+                        statusText,
+                        style: const TextStyle(fontSize: 10),
+                      ),
+                    ),
                   ),
                 );
               },
@@ -113,98 +127,119 @@ class UpdateWebsiteSyncComparisonSheetState
   }
 
   Widget _buildFilterStatusWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    final textTheme = Theme.of(context)
+        .textTheme
+        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
+    return Wrap(
+      spacing: 8,
+      runSpacing: 8,
       children: [
-        TextButton.icon(
-          onPressed: () {
-            setState(() {
-              _selectedStatus = null;
-            });
-          },
-          icon: const Icon(Icons.filter_alt_outlined, color: Colors.white),
-          label: const Text(
-            'All',
-            style: TextStyle(color: Colors.white, fontSize: 12),
-          ),
-          style: ButtonStyle(
-            backgroundColor: _selectedStatus == null
-                ? MaterialStateProperty.all(Colors.blue[100]!.withOpacity(0.2))
-                : null,
-          ),
-        ),
-        TextButton.icon(
-          onPressed: () {
-            setState(() {
-              _selectedStatus = HostingContentComparisonStatus.localOnly;
-            });
-          },
-          icon: const Icon(Icons.cloud_upload, color: Colors.orange),
-          label: const Text(
-            'Local only',
-            style: TextStyle(color: Colors.white, fontSize: 12),
-          ),
-          style: ButtonStyle(
-            backgroundColor:
-                _selectedStatus == HostingContentComparisonStatus.localOnly
-                    ? MaterialStateProperty.all(
-                        Colors.orange[100]!.withOpacity(0.2),
-                      )
-                    : null,
+        Flexible(
+          child: TextButton.icon(
+            onPressed: () {
+              setState(() {
+                _selectedStatus = null;
+              });
+            },
+            icon: const Icon(
+              Icons.filter_alt_outlined,
+            ),
+            label: Text(
+              'All',
+              style: textTheme.labelMedium,
+            ),
+            style: ButtonStyle(
+              backgroundColor: _selectedStatus == null
+                  ? MaterialStateProperty.all(
+                      Colors.blue[100]!.withOpacity(0.2))
+                  : null,
+            ),
           ),
         ),
-        TextButton.icon(
-          onPressed: () {
-            setState(() {
-              _selectedStatus = HostingContentComparisonStatus.remoteOnly;
-            });
-          },
-          icon: const Icon(Icons.cloud_download, color: Colors.blue),
-          label: const Text(
-            'Remote only',
-            style: TextStyle(color: Colors.white, fontSize: 12),
-          ),
-          style: ButtonStyle(
-            backgroundColor: _selectedStatus ==
-                    HostingContentComparisonStatus.remoteOnly
-                ? MaterialStateProperty.all(Colors.blue[100]!.withOpacity(0.2))
-                : null,
-          ),
-        ),
-        TextButton.icon(
-          onPressed: () {
-            setState(() {
-              _selectedStatus = HostingContentComparisonStatus.differentContent;
-            });
-          },
-          icon: const Icon(Icons.sync_problem, color: Colors.red),
-          label: const Text(
-            'Different',
-            style: TextStyle(color: Colors.white, fontSize: 12),
-          ),
-          style: ButtonStyle(
-            backgroundColor: _selectedStatus ==
-                    HostingContentComparisonStatus.differentContent
-                ? MaterialStateProperty.all(Colors.red[100]!.withOpacity(0.2))
-                : null,
+        Flexible(
+          child: TextButton.icon(
+            onPressed: () {
+              setState(() {
+                _selectedStatus = HostingContentComparisonStatus.localOnly;
+              });
+            },
+            icon: const Icon(Icons.cloud_upload, color: Colors.orange),
+            label: Text(
+              'Local only',
+              style: textTheme.labelMedium,
+            ),
+            style: ButtonStyle(
+              backgroundColor:
+                  _selectedStatus == HostingContentComparisonStatus.localOnly
+                      ? MaterialStateProperty.all(
+                          Colors.orange[100]!.withOpacity(0.2),
+                        )
+                      : null,
+            ),
           ),
         ),
-        TextButton.icon(
-          onPressed: () {
-            setState(() {
-              _selectedStatus = HostingContentComparisonStatus.sameContent;
-            });
-          },
-          icon: const Icon(Icons.check_circle_outline, color: Colors.green),
-          label: const Text(
-            'Same',
-            style: TextStyle(color: Colors.white, fontSize: 12),
+        Flexible(
+          child: TextButton.icon(
+            onPressed: () {
+              setState(() {
+                _selectedStatus = HostingContentComparisonStatus.remoteOnly;
+              });
+            },
+            icon: const Icon(Icons.cloud_download, color: Colors.blue),
+            label: Text(
+              'Remote only',
+              style: textTheme.labelMedium,
+            ),
+            style: ButtonStyle(
+              backgroundColor:
+                  _selectedStatus == HostingContentComparisonStatus.remoteOnly
+                      ? MaterialStateProperty.all(
+                          Colors.blue[100]!.withOpacity(0.2))
+                      : null,
+            ),
           ),
-          style: ButtonStyle(
-            backgroundColor: _selectedStatus ==
-                    HostingContentComparisonStatus.sameContent
-                ? MaterialStateProperty.all(Colors.green[100]!.withOpacity(0.2))
-                : null,
+        ),
+        Flexible(
+          child: TextButton.icon(
+            onPressed: () {
+              setState(() {
+                _selectedStatus =
+                    HostingContentComparisonStatus.differentContent;
+              });
+            },
+            icon: const Icon(Icons.sync_problem, color: Colors.red),
+            label: Text(
+              'Different',
+              style: textTheme.labelMedium,
+            ),
+            style: ButtonStyle(
+              backgroundColor: _selectedStatus ==
+                      HostingContentComparisonStatus.differentContent
+                  ? MaterialStateProperty.all(Colors.red[100]!.withOpacity(0.2))
+                  : null,
+            ),
+          ),
+        ),
+        Flexible(
+          child: TextButton.icon(
+            onPressed: () {
+              setState(() {
+                _selectedStatus = HostingContentComparisonStatus.sameContent;
+              });
+            },
+            icon: const Icon(Icons.check_circle_outline, color: Colors.green),
+            label: Text(
+              'Same',
+              style: textTheme.labelMedium,
+            ),
+            style: ButtonStyle(
+              backgroundColor:
+                  _selectedStatus == HostingContentComparisonStatus.sameContent
+                      ? MaterialStateProperty.all(
+                          Colors.green[100]!.withOpacity(0.2),
+                        )
+                      : null,
+            ),
           ),
         ),
       ],

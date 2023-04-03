@@ -3,6 +3,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
+import 'package:go_router/go_router.dart';
 
 class ExplorerScreen extends StatefulWidget {
   const ExplorerScreen({super.key, required this.filesAndFolders});
@@ -121,59 +122,41 @@ class ExplorerScreenState extends State<ExplorerScreen> {
 
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        title: const SelectableText('Content'),
-      ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: Container(
-          padding: const EdgeInsets.all(20),
-          height: double.infinity,
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  padding: const EdgeInsets.all(10),
-                  child: TreeView(
-                    controller: treeViewController,
-                    onExpansionChanged: _expandNode,
-                    onNodeTap: (key) {
-                      setState(() {
-                        _selectedNode = key;
-                        treeViewController =
-                            treeViewController.copyWith(selectedKey: key);
-                      });
-                    },
-                    theme: _treeViewTheme,
-                  ),
-                ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
               ),
-              GestureDetector(
-                onTap: () {
-                  FocusScope.of(context).unfocus();
+              padding: const EdgeInsets.all(10),
+              child: TreeView(
+                controller: treeViewController,
+                onExpansionChanged: _expandNode,
+                onNodeTap: (key) {
+                  setState(() {
+                    _selectedNode = key;
+                    treeViewController =
+                        treeViewController.copyWith(selectedKey: key);
+                  });
                 },
-                child: Container(
-                  padding: const EdgeInsets.only(top: 20),
-                  alignment: Alignment.center,
-                  child: Row(
-                    children: [
-                      Text(
-                        treeViewController.getNode(_selectedNode) == null
-                            ? ''
-                            : treeViewController.getNode(_selectedNode)!.label,
-                      ),
-                    ],
-                  ),
-                ),
-              )
-            ],
+                theme: _treeViewTheme,
+              ),
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
+            child: ElevatedButton(
+              onPressed: () {
+                context.go('/');
+              },
+              child: const Text(
+                'Back',
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

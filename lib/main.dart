@@ -6,10 +6,13 @@ import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/providers_observer.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/main_screen.dart';
+import 'package:aeweb/ui/views/route_screen.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
+import 'package:aeweb/ui/views/website/explorer.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
-import 'package:aeweb/util/get_it_instance.dart';
+import 'package:aeweb/ui/views/welcome_screen.dart';
 import 'package:aeweb/util/service_locator.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +33,7 @@ Future<void> main() async {
       observers: [
         ProvidersLogger(),
       ],
-      child: MyApp(
-        endpoint: sl.get<ApiService>().endpoint,
-      ),
+      child: const MyApp(),
     ),
   );
 
@@ -45,26 +46,41 @@ Future<void> main() async {
   }
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({required this.endpoint, super.key});
-
-  final String endpoint;
+class MyApp extends ConsumerWidget {
+  const MyApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     // TODO(reddwarf03): use LanguageProviders
     //const language = AvailableLanguage.english;
 
     // GoRouter configuration
     final _router = GoRouter(
       routes: [
+        GoRoute(path: '/', builder: (context, state) => const RouteScreen()),
         GoRoute(
-          path: '/',
+          path: '/main',
           builder: (context, state) => const MainScreen(),
+        ),
+        GoRoute(
+          path: '/welcome',
+          builder: (context, state) => const WelcomeScreen(),
         ),
         GoRoute(
           path: '/addWebsite',
           builder: (context, state) => const AddWebsiteSheet(),
+        ),
+        GoRoute(
+          path: '/explorer',
+          name: 'explorer',
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return ExplorerScreen(
+              filesAndFolders: args['filesAndFolders'] == null
+                  ? const archethic.HostingRef()
+                  : args['filesAndFolders']! as archethic.HostingRef,
+            );
+          },
         ),
         GoRoute(
           path: '/websiteVersions',
