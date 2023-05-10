@@ -46,9 +46,7 @@ class AddWebsiteBottomBar extends ConsumerWidget {
               else
                 ElevatedButton(
                   onPressed: () {
-                    if (addWebsite.creationInProgress == false) {
-                      context.go('/');
-                    }
+                    context.go('/');
                   },
                   child: Row(
                     children: const [

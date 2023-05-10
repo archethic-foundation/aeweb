@@ -8,5 +8,7 @@
 	"addWebsitePublicCertPathLabel": "PEM du certificat public pour le domaine",
 	"addWebsitePrivateKeyCertLabel": "PEM de la clé privée liée au certificat pour le domaine",
 	"addWebsiteGitignoreLabel": "Appliquer le règles .gitignore ?",
-	"choosePathSyncPathMissing": "Veuillez resneigner le chemin contenant les fichiers à synchroniser avec les fichiers stockés sur la blockchain."
+	"choosePathSyncPathMissing": "Veuillez resneigner le chemin contenant les fichiers à synchroniser avec les fichiers stockés sur la blockchain.",
+	"version": "Version : ",
+	"build": "Build : "
 }

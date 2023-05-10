@@ -1,43 +1,41 @@
+import 'package:aeweb/application/version.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuDestination {
-  const MenuDestination(this.label, this.icon, this.selectedIcon);
+  const MenuDestination(this.label, this.icon);
 
   final String label;
   final Widget icon;
-  final Widget selectedIcon;
 }
 
 const List<MenuDestination> destinationsHosting = <MenuDestination>[
   MenuDestination(
     'Your websites',
-    Icon(Icons.cloud_circle_outlined),
-    Icon(Icons.cloud_circle),
+    Icon(Iconsax.global),
   ),
   MenuDestination(
     'New website',
-    Icon(Icons.add_circle_outline),
-    Icon(Icons.add_circle),
+    Icon(Iconsax.add_circle),
   ),
 ];
 
 const List<MenuDestination> destinationsInfos = <MenuDestination>[
   MenuDestination(
     'Documentation',
-    Icon(Icons.feed_outlined),
-    Icon(Icons.feed),
+    Icon(Iconsax.document_text),
   ),
   MenuDestination(
     'Source Code',
-    Icon(Icons.code_outlined),
-    Icon(Icons.code),
+    Icon(Iconsax.code_circle),
   ),
   MenuDestination(
     'FAQ',
-    Icon(Icons.help_outlined),
-    Icon(Icons.help_outline),
+    Icon(Iconsax.message_question),
   ),
 ];
 
@@ -67,7 +65,7 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
           case 2:
             launchUrl(
               Uri.parse(
-                'https://archethic-foundation.github.io/archethic-docs/participate/aeweb',
+                'https://wiki.archethic.net/participate/aeweb/',
               ),
             );
             break;
@@ -81,7 +79,7 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
           case 4:
             launchUrl(
               Uri.parse(
-                'https://archethic-foundation.github.io/archethic-docs/category/FAQ',
+                'https://wiki.archethic.net/category/FAQ',
               ),
             );
             break;
@@ -101,7 +99,7 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
           return NavigationDrawerDestination(
             label: Text(destination.label),
             icon: destination.icon,
-            selectedIcon: destination.selectedIcon,
+            selectedIcon: destination.icon,
           );
         }),
         const Divider(indent: 28, endIndent: 28),
@@ -116,9 +114,26 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
           return NavigationDrawerDestination(
             label: Text(destination.label),
             icon: destination.icon,
-            selectedIcon: destination.selectedIcon,
+            selectedIcon: destination.icon,
           );
         }),
+        Padding(
+          padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
+          child: Consumer(
+            builder: (context, ref, child) {
+              final asyncVersionString = ref.watch(
+                versionStringProvider(
+                  AppLocalizations.of(context)!,
+                ),
+              );
+
+              return Text(
+                asyncVersionString.asData?.value ?? '',
+                style: Theme.of(context).textTheme.labelSmall,
+              );
+            },
+          ),
+        ),
       ],
     );
   }

@@ -7,6 +7,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WebsiteList extends ConsumerWidget {
@@ -113,7 +114,7 @@ Widget _buildAddWebsiteCard(BuildContext context) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Icon(
-              Icons.add_circle_outline,
+              Iconsax.add_circle,
               size: 20,
             ),
           ],

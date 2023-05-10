@@ -34,9 +34,7 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
               else
                 ElevatedButton(
                   onPressed: () {
-                    if (updateWebsiteSync.updateInProgress == false) {
-                      context.go('/');
-                    }
+                    context.go('/');
                   },
                   child: Row(
                     children: const [

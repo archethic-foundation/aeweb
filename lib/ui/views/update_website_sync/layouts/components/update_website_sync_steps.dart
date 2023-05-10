@@ -46,6 +46,7 @@ class UpdateWebsiteSyncSteps extends ConsumerWidget {
                 _confirmedStep(
                   context,
                   'Analyse effectuée',
+                  icon: Iconsax.filter_tick,
                 ),
               if (updateWebsiteSync.step == 3)
                 _waitingStep(

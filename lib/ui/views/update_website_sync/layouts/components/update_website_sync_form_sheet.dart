@@ -15,17 +15,30 @@ class UpdateWebsiteSyncFormSheet extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
       body: Padding(
-        padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
+        padding: const EdgeInsets.only(left: 30, right: 30),
         child: Column(
           children: [
             const Header(),
             Expanded(
               child: ResizableBox(
                 width: MediaQuery.of(context).size.width - 100,
-                childLeft: const UpdateWebsiteSyncComparisonSheet(),
+                childLeft: Card(
+                  color: Theme.of(context).colorScheme.surface,
+                  elevation: 0,
+                  clipBehavior: Clip.antiAlias,
+                  child: Padding(
+                    padding: const EdgeInsets.all(
+                      20,
+                    ),
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: const UpdateWebsiteSyncComparisonSheet(),
+                    ),
+                  ),
+                ),
                 childRight: Card(
                   color: Theme.of(context).colorScheme.surface,
                   elevation: 0,

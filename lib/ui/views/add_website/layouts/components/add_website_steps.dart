@@ -34,6 +34,7 @@ class AddWebsiteSteps extends ConsumerWidget {
                 _confirmedStep(
                   context,
                   'Site créé en tant que nouveau service dans votre porte-clés',
+                  icon: Iconsax.wallet_add,
                 ),
               if (addWebsite.step == 2)
                 _waitingStep(

@@ -28,8 +28,6 @@ class AddWebsiteFormSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final _formKey = GlobalKey<FormState>();
-
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
@@ -37,8 +35,8 @@ class AddWebsiteFormSheet extends ConsumerWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       resizeToAvoidBottomInset: false,
-      body: Form(
-        key: _formKey,
+      body: Padding(
+        padding: const EdgeInsets.only(left: 30, right: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
