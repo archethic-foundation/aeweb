@@ -1,3 +1,6 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:typed_data';
+
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/domain/usecases/website/update_website_sync.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
@@ -71,11 +74,51 @@ class UpdateWebsiteSyncFormNotifier
     );
   }
 
+  void setPublicCert(
+    Uint8List publicCert,
+  ) {
+    state = state.copyWith(
+      publicCert: publicCert,
+    );
+  }
+
   void setPrivateKeyPath(
     String privateKeyPath,
   ) {
     state = state.copyWith(
       privateKeyPath: privateKeyPath,
+    );
+  }
+
+  void setPrivateKey(
+    Uint8List privateKey,
+  ) {
+    state = state.copyWith(
+      privateKey: privateKey,
+    );
+  }
+
+  void setStep(int step) {
+    state = state.copyWith(
+      step: step,
+    );
+  }
+
+  void setStepError(String stepError) {
+    state = state.copyWith(
+      stepError: stepError,
+    );
+  }
+
+  void setGlobalFees(double globalFees) {
+    state = state.copyWith(
+      globalFees: globalFees,
+    );
+  }
+
+  void setGlobalFeesValidated(bool? globalFeesValidated) {
+    state = state.copyWith(
+      globalFeesValidated: globalFeesValidated,
     );
   }
 
@@ -87,14 +130,8 @@ class UpdateWebsiteSyncFormNotifier
     );
   }
 
-  void setUpdateWebsiteSyncProcessStep(int updateWebsiteSyncProcessStep) {
-    state = state.copyWith(
-      updateWebsiteSyncProcessStep: updateWebsiteSyncProcessStep,
-    );
-  }
-
   Future<void> update(BuildContext context, WidgetRef ref) async {
-    await UpdateWebsiteSyncUseCases().updateWebsite(
+    await UpdateWebsiteSyncUseCases().run(
       ref,
       state.name,
       state.path,

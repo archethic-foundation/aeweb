@@ -245,32 +245,26 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
         error.maybeMap(
           connectivity: (_) {
             addWebsiteNotifier.setStepError('No connection');
-
             log('no connection');
           },
           consensusNotReached: (_) {
             addWebsiteNotifier.setStepError('Consensus not reached');
-
             log('consensus not reached');
           },
           timeout: (_) {
             addWebsiteNotifier.setStepError('Timeout');
-
             log('timeout');
           },
           invalidConfirmation: (_) {
             addWebsiteNotifier.setStepError('Invalid Confirmation');
-
             log('invalid Confirmation');
           },
           other: (error) {
             addWebsiteNotifier.setStepError(error.message);
-
             log('error');
           },
           orElse: () {
             addWebsiteNotifier.setStepError('An error is occured');
-
             log('other');
           },
         );

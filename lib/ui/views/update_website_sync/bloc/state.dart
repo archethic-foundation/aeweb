@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:typed_data';
+
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -8,12 +10,17 @@ part 'state.freezed.dart';
 @freezed
 class UpdateWebsiteSyncFormState with _$UpdateWebsiteSyncFormState {
   const factory UpdateWebsiteSyncFormState({
-    @Default(0) int updateWebsiteSyncProcessStep,
+    @Default(0) int step,
+    @Default('') String stepError,
     @Default('') String name,
     @Default('') String genesisAddress,
     @Default('') String path,
     @Default('') String publicCertPath,
+    Uint8List? publicCert,
     @Default('') String privateKeyPath,
+    Uint8List? privateKey,
+    @Default(0.0) double globalFees,
+    bool? globalFeesValidated,
     bool? applyGitIgnoreRules,
     @Default('') String errorText,
     @Default({}) Map<String, HostingRefContentMetaData> localFiles,
@@ -22,6 +29,8 @@ class UpdateWebsiteSyncFormState with _$UpdateWebsiteSyncFormState {
   const UpdateWebsiteSyncFormState._();
 
   bool get isControlsOk => errorText == '';
+
+  bool get updateInProgress => step > 0 && step < 13 && stepError.isEmpty;
 
   bool get canUpdateWebsiteSync => isControlsOk;
 }

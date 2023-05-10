@@ -2,29 +2,37 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
-import 'package:aeweb/ui/views/util/components/stepper/bloc/provider.dart';
+import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:aeweb/util/transaction_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
-  Future<void> updateWebsite(
+  Future<void> run(
     WidgetRef ref,
     String websiteName,
     String path,
     Map<String, HostingRefContentMetaData> localFiles,
     List<HostingContentComparison> comparedFiles,
   ) async {
-    final aeStepperNotifier = ref.watch(AEStepperProvider.aeStepper.notifier);
+    final updateWebsiteSyncNotifier =
+        ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier)
+          ..setStep(0)
+          ..setStepError('')
+          ..setGlobalFees(0)
+          ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull('aeweb-$websiteName');
 
-    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
     log('Get last transaction reference');
-    aeStepperNotifier.setActiveIndex(3);
+    updateWebsiteSyncNotifier.setStep(1);
+
+    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
+
     final lastTransactionReferenceMap =
         await sl.get<ApiService>().getLastTransaction(
       [addressTxRef],
@@ -32,12 +40,17 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     );
     final lastTransactionReference = lastTransactionReferenceMap[addressTxRef];
     if (lastTransactionReference == null) {
+      updateWebsiteSyncNotifier
+          .setStepError('Unable to get the last transaction reference');
       log('Unable to get the last transaction reference');
       return;
     }
+
     final lastHostingTransactionReference = HostingRef.fromJson(
       jsonDecode(lastTransactionReference.data!.content!),
     );
+
+    updateWebsiteSyncNotifier.setStep(2);
 
     final newMetaData = <String, HostingRefContentMetaData>{};
     final filesNewOrUpdated = <String>[];
@@ -74,13 +87,13 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     }
 
     if (refChanged == false) {
+      updateWebsiteSyncNotifier.setStepError('No update necessary');
       log('No update necessary');
       return;
     }
 
-    aeStepperNotifier.setActiveIndex(1);
-
     log('Create files transactions');
+    updateWebsiteSyncNotifier.setStep(3);
     final contents = setContents(path, filesNewOrUpdated);
     var transactionsList = <Transaction>[];
     for (final content in contents) {
@@ -90,13 +103,18 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     }
 
     log('Sign ${transactionsList.length} files transactions');
-    aeStepperNotifier.setActiveIndex(2);
-
-    transactionsList = await signTx(
-      keychainWebsiteService,
-      'files',
-      transactionsList,
-    );
+    updateWebsiteSyncNotifier.setStep(4);
+    try {
+      transactionsList = await signTx(
+        keychainWebsiteService,
+        'files',
+        transactionsList,
+      );
+    } catch (e) {
+      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+      log('Signature failed');
+      return;
+    }
 
     final filesWithAddressNew =
         setAddressesInTxRef(transactionsList, newMetaData);
@@ -124,21 +142,27 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     });
 
     log('Create transaction reference');
-    aeStepperNotifier.setActiveIndex(3);
+    updateWebsiteSyncNotifier.setStep(5);
     var transactionReference =
         newTransactionReference(filesWithAddressWithLast);
 
     log('Sign transaction reference');
-    aeStepperNotifier.setActiveIndex(4);
-    transactionReference = (await signTx(
-      keychainWebsiteService,
-      '',
-      [transactionReference],
-    ))
-        .first;
+    updateWebsiteSyncNotifier.setStep(6);
+    try {
+      transactionReference = (await signTx(
+        keychainWebsiteService,
+        '',
+        [transactionReference],
+      ))
+          .first;
+    } catch (e) {
+      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+      log('Signature failed');
+      return;
+    }
 
     log('Fees calculation');
-    aeStepperNotifier.setActiveIndex(5);
+    updateWebsiteSyncNotifier.setStep(7);
     var feesFiles = 0.0;
     for (var i = 0; i < transactionsList.length; i++) {
       log('previousPublicKey: ${transactionsList[i].previousPublicKey!}');
@@ -152,8 +176,9 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     final feesRef = await calculateFees(transactionReference);
     log('feesRef: $feesRef');
 
+    updateWebsiteSyncNotifier.setStep(8);
+
     log('Create transfer transaction to manage fees');
-    aeStepperNotifier.setActiveIndex(6);
 
     final addressTxFiles =
         await getDeriveAddress(keychainWebsiteService, 'files');
@@ -167,28 +192,73 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
       transactionTransfer.addUCOTransfer(addressTxFiles, toBigInt(feesFiles));
     }
 
+    updateWebsiteSyncNotifier.setStep(9);
+
     final currentNameAccount = await getCurrentAccount();
     log('Sign transaction transfer');
-    aeStepperNotifier.setActiveIndex(7);
+    try {
+      transactionTransfer = (await signTx(
+        Uri.encodeFull('archethic-wallet-$currentNameAccount'),
+        '',
+        [transactionTransfer],
+      ))
+          .first;
+    } catch (e) {
+      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+      log('Signature failed');
+      return;
+    }
 
-    transactionTransfer = (await signTx(
-      Uri.encodeFull('archethic-wallet-$currentNameAccount'),
-      '',
-      [transactionTransfer],
-    ))
-        .first;
-
+    updateWebsiteSyncNotifier.setStep(10);
     final feesTrf = await calculateFees(transactionTransfer);
 
+    updateWebsiteSyncNotifier.setGlobalFees(feesFiles + feesTrf + feesRef);
     log('Global fees : ${feesFiles + feesTrf + feesRef} UCO');
 
-    aeStepperNotifier.setActiveIndex(8);
     var transactionRepository = ArchethicTransactionSender(
       phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
       websocketEndpoint:
           '${sl.get<ApiService>().endpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket',
     );
 
+    updateWebsiteSyncNotifier.setStep(11);
+    final startTime = DateTime.now();
+    var timeout = false;
+    while (ref
+            .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
+            .globalFeesValidated ==
+        null) {
+      if (DateTime.now().difference(startTime).inSeconds >= 60) {
+        log('Timeout');
+        timeout = true;
+      }
+      if (timeout) {
+        break;
+      }
+      await Future.delayed(const Duration(seconds: 1));
+    }
+
+    if (ref
+            .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
+            .globalFeesValidated ==
+        null) {
+      updateWebsiteSyncNotifier.setStepError(
+        "La mise à jour du site web n'a pas été déployée car vous n'avez pas validé les frais à temps.",
+      );
+      return;
+    }
+
+    if (ref
+            .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
+            .globalFeesValidated ==
+        false) {
+      updateWebsiteSyncNotifier.setStepError(
+        "La mise à jour du site web n'a pas été déployée car les frais n'ont pas été validés.",
+      );
+      return;
+    }
+
+    updateWebsiteSyncNotifier.setStep(12);
     await transactionRepository.send(
       transaction: transactionTransfer,
       onConfirmation: (confirmation) async {
@@ -218,24 +288,33 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
               transactionRepository.close();
               error.maybeMap(
                 connectivity: (_) {
+                  updateWebsiteSyncNotifier.setStepError('No connection');
                   log('no connection');
                 },
                 consensusNotReached: (_) {
+                  updateWebsiteSyncNotifier
+                      .setStepError('Consensus not reached');
                   log('consensus not reached');
                 },
                 timeout: (_) {
+                  updateWebsiteSyncNotifier.setStepError('Timeout');
                   log('timeout');
                 },
                 invalidConfirmation: (_) {
+                  updateWebsiteSyncNotifier
+                      .setStepError('Invalid Confirmation');
                   log('invalid Confirmation');
                 },
                 other: (error) {
+                  updateWebsiteSyncNotifier.setStepError(error.message);
                   log('error');
                 },
                 orElse: () {
+                  updateWebsiteSyncNotifier.setStepError('An error is occured');
                   log('other');
                 },
               );
+              return;
             },
           );
         }
@@ -243,27 +322,39 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
       onError: (error) async {
         error.maybeMap(
           connectivity: (_) {
+            updateWebsiteSyncNotifier.setStepError('No connection');
             log('no connection');
           },
           consensusNotReached: (_) {
+            updateWebsiteSyncNotifier.setStepError('Consensus not reached');
             log('consensus not reached');
           },
           timeout: (_) {
+            updateWebsiteSyncNotifier.setStepError('Timeout');
             log('timeout');
           },
           invalidConfirmation: (_) {
+            updateWebsiteSyncNotifier.setStepError('Invalid Confirmation');
             log('invalid Confirmation');
           },
           other: (error) {
+            updateWebsiteSyncNotifier.setStepError(error.message);
             log('error');
           },
           orElse: () {
+            updateWebsiteSyncNotifier.setStepError('An error is occured');
             log('other');
           },
         );
+        return;
       },
     );
-    aeStepperNotifier.setActiveIndex(9);
-    log('Website is deployed at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+    if (ref
+        .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
+        .stepError
+        .isEmpty) {
+      updateWebsiteSyncNotifier.setStep(13);
+      log("Website's update is deployed at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef");
+    }
   }
 }

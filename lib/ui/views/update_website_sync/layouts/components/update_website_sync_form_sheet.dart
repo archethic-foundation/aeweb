@@ -1,9 +1,13 @@
+import 'package:aeweb/header.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_comparison_list.dart';
-import 'package:aeweb/ui/views/util/components/ae_stepper.dart';
+import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_steps.dart';
+import 'package:aeweb/ui/views/util/components/resizable_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+
+part 'update_website_sync_bottom_bar.dart';
 
 class UpdateWebsiteSyncFormSheet extends ConsumerWidget {
   const UpdateWebsiteSyncFormSheet({super.key});
@@ -13,54 +17,27 @@ class UpdateWebsiteSyncFormSheet extends ConsumerWidget {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: const Text('Host a new website on Archethic Blockchain'),
-      ),
       body: Padding(
         padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
         child: Column(
           children: [
+            const Header(),
             Expanded(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: const [
-                  Expanded(
-                    child: UpdateWebsiteSyncComparisonSheet(),
+              child: ResizableBox(
+                width: MediaQuery.of(context).size.width - 100,
+                childLeft: const UpdateWebsiteSyncComparisonSheet(),
+                childRight: Card(
+                  color: Theme.of(context).colorScheme.surface,
+                  elevation: 0,
+                  clipBehavior: Clip.antiAlias,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(),
+                    child: const UpdateWebsiteSyncSteps(),
                   ),
-                  SizedBox(width: 50),
-                  AEStepper(),
-                ],
+                ),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
-              child: Row(
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      context.go('/');
-                    },
-                    child: const Text(
-                      'Back',
-                    ),
-                  ),
-                  const SizedBox(width: 10),
-                  ElevatedButton(
-                    onPressed: () async {
-                      final updateWebsiteSyncNotifier = ref.watch(
-                        UpdateWebsiteSyncFormProvider
-                            .updateWebsiteSyncForm.notifier,
-                      );
-                      await updateWebsiteSyncNotifier.update(context, ref);
-                    },
-                    child: Text(
-                      'Update website',
-                      style: Theme.of(context).textTheme.labelLarge,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const UpdateWebsiteSyncBottomBar(),
           ],
         ),
       ),

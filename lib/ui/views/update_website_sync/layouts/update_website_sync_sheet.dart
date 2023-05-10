@@ -3,9 +3,6 @@ import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_form_sheet.dart';
-import 'package:aeweb/ui/views/util/components/stepper/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/components/stepper/bloc/state.dart';
-import 'package:another_stepper/another_stepper.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,69 +23,6 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
   final Map<String, HostingRefContentMetaData> localFiles;
   final List<HostingContentComparison> comparedFiles;
 
-  List<StepperData> getStepperDatas(BuildContext context) {
-    return <StepperData>[
-      StepperData(
-        title: StepperText(
-          'Creation of transactions containing the content of the files updated',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-      ),
-      StepperData(
-        title: StepperText(
-          'Signature of transactions containing the content of the files updated',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-        subtitle: StepperText('Operation performed by the wallet'),
-      ),
-      StepperData(
-        title: StepperText(
-          'Creation of the new reference transaction',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-      ),
-      StepperData(
-        title: StepperText(
-          'Signature of the new reference transaction',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-        subtitle: StepperText('Operation performed by the wallet'),
-      ),
-      StepperData(
-        title: StepperText(
-          'Fees calculation',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-      ),
-      StepperData(
-        title: StepperText(
-          'Creation of the transfer transaction',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-        subtitle: StepperText('To manage fees from your current account'),
-      ),
-      StepperData(
-        title: StepperText(
-          'Signature of the transfer transaction',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-        subtitle: StepperText('Operation performed by the wallet'),
-      ),
-      StepperData(
-        title: StepperText(
-          'Send transactions to the blockchain',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-      ),
-      StepperData(
-        title: StepperText(
-          'Your website is updated',
-          textStyle: Theme.of(context).textTheme.labelLarge,
-        ),
-      ),
-    ];
-  }
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return ProviderScope(
@@ -103,13 +37,6 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
             comparedFiles: comparedFiles,
           ),
         ),
-        AEStepperProvider.initialAEStepper.overrideWithValue(
-          AEStepperState(
-            stepperList: getStepperDatas(context),
-            activeIndex: 0,
-            axis: Axis.vertical,
-          ),
-        )
       ],
       child: const UpdateWebsiteSyncSheetBody(),
     );

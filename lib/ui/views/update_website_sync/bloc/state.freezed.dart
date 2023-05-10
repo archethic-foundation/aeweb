@@ -16,12 +16,17 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UpdateWebsiteSyncFormState {
-  int get updateWebsiteSyncProcessStep => throw _privateConstructorUsedError;
+  int get step => throw _privateConstructorUsedError;
+  String get stepError => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get genesisAddress => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
   String get publicCertPath => throw _privateConstructorUsedError;
+  Uint8List? get publicCert => throw _privateConstructorUsedError;
   String get privateKeyPath => throw _privateConstructorUsedError;
+  Uint8List? get privateKey => throw _privateConstructorUsedError;
+  double get globalFees => throw _privateConstructorUsedError;
+  bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get applyGitIgnoreRules => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
   Map<String, HostingRefContentMetaData> get localFiles =>
@@ -42,12 +47,17 @@ abstract class $UpdateWebsiteSyncFormStateCopyWith<$Res> {
           UpdateWebsiteSyncFormState>;
   @useResult
   $Res call(
-      {int updateWebsiteSyncProcessStep,
+      {int step,
+      String stepError,
       String name,
       String genesisAddress,
       String path,
       String publicCertPath,
+      Uint8List? publicCert,
       String privateKeyPath,
+      Uint8List? privateKey,
+      double globalFees,
+      bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText,
       Map<String, HostingRefContentMetaData> localFiles,
@@ -68,22 +78,31 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? updateWebsiteSyncProcessStep = null,
+    Object? step = null,
+    Object? stepError = null,
     Object? name = null,
     Object? genesisAddress = null,
     Object? path = null,
     Object? publicCertPath = null,
+    Object? publicCert = freezed,
     Object? privateKeyPath = null,
+    Object? privateKey = freezed,
+    Object? globalFees = null,
+    Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
     Object? localFiles = null,
     Object? comparedFiles = null,
   }) {
     return _then(_value.copyWith(
-      updateWebsiteSyncProcessStep: null == updateWebsiteSyncProcessStep
-          ? _value.updateWebsiteSyncProcessStep
-          : updateWebsiteSyncProcessStep // ignore: cast_nullable_to_non_nullable
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
               as int,
+      stepError: null == stepError
+          ? _value.stepError
+          : stepError // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -100,10 +119,26 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
           ? _value.publicCertPath
           : publicCertPath // ignore: cast_nullable_to_non_nullable
               as String,
+      publicCert: freezed == publicCert
+          ? _value.publicCert
+          : publicCert // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       privateKeyPath: null == privateKeyPath
           ? _value.privateKeyPath
           : privateKeyPath // ignore: cast_nullable_to_non_nullable
               as String,
+      privateKey: freezed == privateKey
+          ? _value.privateKey
+          : privateKey // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      globalFees: null == globalFees
+          ? _value.globalFees
+          : globalFees // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesValidated: freezed == globalFeesValidated
+          ? _value.globalFeesValidated
+          : globalFeesValidated // ignore: cast_nullable_to_non_nullable
+              as bool?,
       applyGitIgnoreRules: freezed == applyGitIgnoreRules
           ? _value.applyGitIgnoreRules
           : applyGitIgnoreRules // ignore: cast_nullable_to_non_nullable
@@ -134,12 +169,17 @@ abstract class _$$_UpdateWebsiteSyncFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int updateWebsiteSyncProcessStep,
+      {int step,
+      String stepError,
       String name,
       String genesisAddress,
       String path,
       String publicCertPath,
+      Uint8List? publicCert,
       String privateKeyPath,
+      Uint8List? privateKey,
+      double globalFees,
+      bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText,
       Map<String, HostingRefContentMetaData> localFiles,
@@ -159,22 +199,31 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? updateWebsiteSyncProcessStep = null,
+    Object? step = null,
+    Object? stepError = null,
     Object? name = null,
     Object? genesisAddress = null,
     Object? path = null,
     Object? publicCertPath = null,
+    Object? publicCert = freezed,
     Object? privateKeyPath = null,
+    Object? privateKey = freezed,
+    Object? globalFees = null,
+    Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
     Object? localFiles = null,
     Object? comparedFiles = null,
   }) {
     return _then(_$_UpdateWebsiteSyncFormState(
-      updateWebsiteSyncProcessStep: null == updateWebsiteSyncProcessStep
-          ? _value.updateWebsiteSyncProcessStep
-          : updateWebsiteSyncProcessStep // ignore: cast_nullable_to_non_nullable
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
               as int,
+      stepError: null == stepError
+          ? _value.stepError
+          : stepError // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -191,10 +240,26 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
           ? _value.publicCertPath
           : publicCertPath // ignore: cast_nullable_to_non_nullable
               as String,
+      publicCert: freezed == publicCert
+          ? _value.publicCert
+          : publicCert // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       privateKeyPath: null == privateKeyPath
           ? _value.privateKeyPath
           : privateKeyPath // ignore: cast_nullable_to_non_nullable
               as String,
+      privateKey: freezed == privateKey
+          ? _value.privateKey
+          : privateKey // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      globalFees: null == globalFees
+          ? _value.globalFees
+          : globalFees // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesValidated: freezed == globalFeesValidated
+          ? _value.globalFeesValidated
+          : globalFeesValidated // ignore: cast_nullable_to_non_nullable
+              as bool?,
       applyGitIgnoreRules: freezed == applyGitIgnoreRules
           ? _value.applyGitIgnoreRules
           : applyGitIgnoreRules // ignore: cast_nullable_to_non_nullable
@@ -219,12 +284,17 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
 
 class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   const _$_UpdateWebsiteSyncFormState(
-      {this.updateWebsiteSyncProcessStep = 0,
+      {this.step = 0,
+      this.stepError = '',
       this.name = '',
       this.genesisAddress = '',
       this.path = '',
       this.publicCertPath = '',
+      this.publicCert,
       this.privateKeyPath = '',
+      this.privateKey,
+      this.globalFees = 0.0,
+      this.globalFeesValidated,
       this.applyGitIgnoreRules,
       this.errorText = '',
       final Map<String, HostingRefContentMetaData> localFiles = const {},
@@ -235,7 +305,10 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
 
   @override
   @JsonKey()
-  final int updateWebsiteSyncProcessStep;
+  final int step;
+  @override
+  @JsonKey()
+  final String stepError;
   @override
   @JsonKey()
   final String name;
@@ -249,8 +322,17 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   @JsonKey()
   final String publicCertPath;
   @override
+  final Uint8List? publicCert;
+  @override
   @JsonKey()
   final String privateKeyPath;
+  @override
+  final Uint8List? privateKey;
+  @override
+  @JsonKey()
+  final double globalFees;
+  @override
+  final bool? globalFeesValidated;
   @override
   final bool? applyGitIgnoreRules;
   @override
@@ -276,7 +358,7 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
 
   @override
   String toString() {
-    return 'UpdateWebsiteSyncFormState(updateWebsiteSyncProcessStep: $updateWebsiteSyncProcessStep, name: $name, genesisAddress: $genesisAddress, path: $path, publicCertPath: $publicCertPath, privateKeyPath: $privateKeyPath, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
+    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, genesisAddress: $genesisAddress, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
   }
 
   @override
@@ -284,18 +366,25 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UpdateWebsiteSyncFormState &&
-            (identical(other.updateWebsiteSyncProcessStep,
-                    updateWebsiteSyncProcessStep) ||
-                other.updateWebsiteSyncProcessStep ==
-                    updateWebsiteSyncProcessStep) &&
+            (identical(other.step, step) || other.step == step) &&
+            (identical(other.stepError, stepError) ||
+                other.stepError == stepError) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.genesisAddress, genesisAddress) ||
                 other.genesisAddress == genesisAddress) &&
             (identical(other.path, path) || other.path == path) &&
             (identical(other.publicCertPath, publicCertPath) ||
                 other.publicCertPath == publicCertPath) &&
+            const DeepCollectionEquality()
+                .equals(other.publicCert, publicCert) &&
             (identical(other.privateKeyPath, privateKeyPath) ||
                 other.privateKeyPath == privateKeyPath) &&
+            const DeepCollectionEquality()
+                .equals(other.privateKey, privateKey) &&
+            (identical(other.globalFees, globalFees) ||
+                other.globalFees == globalFees) &&
+            (identical(other.globalFeesValidated, globalFeesValidated) ||
+                other.globalFeesValidated == globalFeesValidated) &&
             (identical(other.applyGitIgnoreRules, applyGitIgnoreRules) ||
                 other.applyGitIgnoreRules == applyGitIgnoreRules) &&
             (identical(other.errorText, errorText) ||
@@ -309,12 +398,17 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      updateWebsiteSyncProcessStep,
+      step,
+      stepError,
       name,
       genesisAddress,
       path,
       publicCertPath,
+      const DeepCollectionEquality().hash(publicCert),
       privateKeyPath,
+      const DeepCollectionEquality().hash(privateKey),
+      globalFees,
+      globalFeesValidated,
       applyGitIgnoreRules,
       errorText,
       const DeepCollectionEquality().hash(_localFiles),
@@ -330,12 +424,17 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
 
 abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   const factory _UpdateWebsiteSyncFormState(
-          {final int updateWebsiteSyncProcessStep,
+          {final int step,
+          final String stepError,
           final String name,
           final String genesisAddress,
           final String path,
           final String publicCertPath,
+          final Uint8List? publicCert,
           final String privateKeyPath,
+          final Uint8List? privateKey,
+          final double globalFees,
+          final bool? globalFeesValidated,
           final bool? applyGitIgnoreRules,
           final String errorText,
           final Map<String, HostingRefContentMetaData> localFiles,
@@ -344,7 +443,9 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   const _UpdateWebsiteSyncFormState._() : super._();
 
   @override
-  int get updateWebsiteSyncProcessStep;
+  int get step;
+  @override
+  String get stepError;
   @override
   String get name;
   @override
@@ -354,7 +455,15 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   @override
   String get publicCertPath;
   @override
+  Uint8List? get publicCert;
+  @override
   String get privateKeyPath;
+  @override
+  Uint8List? get privateKey;
+  @override
+  double get globalFees;
+  @override
+  bool? get globalFeesValidated;
   @override
   bool? get applyGitIgnoreRules;
   @override

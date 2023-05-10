@@ -71,23 +71,19 @@ mixin TransactionMixin {
   ) async {
     final newTransactions = <Transaction>[];
 
-    log(
-      {
-        'serviceName': serviceName,
-        'pathSuffix': pathSuffix,
-        'transactions': List<dynamic>.from(
-          transactions.map((Transaction x) => x.toJson()),
-        ),
-      }.toString(),
-    );
-
-    final result = await sl.get<ArchethicDAppClient>().signTransactions({
+    final payload = {
       'serviceName': serviceName,
       'pathSuffix': pathSuffix,
       'transactions': List<dynamic>.from(
         transactions.map((Transaction x) => x.toJson()),
       ),
-    });
+    };
+    log(
+      payload.toString(),
+    );
+
+    final result =
+        await sl.get<ArchethicDAppClient>().signTransactions(payload);
     result.when(
       failure: (failure) {
         log(

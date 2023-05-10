@@ -23,29 +23,13 @@ part 'add_website_select_public_cert_path.dart';
 part 'add_website_switch_gitignore.dart';
 part 'add_website_textfield_name.dart';
 
-class AddWebsiteFormSheet extends ConsumerStatefulWidget {
+class AddWebsiteFormSheet extends ConsumerWidget {
   const AddWebsiteFormSheet({super.key});
 
   @override
-  AddWebsiteFormSheetState createState() => AddWebsiteFormSheetState();
-}
+  Widget build(BuildContext context, WidgetRef ref) {
+    final _formKey = GlobalKey<FormState>();
 
-class AddWebsiteFormSheetState extends ConsumerState<AddWebsiteFormSheet>
-    with FileMixin {
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  final websiteNameTextController = TextEditingController(
-    text: '',
-  );
-
-  @override
-  void dispose() {
-    websiteNameTextController.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
@@ -70,27 +54,30 @@ class AddWebsiteFormSheetState extends ConsumerState<AddWebsiteFormSheet>
                     padding: const EdgeInsets.all(
                       20,
                     ),
-                    child: Scrollbar(
-                      thumbVisibility: true,
-                      child: SingleChildScrollView(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Ready to experience the future of decentralized ownership?\nDeploy your website on AEWeb and enjoy the benefits of 100% security, tamperproof technology, and optimized scalability.',
-                              style: textTheme.labelMedium,
-                            ),
-                            const SizedBox(height: 16),
-                            const AddWebsiteTextFieldName(),
-                            const SizedBox(height: 16),
-                            const AddWebsiteSelectPath(),
-                            const SizedBox(height: 16),
-                            const AddWebsiteSwitchGitignore(),
-                            const SizedBox(height: 16),
-                            const AddWebsiteSelectPublicCertPath(),
-                            const SizedBox(height: 16),
-                            const AddWebsiteSelectPrivateKeyPath(),
-                          ],
+                    child: SizedBox(
+                      height: MediaQuery.of(context).size.height,
+                      child: Scrollbar(
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Ready to experience the future of decentralized ownership?\nDeploy your website on AEWeb and enjoy the benefits of 100% security, tamperproof technology, and optimized scalability.',
+                                style: textTheme.labelMedium,
+                              ),
+                              const SizedBox(height: 16),
+                              const AddWebsiteTextFieldName(),
+                              const SizedBox(height: 16),
+                              const AddWebsiteSelectPath(),
+                              const SizedBox(height: 16),
+                              const AddWebsiteSwitchGitignore(),
+                              const SizedBox(height: 16),
+                              const AddWebsiteSelectPublicCertPath(),
+                              const SizedBox(height: 16),
+                              const AddWebsiteSelectPrivateKeyPath(),
+                            ],
+                          ),
                         ),
                       ),
                     ),
