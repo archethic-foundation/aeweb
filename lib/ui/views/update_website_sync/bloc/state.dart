@@ -19,6 +19,8 @@ class UpdateWebsiteSyncFormState with _$UpdateWebsiteSyncFormState {
     Uint8List? publicCert,
     @Default('') String privateKeyPath,
     Uint8List? privateKey,
+    @Default('') String zipFilePath,
+    Uint8List? zipFile,
     @Default(0.0) double globalFees,
     bool? globalFeesValidated,
     bool? applyGitIgnoreRules,

@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:typed_data';
-
 import 'package:aeweb/domain/usecases/website/add_website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:flutter/foundation.dart';

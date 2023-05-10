@@ -4,6 +4,7 @@ import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_form_sheet.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -13,6 +14,7 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
     required this.websiteName,
     required this.genesisAddress,
     required this.path,
+    required this.zipFile,
     required this.localFiles,
     required this.comparedFiles,
   });
@@ -20,6 +22,7 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
   final String websiteName;
   final String genesisAddress;
   final String path;
+  final Uint8List zipFile;
   final Map<String, HostingRefContentMetaData> localFiles;
   final List<HostingContentComparison> comparedFiles;
 
@@ -33,6 +36,7 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
             name: websiteName,
             genesisAddress: genesisAddress,
             path: path,
+            zipFile: zipFile,
             localFiles: localFiles,
             comparedFiles: comparedFiles,
           ),

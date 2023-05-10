@@ -25,7 +25,8 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
     final resultCreate = await createWebsiteServiceInKeychain(
-        ref.read(AddWebsiteFormProvider.addWebsiteForm).name);
+      ref.read(AddWebsiteFormProvider.addWebsiteForm).name,
+    );
     if (resultCreate is Failure) {
       addWebsiteNotifier.setStepError(resultCreate.message!);
       log('Transaction failed');
@@ -63,12 +64,14 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
     late final List<Map<String, dynamic>> contents;
     if (kIsWeb) {
       contents = setContentsFromZip(
-          ref.read(AddWebsiteFormProvider.addWebsiteForm).zipFile!,
-          files.keys.toList());
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).zipFile!,
+        files.keys.toList(),
+      );
     } else {
       contents = setContentsFromPath(
-          ref.read(AddWebsiteFormProvider.addWebsiteForm).path,
-          files.keys.toList());
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).path,
+        files.keys.toList(),
+      );
     }
 
     var transactionsList = <Transaction>[];
@@ -80,7 +83,8 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
 
     log('Sign ${transactionsList.length} files transactions');
     final keychainWebsiteService = Uri.encodeFull(
-        'aeweb-${ref.read(AddWebsiteFormProvider.addWebsiteForm).name}');
+      'aeweb-${ref.read(AddWebsiteFormProvider.addWebsiteForm).name}',
+    );
     addWebsiteNotifier.setStep(4);
     try {
       transactionsList = await signTx(

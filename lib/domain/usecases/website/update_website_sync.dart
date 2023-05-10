@@ -9,6 +9,7 @@ import 'package:aeweb/util/get_it_instance.dart';
 import 'package:aeweb/util/transaction_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
@@ -23,7 +24,8 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
           ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
-        'aeweb-${ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).name})');
+      'aeweb-${ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).name}',
+    );
 
     log('Get last transaction reference');
     updateWebsiteSyncNotifier.setStep(1);
@@ -97,9 +99,19 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
 
     log('Create files transactions');
     updateWebsiteSyncNotifier.setStep(3);
-    final contents = setContentsFromPath(
+    late final List<Map<String, dynamic>> contents;
+    if (kIsWeb) {
+      contents = setContentsFromZip(
+        ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).zipFile!,
+        filesNewOrUpdated,
+      );
+    } else {
+      contents = setContentsFromPath(
         ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).path,
-        filesNewOrUpdated);
+        filesNewOrUpdated,
+      );
+    }
+
     var transactionsList = <Transaction>[];
     for (final content in contents) {
       transactionsList.add(

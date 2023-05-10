@@ -110,6 +110,9 @@ class MyApp extends ConsumerWidget {
                   ? ''
                   : args['genesisAddress']! as String,
               path: args['path'] == null ? '' : args['path']! as String,
+              zipFile: args['zipFile'] == null
+                  ? Uint8List.fromList([])
+                  : args['zipFile']! as Uint8List,
               localFiles: args['localFiles'] == null
                   ? <String, HostingRefContentMetaData>{}
                   : args['localFiles']!

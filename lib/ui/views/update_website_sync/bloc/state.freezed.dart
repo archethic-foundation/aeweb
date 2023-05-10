@@ -25,6 +25,8 @@ mixin _$UpdateWebsiteSyncFormState {
   Uint8List? get publicCert => throw _privateConstructorUsedError;
   String get privateKeyPath => throw _privateConstructorUsedError;
   Uint8List? get privateKey => throw _privateConstructorUsedError;
+  String get zipFilePath => throw _privateConstructorUsedError;
+  Uint8List? get zipFile => throw _privateConstructorUsedError;
   double get globalFees => throw _privateConstructorUsedError;
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get applyGitIgnoreRules => throw _privateConstructorUsedError;
@@ -56,6 +58,8 @@ abstract class $UpdateWebsiteSyncFormStateCopyWith<$Res> {
       Uint8List? publicCert,
       String privateKeyPath,
       Uint8List? privateKey,
+      String zipFilePath,
+      Uint8List? zipFile,
       double globalFees,
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
@@ -87,6 +91,8 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
     Object? publicCert = freezed,
     Object? privateKeyPath = null,
     Object? privateKey = freezed,
+    Object? zipFilePath = null,
+    Object? zipFile = freezed,
     Object? globalFees = null,
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
@@ -130,6 +136,14 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
       privateKey: freezed == privateKey
           ? _value.privateKey
           : privateKey // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      zipFilePath: null == zipFilePath
+          ? _value.zipFilePath
+          : zipFilePath // ignore: cast_nullable_to_non_nullable
+              as String,
+      zipFile: freezed == zipFile
+          ? _value.zipFile
+          : zipFile // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
       globalFees: null == globalFees
           ? _value.globalFees
@@ -178,6 +192,8 @@ abstract class _$$_UpdateWebsiteSyncFormStateCopyWith<$Res>
       Uint8List? publicCert,
       String privateKeyPath,
       Uint8List? privateKey,
+      String zipFilePath,
+      Uint8List? zipFile,
       double globalFees,
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
@@ -208,6 +224,8 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
     Object? publicCert = freezed,
     Object? privateKeyPath = null,
     Object? privateKey = freezed,
+    Object? zipFilePath = null,
+    Object? zipFile = freezed,
     Object? globalFees = null,
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
@@ -252,6 +270,14 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
           ? _value.privateKey
           : privateKey // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
+      zipFilePath: null == zipFilePath
+          ? _value.zipFilePath
+          : zipFilePath // ignore: cast_nullable_to_non_nullable
+              as String,
+      zipFile: freezed == zipFile
+          ? _value.zipFile
+          : zipFile // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       globalFees: null == globalFees
           ? _value.globalFees
           : globalFees // ignore: cast_nullable_to_non_nullable
@@ -293,6 +319,8 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
       this.publicCert,
       this.privateKeyPath = '',
       this.privateKey,
+      this.zipFilePath = '',
+      this.zipFile,
       this.globalFees = 0.0,
       this.globalFeesValidated,
       this.applyGitIgnoreRules,
@@ -330,6 +358,11 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   final Uint8List? privateKey;
   @override
   @JsonKey()
+  final String zipFilePath;
+  @override
+  final Uint8List? zipFile;
+  @override
+  @JsonKey()
   final double globalFees;
   @override
   final bool? globalFeesValidated;
@@ -358,7 +391,7 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
 
   @override
   String toString() {
-    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, genesisAddress: $genesisAddress, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
+    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, genesisAddress: $genesisAddress, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
   }
 
   @override
@@ -381,6 +414,9 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
                 other.privateKeyPath == privateKeyPath) &&
             const DeepCollectionEquality()
                 .equals(other.privateKey, privateKey) &&
+            (identical(other.zipFilePath, zipFilePath) ||
+                other.zipFilePath == zipFilePath) &&
+            const DeepCollectionEquality().equals(other.zipFile, zipFile) &&
             (identical(other.globalFees, globalFees) ||
                 other.globalFees == globalFees) &&
             (identical(other.globalFeesValidated, globalFeesValidated) ||
@@ -407,6 +443,8 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
       const DeepCollectionEquality().hash(publicCert),
       privateKeyPath,
       const DeepCollectionEquality().hash(privateKey),
+      zipFilePath,
+      const DeepCollectionEquality().hash(zipFile),
       globalFees,
       globalFeesValidated,
       applyGitIgnoreRules,
@@ -433,6 +471,8 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
           final Uint8List? publicCert,
           final String privateKeyPath,
           final Uint8List? privateKey,
+          final String zipFilePath,
+          final Uint8List? zipFile,
           final double globalFees,
           final bool? globalFeesValidated,
           final bool? applyGitIgnoreRules,
@@ -460,6 +500,10 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   String get privateKeyPath;
   @override
   Uint8List? get privateKey;
+  @override
+  String get zipFilePath;
+  @override
+  Uint8List? get zipFile;
   @override
   double get globalFees;
   @override

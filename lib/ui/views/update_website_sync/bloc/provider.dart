@@ -74,6 +74,14 @@ class UpdateWebsiteSyncFormNotifier
     );
   }
 
+  void setZipFilePath(
+    String zipFilePath,
+  ) {
+    state = state.copyWith(
+      zipFilePath: zipFilePath,
+    );
+  }
+
   void setPublicCert(
     Uint8List publicCert,
   ) {
@@ -119,6 +127,14 @@ class UpdateWebsiteSyncFormNotifier
   void setGlobalFeesValidated(bool? globalFeesValidated) {
     state = state.copyWith(
       globalFeesValidated: globalFeesValidated,
+    );
+  }
+
+  void setZipFile(
+    Uint8List zipFile,
+  ) {
+    state = state.copyWith(
+      zipFile: zipFile,
     );
   }
 

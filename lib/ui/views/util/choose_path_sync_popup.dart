@@ -3,7 +3,9 @@ import 'dart:developer';
 import 'package:aeweb/domain/usecases/website/read_website.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -15,6 +17,7 @@ class PathSyncPopup with FileMixin {
     String genesisAddress,
   ) async {
     String? path;
+    Uint8List? zipFile;
     bool? applyGitIgnoreRules;
     late final _colorScheme = Theme.of(context).colorScheme;
     final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
@@ -56,41 +59,87 @@ class PathSyncPopup with FileMixin {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisSize: MainAxisSize.min,
                             children: <Widget>[
-                              Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      const Text(
-                                        'Sélectionnez le dossier racine de votre site web',
-                                      ),
-                                      const SizedBox(width: 2),
-                                      TextButton(
-                                        onPressed: () async {
-                                          try {
-                                            final result = await FilePicker
-                                                .platform
-                                                .getDirectoryPath();
-                                            if (result != null) {
-                                              setState(
-                                                () {
-                                                  path = '$result/';
-                                                },
+                              if (kIsWeb)
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Sélectionnez le fichier zip contenant la mise à jour de votre site web',
+                                        ),
+                                        const SizedBox(width: 2),
+                                        TextButton(
+                                          onPressed: () async {
+                                            try {
+                                              final result = await FilePicker
+                                                  .platform
+                                                  .pickFiles(
+                                                type: FileType.custom,
+                                                allowedExtensions: [
+                                                  'zip',
+                                                  '7z'
+                                                ],
                                               );
+                                              if (result != null) {
+                                                zipFile =
+                                                    result.files.first.bytes;
+                                                setState(
+                                                  () {
+                                                    path =
+                                                        result.files.first.name;
+                                                  },
+                                                );
+                                              }
+                                            } on Exception catch (e) {
+                                              log('Error while picking folder: $e');
                                             }
-                                          } on Exception catch (e) {
-                                            log('Error while picking folder: $e');
-                                          }
-                                        },
-                                        child: const Icon(Icons.folder),
-                                      ),
-                                    ],
-                                  ),
-                                  Text(
-                                    path ?? '',
-                                  ),
-                                ],
-                              ),
+                                          },
+                                          child: const Icon(Icons.folder),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      path ?? '',
+                                    ),
+                                  ],
+                                )
+                              else
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        const Text(
+                                          'Sélectionnez le dossier racine de votre site web',
+                                        ),
+                                        const SizedBox(width: 2),
+                                        TextButton(
+                                          onPressed: () async {
+                                            try {
+                                              final result = await FilePicker
+                                                  .platform
+                                                  .getDirectoryPath();
+                                              if (result != null) {
+                                                setState(
+                                                  () {
+                                                    path = '$result/';
+                                                  },
+                                                );
+                                              }
+                                            } on Exception catch (e) {
+                                              log('Error while picking folder: $e');
+                                            }
+                                          },
+                                          child: const Icon(Icons.folder),
+                                        ),
+                                      ],
+                                    ),
+                                    Text(
+                                      path ?? '',
+                                    ),
+                                  ],
+                                ),
                               const SizedBox(
                                 height: 20,
                               ),
@@ -129,15 +178,44 @@ class PathSyncPopup with FileMixin {
                                 ),
                                 child: ElevatedButton(
                                   onPressed: () async {
-                                    if (path == null || path!.isEmpty) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Please, select a folder',
+                                    late final Map<String,
+                                        HostingRefContentMetaData>? localFiles;
+                                    if (kIsWeb) {
+                                      if (zipFile == null) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Please, select a zip file',
+                                            ),
+                                            duration: Duration(seconds: 3),
                                           ),
-                                          duration: Duration(seconds: 3),
-                                        ),
+                                        );
+                                      }
+                                      localFiles =
+                                          await FileMixin.listFilesFromZip(
+                                        zipFile!,
+                                        applyGitIgnoreRules:
+                                            applyGitIgnoreRules ?? false,
+                                      );
+                                    } else {
+                                      if (path == null || path!.isEmpty) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          const SnackBar(
+                                            content: Text(
+                                              'Please, select a folder',
+                                            ),
+                                            duration: Duration(seconds: 3),
+                                          ),
+                                        );
+                                      }
+
+                                      localFiles =
+                                          await FileMixin.listFilesFromPath(
+                                        path!,
+                                        applyGitIgnoreRules:
+                                            applyGitIgnoreRules ?? false,
                                       );
                                     }
 
@@ -148,19 +226,14 @@ class PathSyncPopup with FileMixin {
                                             .content!
                                             .metaData;
 
-                                    final localFiles =
-                                        await FileMixin.listFilesFromPath(
-                                      path!,
-                                      applyGitIgnoreRules:
-                                          applyGitIgnoreRules ?? false,
-                                    );
-
                                     context.goNamed(
                                       'updateWebsiteSync',
                                       extra: {
                                         'websiteName': websiteName,
                                         'genesisAddress': genesisAddress,
-                                        'path': path,
+                                        'path': path ?? '',
+                                        'zipFile':
+                                            zipFile ?? Uint8List.fromList([]),
                                         'localFiles': localFiles,
                                         'comparedFiles': SyncWebsiteUseCases()
                                             .compareFileLists(

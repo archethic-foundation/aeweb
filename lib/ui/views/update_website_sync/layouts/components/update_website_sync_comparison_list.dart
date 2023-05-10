@@ -2,6 +2,7 @@ import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 
 class UpdateWebsiteSyncComparisonSheet extends ConsumerStatefulWidget {
   const UpdateWebsiteSyncComparisonSheet({
@@ -73,22 +74,22 @@ class UpdateWebsiteSyncComparisonSheetState
                 String statusText;
                 switch (file.status) {
                   case HostingContentComparisonStatus.localOnly:
-                    iconData = Icons.cloud_upload;
+                    iconData = Iconsax.document;
                     iconColor = Colors.orange;
                     statusText = 'Local only';
                     break;
                   case HostingContentComparisonStatus.remoteOnly:
-                    iconData = Icons.cloud_download;
+                    iconData = Iconsax.document_cloud;
                     iconColor = Colors.blue;
                     statusText = 'Remote only';
                     break;
                   case HostingContentComparisonStatus.differentContent:
-                    iconData = Icons.sync_problem;
+                    iconData = Iconsax.note_remove;
                     iconColor = Colors.red;
                     statusText = 'Different content';
                     break;
                   case HostingContentComparisonStatus.sameContent:
-                    iconData = Icons.check_circle_outline;
+                    iconData = Iconsax.document_copy;
                     iconColor = Colors.green;
                     statusText = 'Same content';
                     break;
@@ -142,7 +143,8 @@ class UpdateWebsiteSyncComparisonSheetState
               });
             },
             icon: const Icon(
-              Icons.filter_alt_outlined,
+              Iconsax.filter,
+              size: 16,
             ),
             label: Text(
               'All',
@@ -164,7 +166,11 @@ class UpdateWebsiteSyncComparisonSheetState
                 _selectedStatus = HostingContentComparisonStatus.localOnly;
               });
             },
-            icon: const Icon(Icons.cloud_upload, color: Colors.orange),
+            icon: const Icon(
+              Iconsax.document,
+              color: Colors.orange,
+              size: 16,
+            ),
             label: Text(
               'Local only',
               style: textTheme.labelMedium,
@@ -186,7 +192,11 @@ class UpdateWebsiteSyncComparisonSheetState
                 _selectedStatus = HostingContentComparisonStatus.remoteOnly;
               });
             },
-            icon: const Icon(Icons.cloud_download, color: Colors.blue),
+            icon: const Icon(
+              Iconsax.document_cloud,
+              color: Colors.blue,
+              size: 16,
+            ),
             label: Text(
               'Remote only',
               style: textTheme.labelMedium,
@@ -209,7 +219,11 @@ class UpdateWebsiteSyncComparisonSheetState
                     HostingContentComparisonStatus.differentContent;
               });
             },
-            icon: const Icon(Icons.sync_problem, color: Colors.red),
+            icon: const Icon(
+              Iconsax.note_remove,
+              color: Colors.red,
+              size: 16,
+            ),
             label: Text(
               'Different',
               style: textTheme.labelMedium,
@@ -229,7 +243,11 @@ class UpdateWebsiteSyncComparisonSheetState
                 _selectedStatus = HostingContentComparisonStatus.sameContent;
               });
             },
-            icon: const Icon(Icons.check_circle_outline, color: Colors.green),
+            icon: const Icon(
+              Iconsax.document_copy,
+              color: Colors.green,
+              size: 16,
+            ),
             label: Text(
               'Same',
               style: textTheme.labelMedium,
