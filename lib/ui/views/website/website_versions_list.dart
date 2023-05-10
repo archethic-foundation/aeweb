@@ -1,6 +1,6 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
-import 'package:aeweb/ui/views/util/components/choose_path_sync_popup.dart';
+import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';

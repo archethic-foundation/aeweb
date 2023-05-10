@@ -12,7 +12,8 @@ class AddWebsiteSelectPrivateKeyPath extends ConsumerStatefulWidget {
 }
 
 class _AddWebsiteSelectPrivateKeyPathState
-    extends ConsumerState<AddWebsiteSelectPrivateKeyPath> with FileMixin {
+    extends ConsumerState<AddWebsiteSelectPrivateKeyPath>
+    with FileMixin, SingleTickerProviderStateMixin {
   Future<void> _selectPrivateKeyFile() async {
     try {
       final addWebsiteNotifier =
@@ -20,11 +21,24 @@ class _AddWebsiteSelectPrivateKeyPathState
 
       final result = await FilePicker.platform.pickFiles();
       if (result != null) {
-        addWebsiteNotifier.setPrivateKeyPath(result.files.single.path!);
+        if (kIsWeb) {
+          addWebsiteNotifier.setPrivateKeyPath(result.files.first.name);
+        } else {
+          addWebsiteNotifier.setPrivateKeyPath(result.files.single.path!);
+        }
+
+        addWebsiteNotifier.setPrivateKey(result.files.first.bytes!);
       }
     } on Exception catch (e) {
       log('Error while picking private key file: $e');
     }
+  }
+
+  Future<void> _resetPath() async {
+    final addWebsiteNotifier =
+        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
+    // ignore: cascade_invocations
+    addWebsiteNotifier.setPrivateKeyPath('');
   }
 
   @override
@@ -36,22 +50,12 @@ class _AddWebsiteSelectPrivateKeyPathState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text(
-                AppLocalizations.of(context)!.addWebsitePrivateKeyCertLabel,
-              ),
-            ),
-            const SizedBox(width: 2),
-            TextButton(
-              onPressed: _selectPrivateKeyFile,
-              child: const Icon(Icons.upload_file),
-            ),
-          ],
+        UploadFile(
+          title: AppLocalizations.of(context)!.addWebsitePrivateKeyCertLabel,
+          value: addWebsiteProvider.privateKeyPath,
+          onTap: _selectPrivateKeyFile,
+          onDelete: _resetPath,
         ),
-        const SizedBox(height: 16),
-        Text(addWebsiteProvider.privateKeyPath),
       ],
     );
   }

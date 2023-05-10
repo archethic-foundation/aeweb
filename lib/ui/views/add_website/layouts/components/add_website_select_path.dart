@@ -21,16 +21,23 @@ class _AddWebsiteSelectPathState extends ConsumerState<AddWebsiteSelectPath>
       final result = await FilePicker.platform.getDirectoryPath();
       final gitIgnoreExist = await isGitignoreExist(path: '$result/');
       if (result != null) {
-        setState(() {
-          addWebsiteNotifier
-            ..setPath('$result/')
-            ..setApplyGitIgnoreRules(gitIgnoreExist == false ? null : true);
-          log('ApplyGitIgnoreRules ($result/): $gitIgnoreExist');
-        });
+        addWebsiteNotifier
+          ..setPath('$result/')
+          ..setApplyGitIgnoreRules(gitIgnoreExist == false ? null : true);
+        log('ApplyGitIgnoreRules ($result/): $gitIgnoreExist');
       }
     } on Exception catch (e) {
       log('Error while picking folder: $e');
     }
+  }
+
+  Future<void> _resetPath() async {
+    final addWebsiteNotifier =
+        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
+    // ignore: cascade_invocations
+    addWebsiteNotifier
+      ..setPath('')
+      ..setApplyGitIgnoreRules(null);
   }
 
   @override
@@ -42,22 +49,12 @@ class _AddWebsiteSelectPathState extends ConsumerState<AddWebsiteSelectPath>
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                AppLocalizations.of(context)!.addWebsitePathLabel,
-              ),
-            ),
-            const SizedBox(width: 2),
-            TextButton(
-              onPressed: _selectFilePath,
-              child: const Icon(Icons.folder),
-            ),
-          ],
+        UploadFile(
+          title: AppLocalizations.of(context)!.addWebsitePathLabel,
+          value: addWebsiteProvider.path,
+          onTap: _selectFilePath,
+          onDelete: _resetPath,
         ),
-        Text(addWebsiteProvider.path),
       ],
     );
   }

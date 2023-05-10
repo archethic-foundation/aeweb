@@ -143,7 +143,8 @@ class PathSyncPopup with FileMixin {
 
                                     final remoteFiles =
                                         (await ReadWebsiteUseCases().getRemote(
-                                                transactionRefAddress))!
+                                      transactionRefAddress,
+                                    ))!
                                             .content!
                                             .metaData;
 
@@ -172,7 +173,8 @@ class PathSyncPopup with FileMixin {
                                   child: Text(
                                     'Sync',
                                     style: TextStyle(
-                                        color: _colorScheme.onSurfaceVariant),
+                                      color: _colorScheme.onSurfaceVariant,
+                                    ),
                                   ),
                                 ),
                               ),

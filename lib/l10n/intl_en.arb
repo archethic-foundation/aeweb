@@ -2,11 +2,11 @@
   "@@last_modified": "2021-12-07T12:33:16.270871",
   "welcomeText": "Welcome to AEWeb",
   "systemDefault": "System Default",
-  "addWebsiteNameMissing": "Please fill in the name of the website.",
+  "addWebsiteNameMissing": "Please fill the name of the website.",
   "addWebsitePathMissing": "Please fill the path containing the files to be uploaded.",
-  "addWebsitePathLabel": "Select the root folder of your website:",
-  "addWebsitePublicCertPathLabel": "Add PEM file of the public certificate for the domain",
-  "addWebsitePrivateKeyCertLabel": "Add PEM file of the private key related to the certificate for the domain",
-  "addWebsiteGitignoreLabel": "Apply .gitignore rules",
+  "addWebsitePathLabel": "Root folder of the website",
+  "addWebsitePublicCertPathLabel": "PEM file of the public certificate for the domain",
+  "addWebsitePrivateKeyCertLabel": "PEM file of the private key related to the certificate for the domain",
+  "addWebsiteGitignoreLabel": "Apply .gitignore rules?",
   "choosePathSyncPathMissing": "Please fill the path containing the files to be synchronized with the files stored on the blockchain."
 }

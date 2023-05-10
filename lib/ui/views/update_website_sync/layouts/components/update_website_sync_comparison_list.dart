@@ -151,7 +151,8 @@ class UpdateWebsiteSyncComparisonSheetState
             style: ButtonStyle(
               backgroundColor: _selectedStatus == null
                   ? MaterialStateProperty.all(
-                      Colors.blue[100]!.withOpacity(0.2))
+                      Colors.blue[100]!.withOpacity(0.2),
+                    )
                   : null,
             ),
           ),
@@ -194,7 +195,8 @@ class UpdateWebsiteSyncComparisonSheetState
               backgroundColor:
                   _selectedStatus == HostingContentComparisonStatus.remoteOnly
                       ? MaterialStateProperty.all(
-                          Colors.blue[100]!.withOpacity(0.2))
+                          Colors.blue[100]!.withOpacity(0.2),
+                        )
                       : null,
             ),
           ),

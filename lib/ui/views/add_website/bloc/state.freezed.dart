@@ -16,11 +16,16 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AddWebsiteFormState {
-  int get addWebsiteProcessStep => throw _privateConstructorUsedError;
+  int get step => throw _privateConstructorUsedError;
+  String get stepError => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
   String get publicCertPath => throw _privateConstructorUsedError;
+  Uint8List? get publicCert => throw _privateConstructorUsedError;
   String get privateKeyPath => throw _privateConstructorUsedError;
+  Uint8List? get privateKey => throw _privateConstructorUsedError;
+  double get globalFees => throw _privateConstructorUsedError;
+  bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get applyGitIgnoreRules => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
 
@@ -36,11 +41,16 @@ abstract class $AddWebsiteFormStateCopyWith<$Res> {
       _$AddWebsiteFormStateCopyWithImpl<$Res, AddWebsiteFormState>;
   @useResult
   $Res call(
-      {int addWebsiteProcessStep,
+      {int step,
+      String stepError,
       String name,
       String path,
       String publicCertPath,
+      Uint8List? publicCert,
       String privateKeyPath,
+      Uint8List? privateKey,
+      double globalFees,
+      bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText});
 }
@@ -58,19 +68,28 @@ class _$AddWebsiteFormStateCopyWithImpl<$Res, $Val extends AddWebsiteFormState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addWebsiteProcessStep = null,
+    Object? step = null,
+    Object? stepError = null,
     Object? name = null,
     Object? path = null,
     Object? publicCertPath = null,
+    Object? publicCert = freezed,
     Object? privateKeyPath = null,
+    Object? privateKey = freezed,
+    Object? globalFees = null,
+    Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
   }) {
     return _then(_value.copyWith(
-      addWebsiteProcessStep: null == addWebsiteProcessStep
-          ? _value.addWebsiteProcessStep
-          : addWebsiteProcessStep // ignore: cast_nullable_to_non_nullable
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
               as int,
+      stepError: null == stepError
+          ? _value.stepError
+          : stepError // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -83,10 +102,26 @@ class _$AddWebsiteFormStateCopyWithImpl<$Res, $Val extends AddWebsiteFormState>
           ? _value.publicCertPath
           : publicCertPath // ignore: cast_nullable_to_non_nullable
               as String,
+      publicCert: freezed == publicCert
+          ? _value.publicCert
+          : publicCert // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       privateKeyPath: null == privateKeyPath
           ? _value.privateKeyPath
           : privateKeyPath // ignore: cast_nullable_to_non_nullable
               as String,
+      privateKey: freezed == privateKey
+          ? _value.privateKey
+          : privateKey // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      globalFees: null == globalFees
+          ? _value.globalFees
+          : globalFees // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesValidated: freezed == globalFeesValidated
+          ? _value.globalFeesValidated
+          : globalFeesValidated // ignore: cast_nullable_to_non_nullable
+              as bool?,
       applyGitIgnoreRules: freezed == applyGitIgnoreRules
           ? _value.applyGitIgnoreRules
           : applyGitIgnoreRules // ignore: cast_nullable_to_non_nullable
@@ -108,11 +143,16 @@ abstract class _$$_AddWebsiteFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int addWebsiteProcessStep,
+      {int step,
+      String stepError,
       String name,
       String path,
       String publicCertPath,
+      Uint8List? publicCert,
       String privateKeyPath,
+      Uint8List? privateKey,
+      double globalFees,
+      bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText});
 }
@@ -128,19 +168,28 @@ class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? addWebsiteProcessStep = null,
+    Object? step = null,
+    Object? stepError = null,
     Object? name = null,
     Object? path = null,
     Object? publicCertPath = null,
+    Object? publicCert = freezed,
     Object? privateKeyPath = null,
+    Object? privateKey = freezed,
+    Object? globalFees = null,
+    Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
   }) {
     return _then(_$_AddWebsiteFormState(
-      addWebsiteProcessStep: null == addWebsiteProcessStep
-          ? _value.addWebsiteProcessStep
-          : addWebsiteProcessStep // ignore: cast_nullable_to_non_nullable
+      step: null == step
+          ? _value.step
+          : step // ignore: cast_nullable_to_non_nullable
               as int,
+      stepError: null == stepError
+          ? _value.stepError
+          : stepError // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -153,10 +202,26 @@ class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
           ? _value.publicCertPath
           : publicCertPath // ignore: cast_nullable_to_non_nullable
               as String,
+      publicCert: freezed == publicCert
+          ? _value.publicCert
+          : publicCert // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
       privateKeyPath: null == privateKeyPath
           ? _value.privateKeyPath
           : privateKeyPath // ignore: cast_nullable_to_non_nullable
               as String,
+      privateKey: freezed == privateKey
+          ? _value.privateKey
+          : privateKey // ignore: cast_nullable_to_non_nullable
+              as Uint8List?,
+      globalFees: null == globalFees
+          ? _value.globalFees
+          : globalFees // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesValidated: freezed == globalFeesValidated
+          ? _value.globalFeesValidated
+          : globalFeesValidated // ignore: cast_nullable_to_non_nullable
+              as bool?,
       applyGitIgnoreRules: freezed == applyGitIgnoreRules
           ? _value.applyGitIgnoreRules
           : applyGitIgnoreRules // ignore: cast_nullable_to_non_nullable
@@ -173,18 +238,26 @@ class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
 
 class _$_AddWebsiteFormState extends _AddWebsiteFormState {
   const _$_AddWebsiteFormState(
-      {this.addWebsiteProcessStep = 0,
+      {this.step = 0,
+      this.stepError = '',
       this.name = '',
       this.path = '',
       this.publicCertPath = '',
+      this.publicCert,
       this.privateKeyPath = '',
+      this.privateKey,
+      this.globalFees = 0.0,
+      this.globalFeesValidated,
       this.applyGitIgnoreRules,
       this.errorText = ''})
       : super._();
 
   @override
   @JsonKey()
-  final int addWebsiteProcessStep;
+  final int step;
+  @override
+  @JsonKey()
+  final String stepError;
   @override
   @JsonKey()
   final String name;
@@ -195,8 +268,17 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
   @JsonKey()
   final String publicCertPath;
   @override
+  final Uint8List? publicCert;
+  @override
   @JsonKey()
   final String privateKeyPath;
+  @override
+  final Uint8List? privateKey;
+  @override
+  @JsonKey()
+  final double globalFees;
+  @override
+  final bool? globalFeesValidated;
   @override
   final bool? applyGitIgnoreRules;
   @override
@@ -205,7 +287,7 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
 
   @override
   String toString() {
-    return 'AddWebsiteFormState(addWebsiteProcessStep: $addWebsiteProcessStep, name: $name, path: $path, publicCertPath: $publicCertPath, privateKeyPath: $privateKeyPath, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText)';
+    return 'AddWebsiteFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText)';
   }
 
   @override
@@ -213,14 +295,23 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AddWebsiteFormState &&
-            (identical(other.addWebsiteProcessStep, addWebsiteProcessStep) ||
-                other.addWebsiteProcessStep == addWebsiteProcessStep) &&
+            (identical(other.step, step) || other.step == step) &&
+            (identical(other.stepError, stepError) ||
+                other.stepError == stepError) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.path, path) || other.path == path) &&
             (identical(other.publicCertPath, publicCertPath) ||
                 other.publicCertPath == publicCertPath) &&
+            const DeepCollectionEquality()
+                .equals(other.publicCert, publicCert) &&
             (identical(other.privateKeyPath, privateKeyPath) ||
                 other.privateKeyPath == privateKeyPath) &&
+            const DeepCollectionEquality()
+                .equals(other.privateKey, privateKey) &&
+            (identical(other.globalFees, globalFees) ||
+                other.globalFees == globalFees) &&
+            (identical(other.globalFeesValidated, globalFeesValidated) ||
+                other.globalFeesValidated == globalFeesValidated) &&
             (identical(other.applyGitIgnoreRules, applyGitIgnoreRules) ||
                 other.applyGitIgnoreRules == applyGitIgnoreRules) &&
             (identical(other.errorText, errorText) ||
@@ -228,8 +319,20 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, addWebsiteProcessStep, name,
-      path, publicCertPath, privateKeyPath, applyGitIgnoreRules, errorText);
+  int get hashCode => Object.hash(
+      runtimeType,
+      step,
+      stepError,
+      name,
+      path,
+      publicCertPath,
+      const DeepCollectionEquality().hash(publicCert),
+      privateKeyPath,
+      const DeepCollectionEquality().hash(privateKey),
+      globalFees,
+      globalFeesValidated,
+      applyGitIgnoreRules,
+      errorText);
 
   @JsonKey(ignore: true)
   @override
@@ -241,17 +344,24 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
 
 abstract class _AddWebsiteFormState extends AddWebsiteFormState {
   const factory _AddWebsiteFormState(
-      {final int addWebsiteProcessStep,
+      {final int step,
+      final String stepError,
       final String name,
       final String path,
       final String publicCertPath,
+      final Uint8List? publicCert,
       final String privateKeyPath,
+      final Uint8List? privateKey,
+      final double globalFees,
+      final bool? globalFeesValidated,
       final bool? applyGitIgnoreRules,
       final String errorText}) = _$_AddWebsiteFormState;
   const _AddWebsiteFormState._() : super._();
 
   @override
-  int get addWebsiteProcessStep;
+  int get step;
+  @override
+  String get stepError;
   @override
   String get name;
   @override
@@ -259,7 +369,15 @@ abstract class _AddWebsiteFormState extends AddWebsiteFormState {
   @override
   String get publicCertPath;
   @override
+  Uint8List? get publicCert;
+  @override
   String get privateKeyPath;
+  @override
+  Uint8List? get privateKey;
+  @override
+  double get globalFees;
+  @override
+  bool? get globalFeesValidated;
   @override
   bool? get applyGitIgnoreRules;
   @override

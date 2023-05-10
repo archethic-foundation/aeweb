@@ -1,23 +1,27 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
 
+import 'package:aeweb/header.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/app_text_field.dart';
-import 'package:aeweb/ui/views/util/components/ae_stepper.dart';
+import 'package:aeweb/ui/views/add_website/layouts/components/add_website_steps.dart';
+import 'package:aeweb/ui/views/util/components/resizable_box.dart';
 import 'package:aeweb/ui/views/util/formatters.dart';
+import 'package:aeweb/ui/views/util/upload_file.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
-part 'add_website_textfield_name.dart';
+part 'add_website_bottom_bar.dart';
 part 'add_website_select_path.dart';
-part 'add_website_select_public_cert_path.dart';
 part 'add_website_select_private_key_path.dart';
+part 'add_website_select_public_cert_path.dart';
 part 'add_website_switch_gitignore.dart';
+part 'add_website_textfield_name.dart';
 
 class AddWebsiteFormSheet extends ConsumerStatefulWidget {
   const AddWebsiteFormSheet({super.key});
@@ -40,81 +44,71 @@ class AddWebsiteFormSheetState extends ConsumerState<AddWebsiteFormSheet>
     super.dispose();
   }
 
-  Future<void> _submitForm() async {
-    final addWebsiteNotifier =
-        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
-
-    final isNameOk = addWebsiteNotifier.controlName(context);
-    final isPathOk = addWebsiteNotifier.controlPath(context);
-
-    if (isNameOk && isPathOk) {
-      addWebsiteNotifier.create(context, ref);
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context)
+        .textTheme
+        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
+
     return Scaffold(
+      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
       resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: const Text('Host a new website on Archethic Blockchain'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.only(top: 60, left: 30, right: 30),
-        child: Form(
-          key: _formKey,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: Scrollbar(
-                  thumbVisibility: true,
-                  child: SingleChildScrollView(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const SizedBox(height: 16),
-                        const AddWebsiteTextFieldName(),
-                        const SizedBox(height: 16),
-                        const AddWebsiteSelectPath(),
-                        const SizedBox(height: 16),
-                        const AddWebsiteSwitchGitignore(),
-                        const SizedBox(height: 16),
-                        const AddWebsiteSelectPublicCertPath(),
-                        const SizedBox(height: 16),
-                        const AddWebsiteSelectPrivateKeyPath(),
-                        Row(
+      body: Form(
+        key: _formKey,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Header(),
+            Expanded(
+              child: ResizableBox(
+                width: MediaQuery.of(context).size.width - 100,
+                childLeft: Card(
+                  color: Theme.of(context).colorScheme.surface,
+                  elevation: 0,
+                  clipBehavior: Clip.antiAlias,
+                  child: Padding(
+                    padding: const EdgeInsets.all(
+                      20,
+                    ),
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                context.go('/');
-                              },
-                              child: const Text(
-                                'Back',
-                              ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            ElevatedButton(
-                              onPressed: _submitForm,
-                              child: const Text(
-                                'Create website',
-                              ),
+                            Text(
+                              'Ready to experience the future of decentralized ownership?\nDeploy your website on AEWeb and enjoy the benefits of 100% security, tamperproof technology, and optimized scalability.',
+                              style: textTheme.labelMedium,
                             ),
                             const SizedBox(height: 16),
+                            const AddWebsiteTextFieldName(),
+                            const SizedBox(height: 16),
+                            const AddWebsiteSelectPath(),
+                            const SizedBox(height: 16),
+                            const AddWebsiteSwitchGitignore(),
+                            const SizedBox(height: 16),
+                            const AddWebsiteSelectPublicCertPath(),
+                            const SizedBox(height: 16),
+                            const AddWebsiteSelectPrivateKeyPath(),
                           ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
+                childRight: Card(
+                  color: Theme.of(context).colorScheme.surface,
+                  elevation: 0,
+                  clipBehavior: Clip.antiAlias,
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(),
+                    child: const AddWebsiteSteps(),
+                  ),
+                ),
               ),
-              const SizedBox(width: 50),
-              const AEStepper(),
-            ],
-          ),
+            ),
+            const AddWebsiteBottomBar(),
+          ],
         ),
       ),
     );

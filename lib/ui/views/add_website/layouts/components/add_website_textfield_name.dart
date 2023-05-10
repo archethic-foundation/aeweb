@@ -35,26 +35,59 @@ class _AddWebsiteTextFieldNameState
   Widget build(
     BuildContext context,
   ) {
+    final textTheme = Theme.of(context)
+        .textTheme
+        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
+
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
 
-    return AppTextField(
-      leftMargin: 0,
-      textAlign: TextAlign.left,
-      focusNode: nameFocusNode,
-      controller: nameController,
-      textInputAction: TextInputAction.next,
-      labelText: "Website's name",
-      keyboardType: TextInputType.text,
-      inputFormatters: <TextInputFormatter>[
-        UpperCaseTextFormatter(),
-        LengthLimitingTextInputFormatter(20),
-      ],
-      onChanged: (text) async {
-        addWebsiteNotifier.setName(
-          text,
-        );
-      },
+    return SizedBox(
+      height: 60,
+      width: 250,
+      child: Row(
+        children: [
+          Expanded(
+            child: DecoratedBox(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      style: textTheme.labelMedium,
+                      autocorrect: false,
+                      controller: nameController,
+                      onChanged: (text) async {
+                        addWebsiteNotifier.setName(
+                          text,
+                        );
+                      },
+                      focusNode: nameFocusNode,
+                      textAlign: TextAlign.left,
+                      textInputAction: TextInputAction.next,
+                      keyboardType: TextInputType.text,
+                      inputFormatters: <TextInputFormatter>[
+                        UpperCaseTextFormatter(),
+                        LengthLimitingTextInputFormatter(20),
+                      ],
+                      decoration: InputDecoration(
+                        hintText: "Website's name?",
+                        hintStyle: textTheme.labelMedium!
+                            .copyWith(fontWeight: FontWeight.w300),
+                        border: InputBorder.none,
+                        contentPadding: const EdgeInsets.only(left: 10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

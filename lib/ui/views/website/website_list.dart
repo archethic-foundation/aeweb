@@ -42,13 +42,13 @@ class WebsiteList extends ConsumerWidget {
                         padding: const EdgeInsets.all(8),
                         itemCount: data.value.length + 1,
                         itemBuilder: (context, index) {
-                          if (index == data.value.length) {
+                          if (index == 0) {
                             return _buildAddWebsiteCard(context);
                           }
                           return _buildWebsiteCard(
                             context,
                             ref,
-                            data.value[index],
+                            data.value[index - 1],
                           );
                         },
                       ),

@@ -94,7 +94,7 @@ mixin TransactionMixin {
           'Signature failed',
           error: failure,
         );
-        return;
+        throw failure;
       },
       success: (result) {
         for (var i = 0; i < transactions.length; i++) {
@@ -159,7 +159,7 @@ mixin TransactionMixin {
     final responseAddService = await sl
         .get<ArchethicDAppClient>()
         .addService({'name': 'aeweb-$websiteName'});
-    responseAddService.when(
+    return responseAddService.when(
       failure: (failure) {
         log(
           'Transaction failed',

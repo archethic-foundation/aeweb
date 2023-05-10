@@ -1,5 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/domain/usecases/website/create_website.dart';
+import 'dart:typed_data';
+
+import 'package:aeweb/domain/usecases/website/add_website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -70,6 +72,22 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
     );
   }
 
+  void setPublicCert(
+    Uint8List publicCert,
+  ) {
+    state = state.copyWith(
+      publicCert: publicCert,
+    );
+  }
+
+  void setPrivateKey(
+    Uint8List privateKey,
+  ) {
+    state = state.copyWith(
+      privateKey: privateKey,
+    );
+  }
+
   void setError(
     String errorText,
   ) {
@@ -78,9 +96,27 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
     );
   }
 
-  void setAddWebsiteProcessStep(int addWebsiteProcessStep) {
+  void setStep(int step) {
     state = state.copyWith(
-      addWebsiteProcessStep: addWebsiteProcessStep,
+      step: step,
+    );
+  }
+
+  void setStepError(String stepError) {
+    state = state.copyWith(
+      stepError: stepError,
+    );
+  }
+
+  void setGlobalFees(double globalFees) {
+    state = state.copyWith(
+      globalFees: globalFees,
+    );
+  }
+
+  void setGlobalFeesValidated(bool? globalFeesValidated) {
+    state = state.copyWith(
+      globalFeesValidated: globalFeesValidated,
     );
   }
 
@@ -108,8 +144,8 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
     return true;
   }
 
-  Future<void> create(BuildContext context, WidgetRef ref) async {
-    await CreateWebsiteUseCases().createWebsite(
+  Future<void> addWebsite(BuildContext context, WidgetRef ref) async {
+    await AddWebsiteUseCases().run(
       ref,
       state.name,
       state.path,

@@ -17,6 +17,9 @@ class _AddWebsiteSwitchGitignoreState
   Widget build(
     BuildContext context,
   ) {
+    final textTheme = Theme.of(context)
+        .textTheme
+        .apply(displayColor: Theme.of(context).colorScheme.onSurface);
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
     final addWebsiteProvider = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
@@ -36,6 +39,7 @@ class _AddWebsiteSwitchGitignoreState
           children: [
             Text(
               AppLocalizations.of(context)!.addWebsiteGitignoreLabel,
+              style: textTheme.labelMedium,
             ),
             const SizedBox(width: 2),
             SizedBox(

@@ -23,11 +23,24 @@ class _AddWebsiteSelectPublicCertPathState
         allowedExtensions: ['pem', 'crt'],
       );
       if (result != null) {
-        addWebsiteNotifier.setPublicCertPath(result.files.single.path!);
+        if (kIsWeb) {
+          addWebsiteNotifier.setPublicCertPath(result.files.first.name);
+        } else {
+          addWebsiteNotifier.setPublicCertPath(result.files.single.path!);
+        }
+
+        addWebsiteNotifier.setPublicCert(result.files.first.bytes!);
       }
     } on Exception catch (e) {
       log('Error while picking public cert file: $e');
     }
+  }
+
+  Future<void> _resetPath() async {
+    final addWebsiteNotifier =
+        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
+    // ignore: cascade_invocations
+    addWebsiteNotifier.setPublicCertPath('');
   }
 
   @override
@@ -39,23 +52,13 @@ class _AddWebsiteSelectPublicCertPathState
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Text(
-                AppLocalizations.of(context)!.addWebsitePublicCertPathLabel,
-              ),
-            ),
-            const SizedBox(width: 2),
-            TextButton(
-              onPressed: _selectPublicCertFile,
-              child: const Icon(Icons.upload_file),
-            ),
-          ],
+        const SizedBox(width: 10),
+        UploadFile(
+          title: AppLocalizations.of(context)!.addWebsitePublicCertPathLabel,
+          value: addWebsiteProvider.publicCertPath,
+          onTap: _selectPublicCertFile,
+          onDelete: _resetPath,
         ),
-        const SizedBox(height: 16),
-        Text(addWebsiteProvider.publicCertPath),
       ],
     );
   }

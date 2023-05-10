@@ -27,19 +27,22 @@ dependencies:
       ref: aeweb
 
   # Compression
-  archive: ^3.3.6
+  archive: ^3.3.7
 
   # Collections and utilities functions and classes related to collections.
-  collection: ^1.17.1
+  collection: ^1.17.0
 
   # A package to show context menus on right-click or long-press
   context_menus: ^1.0.2
 
   # Implementations of SHA, MD5, and HMAC cryptographic functions
-  crypto: ^3.0.2
+  crypto: ^3.0.3
+
+  # A flutter package to let users easily add a dashed border around any widget.
+  dotted_border: ^2.0.0+3
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.2.5
+  file_picker: ^5.3.0
 
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
@@ -57,7 +60,7 @@ dependencies:
   flutter_staggered_grid_view: ^0.6.2
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
-  flutter_svg: ^2.0.4
+  flutter_svg: ^2.0.5
 
   # A tree widget for Flutter that can be used to display nested, hierarchical data. It includes a number of features like styling labels, icons, and import and export utilities.
   flutter_treeview: ^1.0.7+1
@@ -66,10 +69,10 @@ dependencies:
   freezed_annotation: ^2.2.0
 
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
-  get_it: ^7.2.0
+  get_it: ^7.6.0
 
   # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
-  go_router: ^6.5.0
+  go_router: ^7.0.0
 
   # GraphQL tools for parsing, transforming and printing GraphQL documents.
   gql: ^0.14.0
@@ -81,23 +84,29 @@ dependencies:
   hive: ^2.2.3
   hive_flutter: ^1.1.0
 
+  # Iconsax for flutter (1000+ icons 6 diferent styles, total 6000+ icons).
+  iconsax: ^0.0.8
+
   # Contains code to deal with internationalized/localized messages, date and number formatting and parsing, bi-directional text, and other internationalization issues.
   intl: any
 
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
-  json_annotation: ^4.4.0
+  json_annotation: ^4.8.1
+
+  # A collection loading animations written in pure dart. Out of the box, no extra dependency.
+  loading_indicator: ^3.1.0
 
   # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
   path: ^1.8.2
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
-  phoenix_socket: ^0.6.2
+  phoenix_socket: ^0.6.3
 
   # A package exposing annotations for riverpod_generator
   riverpod_annotation: 1.0.6
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.8
+  url_launcher: ^6.1.11
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.
