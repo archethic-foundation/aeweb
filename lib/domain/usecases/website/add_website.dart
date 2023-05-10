@@ -8,15 +8,13 @@ import 'package:aeweb/util/get_it_instance.dart';
 import 'package:aeweb/util/transaction_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddWebsiteUseCases with FileMixin, TransactionMixin {
   Future<void> run(
     WidgetRef ref,
-    String websiteName,
-    String path, {
-    bool applyGitIgnoreRules = true,
-  }) async {
+  ) async {
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
           ..setStep(0)
@@ -26,7 +24,8 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
 
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
-    final resultCreate = await createWebsiteServiceInKeychain(websiteName);
+    final resultCreate = await createWebsiteServiceInKeychain(
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).name);
     if (resultCreate is Failure) {
       addWebsiteNotifier.setStepError(resultCreate.message!);
       log('Transaction failed');
@@ -35,10 +34,24 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
 
     log('Get the list of files in the path');
     addWebsiteNotifier.setStep(2);
-    final files = await FileMixin.listFilesFromPath(
-      path,
-      applyGitIgnoreRules: applyGitIgnoreRules,
-    );
+    late final Map<String, HostingRefContentMetaData>? files;
+    if (kIsWeb) {
+      files = await FileMixin.listFilesFromZip(
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).zipFile!,
+        applyGitIgnoreRules: ref
+                .read(AddWebsiteFormProvider.addWebsiteForm)
+                .applyGitIgnoreRules ??
+            false,
+      );
+    } else {
+      files = await FileMixin.listFilesFromPath(
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).path,
+        applyGitIgnoreRules: ref
+                .read(AddWebsiteFormProvider.addWebsiteForm)
+                .applyGitIgnoreRules ??
+            false,
+      );
+    }
     if (files == null) {
       addWebsiteNotifier.setStepError('Unable to get the list of files.');
       log('Unable to get the list of files');
@@ -47,7 +60,17 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
 
     log('Create files transactions');
     addWebsiteNotifier.setStep(3);
-    final contents = setContents(path, files.keys.toList());
+    late final List<Map<String, dynamic>> contents;
+    if (kIsWeb) {
+      contents = setContentsFromZip(
+          ref.read(AddWebsiteFormProvider.addWebsiteForm).zipFile!,
+          files.keys.toList());
+    } else {
+      contents = setContentsFromPath(
+          ref.read(AddWebsiteFormProvider.addWebsiteForm).path,
+          files.keys.toList());
+    }
+
     var transactionsList = <Transaction>[];
     for (final content in contents) {
       transactionsList.add(
@@ -56,7 +79,8 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
     }
 
     log('Sign ${transactionsList.length} files transactions');
-    final keychainWebsiteService = Uri.encodeFull('aeweb-$websiteName');
+    final keychainWebsiteService = Uri.encodeFull(
+        'aeweb-${ref.read(AddWebsiteFormProvider.addWebsiteForm).name}');
     addWebsiteNotifier.setStep(4);
     try {
       transactionsList = await signTx(
@@ -179,7 +203,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
     var transactionRepository = ArchethicTransactionSender(
       phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
       websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket',
+          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
     );
 
     addWebsiteNotifier.setStep(12);
@@ -199,7 +223,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
             phoenixHttpEndpoint:
                 '${sl.get<ApiService>().endpoint}/socket/websocket',
             websocketEndpoint:
-                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket',
+                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
           );
 
           await transactionRepository.send(

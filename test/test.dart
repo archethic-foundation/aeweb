@@ -20,7 +20,8 @@ void main() {
       );
 
       // Create transactions with file contents
-      final contents = TestFileMixin().setContents(path, files!.keys.toList());
+      final contents =
+          TestFileMixin().setContentsFromPath(path, files!.keys.toList());
 
       final transactionsList = <Transaction>[];
       for (final content in contents) {

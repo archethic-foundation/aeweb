@@ -14,10 +14,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
   Future<void> run(
     WidgetRef ref,
-    String websiteName,
-    String path,
-    Map<String, HostingRefContentMetaData> localFiles,
-    List<HostingContentComparison> comparedFiles,
   ) async {
     final updateWebsiteSyncNotifier =
         ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier)
@@ -26,7 +22,8 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
           ..setGlobalFees(0)
           ..setGlobalFeesValidated(null);
 
-    final keychainWebsiteService = Uri.encodeFull('aeweb-$websiteName');
+    final keychainWebsiteService = Uri.encodeFull(
+        'aeweb-${ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).name})');
 
     log('Get last transaction reference');
     updateWebsiteSyncNotifier.setStep(1);
@@ -55,13 +52,17 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     final newMetaData = <String, HostingRefContentMetaData>{};
     final filesNewOrUpdated = <String>[];
     var refChanged = false;
-    for (final comparedFile in comparedFiles) {
+    for (final comparedFile in ref
+        .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
+        .comparedFiles) {
       switch (comparedFile.status) {
         case HostingContentComparisonStatus.remoteOnly:
           refChanged = true;
           break;
         case HostingContentComparisonStatus.sameContent:
-          final localFile = localFiles[comparedFile.path];
+          final localFile = ref
+              .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
+              .localFiles[comparedFile.path];
           if (localFile != null) {
             newMetaData[comparedFile.path] = HostingRefContentMetaData(
               hash: localFile.hash,
@@ -72,7 +73,9 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
           break;
         case HostingContentComparisonStatus.localOnly:
         case HostingContentComparisonStatus.differentContent:
-          final localFile = localFiles[comparedFile.path];
+          final localFile = ref
+              .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
+              .localFiles[comparedFile.path];
           if (localFile != null) {
             newMetaData[comparedFile.path] = HostingRefContentMetaData(
               hash: localFile.hash,
@@ -94,7 +97,9 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
 
     log('Create files transactions');
     updateWebsiteSyncNotifier.setStep(3);
-    final contents = setContents(path, filesNewOrUpdated);
+    final contents = setContentsFromPath(
+        ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).path,
+        filesNewOrUpdated);
     var transactionsList = <Transaction>[];
     for (final content in contents) {
       transactionsList.add(
@@ -218,7 +223,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     var transactionRepository = ArchethicTransactionSender(
       phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
       websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket',
+          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
     );
 
     updateWebsiteSyncNotifier.setStep(11);
@@ -275,7 +280,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
             phoenixHttpEndpoint:
                 '${sl.get<ApiService>().endpoint}/socket/websocket',
             websocketEndpoint:
-                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'ws:').replaceAll('http:', 'ws:')}/socket/websocket',
+                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
           );
 
           await transactionRepository.send(

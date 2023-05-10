@@ -4,10 +4,12 @@
   "systemDefault": "System Default",
   "addWebsiteNameMissing": "Please fill the name of the website.",
   "addWebsitePathMissing": "Please fill the path containing the files to be uploaded.",
+  "addWebsiteZipFileMissing": "Please fill the zip file containing the files to be uploaded.",
   "addWebsitePathLabel": "Root folder of the website",
   "addWebsitePublicCertPathLabel": "PEM file of the public certificate for the domain",
   "addWebsitePrivateKeyCertLabel": "PEM file of the private key related to the certificate for the domain",
   "addWebsiteGitignoreLabel": "Apply .gitignore rules?",
+  "addWebsiteZipLabel": "Zip file containing the website files",
   "choosePathSyncPathMissing": "Please fill the path containing the files to be synchronized with the files stored on the blockchain.",
   "version": "Version :",
   "build": "Build :"

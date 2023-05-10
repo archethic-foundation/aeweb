@@ -16,6 +16,8 @@ class AddWebsiteFormState with _$AddWebsiteFormState {
     Uint8List? publicCert,
     @Default('') String privateKeyPath,
     Uint8List? privateKey,
+    @Default('') String zipFilePath,
+    Uint8List? zipFile,
     @Default(0.0) double globalFees,
     bool? globalFeesValidated,
     bool? applyGitIgnoreRules,

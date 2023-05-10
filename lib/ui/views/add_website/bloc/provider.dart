@@ -3,6 +3,7 @@ import 'dart:typed_data';
 
 import 'package:aeweb/domain/usecases/website/add_website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -72,6 +73,14 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
     );
   }
 
+  void setZipFilePath(
+    String zipFilePath,
+  ) {
+    state = state.copyWith(
+      zipFilePath: zipFilePath,
+    );
+  }
+
   void setPublicCert(
     Uint8List publicCert,
   ) {
@@ -85,6 +94,14 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
   ) {
     state = state.copyWith(
       privateKey: privateKey,
+    );
+  }
+
+  void setZipFile(
+    Uint8List zipFile,
+  ) {
+    state = state.copyWith(
+      zipFile: zipFile,
     );
   }
 
@@ -135,21 +152,28 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
   bool controlPath(
     BuildContext context,
   ) {
-    if (state.path.trim().isEmpty) {
-      state = state.copyWith(
-        errorText: AppLocalizations.of(context)!.addWebsitePathMissing,
-      );
-      return false;
+    if (kIsWeb) {
+      if (state.zipFilePath.isEmpty) {
+        state = state.copyWith(
+          errorText: AppLocalizations.of(context)!.addWebsitePathMissing,
+        );
+        return false;
+      }
+    } else {
+      if (state.path.trim().isEmpty) {
+        state = state.copyWith(
+          errorText: AppLocalizations.of(context)!.addWebsitePathMissing,
+        );
+        return false;
+      }
     }
+
     return true;
   }
 
   Future<void> addWebsite(BuildContext context, WidgetRef ref) async {
     await AddWebsiteUseCases().run(
       ref,
-      state.name,
-      state.path,
-      applyGitIgnoreRules: state.applyGitIgnoreRules ?? false,
     );
   }
 }

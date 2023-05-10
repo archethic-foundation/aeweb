@@ -18,6 +18,7 @@ import 'package:go_router/go_router.dart';
 
 part 'add_website_bottom_bar.dart';
 part 'add_website_select_path.dart';
+part 'add_website_select_zip_file.dart';
 part 'add_website_select_private_key_path.dart';
 part 'add_website_select_public_cert_path.dart';
 part 'add_website_switch_gitignore.dart';
@@ -67,7 +68,10 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                               const SizedBox(height: 16),
                               const AddWebsiteTextFieldName(),
                               const SizedBox(height: 16),
-                              const AddWebsiteSelectPath(),
+                              if (kIsWeb)
+                                const AddWebsiteSelectZipFile()
+                              else
+                                const AddWebsiteSelectPath(),
                               const SizedBox(height: 16),
                               const AddWebsiteSwitchGitignore(),
                               const SizedBox(height: 16),

@@ -73,7 +73,60 @@ mixin FileMixin {
     return hostingRefContentMetaDataFiltered;
   }
 
-  List<Map<String, dynamic>> setContents(String path, List<String> files) {
+  static Future<Map<String, HostingRefContentMetaData>?> listFilesFromZip(
+    Uint8List zipData, {
+    bool applyGitIgnoreRules = true,
+  }) async {
+    final hostingRefContentMetaData = <String, HostingRefContentMetaData>{};
+    final hostingRefContentMetaDataFiltered =
+        <String, HostingRefContentMetaData>{};
+    final archive = ZipDecoder().decodeBytes(zipData);
+
+    try {
+      final gitIgnoreContent = StringBuffer();
+
+      for (final file in archive) {
+        if (!file.isFile) continue;
+
+        final contentBytes = file.content;
+        final contentHash = sha1.convert(contentBytes).toString();
+        final filePath = file.name;
+        final fileSize = contentBytes.length;
+
+        if (applyGitIgnoreRules && filePath.split('/').last == '.gitignore') {
+          gitIgnoreContent.write(utf8.decode(contentBytes));
+        }
+
+        hostingRefContentMetaData[filePath] = HostingRefContentMetaData(
+          hash: contentHash,
+          encoding: 'gzip',
+          size: fileSize,
+        );
+      }
+
+      if (applyGitIgnoreRules && gitIgnoreContent.isNotEmpty) {
+        log(gitIgnoreContent.toString());
+        final ignore = Ignore([gitIgnoreContent.toString()], ignoreCase: true);
+
+        hostingRefContentMetaData.forEach((key, value) {
+          if (!ignore.ignores(key)) {
+            hostingRefContentMetaDataFiltered[key] = value;
+          }
+        });
+      } else {
+        return hostingRefContentMetaData;
+      }
+    } catch (e) {
+      log('Error while retrieving files and folders: $e');
+    }
+
+    return hostingRefContentMetaDataFiltered;
+  }
+
+  List<Map<String, dynamic>> setContentsFromPath(
+    String path,
+    List<String> files,
+  ) {
     var txsContent = <Map<String, dynamic>>[];
     for (final file in files) {
       final fileLoaded = File(path + file);
@@ -86,6 +139,32 @@ mixin FileMixin {
         }
       }
     }
+    return txsContent;
+  }
+
+  List<Map<String, dynamic>> setContentsFromZip(
+    Uint8List zipData,
+    List<String> files,
+  ) {
+    var txsContent = <Map<String, dynamic>>[];
+    final archive = ZipDecoder().decodeBytes(zipData);
+
+    for (final file in files) {
+      final archiveFile = archive.firstWhere(
+        (entry) => entry.name == file,
+      );
+      if (!archiveFile.isFile) continue;
+
+      final encodedContent = encodeContent(
+        Uint8List.fromList(archiveFile.content),
+      );
+      if (encodedContent.length >= kMaxFileSize) {
+        txsContent = handleBigFile(txsContent, file, encodedContent);
+      } else {
+        txsContent = handleNormalFile(txsContent, file, encodedContent);
+      }
+    }
+
     return txsContent;
   }
 
