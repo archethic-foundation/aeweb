@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:aeweb/application/session/provider.dart';
+import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -24,6 +27,9 @@ class _ConnectionToWalletStatusState
 
     return session.isConnectedToWallet == false
         ? OutlinedButton(
+            style: ButtonStyle(
+              side: MaterialStateProperty.all(BorderSide.none),
+            ),
             onPressed: () async {
               await sessionNotifier.connectToWallet();
 
@@ -38,31 +44,149 @@ class _ConnectionToWalletStatusState
                 );
               }
             },
-            child: Row(
-              children: [
-                const Icon(
-                  Icons.blur_circular,
-                  color: Colors.red,
-                  size: 13,
+            child: Container(
+              alignment: Alignment.center,
+              height: 50,
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              decoration: ShapeDecoration(
+                gradient: const LinearGradient(
+                  colors: <Color>[
+                    Color(0xFF00A4DB),
+                    Color(0xFFCC00FF),
+                  ],
+                  transform: GradientRotation(pi / 9),
                 ),
-                const SizedBox(width: 4),
-                Text('Connect your wallet', style: textTheme.labelMedium),
-              ],
+                shape: const StadiumBorder(),
+                shadows: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.5),
+                    blurRadius: 7,
+                    spreadRadius: 1,
+                    offset: const Offset(0, 5),
+                  ),
+                ],
+              ),
+              child: Text(
+                'Connect your wallet',
+                style: TextStyle(
+                  color: Theme.of(context).textTheme.labelMedium!.color,
+                  fontFamily: 'Equinox',
+                  fontSize: 16,
+                ),
+              ),
             ),
           )
-        : OutlinedButton(
-            onPressed: () {},
+        : Card(
+            elevation: 0,
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Icon(
-                  Icons.blur_circular,
-                  color: Colors.green,
-                  size: 13,
+                OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(BorderSide.none),
+                  ),
+                  onPressed: () {},
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Icons.blur_circular,
+                        color: Colors.green,
+                        size: 13,
+                      ),
+                      const SizedBox(width: 4),
+                      Text(
+                        session.nameAccount,
+                        style: textTheme.labelMedium,
+                      ),
+                    ],
+                  ),
                 ),
-                const SizedBox(width: 4),
-                Text(
-                  session.nameAccount,
-                  style: textTheme.labelMedium,
+                IconButtonAnimated(
+                  onPressed: () async {
+                    return showDialog(
+                      context: context,
+                      builder: (context) {
+                        return ScaffoldMessenger(
+                          child: Builder(
+                            builder: (context) {
+                              return AlertDialog(
+                                contentPadding: const EdgeInsets.only(
+                                  top: 10,
+                                ),
+                                content: Container(
+                                  color: Colors.transparent,
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(
+                                          'Demande de confirmation',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .titleMedium,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Text(
+                                          "Etes-vous sûr(e)s de vouloir déconnecter votre wallet\net quitter l'application ?",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyMedium,
+                                        ),
+                                      ),
+                                      const SizedBox(
+                                        height: 20,
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        padding: const EdgeInsets.only(
+                                          bottom: 20,
+                                        ),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text(
+                                                'No',
+                                              ),
+                                            ),
+                                            const SizedBox(width: 10),
+                                            ElevatedButton(
+                                              onPressed: () async {
+                                                await sessionNotifier
+                                                    .cancelConnection();
+                                                Navigator.of(context).pop();
+                                              },
+                                              child: const Text(
+                                                'Yes',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.power_settings_new_rounded),
+                  color: Colors.red,
+                  tooltip: 'Disconnect wallet',
                 ),
               ],
             ),

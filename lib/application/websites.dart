@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/model/website_version.dart';
@@ -51,9 +50,6 @@ class WebsitesRepository {
             name = name.substring(0, name.length - 1);
 
             var genesisAddress = '';
-            var size = 0;
-            final addresses = <String>[];
-            HostingRef? hosting;
             // Get genesis address
             final response = await sl
                 .get<ArchethicDAppClient>()
@@ -66,26 +62,6 @@ class WebsitesRepository {
               failure: (failure) {},
               success: (result) async {
                 genesisAddress = result.address;
-
-                // Last address
-                final lastAddressMap =
-                    await sl.get<ApiService>().getLastTransaction(
-                  [genesisAddress],
-                  request: 'address, data {content}',
-                );
-                if (lastAddressMap[genesisAddress] != null) {
-                  log(lastAddressMap[genesisAddress]!.address.toString());
-
-                  hosting = HostingRef.fromJson(
-                    jsonDecode(lastAddressMap[genesisAddress]!.data!.content!),
-                  );
-                  if (hosting != null) {
-                    hosting!.metaData.forEach((key, value) {
-                      size = size + value.size;
-                      addresses.addAll(value.addresses);
-                    });
-                  }
-                }
               },
             );
             websites.add(

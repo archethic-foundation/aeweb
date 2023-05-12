@@ -22,6 +22,18 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
           ..setGlobalFees(0)
           ..setGlobalFeesValidated(null);
 
+    // TODO(reddwarf03): Move to widget
+    final publicCert =
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).publicCert;
+    final privateKey =
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).privateKey;
+    if (publicCert != null && privateKey != null) {
+      if (FileMixin.validCertificate(publicCert, privateKey) == false) {
+        addWebsiteNotifier.setStepError('SSL key or certificate are invalid.');
+        return;
+      }
+    }
+
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
     final resultCreate = await createWebsiteServiceInKeychain(

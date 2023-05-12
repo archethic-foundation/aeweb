@@ -273,4 +273,9 @@ mixin FileMixin {
     }
     return gitignoreExist;
   }
+
+  static bool validCertificate(Uint8List cert, Uint8List key) {
+    // TODO(reddwarf03): TODO
+    return true;
+  }
 }

@@ -21,12 +21,12 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                   child: Row(
                     children: const [
                       Icon(
-                        Icons.arrow_back_ios_new,
+                        Iconsax.close_square,
                         size: 12,
                       ),
                       SizedBox(width: 5),
                       Text(
-                        'Back',
+                        'Cancel',
                       ),
                     ],
                   ),
@@ -39,12 +39,12 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                   child: Row(
                     children: const [
                       Icon(
-                        Icons.arrow_back_ios_new,
+                        Iconsax.close_square,
                         size: 12,
                       ),
                       SizedBox(width: 5),
                       Text(
-                        'Back',
+                        'Cancel',
                       ),
                     ],
                   ),
@@ -55,9 +55,17 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
               if (updateWebsiteSync.updateInProgress)
                 ElevatedButton(
                   onPressed: null,
-                  child: Text(
-                    'Update website',
-                    style: Theme.of(context).textTheme.labelLarge,
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Iconsax.global_edit,
+                        size: 12,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Update website',
+                      ),
+                    ],
                   ),
                 )
               else
@@ -69,9 +77,17 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                     );
                     await updateWebsiteSyncNotifier.update(context, ref);
                   },
-                  child: Text(
-                    'Update website',
-                    style: Theme.of(context).textTheme.labelLarge,
+                  child: Row(
+                    children: const [
+                      Icon(
+                        Iconsax.global_edit,
+                        size: 12,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        'Update website',
+                      ),
+                    ],
                   ),
                 ),
               const SizedBox(height: 16),

@@ -8,11 +8,9 @@ import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/main_screen.dart';
 import 'package:aeweb/ui/views/route_screen.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
-import 'package:aeweb/ui/views/website/explorer.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
 import 'package:aeweb/ui/views/welcome_screen.dart';
 import 'package:aeweb/util/service_locator.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -71,18 +69,6 @@ class MyApp extends ConsumerWidget {
           builder: (context, state) => const AddWebsiteSheet(),
         ),
         GoRoute(
-          path: '/explorer',
-          name: 'explorer',
-          builder: (context, state) {
-            final args = state.extra! as Map<String, Object?>;
-            return ExplorerScreen(
-              filesAndFolders: args['filesAndFolders'] == null
-                  ? const archethic.HostingRef()
-                  : args['filesAndFolders']! as archethic.HostingRef,
-            );
-          },
-        ),
-        GoRoute(
           path: '/websiteVersions',
           name: 'websiteVersions',
           builder: (context, state) {
@@ -130,10 +116,12 @@ class MyApp extends ConsumerWidget {
       routerConfig: _router,
       title: 'AEWeb',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(
+      theme: ThemeData(
+        brightness: Brightness.dark,
         useMaterial3: true,
       ),
-      darkTheme: ThemeData.dark(
+      darkTheme: ThemeData(
+        brightness: Brightness.dark,
         useMaterial3: true,
       ),
       localizationsDelegates: const [

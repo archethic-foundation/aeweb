@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/ui/views/util/components/gradient_card.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:go_router/go_router.dart';
 
 class ExplorerScreen extends StatefulWidget {
   const ExplorerScreen({super.key, required this.filesAndFolders});
@@ -118,45 +118,84 @@ class ExplorerScreenState extends State<ExplorerScreen> {
       iconTheme: const IconThemeData(
         size: 12,
       ),
+      colorScheme: ColorScheme.light(
+        primary:
+            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+      ),
     );
 
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Expanded(
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-              ),
-              padding: const EdgeInsets.all(10),
-              child: TreeView(
-                controller: treeViewController,
-                onExpansionChanged: _expandNode,
-                onNodeTap: (key) {
-                  setState(() {
-                    _selectedNode = key;
-                    treeViewController =
-                        treeViewController.copyWith(selectedKey: key);
-                  });
-                },
-                theme: _treeViewTheme,
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
-            child: ElevatedButton(
-              onPressed: () {
-                context.go('/');
-              },
-              child: const Text(
-                'Back',
-              ),
-            ),
-          ),
+    return GradientCard(
+      strokeWidth: 1,
+      radius: 16,
+      backgroundColor:
+          Theme.of(context).colorScheme.background.withOpacity(0.1),
+      gradient: const LinearGradient(
+        colors: [
+          Color(0x003C89B9),
+          Color(0xFFCC00FF),
         ],
+        stops: [0, 1],
+      ),
+      child: SizedBox(
+        height: MediaQuery.of(context).size.height - 380,
+        child: Padding(
+          padding: const EdgeInsets.only(
+            left: 30,
+            right: 30,
+            top: 20,
+            bottom: 20,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: SelectionArea(
+                      child: Text(
+                        'Explorer',
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: 50,
+                      height: 1,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0x003C89B9),
+                            Color(0xFFCC00FF),
+                          ],
+                          stops: [0, 1],
+                          begin: AlignmentDirectional.centerEnd,
+                          end: AlignmentDirectional.centerStart,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height - 440,
+                child: TreeView(
+                  controller: treeViewController,
+                  onExpansionChanged: _expandNode,
+                  onNodeTap: (key) {
+                    setState(() {
+                      _selectedNode = key;
+                      treeViewController =
+                          treeViewController.copyWith(selectedKey: key);
+                    });
+                  },
+                  theme: _treeViewTheme,
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
