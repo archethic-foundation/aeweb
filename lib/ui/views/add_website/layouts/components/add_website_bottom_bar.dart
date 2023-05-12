@@ -33,12 +33,12 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                   child: Row(
                     children: const [
                       Icon(
-                        Icons.arrow_back_ios_new,
+                        Iconsax.close_square,
                         size: 12,
                       ),
                       SizedBox(width: 5),
                       Text(
-                        'Back',
+                        'Cancel',
                       ),
                     ],
                   ),
@@ -51,12 +51,12 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                   child: Row(
                     children: const [
                       Icon(
-                        Icons.arrow_back_ios_new,
+                        Iconsax.close_square,
                         size: 12,
                       ),
                       SizedBox(width: 5),
                       Text(
-                        'Back',
+                        'Cancel',
                       ),
                     ],
                   ),
@@ -70,7 +70,7 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                   child: Row(
                     children: const [
                       Icon(
-                        Icons.add,
+                        Iconsax.global,
                         size: 12,
                       ),
                       SizedBox(width: 5),
@@ -95,7 +95,7 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                   child: Row(
                     children: const [
                       Icon(
-                        Icons.add,
+                        Iconsax.global,
                         size: 12,
                       ),
                       SizedBox(width: 5),

@@ -12,9 +12,12 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:gradient_borders/gradient_borders.dart';
+import 'package:iconsax/iconsax.dart';
 
 part 'add_website_bottom_bar.dart';
 part 'add_website_select_path.dart';
@@ -34,27 +37,64 @@ class AddWebsiteFormSheet extends ConsumerWidget {
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.onInverseSurface,
+      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: false,
-      body: Padding(
-        padding: const EdgeInsets.only(left: 30, right: 30),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Header(),
-            Expanded(
-              child: ResizableBox(
-                width: MediaQuery.of(context).size.width - 100,
-                childLeft: Card(
-                  color: Theme.of(context).colorScheme.surface,
-                  elevation: 0,
-                  clipBehavior: Clip.antiAlias,
-                  child: Padding(
-                    padding: const EdgeInsets.all(
-                      20,
-                    ),
-                    child: SizedBox(
+      body: Stack(
+        children: [
+          Opacity(
+            opacity: 0.2,
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/background.png',
+                  ),
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  const Color(0x00000000),
+                  const Color(0x00000000).withOpacity(1),
+                ],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 30, right: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Header(),
+                Expanded(
+                  child: ResizableBox(
+                    width: MediaQuery.of(context).size.width - 100,
+                    childLeft: Container(
                       height: MediaQuery.of(context).size.height,
+                      padding: const EdgeInsets.only(
+                        top: 10,
+                        bottom: 10,
+                        left: 5,
+                        right: 5,
+                      ),
+                      decoration: BoxDecoration(
+                        border: const GradientBoxBorder(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0x003C89B9),
+                              Color(0xFFCC00FF),
+                            ],
+                            stops: [0, 1],
+                          ),
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                      ),
                       child: Scrollbar(
                         thumbVisibility: true,
                         child: SingleChildScrollView(
@@ -82,23 +122,21 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                           ),
                         ),
                       ),
-                    ),
+                    )
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 200))
+                        .scale(duration: const Duration(milliseconds: 200)),
+                    childRight: const AddWebsiteSteps()
+                        .animate()
+                        .fade(duration: const Duration(milliseconds: 250))
+                        .scale(duration: const Duration(milliseconds: 250)),
                   ),
                 ),
-                childRight: Card(
-                  color: Theme.of(context).colorScheme.surface,
-                  elevation: 0,
-                  clipBehavior: Clip.antiAlias,
-                  child: ConstrainedBox(
-                    constraints: const BoxConstraints(),
-                    child: const AddWebsiteSteps(),
-                  ),
-                ),
-              ),
+                const AddWebsiteBottomBar(),
+              ],
             ),
-            const AddWebsiteBottomBar(),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

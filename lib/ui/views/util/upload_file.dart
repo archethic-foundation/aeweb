@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -76,7 +77,8 @@ class UploadFile extends ConsumerWidget {
                 style:
                     textTheme.labelSmall!.copyWith(fontWeight: FontWeight.w300),
               ),
-              IconButton(
+              IconButtonAnimated(
+                color: Theme.of(context).colorScheme.primary,
                 onPressed: onDelete,
                 icon: const Icon(
                   Iconsax.trash4,

@@ -2,6 +2,7 @@
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
@@ -15,156 +16,176 @@ class AddWebsiteSteps extends ConsumerWidget {
     final addWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 
     return Container(
-      padding: const EdgeInsets.all(20),
-      height: MediaQuery.of(context).size.height,
-      width: MediaQuery.of(context).size.width,
-      child: Scrollbar(
-        thumbVisibility: true,
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (addWebsite.step == 1)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Création du site dans votre porte-clés en cours.\nVeuillez confirmer dans votre wallet Archethic pour confirmer la création.',
-                ),
-              if (addWebsite.step > 1)
-                _confirmedStep(
-                  context,
-                  'Site créé en tant que nouveau service dans votre porte-clés',
-                  icon: Iconsax.wallet_add,
-                ),
-              if (addWebsite.step == 2)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Récupération des fichiers en cours.',
-                ),
-              if (addWebsite.step > 2)
-                _confirmedStep(
-                  context,
-                  'Fichiers récupérés',
-                ),
-              if (addWebsite.step == 3)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Création des transactions avec le contenu des fichiers du site en cours.',
-                ),
-              if (addWebsite.step > 3)
-                _confirmedStep(
-                  context,
-                  'Transactions avec le contenu des fichiers du site créées',
-                ),
-              if (addWebsite.step == 4)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Signature des transactions en cours.\nVeuillez confirmer dans votre wallet Archethic pour les signer.',
-                ),
-              if (addWebsite.step > 4)
-                _confirmedStep(
-                  context,
-                  'Transactions avec le contenu des fichiers du site signées',
-                  icon: Iconsax.path,
-                ),
-              if (addWebsite.step == 5)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Création de la transaction de référence listant les fichiers du site en cours.',
-                ),
-              if (addWebsite.step > 5)
-                _confirmedStep(
-                  context,
-                  'Transaction de référence créée',
-                ),
-              if (addWebsite.step == 6)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Signature de la transaction de référence en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
-                ),
-              if (addWebsite.step > 6)
-                _confirmedStep(
-                  context,
-                  'Transaction de référence signée',
-                  icon: Iconsax.path,
-                ),
-              if (addWebsite.step == 7)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Calcul des frais pour provisionner les chaînes de transaction contenant le site en cours.',
-                ),
-              if (addWebsite.step > 7)
-                _confirmedStep(
-                  context,
-                  'Frais pour provisionner les chaînes de transaction contenant le site calculés',
-                  icon: Iconsax.calculator,
-                ),
-              if (addWebsite.step == 8)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Création de la transaction de transfert de fonds pour provisionner les chaînes de transactions contenant le site en cours.',
-                ),
-              if (addWebsite.step > 8)
-                _confirmedStep(
-                  context,
-                  'Transaction de transfert de fonds pour provisionner les chaînes de transactions créée',
-                ),
-              if (addWebsite.step == 9)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Signature de la transaction de transfert de fonds en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
-                ),
-              if (addWebsite.step > 9)
-                _confirmedStep(
-                  context,
-                  'Transaction de transfert de fonds pour provisionner les chaînes de transactions signée',
-                  icon: Iconsax.path,
-                ),
-              if (addWebsite.step == 10)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Calcul des frais globaux en cours',
-                ),
-              if (addWebsite.step > 10)
-                _confirmedStep(
-                  context,
-                  'Frais globaux calculés: ${addWebsite.globalFees.toStringAsFixed(8)} UCO.',
-                  icon: Iconsax.calculator,
-                ),
-              if (addWebsite.step == 11 &&
-                  addWebsite.globalFeesValidated == null)
-                _userConfirmStep(
-                  context,
-                  ref,
-                  'Confirmez vous la création du site?',
-                ),
-              if (addWebsite.step == 12)
-                _waitingStep(
-                  context,
-                  ref,
-                  'Création du site sur la blockchain Archethic en cours.',
-                ),
-              if (addWebsite.step >= 13)
-                _confirmedStep(
-                  context,
-                  'Le site a été déployé avec succès !',
-                  icon: Iconsax.global,
-                ),
-              if (addWebsite.stepError.isNotEmpty)
-                _errorStep(
-                  context,
-                  addWebsite.stepError,
-                ),
+      padding: const EdgeInsets.only(
+        top: 10,
+        bottom: 10,
+        left: 5,
+        right: 5,
+      ),
+      decoration: BoxDecoration(
+        border: const GradientBoxBorder(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFFCC00FF),
+              Color(0x003C89B9),
             ],
+            stops: [0, 1],
+          ),
+        ),
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Container(
+        padding: const EdgeInsets.all(20),
+        height: MediaQuery.of(context).size.height,
+        width: MediaQuery.of(context).size.width,
+        child: Scrollbar(
+          thumbVisibility: true,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (addWebsite.step == 1)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Création du site dans votre porte-clés en cours.\nVeuillez confirmer dans votre wallet Archethic pour confirmer la création.',
+                  ),
+                if (addWebsite.step > 1)
+                  _confirmedStep(
+                    context,
+                    'Site créé en tant que nouveau service dans votre porte-clés',
+                    icon: Iconsax.wallet_add,
+                  ),
+                if (addWebsite.step == 2)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Récupération des fichiers en cours.',
+                  ),
+                if (addWebsite.step > 2)
+                  _confirmedStep(
+                    context,
+                    'Fichiers récupérés',
+                  ),
+                if (addWebsite.step == 3)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Création des transactions avec le contenu des fichiers du site en cours.',
+                  ),
+                if (addWebsite.step > 3)
+                  _confirmedStep(
+                    context,
+                    'Transactions avec le contenu des fichiers du site créées',
+                  ),
+                if (addWebsite.step == 4)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Signature des transactions en cours.\nVeuillez confirmer dans votre wallet Archethic pour les signer.',
+                  ),
+                if (addWebsite.step > 4)
+                  _confirmedStep(
+                    context,
+                    'Transactions avec le contenu des fichiers du site signées',
+                    icon: Iconsax.path,
+                  ),
+                if (addWebsite.step == 5)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Création de la transaction de référence listant les fichiers du site en cours.',
+                  ),
+                if (addWebsite.step > 5)
+                  _confirmedStep(
+                    context,
+                    'Transaction de référence créée',
+                  ),
+                if (addWebsite.step == 6)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Signature de la transaction de référence en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
+                  ),
+                if (addWebsite.step > 6)
+                  _confirmedStep(
+                    context,
+                    'Transaction de référence signée',
+                    icon: Iconsax.path,
+                  ),
+                if (addWebsite.step == 7)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Calcul des frais pour provisionner les chaînes de transaction contenant le site en cours.',
+                  ),
+                if (addWebsite.step > 7)
+                  _confirmedStep(
+                    context,
+                    'Frais pour provisionner les chaînes de transaction contenant le site calculés',
+                    icon: Iconsax.calculator,
+                  ),
+                if (addWebsite.step == 8)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Création de la transaction de transfert de fonds pour provisionner les chaînes de transactions contenant le site en cours.',
+                  ),
+                if (addWebsite.step > 8)
+                  _confirmedStep(
+                    context,
+                    'Transaction de transfert de fonds pour provisionner les chaînes de transactions créée',
+                  ),
+                if (addWebsite.step == 9)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Signature de la transaction de transfert de fonds en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
+                  ),
+                if (addWebsite.step > 9)
+                  _confirmedStep(
+                    context,
+                    'Transaction de transfert de fonds pour provisionner les chaînes de transactions signée',
+                    icon: Iconsax.path,
+                  ),
+                if (addWebsite.step == 10)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Calcul des frais globaux en cours',
+                  ),
+                if (addWebsite.step > 10)
+                  _confirmedStep(
+                    context,
+                    'Frais globaux calculés: ${addWebsite.globalFees.toStringAsFixed(8)} UCO.',
+                    icon: Iconsax.calculator,
+                  ),
+                if (addWebsite.step == 11 &&
+                    addWebsite.globalFeesValidated == null)
+                  _userConfirmStep(
+                    context,
+                    ref,
+                    'Confirmez vous la création du site?',
+                  ),
+                if (addWebsite.step == 12)
+                  _waitingStep(
+                    context,
+                    ref,
+                    'Création du site sur la blockchain Archethic en cours.',
+                  ),
+                if (addWebsite.step >= 13)
+                  _confirmedStep(
+                    context,
+                    'Le site a été déployé avec succès !',
+                    icon: Iconsax.global,
+                  ),
+                if (addWebsite.stepError.isNotEmpty)
+                  _errorStep(
+                    context,
+                    addWebsite.stepError,
+                  ),
+              ],
+            ),
           ),
         ),
       ),

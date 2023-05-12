@@ -1,8 +1,8 @@
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/components/gradient_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
 
 class UpdateWebsiteSyncComparisonSheet extends ConsumerStatefulWidget {
@@ -44,103 +44,102 @@ class UpdateWebsiteSyncComparisonSheetState
         )
         .toList();
 
-    return GradientCard(
-      strokeWidth: 1,
-      radius: 16,
-      backgroundColor:
-          Theme.of(context).colorScheme.background.withOpacity(0.1),
-      gradient: const LinearGradient(
-        colors: [
-          Color(0x003C89B9),
-          Color(0xFFCC00FF),
-        ],
-        stops: [0, 1],
+    return Container(
+      padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
+      decoration: BoxDecoration(
+        border: const GradientBoxBorder(
+          gradient: LinearGradient(
+            colors: [
+              Color(0x003C89B9),
+              Color(0xFFCC00FF),
+            ],
+            stops: [0, 1],
+          ),
+        ),
+        borderRadius: BorderRadius.circular(16),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10, right: 10, bottom: 10),
-        child: Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: _searchController,
-                  decoration: const InputDecoration(
-                    hintText: 'Search files...',
-                  ),
+      child: Expanded(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                controller: _searchController,
+                decoration: const InputDecoration(
+                  hintText: 'Search files...',
                 ),
               ),
-              _buildFilterStatusWidget(),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 8),
-                child: Text('Displayed files: ${filteredFiles.length}'),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: filteredFiles.length,
-                  itemBuilder: (context, index) {
-                    final file = filteredFiles[index];
-                    IconData iconData;
-                    Color iconColor;
-                    String statusText;
-                    switch (file.status) {
-                      case HostingContentComparisonStatus.localOnly:
-                        iconData = Iconsax.document;
-                        iconColor = Colors.orange;
-                        statusText = 'Local only';
-                        break;
-                      case HostingContentComparisonStatus.remoteOnly:
-                        iconData = Iconsax.document_cloud;
-                        iconColor = Colors.blue;
-                        statusText = 'Remote only';
-                        break;
-                      case HostingContentComparisonStatus.differentContent:
-                        iconData = Iconsax.note_remove;
-                        iconColor = Colors.red;
-                        statusText = 'Different content';
-                        break;
-                      case HostingContentComparisonStatus.sameContent:
-                        iconData = Iconsax.document_copy;
-                        iconColor = Colors.green;
-                        statusText = 'Same content';
-                        break;
-                    }
-                    return Center(
-                      child: Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .background
-                            .withOpacity(0.5),
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
+            ),
+            _buildFilterStatusWidget(),
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 8),
+              child: Text('Displayed files: ${filteredFiles.length}'),
+            ),
+            Expanded(
+              child: ListView.builder(
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemCount: filteredFiles.length,
+                itemBuilder: (context, index) {
+                  final file = filteredFiles[index];
+                  IconData iconData;
+                  Color iconColor;
+                  String statusText;
+                  switch (file.status) {
+                    case HostingContentComparisonStatus.localOnly:
+                      iconData = Iconsax.document;
+                      iconColor = Colors.orange;
+                      statusText = 'Local only';
+                      break;
+                    case HostingContentComparisonStatus.remoteOnly:
+                      iconData = Iconsax.document_cloud;
+                      iconColor = Colors.blue;
+                      statusText = 'Remote only';
+                      break;
+                    case HostingContentComparisonStatus.differentContent:
+                      iconData = Iconsax.note_remove;
+                      iconColor = Colors.red;
+                      statusText = 'Different content';
+                      break;
+                    case HostingContentComparisonStatus.sameContent:
+                      iconData = Iconsax.document_copy;
+                      iconColor = Colors.green;
+                      statusText = 'Same content';
+                      break;
+                  }
+                  return Center(
+                    child: Card(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .background
+                          .withOpacity(0.5),
+                      elevation: 0,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(12)),
+                      ),
+                      clipBehavior: Clip.antiAlias,
+                      child: ListTile(
+                        leading: SizedBox(
+                          height: double.infinity,
+                          child: Icon(iconData, color: iconColor),
                         ),
-                        clipBehavior: Clip.antiAlias,
-                        child: ListTile(
-                          leading: SizedBox(
-                            height: double.infinity,
-                            child: Icon(iconData, color: iconColor),
-                          ),
-                          title: Text(
-                            file.path,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                          subtitle: Text(
-                            statusText,
-                            style: const TextStyle(fontSize: 10),
-                          ),
+                        title: Text(
+                          file.path,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        subtitle: Text(
+                          statusText,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
