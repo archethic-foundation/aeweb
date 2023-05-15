@@ -1,9 +1,14 @@
 import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
+import 'package:aeweb/ui/views/util/certificate_infos_popup.dart';
 import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
+import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/website/explorer.dart';
+import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:aeweb/util/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -11,6 +16,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class WebsiteVersionsList extends ConsumerWidget with FileMixin {
   const WebsiteVersionsList({
@@ -105,7 +111,7 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                   }
                   return Align(
                     child: DataTable(
-                      dividerThickness: 0,
+                      dividerThickness: 1,
                       columns: const [
                         DataColumn(
                           label: Expanded(
@@ -128,6 +134,14 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                           label: Expanded(
                             child: Text(
                               'Size',
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text(
+                              'Certificate',
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -175,6 +189,43 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                                     ),
                                   ),
                                   DataCell(
+                                    Align(
+                                      child: websiteVersion.sslCertificate !=
+                                                  null &&
+                                              CertificateMixin.validCertificate(
+                                                websiteVersion.sslCertificate!,
+                                              )
+                                          ? IconButtonAnimated(
+                                              icon: const Icon(
+                                                Iconsax.security_safe,
+                                              ),
+                                              tooltip: 'See certificate infos',
+                                              onPressed: () {
+                                                CertificateInfosPopup.getDialog(
+                                                  context,
+                                                  websiteVersion.sslCertificate,
+                                                );
+                                              },
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .primary,
+                                            )
+                                          : IconButtonAnimated(
+                                              icon: const Icon(
+                                                Iconsax.shield_slash,
+                                              ),
+                                              tooltip: 'See certificate infos',
+                                              onPressed: () {
+                                                CertificateInfosPopup.getDialog(
+                                                  context,
+                                                  websiteVersion.sslCertificate,
+                                                );
+                                              },
+                                              color: Colors.red,
+                                            ),
+                                    ),
+                                  ),
+                                  DataCell(
                                     _popupMenuButton(
                                       context,
                                       ref,
@@ -213,16 +264,31 @@ Widget _popupMenuButton(
   String genesisAddress,
 ) {
   return PopupMenuButton(
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
     itemBuilder: (context) {
       return [
         PopupMenuItem(
           value: 'Explore',
           child: Row(
             children: const [
-              Icon(Icons.explore),
+              Icon(Iconsax.folder_open),
               SizedBox(width: 8),
               Flexible(
-                child: Text('Explore'),
+                child: Text('Explore files'),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'refTx',
+          child: Row(
+            children: const [
+              Icon(Iconsax.archive_book),
+              SizedBox(width: 8),
+              Flexible(
+                child: Text('See reference transaction'),
               ),
             ],
           ),
@@ -232,7 +298,7 @@ Widget _popupMenuButton(
             value: 'Sync',
             child: Row(
               children: const [
-                Icon(Icons.sync),
+                Icon(Iconsax.receive_square_2),
                 SizedBox(width: 8),
                 Flexible(
                   child: Text('Sync from local folder'),
@@ -244,7 +310,7 @@ Widget _popupMenuButton(
           value: 'Delete',
           child: Row(
             children: const [
-              Icon(Icons.delete),
+              Icon(Iconsax.trash),
               SizedBox(width: 8),
               Flexible(
                 child: Text('Delete files and SSL certificate / key'),
@@ -256,7 +322,7 @@ Widget _popupMenuButton(
           value: 'Download',
           child: Row(
             children: const [
-              Icon(Icons.download),
+              Icon(Iconsax.receive_square),
               SizedBox(width: 8),
               Flexible(
                 child: Text('Download'),
@@ -268,7 +334,7 @@ Widget _popupMenuButton(
           value: 'Certificate',
           child: Row(
             children: const [
-              Icon(Icons.security),
+              Icon(Iconsax.security_safe),
               SizedBox(width: 8),
               Flexible(
                 child: Text('Certificate management'),
@@ -307,7 +373,13 @@ Widget _popupMenuButton(
             websiteName,
             genesisAddress,
           );
-
+          break;
+        case 'refTx':
+          launchUrl(
+            Uri.parse(
+              '${sl.get<ApiService>().endpoint}/explorer/transaction/${websiteVersion.transactionRefAddress}',
+            ),
+          );
           break;
         default:
       }

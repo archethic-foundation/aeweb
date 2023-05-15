@@ -4,6 +4,7 @@ import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:iconsax/iconsax.dart';
 
 class ConnectionToWalletStatus extends ConsumerStatefulWidget {
   const ConnectionToWalletStatus({
@@ -66,13 +67,23 @@ class _ConnectionToWalletStatusState
                   ),
                 ],
               ),
-              child: Text(
-                'Connect your wallet',
-                style: TextStyle(
-                  color: Theme.of(context).textTheme.labelMedium!.color,
-                  fontFamily: 'Equinox',
-                  fontSize: 16,
-                ),
+              child: Row(
+                children: [
+                  Icon(
+                    Iconsax.empty_wallet,
+                    color: Theme.of(context).textTheme.labelMedium!.color,
+                    size: 20,
+                  ),
+                  const SizedBox(width: 10),
+                  Text(
+                    'Connect your wallet',
+                    style: TextStyle(
+                      color: Theme.of(context).textTheme.labelMedium!.color,
+                      fontFamily: 'Equinox',
+                      fontSize: 16,
+                    ),
+                  ),
+                ],
               ),
             ),
           )
@@ -89,7 +100,7 @@ class _ConnectionToWalletStatusState
                   child: Row(
                     children: [
                       const Icon(
-                        Icons.blur_circular,
+                        Iconsax.empty_wallet_tick,
                         color: Colors.green,
                         size: 13,
                       ),

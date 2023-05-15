@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
+import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/get_it_instance.dart';
@@ -11,7 +12,7 @@ import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddWebsiteUseCases with FileMixin, TransactionMixin {
+class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
   Future<void> run(
     WidgetRef ref,
   ) async {
@@ -27,12 +28,18 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
         ref.read(AddWebsiteFormProvider.addWebsiteForm).publicCert;
     final privateKey =
         ref.read(AddWebsiteFormProvider.addWebsiteForm).privateKey;
-    if (publicCert != null && privateKey != null) {
-      if (FileMixin.validCertificate(publicCert, privateKey) == false) {
-        addWebsiteNotifier.setStepError('SSL key or certificate are invalid.');
+    if (publicCert != null) {
+      if (CertificateMixin.validCertificatFromFile(publicCert) == false) {
+        addWebsiteNotifier.setStepError('SSL Certificate is invalid.');
         return;
       }
     }
+    /*if (privateKey != null) {
+      if (FileMixin.validCertificate(privateKey) == false) {
+        addWebsiteNotifier.setStepError('SSL Key is invalid.');
+        return;
+      }
+    }*/
 
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
@@ -219,7 +226,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
     var transactionRepository = ArchethicTransactionSender(
       phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
       websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
+          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
     );
 
     addWebsiteNotifier.setStep(12);
@@ -239,7 +246,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin {
             phoenixHttpEndpoint:
                 '${sl.get<ApiService>().endpoint}/socket/websocket',
             websocketEndpoint:
-                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
+                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
           );
 
           await transactionRepository.send(

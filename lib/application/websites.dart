@@ -6,6 +6,7 @@ import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/util/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'websites.g.dart';
@@ -100,15 +101,30 @@ class WebsitesRepository {
         size = size + value.size;
       });
 
-      websiteVersions.add(
-        WebsiteVersion(
-          transactionRefAddress: transaction.address!.address!,
-          timestamp: transaction.validationStamp!.timestamp!,
-          filesCount: hosting.metaData.length,
-          size: size,
-          content: hosting,
-        ),
-      );
+      if (hosting.sslCertificate.isNotEmpty) {
+        final x509Certificate =
+            X509Utils.x509CertificateFromPem(hosting.sslCertificate);
+        websiteVersions.add(
+          WebsiteVersion(
+            transactionRefAddress: transaction.address!.address!,
+            timestamp: transaction.validationStamp!.timestamp!,
+            filesCount: hosting.metaData.length,
+            size: size,
+            content: hosting,
+            sslCertificate: x509Certificate,
+          ),
+        );
+      } else {
+        websiteVersions.add(
+          WebsiteVersion(
+            transactionRefAddress: transaction.address!.address!,
+            timestamp: transaction.validationStamp!.timestamp!,
+            filesCount: hosting.metaData.length,
+            size: size,
+            content: hosting,
+          ),
+        );
+      }
     }
 
     return websiteVersions;

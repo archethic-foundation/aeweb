@@ -235,7 +235,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     var transactionRepository = ArchethicTransactionSender(
       phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
       websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
+          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
     );
 
     updateWebsiteSyncNotifier.setStep(11);
@@ -292,7 +292,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
             phoenixHttpEndpoint:
                 '${sl.get<ApiService>().endpoint}/socket/websocket',
             websocketEndpoint:
-                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket',
+                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
           );
 
           await transactionRepository.send(

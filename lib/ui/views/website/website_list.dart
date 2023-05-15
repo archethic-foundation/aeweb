@@ -137,26 +137,68 @@ class WebsiteList extends ConsumerWidget {
 Widget _buildWebsiteCard(BuildContext context, WidgetRef ref, Website website) {
   final selectedWebsite =
       ref.watch(SelectedWebsiteProviders.selectedWebsiteProvider);
-  return SizedBox(
-    height: 60,
-    child: selectedWebsite.genesisAddress != website.genesisAddress
-        ? Card(
-            color: Theme.of(context).colorScheme.background.withOpacity(0.5),
-            elevation: 0,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 10),
+    child: SizedBox(
+      height: 60,
+      child: selectedWebsite.genesisAddress != website.genesisAddress
+          ? DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.background.withOpacity(1),
+                    Theme.of(context).colorScheme.background.withOpacity(0.3),
+                  ],
+                  stops: const [0, 1],
+                ),
+                border: GradientBoxBorder(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.background.withOpacity(0.5),
+                      Theme.of(context).colorScheme.background.withOpacity(0.7),
+                    ],
+                    stops: const [0, 1],
+                  ),
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: _contentCard(context, ref, website),
+            )
+          : DecoratedBox(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(1),
+                    Theme.of(context)
+                        .colorScheme
+                        .primaryContainer
+                        .withOpacity(0.3),
+                  ],
+                  stops: const [0, 1],
+                ),
+                border: GradientBoxBorder(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context)
+                          .colorScheme
+                          .primaryContainer
+                          .withOpacity(1),
+                      Theme.of(context)
+                          .colorScheme
+                          .primaryContainer
+                          .withOpacity(0.3),
+                    ],
+                    stops: const [0, 1],
+                  ),
+                ),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: _contentCard(context, ref, website),
             ),
-            child: _contentCard(context, ref, website),
-          )
-        : Card(
-            color:
-                Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
-            elevation: 0,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(Radius.circular(12)),
-            ),
-            child: _contentCard(context, ref, website),
-          ),
+    ),
   );
 }
 

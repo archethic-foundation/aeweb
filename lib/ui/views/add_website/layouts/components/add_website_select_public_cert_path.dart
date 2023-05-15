@@ -58,6 +58,7 @@ class _AddWebsiteSelectPublicCertPathState
           value: addWebsiteProvider.publicCertPath,
           onTap: _selectPublicCertFile,
           onDelete: _resetPath,
+          helpLink: 'https://wiki.archethic.net/participate/aeweb/dns/#ssl',
         ),
       ],
     );

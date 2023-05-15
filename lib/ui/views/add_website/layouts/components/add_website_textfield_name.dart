@@ -50,7 +50,6 @@ class _AddWebsiteTextFieldNameState
           Expanded(
             child: DecoratedBox(
               decoration: BoxDecoration(
-                color: Colors.white,
                 borderRadius: BorderRadius.circular(20),
               ),
               child: Row(

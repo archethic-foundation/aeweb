@@ -19,7 +19,10 @@ class _AddWebsiteSelectPrivateKeyPathState
       final addWebsiteNotifier =
           ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
 
-      final result = await FilePicker.platform.pickFiles();
+      final result = await FilePicker.platform.pickFiles(
+        type: FileType.custom,
+        allowedExtensions: ['pem', 'crt'],
+      );
       if (result != null) {
         if (kIsWeb) {
           addWebsiteNotifier.setPrivateKeyPath(result.files.first.name);
@@ -55,6 +58,7 @@ class _AddWebsiteSelectPrivateKeyPathState
           value: addWebsiteProvider.privateKeyPath,
           onTap: _selectPrivateKeyFile,
           onDelete: _resetPath,
+          helpLink: 'https://wiki.archethic.net/participate/aeweb/dns/#ssl',
         ),
       ],
     );

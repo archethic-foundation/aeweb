@@ -3,7 +3,9 @@ import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UploadFile extends ConsumerWidget {
   const UploadFile({
@@ -11,6 +13,7 @@ class UploadFile extends ConsumerWidget {
     this.value,
     required this.onTap,
     required this.onDelete,
+    this.helpLink,
     super.key,
   });
 
@@ -18,10 +21,10 @@ class UploadFile extends ConsumerWidget {
   final Function() onDelete;
   final String title;
   final String? value;
+  final String? helpLink;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    late final _colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
@@ -29,11 +32,27 @@ class UploadFile extends ConsumerWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          title,
-          style: textTheme.labelMedium,
+        Row(
+          children: [
+            Text(
+              title,
+              style: textTheme.labelMedium,
+            ),
+            if (helpLink != null)
+              IconButtonAnimated(
+                icon: const Icon(Icons.help),
+                onPressed: () {
+                  launchUrl(
+                    Uri.parse(
+                      helpLink!,
+                    ),
+                  );
+                },
+                color: Theme.of(context).colorScheme.primaryContainer,
+              ),
+          ],
         ),
-        const SizedBox(width: 10),
+        if (helpLink == null) const SizedBox(height: 12),
         GestureDetector(
           onTap: onTap,
           child: DottedBorder(
@@ -41,13 +60,28 @@ class UploadFile extends ConsumerWidget {
             radius: const Radius.circular(10),
             dashPattern: const [10, 4],
             strokeCap: StrokeCap.round,
-            color: _colorScheme.primaryContainer,
+            color: Theme.of(context).colorScheme.primaryContainer,
             child: Container(
               width: 200,
               height: 130,
               decoration: BoxDecoration(
-                color: _colorScheme.primaryContainer.withOpacity(.3),
-                borderRadius: BorderRadius.circular(10),
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.background.withOpacity(1),
+                    Theme.of(context).colorScheme.background.withOpacity(0.3),
+                  ],
+                  stops: const [0, 1],
+                ),
+                border: GradientBoxBorder(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.background.withOpacity(0.5),
+                      Theme.of(context).colorScheme.background.withOpacity(0.7),
+                    ],
+                    stops: const [0, 1],
+                  ),
+                ),
+                borderRadius: BorderRadius.circular(12),
               ),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,

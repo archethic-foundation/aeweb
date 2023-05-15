@@ -7,6 +7,7 @@ import 'package:aeweb/util/ignore.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
+import 'package:basic_utils/basic_utils.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
 
@@ -272,10 +273,5 @@ mixin FileMixin {
       log('Error while retrieving files and folders : $e');
     }
     return gitignoreExist;
-  }
-
-  static bool validCertificate(Uint8List cert, Uint8List key) {
-    // TODO(reddwarf03): TODO
-    return true;
   }
 }
