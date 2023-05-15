@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
@@ -99,12 +100,14 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Iconsax.warning_2),
-                          SizedBox(
+                          const Icon(Iconsax.warning_2),
+                          const SizedBox(
                             width: 5,
                           ),
-                          Text(AppLocalizations.of(context)!
-                              .websitesListVersionsNoVersion),
+                          Text(
+                            AppLocalizations.of(context)!
+                                .websitesListVersionsNoVersion,
+                          ),
                         ],
                       ),
                     );
@@ -279,8 +282,10 @@ Widget _popupMenuButton(
               const Icon(Iconsax.folder_open),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(AppLocalizations.of(context)!
-                    .websitesListVersionsPopupExplore),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .websitesListVersionsPopupExplore,
+                ),
               ),
             ],
           ),
@@ -292,8 +297,9 @@ Widget _popupMenuButton(
               const Icon(Iconsax.archive_book),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(AppLocalizations.of(context)!
-                    .websitesListVersionsPopupRefTx),
+                child: Text(
+                  AppLocalizations.of(context)!.websitesListVersionsPopupRefTx,
+                ),
               ),
               const SizedBox(width: 5),
               const Icon(
@@ -311,25 +317,29 @@ Widget _popupMenuButton(
                 const Icon(Iconsax.refresh_circle),
                 const SizedBox(width: 8),
                 Flexible(
-                  child: Text(AppLocalizations.of(context)!
-                      .websitesListVersionsPopupSync),
+                  child: Text(
+                    AppLocalizations.of(context)!.websitesListVersionsPopupSync,
+                  ),
                 ),
               ],
             ),
           ),
-        PopupMenuItem(
-          value: 'Delete',
-          child: Row(
-            children: [
-              const Icon(Iconsax.trash),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(AppLocalizations.of(context)!
-                    .websitesListVersionsPopupDelete),
-              ),
-            ],
+        if (lastVersion)
+          PopupMenuItem(
+            value: 'Unpublish',
+            child: Row(
+              children: [
+                const Icon(Iconsax.folder_cross),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .websitesListVersionsPopupUnpublish,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
         PopupMenuItem(
           value: 'Download',
           child: Row(
@@ -337,8 +347,10 @@ Widget _popupMenuButton(
               const Icon(Iconsax.receive_square),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(AppLocalizations.of(context)!
-                    .websitesListVersionsPopupDownload),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .websitesListVersionsPopupDownload,
+                ),
               ),
             ],
           ),
@@ -350,8 +362,10 @@ Widget _popupMenuButton(
               const Icon(Iconsax.security_safe),
               const SizedBox(width: 8),
               Flexible(
-                child: Text(AppLocalizations.of(context)!
-                    .websitesListVersionsPopupCertificate),
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .websitesListVersionsPopupCertificate,
+                ),
               ),
             ],
           ),
@@ -387,6 +401,9 @@ Widget _popupMenuButton(
             websiteName,
             genesisAddress,
           );
+          break;
+        case 'Unpublish':
+          context.go('/unpublishWebsite');
           break;
         case 'refTx':
           launchUrl(

@@ -3,6 +3,7 @@ import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_form_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddWebsiteSheet extends ConsumerWidget {
@@ -42,7 +43,7 @@ class AddWebsiteSheetBody extends ConsumerWidget {
             ),
             duration: const Duration(seconds: 3),
             action: SnackBarAction(
-              label: 'Ok',
+              label: AppLocalizations.of(context)!.ok,
               onPressed: () {},
             ),
           ),

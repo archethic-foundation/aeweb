@@ -6,6 +6,7 @@ import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/main_screen.dart';
 import 'package:aeweb/ui/views/route_screen.dart';
+import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
 import 'package:aeweb/ui/views/welcome_screen.dart';
@@ -67,6 +68,10 @@ class MyApp extends ConsumerWidget {
         GoRoute(
           path: '/addWebsite',
           builder: (context, state) => const AddWebsiteSheet(),
+        ),
+        GoRoute(
+          path: '/unpublishWebsite',
+          builder: (context, state) => const UnpublishWebsiteSheet(),
         ),
         GoRoute(
           path: '/websiteVersions',

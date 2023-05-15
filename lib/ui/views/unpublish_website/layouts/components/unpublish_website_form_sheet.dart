@@ -1,17 +1,8 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:developer';
-
 import 'package:aeweb/header.dart';
-import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
-import 'package:aeweb/ui/views/add_website/layouts/components/add_website_steps.dart';
+import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
+import 'package:aeweb/ui/views/unpublish_website/layouts/components/unpublish_website_steps.dart';
 import 'package:aeweb/ui/views/util/components/resizable_box.dart';
-import 'package:aeweb/ui/views/util/components/upload_file.dart';
-import 'package:aeweb/ui/views/util/generic/formatters.dart';
-import 'package:aeweb/util/file_util.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -19,16 +10,10 @@ import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
 
-part 'add_website_bottom_bar.dart';
-part 'add_website_select_path.dart';
-part 'add_website_select_private_key_path.dart';
-part 'add_website_select_public_cert_path.dart';
-part 'add_website_select_zip_file.dart';
-part 'add_website_switch_gitignore.dart';
-part 'add_website_textfield_name.dart';
+part 'unpublish_website_bottom_bar.dart';
 
-class AddWebsiteFormSheet extends ConsumerWidget {
-  const AddWebsiteFormSheet({super.key});
+class UnpublishebsiteFormSheet extends ConsumerWidget {
+  const UnpublishebsiteFormSheet({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -98,50 +83,29 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                       child: Scrollbar(
                         thumbVisibility: true,
                         child: SingleChildScrollView(
-                          child: Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  AppLocalizations.of(context)!.addWebSiteDesc,
-                                  style: textTheme.labelMedium,
-                                ),
-                                const SizedBox(height: 30),
-                                Row(
-                                  children: [
-                                    const Icon(
-                                      Iconsax.warning_2,
-                                      color: Colors.red,
-                                    ),
-                                    const SizedBox(width: 5),
-                                    Text(
-                                      AppLocalizations.of(context)!.disclaimer,
-                                      style: textTheme.labelMedium,
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 16),
-                                Text(
-                                  AppLocalizations.of(context)!
-                                      .addWebSiteDisclaimer,
-                                  style: textTheme.labelMedium,
-                                ),
-                                const SizedBox(height: 16),
-                                const AddWebsiteTextFieldName(),
-                                const SizedBox(height: 16),
-                                if (kIsWeb)
-                                  const AddWebsiteSelectZipFile()
-                                else
-                                  const AddWebsiteSelectPath(),
-                                const SizedBox(height: 16),
-                                const AddWebsiteSwitchGitignore(),
-                                const SizedBox(height: 16),
-                                const AddWebsiteSelectPublicCertPath(),
-                                const SizedBox(height: 16),
-                                const AddWebsiteSelectPrivateKeyPath(),
-                              ],
-                            ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Iconsax.warning_2,
+                                    color: Colors.red,
+                                  ),
+                                  const SizedBox(width: 5),
+                                  Text(
+                                    AppLocalizations.of(context)!.disclaimer,
+                                    style: textTheme.labelMedium,
+                                  ),
+                                ],
+                              ),
+                              const SizedBox(height: 16),
+                              Text(
+                                AppLocalizations.of(context)!
+                                    .unpublishWebSiteDesc,
+                                style: textTheme.labelMedium,
+                              ),
+                            ],
                           ),
                         ),
                       ),
@@ -149,13 +113,13 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                         .animate()
                         .fade(duration: const Duration(milliseconds: 200))
                         .scale(duration: const Duration(milliseconds: 200)),
-                    childRight: const AddWebsiteSteps()
+                    childRight: const UnpublishWebsiteSteps()
                         .animate()
                         .fade(duration: const Duration(milliseconds: 250))
                         .scale(duration: const Duration(milliseconds: 250)),
                   ),
                 ),
-                const AddWebsiteBottomBar(),
+                const UnpublishWebsiteBottomBar(),
               ],
             ),
           ),

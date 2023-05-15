@@ -1,3 +1,4 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/model/website_selection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

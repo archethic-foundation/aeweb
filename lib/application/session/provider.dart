@@ -1,5 +1,5 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
-
 import 'package:aeweb/application/session/state.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/service_locator.dart';

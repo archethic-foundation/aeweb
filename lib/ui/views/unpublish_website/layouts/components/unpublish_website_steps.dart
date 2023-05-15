@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
+import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,14 +8,15 @@ import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
-class AddWebsiteSteps extends ConsumerWidget {
-  const AddWebsiteSteps({
+class UnpublishWebsiteSteps extends ConsumerWidget {
+  const UnpublishWebsiteSteps({
     super.key,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final addWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
+    final unpublishWebsite =
+        ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm);
 
     return Container(
       padding: const EdgeInsets.only(
@@ -45,150 +47,150 @@ class AddWebsiteSteps extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                if (addWebsite.step == 1)
+                if (unpublishWebsite.step == 1)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep1,
                   ),
-                if (addWebsite.step > 1)
+                if (unpublishWebsite.step > 1)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep1,
                     icon: Iconsax.wallet_add,
                   ),
-                if (addWebsite.step == 2)
+                if (unpublishWebsite.step == 2)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep2,
                   ),
-                if (addWebsite.step > 2)
+                if (unpublishWebsite.step > 2)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep2,
                   ),
-                if (addWebsite.step == 3)
+                if (unpublishWebsite.step == 3)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep3,
                   ),
-                if (addWebsite.step > 3)
+                if (unpublishWebsite.step > 3)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep3,
                   ),
-                if (addWebsite.step == 4)
+                if (unpublishWebsite.step == 4)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep4,
                   ),
-                if (addWebsite.step > 4)
+                if (unpublishWebsite.step > 4)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep4,
                     icon: Iconsax.path,
                   ),
-                if (addWebsite.step == 5)
+                if (unpublishWebsite.step == 5)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep5,
                   ),
-                if (addWebsite.step > 5)
+                if (unpublishWebsite.step > 5)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep5,
                   ),
-                if (addWebsite.step == 6)
+                if (unpublishWebsite.step == 6)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep6,
                   ),
-                if (addWebsite.step > 6)
+                if (unpublishWebsite.step > 6)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep6,
                     icon: Iconsax.path,
                   ),
-                if (addWebsite.step == 7)
+                if (unpublishWebsite.step == 7)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep7,
                   ),
-                if (addWebsite.step > 7)
+                if (unpublishWebsite.step > 7)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep7,
                     icon: Iconsax.calculator,
                   ),
-                if (addWebsite.step == 8)
+                if (unpublishWebsite.step == 8)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep8,
                   ),
-                if (addWebsite.step > 8)
+                if (unpublishWebsite.step > 8)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep8,
                   ),
-                if (addWebsite.step == 9)
+                if (unpublishWebsite.step == 9)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep9,
                   ),
-                if (addWebsite.step > 9)
+                if (unpublishWebsite.step > 9)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep9,
                     icon: Iconsax.path,
                   ),
-                if (addWebsite.step == 10)
+                if (unpublishWebsite.step == 10)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep10,
                   ),
-                if (addWebsite.step > 10)
+                if (unpublishWebsite.step > 10)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!
                         .addWebSiteConfirmedStep10
                         .replaceAll(
                           '%1',
-                          addWebsite.globalFees.toStringAsFixed(8),
+                          unpublishWebsite.globalFees.toStringAsFixed(8),
                         ),
                     icon: Iconsax.calculator,
                   ),
-                if (addWebsite.step == 11 &&
-                    addWebsite.globalFeesValidated == null)
+                if (unpublishWebsite.step == 11 &&
+                    unpublishWebsite.globalFeesValidated == null)
                   _userConfirmStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteConfirmStep11,
                   ),
-                if (addWebsite.step == 12)
+                if (unpublishWebsite.step == 12)
                   _waitingStep(
                     context,
                     ref,
                     AppLocalizations.of(context)!.addWebSiteWaitingStep12,
                   ),
-                if (addWebsite.step >= 13)
+                if (unpublishWebsite.step >= 13)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!.addWebSiteConfirmedStep12,
                     icon: Iconsax.global,
                   ),
-                if (addWebsite.stepError.isNotEmpty)
+                if (unpublishWebsite.stepError.isNotEmpty)
                   _errorStep(
                     context,
-                    addWebsite.stepError,
+                    unpublishWebsite.stepError,
                   ),
               ],
             ),
@@ -202,7 +204,7 @@ class AddWebsiteSteps extends ConsumerWidget {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-    final addWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
+    final unpublishWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
     return SizedBox(
       height: 50,
       child: Row(
@@ -217,7 +219,7 @@ class AddWebsiteSteps extends ConsumerWidget {
           const SizedBox(
             width: 10,
           ),
-          if (addWebsite.stepError.isEmpty)
+          if (unpublishWebsite.stepError.isEmpty)
             Flexible(
               child: SizedBox(
                 width: 20,

@@ -1,0 +1,22 @@
+/// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'state.freezed.dart';
+
+@freezed
+class UnpublishWebsiteFormState with _$UnpublishWebsiteFormState {
+  const factory UnpublishWebsiteFormState({
+    @Default(0) int step,
+    @Default('') String stepError,
+    @Default(0.0) double globalFees,
+    bool? globalFeesValidated,
+    @Default('') String errorText,
+  }) = _UnpublishWebsiteFormState;
+  const UnpublishWebsiteFormState._();
+
+  bool get isControlsOk => errorText == '';
+
+  bool get unpublishInProgress => step > 0 && step < 13 && stepError.isEmpty;
+
+  bool get canUnpublishWebsite => isControlsOk;
+}
