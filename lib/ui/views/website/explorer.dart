@@ -2,6 +2,7 @@
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
@@ -154,7 +155,7 @@ class ExplorerScreenState extends State<ExplorerScreen> {
                   padding: const EdgeInsets.only(right: 15),
                   child: SelectionArea(
                     child: Text(
-                      'Explorer',
+                      AppLocalizations.of(context)!.explorerTitle,
                       style: Theme.of(context).textTheme.titleSmall,
                     ),
                   ),

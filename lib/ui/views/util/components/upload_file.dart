@@ -2,6 +2,7 @@
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
@@ -94,7 +95,7 @@ class UploadFile extends ConsumerWidget {
                     height: 15,
                   ),
                   Text(
-                    'Select your file',
+                    AppLocalizations.of(context)!.uploadFileSelect,
                     style: textTheme.labelSmall!
                         .copyWith(fontWeight: FontWeight.w300),
                   ),

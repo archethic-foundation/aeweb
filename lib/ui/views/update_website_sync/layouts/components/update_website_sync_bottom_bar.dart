@@ -19,14 +19,14 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: null,
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.close_square,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Cancel',
+                        AppLocalizations.of(context)!.btn_cancel,
                       ),
                     ],
                   ),
@@ -37,14 +37,14 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                     context.go('/');
                   },
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.close_square,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Cancel',
+                        AppLocalizations.of(context)!.btn_cancel,
                       ),
                     ],
                   ),
@@ -56,14 +56,14 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: null,
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.global_edit,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Update website',
+                        AppLocalizations.of(context)!.btn_update_website,
                       ),
                     ],
                   ),
@@ -78,14 +78,14 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                     await updateWebsiteSyncNotifier.update(context, ref);
                   },
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.global_edit,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Update website',
+                        AppLocalizations.of(context)!.btn_update_website,
                       ),
                     ],
                   ),

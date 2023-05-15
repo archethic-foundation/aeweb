@@ -1,6 +1,7 @@
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
@@ -38,7 +39,8 @@ class CertificateInfosPopup with CertificateMixin {
                                   children: [
                                     SelectionArea(
                                       child: Text(
-                                        'Certificate infos',
+                                        AppLocalizations.of(context)!
+                                            .certificateInfosTitle,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall,
@@ -73,15 +75,16 @@ class CertificateInfosPopup with CertificateMixin {
                                 if (certificate == null)
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    children: const [
-                                      Icon(Iconsax.warning_2),
-                                      SizedBox(
+                                    children: [
+                                      const Icon(Iconsax.warning_2),
+                                      const SizedBox(
                                         width: 5,
                                       ),
                                       Text(
-                                        'No certificate installed',
+                                        AppLocalizations.of(context)!
+                                            .certificateInfosNoCertInstalled,
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 100,
                                       ),
                                     ],
@@ -92,7 +95,8 @@ class CertificateInfosPopup with CertificateMixin {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        'Emis pour',
+                                        AppLocalizations.of(context)!
+                                            .certificateInfosSubjectTitle,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall,
@@ -115,7 +119,10 @@ class CertificateInfosPopup with CertificateMixin {
                                                 certificate.tbsCertificate!
                                                             .subject[
                                                         property['code']] ??
-                                                    '<not included in the certificate>',
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!
+                                                        .certificateInfosNotIncluded,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium,
@@ -150,7 +157,10 @@ class CertificateInfosPopup with CertificateMixin {
                                                 certificate.tbsCertificate!
                                                             .issuer[
                                                         property['code']] ??
-                                                    '<not included in the certificate>',
+                                                    AppLocalizations.of(
+                                                      context,
+                                                    )!
+                                                        .certificateInfosNotIncluded,
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium,
@@ -162,7 +172,8 @@ class CertificateInfosPopup with CertificateMixin {
                                         height: 10,
                                       ),
                                       Text(
-                                        'Durée de validité',
+                                        AppLocalizations.of(context)!
+                                            .certificateInfosValidityTitle,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall,
@@ -173,7 +184,8 @@ class CertificateInfosPopup with CertificateMixin {
                                         child: Row(
                                           children: [
                                             Text(
-                                              'Emis le ',
+                                              AppLocalizations.of(context)!
+                                                  .certificateInfosValidityStart,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelMedium,
@@ -199,7 +211,8 @@ class CertificateInfosPopup with CertificateMixin {
                                         child: Row(
                                           children: [
                                             Text(
-                                              'Expire le ',
+                                              AppLocalizations.of(context)!
+                                                  .certificateInfosValidityEnd,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelMedium,
@@ -223,7 +236,8 @@ class CertificateInfosPopup with CertificateMixin {
                                         height: 10,
                                       ),
                                       Text(
-                                        'Empreintes',
+                                        AppLocalizations.of(context)!
+                                            .certificateInfosThumbprintTitle,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleSmall,
@@ -234,7 +248,8 @@ class CertificateInfosPopup with CertificateMixin {
                                         child: Row(
                                           children: [
                                             Text(
-                                              'Empreinte SHA-256',
+                                              AppLocalizations.of(context)!
+                                                  .certificateInfosThumbprintSha256,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelMedium,
@@ -258,7 +273,8 @@ class CertificateInfosPopup with CertificateMixin {
                                         child: Row(
                                           children: [
                                             Text(
-                                              'Empreinte SHA-1',
+                                              AppLocalizations.of(context)!
+                                                  .certificateInfosThumbprintSha1,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelMedium,
@@ -286,7 +302,7 @@ class CertificateInfosPopup with CertificateMixin {
                                       Navigator.of(context).pop();
                                     },
                                     child: Text(
-                                      'Close',
+                                      AppLocalizations.of(context)!.btn_close,
                                       style: TextStyle(
                                         color: Theme.of(context)
                                             .colorScheme

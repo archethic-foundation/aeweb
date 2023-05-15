@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
@@ -48,116 +49,121 @@ class AddWebsiteSteps extends ConsumerWidget {
                   _waitingStep(
                     context,
                     ref,
-                    'Création du site dans votre porte-clés en cours.\nVeuillez confirmer dans votre wallet Archethic pour confirmer la création.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep1,
                   ),
                 if (addWebsite.step > 1)
                   _confirmedStep(
                     context,
-                    'Site créé en tant que nouveau service dans votre porte-clés',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep1,
                     icon: Iconsax.wallet_add,
                   ),
                 if (addWebsite.step == 2)
                   _waitingStep(
                     context,
                     ref,
-                    'Récupération des fichiers en cours.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep2,
                   ),
                 if (addWebsite.step > 2)
                   _confirmedStep(
                     context,
-                    'Fichiers récupérés',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep2,
                   ),
                 if (addWebsite.step == 3)
                   _waitingStep(
                     context,
                     ref,
-                    'Création des transactions avec le contenu des fichiers du site en cours.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep3,
                   ),
                 if (addWebsite.step > 3)
                   _confirmedStep(
                     context,
-                    'Transactions avec le contenu des fichiers du site créées',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep3,
                   ),
                 if (addWebsite.step == 4)
                   _waitingStep(
                     context,
                     ref,
-                    'Signature des transactions en cours.\nVeuillez confirmer dans votre wallet Archethic pour les signer.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep4,
                   ),
                 if (addWebsite.step > 4)
                   _confirmedStep(
                     context,
-                    'Transactions avec le contenu des fichiers du site signées',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep4,
                     icon: Iconsax.path,
                   ),
                 if (addWebsite.step == 5)
                   _waitingStep(
                     context,
                     ref,
-                    'Création de la transaction de référence listant les fichiers du site en cours.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep5,
                   ),
                 if (addWebsite.step > 5)
                   _confirmedStep(
                     context,
-                    'Transaction de référence créée',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep5,
                   ),
                 if (addWebsite.step == 6)
                   _waitingStep(
                     context,
                     ref,
-                    'Signature de la transaction de référence en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep6,
                   ),
                 if (addWebsite.step > 6)
                   _confirmedStep(
                     context,
-                    'Transaction de référence signée',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep6,
                     icon: Iconsax.path,
                   ),
                 if (addWebsite.step == 7)
                   _waitingStep(
                     context,
                     ref,
-                    'Calcul des frais pour provisionner les chaînes de transaction contenant le site en cours.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep7,
                   ),
                 if (addWebsite.step > 7)
                   _confirmedStep(
                     context,
-                    'Frais pour provisionner les chaînes de transaction contenant le site calculés',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep7,
                     icon: Iconsax.calculator,
                   ),
                 if (addWebsite.step == 8)
                   _waitingStep(
                     context,
                     ref,
-                    'Création de la transaction de transfert de fonds pour provisionner les chaînes de transactions contenant le site en cours.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep8,
                   ),
                 if (addWebsite.step > 8)
                   _confirmedStep(
                     context,
-                    'Transaction de transfert de fonds pour provisionner les chaînes de transactions créée',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep8,
                   ),
                 if (addWebsite.step == 9)
                   _waitingStep(
                     context,
                     ref,
-                    'Signature de la transaction de transfert de fonds en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep9,
                   ),
                 if (addWebsite.step > 9)
                   _confirmedStep(
                     context,
-                    'Transaction de transfert de fonds pour provisionner les chaînes de transactions signée',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep9,
                     icon: Iconsax.path,
                   ),
                 if (addWebsite.step == 10)
                   _waitingStep(
                     context,
                     ref,
-                    'Calcul des frais globaux en cours',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep10,
                   ),
                 if (addWebsite.step > 10)
                   _confirmedStep(
                     context,
-                    'Frais globaux calculés: ${addWebsite.globalFees.toStringAsFixed(8)} UCO.',
+                    AppLocalizations.of(context)!
+                        .addWebSiteConfirmedStep10
+                        .replaceAll(
+                          '%1',
+                          addWebsite.globalFees.toStringAsFixed(8),
+                        ),
                     icon: Iconsax.calculator,
                   ),
                 if (addWebsite.step == 11 &&
@@ -165,18 +171,18 @@ class AddWebsiteSteps extends ConsumerWidget {
                   _userConfirmStep(
                     context,
                     ref,
-                    'Confirmez vous la création du site?',
+                    AppLocalizations.of(context)!.addWebSiteConfirmStep11,
                   ),
                 if (addWebsite.step == 12)
                   _waitingStep(
                     context,
                     ref,
-                    'Création du site sur la blockchain Archethic en cours.',
+                    AppLocalizations.of(context)!.addWebSiteWaitingStep12,
                   ),
                 if (addWebsite.step >= 13)
                   _confirmedStep(
                     context,
-                    'Le site a été déployé avec succès !',
+                    AppLocalizations.of(context)!.addWebSiteConfirmedStep12,
                     icon: Iconsax.global,
                   ),
                 if (addWebsite.stepError.isNotEmpty)
@@ -323,7 +329,8 @@ class AddWebsiteSteps extends ConsumerWidget {
                         size: 11,
                       ),
                       const SizedBox(width: 4),
-                      Text('Oui', style: textTheme.labelSmall),
+                      Text(AppLocalizations.of(context)!.yes,
+                          style: textTheme.labelSmall),
                     ],
                   ),
                 ),
@@ -348,7 +355,8 @@ class AddWebsiteSteps extends ConsumerWidget {
                         size: 11,
                       ),
                       const SizedBox(width: 4),
-                      Text('No', style: textTheme.labelSmall),
+                      Text(AppLocalizations.of(context)!.no,
+                          style: textTheme.labelSmall),
                     ],
                   ),
                 ),

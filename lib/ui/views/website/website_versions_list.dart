@@ -7,11 +7,12 @@ import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/website/explorer.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
-import 'package:aeweb/util/get_it_instance.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
@@ -65,7 +66,7 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                     padding: const EdgeInsets.only(right: 15),
                     child: SelectionArea(
                       child: Text(
-                        "Website's versions",
+                        AppLocalizations.of(context)!.websitesListVersionsTitle,
                         style: Theme.of(context).textTheme.titleSmall,
                       ),
                     ),
@@ -97,14 +98,13 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                       padding: const EdgeInsets.only(top: 100),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
-                        children: const [
+                        children: [
                           Icon(Iconsax.warning_2),
                           SizedBox(
                             width: 5,
                           ),
-                          Text(
-                            'Aucune version disponible',
-                          ),
+                          Text(AppLocalizations.of(context)!
+                              .websitesListVersionsNoVersion),
                         ],
                       ),
                     );
@@ -112,11 +112,12 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                   return Align(
                     child: DataTable(
                       dividerThickness: 1,
-                      columns: const [
+                      columns: [
                         DataColumn(
                           label: Expanded(
                             child: Text(
-                              'Date',
+                              AppLocalizations.of(context)!
+                                  .websitesListVersionsTableHeaderDate,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -124,7 +125,8 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                         DataColumn(
                           label: Expanded(
                             child: Text(
-                              'Files',
+                              AppLocalizations.of(context)!
+                                  .websitesListVersionsTableHeaderFiles,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -133,7 +135,8 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                         DataColumn(
                           label: Expanded(
                             child: Text(
-                              'Size',
+                              AppLocalizations.of(context)!
+                                  .websitesListVersionsTableHeaderSize,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -141,7 +144,8 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                         DataColumn(
                           label: Expanded(
                             child: Text(
-                              'Certificate',
+                              AppLocalizations.of(context)!
+                                  .websitesListVersionsTableHeaderCertificate,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -149,7 +153,8 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                         DataColumn(
                           label: Expanded(
                             child: Text(
-                              'Actions',
+                              AppLocalizations.of(context)!
+                                  .websitesListVersionsTableHeaderActions,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -199,7 +204,6 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                                               icon: const Icon(
                                                 Iconsax.security_safe,
                                               ),
-                                              tooltip: 'See certificate infos',
                                               onPressed: () {
                                                 CertificateInfosPopup.getDialog(
                                                   context,
@@ -214,7 +218,6 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                                               icon: const Icon(
                                                 Iconsax.shield_slash,
                                               ),
-                                              tooltip: 'See certificate infos',
                                               onPressed: () {
                                                 CertificateInfosPopup.getDialog(
                                                   context,
@@ -272,11 +275,12 @@ Widget _popupMenuButton(
         PopupMenuItem(
           value: 'Explore',
           child: Row(
-            children: const [
-              Icon(Iconsax.folder_open),
-              SizedBox(width: 8),
+            children: [
+              const Icon(Iconsax.folder_open),
+              const SizedBox(width: 8),
               Flexible(
-                child: Text('Explore files'),
+                child: Text(AppLocalizations.of(context)!
+                    .websitesListVersionsPopupExplore),
               ),
             ],
           ),
@@ -284,11 +288,17 @@ Widget _popupMenuButton(
         PopupMenuItem(
           value: 'refTx',
           child: Row(
-            children: const [
-              Icon(Iconsax.archive_book),
-              SizedBox(width: 8),
+            children: [
+              const Icon(Iconsax.archive_book),
+              const SizedBox(width: 8),
               Flexible(
-                child: Text('See reference transaction'),
+                child: Text(AppLocalizations.of(context)!
+                    .websitesListVersionsPopupRefTx),
+              ),
+              const SizedBox(width: 5),
+              const Icon(
+                Iconsax.export_3,
+                size: 12,
               ),
             ],
           ),
@@ -297,11 +307,12 @@ Widget _popupMenuButton(
           PopupMenuItem(
             value: 'Sync',
             child: Row(
-              children: const [
-                Icon(Iconsax.receive_square_2),
-                SizedBox(width: 8),
+              children: [
+                const Icon(Iconsax.refresh_circle),
+                const SizedBox(width: 8),
                 Flexible(
-                  child: Text('Sync from local folder'),
+                  child: Text(AppLocalizations.of(context)!
+                      .websitesListVersionsPopupSync),
                 ),
               ],
             ),
@@ -309,11 +320,12 @@ Widget _popupMenuButton(
         PopupMenuItem(
           value: 'Delete',
           child: Row(
-            children: const [
-              Icon(Iconsax.trash),
-              SizedBox(width: 8),
+            children: [
+              const Icon(Iconsax.trash),
+              const SizedBox(width: 8),
               Flexible(
-                child: Text('Delete files and SSL certificate / key'),
+                child: Text(AppLocalizations.of(context)!
+                    .websitesListVersionsPopupDelete),
               ),
             ],
           ),
@@ -321,11 +333,12 @@ Widget _popupMenuButton(
         PopupMenuItem(
           value: 'Download',
           child: Row(
-            children: const [
-              Icon(Iconsax.receive_square),
-              SizedBox(width: 8),
+            children: [
+              const Icon(Iconsax.receive_square),
+              const SizedBox(width: 8),
               Flexible(
-                child: Text('Download'),
+                child: Text(AppLocalizations.of(context)!
+                    .websitesListVersionsPopupDownload),
               ),
             ],
           ),
@@ -333,11 +346,12 @@ Widget _popupMenuButton(
         PopupMenuItem(
           value: 'Certificate',
           child: Row(
-            children: const [
-              Icon(Iconsax.security_safe),
-              SizedBox(width: 8),
+            children: [
+              const Icon(Iconsax.security_safe),
+              const SizedBox(width: 8),
               Flexible(
-                child: Text('Certificate management'),
+                child: Text(AppLocalizations.of(context)!
+                    .websitesListVersionsPopupCertificate),
               ),
             ],
           ),

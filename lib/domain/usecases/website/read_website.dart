@@ -6,7 +6,7 @@ import 'package:aeweb/model/hive/aeweb_website_metadata.dart';
 import 'package:aeweb/model/hive/aeweb_website_version.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/model/website_version.dart';
-import 'package:aeweb/util/get_it_instance.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:hive/hive.dart';
 

@@ -3,15 +3,13 @@ import 'package:aeweb/model/setting_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
-enum AvailableLanguage { systemDefault, english, french }
+enum AvailableLanguage { systemDefault, english }
 
 extension AvailableLanguageExt on AvailableLanguage {
   Locale? getLocale() {
     switch (this) {
       case AvailableLanguage.english:
         return const Locale('en', 'US');
-      case AvailableLanguage.french:
-        return const Locale('fr', 'FR');
       case AvailableLanguage.systemDefault:
         return null;
     }
@@ -21,10 +19,6 @@ extension AvailableLanguageExt on AvailableLanguage {
     switch (this) {
       case AvailableLanguage.english:
         return 'en';
-      case AvailableLanguage.french:
-        return 'fr';
-      //case AvailableLanguage.ARABIC:
-      //  return 'ar';
       case AvailableLanguage.systemDefault:
         return 'DEFAULT';
     }
@@ -43,10 +37,6 @@ class LanguageSetting extends SettingSelectionItem {
     switch (language) {
       case AvailableLanguage.english:
         return 'English (en)';
-      case AvailableLanguage.french:
-        return 'Français (fr)';
-      //case AvailableLanguage.ARABIC:
-      //  return 'Arabic (ar)';
       case AvailableLanguage.systemDefault:
         return AppLocalizations.of(context)!.systemDefault;
     }

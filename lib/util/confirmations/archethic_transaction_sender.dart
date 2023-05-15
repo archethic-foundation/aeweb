@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:aeweb/util/confirmations/phoenix_link.dart';
 import 'package:aeweb/util/confirmations/transaction_event.dart';
 import 'package:aeweb/util/confirmations/transaction_remote.dart';
-import 'package:aeweb/util/get_it_instance.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 import 'package:phoenix_socket/phoenix_socket.dart';

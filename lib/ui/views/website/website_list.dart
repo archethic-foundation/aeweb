@@ -3,10 +3,11 @@ import 'package:aeweb/application/selected_website.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
-import 'package:aeweb/util/get_it_instance.dart';
-import 'package:aeweb/util/responsive.dart';
+import 'package:aeweb/ui/views/util/generic/responsive.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:gradient_borders/gradient_borders.dart';
@@ -58,7 +59,7 @@ class WebsiteList extends ConsumerWidget {
                 padding: const EdgeInsets.all(10),
                 child: SelectionArea(
                   child: Text(
-                    'My websites',
+                    AppLocalizations.of(context)!.websitesListTitle,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
@@ -85,7 +86,7 @@ class WebsiteList extends ConsumerWidget {
                   context.go('/addWebsite');
                 },
                 icon: const Icon(Iconsax.add_circle),
-                tooltip: 'Add new website',
+                tooltip: AppLocalizations.of(context)!.tooltip_addNewWebsite,
                 color: Theme.of(context).colorScheme.primary,
               ),
               IconButtonAnimated(
@@ -93,7 +94,7 @@ class WebsiteList extends ConsumerWidget {
                   ref.read(WebsitesProviders.fetchWebsites);
                 },
                 icon: const Icon(Iconsax.global_refresh),
-                tooltip: 'Refresh websites',
+                tooltip: AppLocalizations.of(context)!.tooltip_refreshWebsite,
                 color: Theme.of(context).colorScheme.primary,
               ),
             ],
@@ -254,7 +255,10 @@ Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
                     size: 11,
                   ),
                   const SizedBox(width: 4),
-                  Text('View', style: textTheme.labelSmall),
+                  Text(
+                    AppLocalizations.of(context)!.btn_view,
+                    style: textTheme.labelSmall,
+                  ),
                 ],
               ),
             ),

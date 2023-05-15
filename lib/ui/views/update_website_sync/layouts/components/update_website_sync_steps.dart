@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
@@ -49,116 +50,121 @@ class UpdateWebsiteSyncSteps extends ConsumerWidget {
                   _waitingStep(
                     context,
                     ref,
-                    'Récupération des informations sur la blockchain en cours',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep1,
                   ),
                 if (updateWebsiteSync.step > 1)
                   _confirmedStep(
                     context,
-                    'Informations récupérées sur la blockchain',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep1,
                   ),
                 if (updateWebsiteSync.step == 2)
                   _waitingStep(
                     context,
                     ref,
-                    'Analyse en cours des modifications à appliquer',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep2,
                   ),
                 if (updateWebsiteSync.step > 2)
                   _confirmedStep(
                     context,
-                    'Analyse effectuée',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep2,
                     icon: Iconsax.filter_tick,
                   ),
                 if (updateWebsiteSync.step == 3)
                   _waitingStep(
                     context,
                     ref,
-                    'Création des transactions avec le contenu des fichiers du site en cours.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep3,
                   ),
                 if (updateWebsiteSync.step > 3)
                   _confirmedStep(
                     context,
-                    'Transactions avec le contenu des fichiers du site créées',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep3,
                   ),
                 if (updateWebsiteSync.step == 4)
                   _waitingStep(
                     context,
                     ref,
-                    'Signature des transactions en cours.\nVeuillez confirmer dans votre wallet Archethic pour les signer.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep4,
                   ),
                 if (updateWebsiteSync.step > 4)
                   _confirmedStep(
                     context,
-                    'Transactions avec le contenu des fichiers du site signées',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep4,
                     icon: Iconsax.path,
                   ),
                 if (updateWebsiteSync.step == 5)
                   _waitingStep(
                     context,
                     ref,
-                    'Création de la transaction de référence listant les fichiers du site en cours.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep5,
                   ),
                 if (updateWebsiteSync.step > 5)
                   _confirmedStep(
                     context,
-                    'Transaction de référence créée',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep5,
                   ),
                 if (updateWebsiteSync.step == 6)
                   _waitingStep(
                     context,
                     ref,
-                    'Signature de la transaction de référence en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep6,
                   ),
                 if (updateWebsiteSync.step > 6)
                   _confirmedStep(
                     context,
-                    'Transaction de référence signée',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep6,
                     icon: Iconsax.path,
                   ),
                 if (updateWebsiteSync.step == 7)
                   _waitingStep(
                     context,
                     ref,
-                    'Calcul des frais pour provisionner les chaînes de transaction contenant le site en cours.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep7,
                   ),
                 if (updateWebsiteSync.step > 7)
                   _confirmedStep(
                     context,
-                    'Frais pour provisionner les chaînes de transaction contenant le site calculés',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep7,
                     icon: Iconsax.calculator,
                   ),
                 if (updateWebsiteSync.step == 8)
                   _waitingStep(
                     context,
                     ref,
-                    'Création de la transaction de transfert de fonds pour provisionner les chaînes de transactions contenant le site en cours.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep8,
                   ),
                 if (updateWebsiteSync.step > 8)
                   _confirmedStep(
                     context,
-                    'Transaction de transfert de fonds pour provisionner les chaînes de transactions créée',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep8,
                   ),
                 if (updateWebsiteSync.step == 9)
                   _waitingStep(
                     context,
                     ref,
-                    'Signature de la transaction de transfert de fonds en cours.\nVeuillez confirmer dans votre wallet Archethic pour la signer.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep9,
                   ),
                 if (updateWebsiteSync.step > 9)
                   _confirmedStep(
                     context,
-                    'Transaction de transfert de fonds pour provisionner les chaînes de transactions signée',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep9,
                     icon: Iconsax.path,
                   ),
                 if (updateWebsiteSync.step == 10)
                   _waitingStep(
                     context,
                     ref,
-                    'Calcul des frais globaux en cours',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep10,
                   ),
                 if (updateWebsiteSync.step > 10)
                   _confirmedStep(
                     context,
-                    'Frais globaux calculés: ${updateWebsiteSync.globalFees.toStringAsFixed(8)} UCO.',
+                    AppLocalizations.of(context)!
+                        .updateWebSiteConfirmedStep10
+                        .replaceAll(
+                          '%1',
+                          updateWebsiteSync.globalFees.toStringAsFixed(8),
+                        ),
                     icon: Iconsax.calculator,
                   ),
                 if (updateWebsiteSync.step == 11 &&
@@ -166,18 +172,18 @@ class UpdateWebsiteSyncSteps extends ConsumerWidget {
                   _userConfirmStep(
                     context,
                     ref,
-                    'Confirmez vous la mise à jour du site?',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmStep11,
                   ),
                 if (updateWebsiteSync.step == 12)
                   _waitingStep(
                     context,
                     ref,
-                    'Mise à jour du site sur la blockchain Archethic en cours.',
+                    AppLocalizations.of(context)!.updateWebSiteWaitingStep12,
                   ),
                 if (updateWebsiteSync.step >= 13)
                   _confirmedStep(
                     context,
-                    'Le site a été mis à jour avec succès !',
+                    AppLocalizations.of(context)!.updateWebSiteConfirmedStep13,
                     icon: Iconsax.global,
                   ),
                 if (updateWebsiteSync.stepError.isNotEmpty)
@@ -328,7 +334,10 @@ class UpdateWebsiteSyncSteps extends ConsumerWidget {
                         size: 11,
                       ),
                       const SizedBox(width: 4),
-                      Text('Oui', style: textTheme.labelSmall),
+                      Text(
+                        AppLocalizations.of(context)!.yes,
+                        style: textTheme.labelSmall,
+                      ),
                     ],
                   ),
                 ),
@@ -356,7 +365,10 @@ class UpdateWebsiteSyncSteps extends ConsumerWidget {
                         size: 11,
                       ),
                       const SizedBox(width: 4),
-                      Text('No', style: textTheme.labelSmall),
+                      Text(
+                        AppLocalizations.of(context)!.no,
+                        style: textTheme.labelSmall,
+                      ),
                     ],
                   ),
                 ),

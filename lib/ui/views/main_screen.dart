@@ -1,9 +1,9 @@
 import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/selected_website.dart';
 import 'package:aeweb/navigation_drawer_section.dart';
+import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:aeweb/ui/views/website/website_list.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
-import 'package:aeweb/util/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

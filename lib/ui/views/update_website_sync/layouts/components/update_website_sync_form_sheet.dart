@@ -5,6 +5,7 @@ import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_web
 import 'package:aeweb/ui/views/util/components/resizable_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';

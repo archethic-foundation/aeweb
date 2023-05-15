@@ -3,13 +3,13 @@ import 'dart:io';
 
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/hive/appdb.dart';
-import 'package:aeweb/providers_observer.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/main_screen.dart';
 import 'package:aeweb/ui/views/route_screen.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
 import 'package:aeweb/ui/views/website/website_versions_list.dart';
 import 'package:aeweb/ui/views/welcome_screen.dart';
+import 'package:aeweb/util/generic/providers_observer.dart';
 import 'package:aeweb/util/service_locator.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';

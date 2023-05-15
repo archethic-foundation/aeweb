@@ -1,6 +1,7 @@
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
@@ -67,15 +68,17 @@ class UpdateWebsiteSyncComparisonSheetState
               padding: const EdgeInsets.all(8),
               child: TextField(
                 controller: _searchController,
-                decoration: const InputDecoration(
-                  hintText: 'Search files...',
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.hint_searchFiles,
                 ),
               ),
             ),
             _buildFilterStatusWidget(),
             Padding(
               padding: const EdgeInsets.only(top: 8, bottom: 8),
-              child: Text('Displayed files: ${filteredFiles.length}'),
+              child: Text(
+                '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
+              ),
             ),
             Expanded(
               child: ListView.builder(
@@ -91,22 +94,26 @@ class UpdateWebsiteSyncComparisonSheetState
                     case HostingContentComparisonStatus.localOnly:
                       iconData = Iconsax.document;
                       iconColor = Colors.orange;
-                      statusText = 'Local only';
+                      statusText =
+                          AppLocalizations.of(context)!.status_localOnly;
                       break;
                     case HostingContentComparisonStatus.remoteOnly:
                       iconData = Iconsax.document_cloud;
                       iconColor = Colors.blue;
-                      statusText = 'Remote only';
+                      statusText =
+                          AppLocalizations.of(context)!.status_remoteOnly;
                       break;
                     case HostingContentComparisonStatus.differentContent:
                       iconData = Iconsax.note_remove;
                       iconColor = Colors.red;
-                      statusText = 'Different content';
+                      statusText =
+                          AppLocalizations.of(context)!.status_differentContent;
                       break;
                     case HostingContentComparisonStatus.sameContent:
                       iconData = Iconsax.document_copy;
                       iconColor = Colors.green;
-                      statusText = 'Same content';
+                      statusText =
+                          AppLocalizations.of(context)!.status_sameContent;
                       break;
                   }
                   return Center(
@@ -171,7 +178,7 @@ class UpdateWebsiteSyncComparisonSheetState
               size: 16,
             ),
             label: Text(
-              'All',
+              AppLocalizations.of(context)!.status_all,
               style: textTheme.labelMedium,
             ),
             style: ButtonStyle(
@@ -196,7 +203,7 @@ class UpdateWebsiteSyncComparisonSheetState
               size: 16,
             ),
             label: Text(
-              'Local only',
+              AppLocalizations.of(context)!.status_localOnly,
               style: textTheme.labelMedium,
             ),
             style: ButtonStyle(
@@ -222,7 +229,7 @@ class UpdateWebsiteSyncComparisonSheetState
               size: 16,
             ),
             label: Text(
-              'Remote only',
+              AppLocalizations.of(context)!.status_remoteOnly,
               style: textTheme.labelMedium,
             ),
             style: ButtonStyle(
@@ -249,7 +256,7 @@ class UpdateWebsiteSyncComparisonSheetState
               size: 16,
             ),
             label: Text(
-              'Different',
+              AppLocalizations.of(context)!.status_differentContent,
               style: textTheme.labelMedium,
             ),
             style: ButtonStyle(
@@ -273,7 +280,7 @@ class UpdateWebsiteSyncComparisonSheetState
               size: 16,
             ),
             label: Text(
-              'Same',
+              AppLocalizations.of(context)!.status_sameContent,
               style: textTheme.labelMedium,
             ),
             style: ButtonStyle(
@@ -293,13 +300,13 @@ class UpdateWebsiteSyncComparisonSheetState
   String statusToString(HostingContentComparisonStatus status) {
     switch (status) {
       case HostingContentComparisonStatus.localOnly:
-        return 'Local only';
+        return AppLocalizations.of(context)!.status_localOnly;
       case HostingContentComparisonStatus.remoteOnly:
-        return 'Remote only';
+        return AppLocalizations.of(context)!.status_remoteOnly;
       case HostingContentComparisonStatus.differentContent:
-        return 'Different content';
+        return AppLocalizations.of(context)!.status_differentContent;
       case HostingContentComparisonStatus.sameContent:
-        return 'Same content';
+        return AppLocalizations.of(context)!.status_sameContent;
     }
   }
 }

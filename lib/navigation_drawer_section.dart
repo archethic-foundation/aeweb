@@ -9,37 +9,12 @@ import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuDestination {
-  const MenuDestination(this.label, this.icon);
+  const MenuDestination(this.label, this.icon, this.externalLink);
 
   final String label;
   final Widget icon;
+  final bool externalLink;
 }
-
-const List<MenuDestination> destinationsHosting = <MenuDestination>[
-  MenuDestination(
-    'Your websites',
-    Icon(Iconsax.global),
-  ),
-  MenuDestination(
-    'New website',
-    Icon(Iconsax.add_circle),
-  ),
-];
-
-const List<MenuDestination> destinationsInfos = <MenuDestination>[
-  MenuDestination(
-    'Documentation',
-    Icon(Iconsax.document_text),
-  ),
-  MenuDestination(
-    'Source Code',
-    Icon(Iconsax.code_circle),
-  ),
-  MenuDestination(
-    'FAQ',
-    Icon(Iconsax.message_question),
-  ),
-];
 
 class NavigationDrawerSection extends StatefulWidget {
   const NavigationDrawerSection({super.key});
@@ -101,13 +76,35 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
                   child: Text(
-                    'Hosting',
+                    AppLocalizations.of(context)!.menu_section_hosting,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
-                ...destinationsHosting.map((destination) {
+                ...<MenuDestination>[
+                  MenuDestination(
+                    AppLocalizations.of(context)!.menu_websitesList,
+                    const Icon(Iconsax.global),
+                    false,
+                  ),
+                  MenuDestination(
+                    AppLocalizations.of(context)!.menu_addWebsite,
+                    const Icon(Iconsax.add_circle),
+                    false,
+                  ),
+                ].map((destination) {
                   return NavigationDrawerDestination(
-                    label: Text(destination.label),
+                    label: destination.externalLink
+                        ? Row(
+                            children: [
+                              Text(destination.label),
+                              const SizedBox(width: 5),
+                              const Icon(
+                                Iconsax.export_3,
+                                size: 12,
+                              ),
+                            ],
+                          )
+                        : Text(destination.label),
                     icon: destination.icon,
                     selectedIcon: destination.icon,
                   );
@@ -132,13 +129,40 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
                   child: Text(
-                    'Informations',
+                    AppLocalizations.of(context)!.menu_section_infos,
                     style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
-                ...destinationsInfos.map((destination) {
+                ...<MenuDestination>[
+                  MenuDestination(
+                    AppLocalizations.of(context)!.menu_documentation,
+                    const Icon(Iconsax.document_text),
+                    true,
+                  ),
+                  MenuDestination(
+                    AppLocalizations.of(context)!.menu_sourceCode,
+                    const Icon(Iconsax.code_circle),
+                    true,
+                  ),
+                  MenuDestination(
+                    AppLocalizations.of(context)!.menu_faq,
+                    const Icon(Iconsax.message_question),
+                    true,
+                  ),
+                ].map((destination) {
                   return NavigationDrawerDestination(
-                    label: Text(destination.label),
+                    label: destination.externalLink
+                        ? Row(
+                            children: [
+                              Text(destination.label),
+                              const SizedBox(width: 5),
+                              const Icon(
+                                Iconsax.export_3,
+                                size: 12,
+                              ),
+                            ],
+                          )
+                        : Text(destination.label),
                     icon: destination.icon,
                     selectedIcon: destination.icon,
                   );

@@ -1,11 +1,11 @@
 import 'package:aeweb/header.dart';
 import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
+import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:aeweb/ui/views/website/website_list.dart';
-import 'package:aeweb/util/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
 import 'package:gradient_borders/gradient_borders.dart';
 
 class WelcomeScreen extends ConsumerWidget {
@@ -48,22 +48,24 @@ class WelcomeScreen extends ConsumerWidget {
               Expanded(
                 child: Responsive(
                   mobile: Column(
-                    children: const [
-                      SizedBox(
+                    children: [
+                      const SizedBox(
                         height: 20,
                       ),
-                      Text('Welcome'),
+                      Text(
+                        AppLocalizations.of(context)!.welcomeTitle,
+                      ),
                     ],
                   ),
                   tablet: Row(
-                    children: const [
-                      Expanded(
+                    children: [
+                      const Expanded(
                         flex: 6,
                         child: WebsiteList(),
                       ),
                       Expanded(
                         flex: 9,
-                        child: Text('Welcome'),
+                        child: Text(AppLocalizations.of(context)!.welcomeTitle),
                       ),
                     ],
                   ),
@@ -74,7 +76,7 @@ class WelcomeScreen extends ConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
                           Text(
-                            'WELCOME',
+                            AppLocalizations.of(context)!.welcomeTitle,
                             style: TextStyle(
                               color: Theme.of(context)
                                   .textTheme
@@ -108,7 +110,8 @@ class WelcomeScreen extends ConsumerWidget {
                                   child: Column(
                                     children: [
                                       Text(
-                                        'Easy, Secure and Simple way to Build',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg1Title,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleMedium,
@@ -117,7 +120,8 @@ class WelcomeScreen extends ConsumerWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        'The AEWeb experience enables you to deploy your website with just a few clicks.\n\nThe interface is simple, secure, and user-friendly, making it easy for you to deploy your website effortlessly, even if you have zero coding knowledge.',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg1Desc,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
@@ -153,7 +157,8 @@ class WelcomeScreen extends ConsumerWidget {
                                   child: Column(
                                     children: [
                                       Text(
-                                        '100% Secure & Tamperproof',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg2Title,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleMedium,
@@ -162,7 +167,8 @@ class WelcomeScreen extends ConsumerWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        'Do I have to worry about security and maintenance once I deploy my website?\nNo!\n\nAEWeb is decentralized and backed by Arch Consensus, which has the capability to handle up to 90% of malicious activity in the network.',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg2Desc,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
@@ -198,7 +204,8 @@ class WelcomeScreen extends ConsumerWidget {
                                   child: Column(
                                     children: [
                                       Text(
-                                        'Minimum Transaction and Maintenance Cost',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg3Title,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleMedium,
@@ -207,7 +214,8 @@ class WelcomeScreen extends ConsumerWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        'Enjoy 3 to 5 times lower deployment and maintenance fees compared to well-known hosting services like AWS, Google Cloud, and more.\n\nAdditionally, the data will be geographically distributed across the globe, ensuring the highest level of data availability and security.',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg3Desc,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,
@@ -243,7 +251,8 @@ class WelcomeScreen extends ConsumerWidget {
                                   child: Column(
                                     children: [
                                       Text(
-                                        'Built-in Optimized Scalability',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg4Title,
                                         style: Theme.of(context)
                                             .textTheme
                                             .titleMedium,
@@ -252,7 +261,8 @@ class WelcomeScreen extends ConsumerWidget {
                                         height: 10,
                                       ),
                                       Text(
-                                        'AEWeb, built on the Archethic blockchain, offers both linear and horizontal scalability for your website.\n\nThere is no comparable product that can provide hassle-free deployment and simultaneous scalability like AEWeb does',
+                                        AppLocalizations.of(context)!
+                                            .welcomeArg4Desc,
                                         style: Theme.of(context)
                                             .textTheme
                                             .bodyMedium,

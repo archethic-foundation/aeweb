@@ -31,14 +31,14 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: null,
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.close_square,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Cancel',
+                        AppLocalizations.of(context)!.btn_cancel,
                       ),
                     ],
                   ),
@@ -49,14 +49,14 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                     context.go('/');
                   },
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.close_square,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Cancel',
+                        AppLocalizations.of(context)!.btn_cancel,
                       ),
                     ],
                   ),
@@ -68,14 +68,14 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                 ElevatedButton(
                   onPressed: null,
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.global,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Create website',
+                        AppLocalizations.of(context)!.btn_add_website,
                       ),
                     ],
                   ),
@@ -93,14 +93,14 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                     }
                   },
                   child: Row(
-                    children: const [
-                      Icon(
+                    children: [
+                      const Icon(
                         Iconsax.global,
                         size: 12,
                       ),
-                      SizedBox(width: 5),
+                      const SizedBox(width: 5),
                       Text(
-                        'Create website',
+                        AppLocalizations.of(context)!.btn_add_website,
                       ),
                     ],
                   ),

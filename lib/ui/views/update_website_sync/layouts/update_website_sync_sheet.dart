@@ -6,6 +6,7 @@ import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_web
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UpdateWebsiteSyncSheet extends ConsumerWidget {
@@ -66,7 +67,7 @@ class UpdateWebsiteSyncSheetBody extends ConsumerWidget {
             ),
             duration: const Duration(seconds: 3),
             action: SnackBarAction(
-              label: 'Ok',
+              label: AppLocalizations.of(context)!.ok,
               onPressed: () {},
             ),
           ),

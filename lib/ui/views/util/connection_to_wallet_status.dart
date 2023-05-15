@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -76,7 +77,7 @@ class _ConnectionToWalletStatusState
                   ),
                   const SizedBox(width: 10),
                   Text(
-                    'Connect your wallet',
+                    AppLocalizations.of(context)!.connectionWalletConnect,
                     style: TextStyle(
                       color: Theme.of(context).textTheme.labelMedium!.color,
                       fontFamily: 'Equinox',
@@ -127,7 +128,9 @@ class _ConnectionToWalletStatusState
                                 content: Container(
                                   color: Colors.transparent,
                                   padding: const EdgeInsets.only(
-                                      left: 10, right: 10),
+                                    left: 10,
+                                    right: 10,
+                                  ),
                                   child: Column(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -136,7 +139,8 @@ class _ConnectionToWalletStatusState
                                       Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Text(
-                                          'Demande de confirmation',
+                                          AppLocalizations.of(context)!
+                                              .confirmationPopupTitle,
                                           style: Theme.of(context)
                                               .textTheme
                                               .titleMedium,
@@ -145,7 +149,8 @@ class _ConnectionToWalletStatusState
                                       Padding(
                                         padding: const EdgeInsets.all(10),
                                         child: Text(
-                                          "Etes-vous sûr(e)s de vouloir déconnecter votre wallet\net quitter l'application ?",
+                                          AppLocalizations.of(context)!
+                                              .connectionWalletDisconnectWarning,
                                           style: Theme.of(context)
                                               .textTheme
                                               .bodyMedium,
@@ -167,8 +172,9 @@ class _ConnectionToWalletStatusState
                                               onPressed: () async {
                                                 Navigator.of(context).pop();
                                               },
-                                              child: const Text(
-                                                'No',
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .no,
                                               ),
                                             ),
                                             const SizedBox(width: 10),
@@ -178,8 +184,9 @@ class _ConnectionToWalletStatusState
                                                     .cancelConnection();
                                                 Navigator.of(context).pop();
                                               },
-                                              child: const Text(
-                                                'Yes',
+                                              child: Text(
+                                                AppLocalizations.of(context)!
+                                                    .yes,
                                               ),
                                             ),
                                           ],
@@ -197,7 +204,8 @@ class _ConnectionToWalletStatusState
                   },
                   icon: const Icon(Icons.power_settings_new_rounded),
                   color: Colors.red,
-                  tooltip: 'Disconnect wallet',
+                  tooltip:
+                      AppLocalizations.of(context)!.connectionWalletDisconnect,
                 ),
               ],
             ),

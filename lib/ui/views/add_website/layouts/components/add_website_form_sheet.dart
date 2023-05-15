@@ -5,8 +5,8 @@ import 'package:aeweb/header.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_steps.dart';
 import 'package:aeweb/ui/views/util/components/resizable_box.dart';
-import 'package:aeweb/ui/views/util/formatters.dart';
-import 'package:aeweb/ui/views/util/upload_file.dart';
+import 'package:aeweb/ui/views/util/components/upload_file.dart';
+import 'package:aeweb/ui/views/util/generic/formatters.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -21,9 +21,9 @@ import 'package:iconsax/iconsax.dart';
 
 part 'add_website_bottom_bar.dart';
 part 'add_website_select_path.dart';
-part 'add_website_select_zip_file.dart';
 part 'add_website_select_private_key_path.dart';
 part 'add_website_select_public_cert_path.dart';
+part 'add_website_select_zip_file.dart';
 part 'add_website_switch_gitignore.dart';
 part 'add_website_textfield_name.dart';
 
@@ -102,7 +102,7 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Ready to experience the future of decentralized ownership?\nDeploy your website on AEWeb and enjoy the benefits of 100% security, tamperproof technology, and optimized scalability.',
+                                AppLocalizations.of(context)!.addWebSiteDesc,
                                 style: textTheme.labelMedium,
                               ),
                               const SizedBox(height: 16),

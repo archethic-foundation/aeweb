@@ -3,11 +3,10 @@ import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
-import 'package:aeweb/util/ignore.dart';
+import 'package:aeweb/util/external/ignore.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archive/archive.dart';
 import 'package:archive/archive_io.dart';
-import 'package:basic_utils/basic_utils.dart';
 import 'package:collection/collection.dart';
 import 'package:crypto/crypto.dart';
 

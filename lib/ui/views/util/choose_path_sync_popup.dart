@@ -8,6 +8,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 
 class PathSyncPopup with FileMixin {
   static Future<void> getDialog(
@@ -19,7 +20,6 @@ class PathSyncPopup with FileMixin {
     String? path;
     Uint8List? zipFile;
     bool? applyGitIgnoreRules;
-    late final _colorScheme = Theme.of(context).colorScheme;
     final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
       (Set<MaterialState> states) {
         // Thumb icon when the switch is selected.
@@ -46,11 +46,45 @@ class PathSyncPopup with FileMixin {
                       ),
                       content: Container(
                         color: Colors.transparent,
-                        padding: const EdgeInsets.only(left: 10, right: 10),
+                        padding:
+                            const EdgeInsets.only(left: 20, right: 20, top: 10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           mainAxisSize: MainAxisSize.min,
                           children: <Widget>[
+                            Row(
+                              children: [
+                                SelectionArea(
+                                  child: Text(
+                                    'Sync from local folder',
+                                    style:
+                                        Theme.of(context).textTheme.titleSmall,
+                                  ),
+                                ),
+                                const SizedBox(width: 15),
+                                Expanded(
+                                  child: Container(
+                                    width: 25,
+                                    height: 1,
+                                    decoration: const BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color(0x003C89B9),
+                                          Color(0xFFCC00FF),
+                                        ],
+                                        stops: [0, 1],
+                                        begin: AlignmentDirectional.centerEnd,
+                                        end: AlignmentDirectional.centerStart,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              width: 500,
+                              height: 20,
+                            ),
                             if (kIsWeb)
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -165,79 +199,110 @@ class PathSyncPopup with FileMixin {
                               padding: const EdgeInsets.only(
                                 bottom: 20,
                               ),
-                              child: ElevatedButton(
-                                onPressed: () async {
-                                  late final Map<String,
-                                      HostingRefContentMetaData>? localFiles;
-                                  if (kIsWeb) {
-                                    if (zipFile == null) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Please, select a zip file',
-                                          ),
-                                          duration: Duration(seconds: 3),
-                                        ),
-                                      );
-                                    }
-                                    localFiles =
-                                        await FileMixin.listFilesFromZip(
-                                      zipFile!,
-                                      applyGitIgnoreRules:
-                                          applyGitIgnoreRules ?? false,
-                                    );
-                                  } else {
-                                    if (path == null || path!.isEmpty) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        const SnackBar(
-                                          content: Text(
-                                            'Please, select a folder',
-                                          ),
-                                          duration: Duration(seconds: 3),
-                                        ),
-                                      );
-                                    }
-
-                                    localFiles =
-                                        await FileMixin.listFilesFromPath(
-                                      path!,
-                                      applyGitIgnoreRules:
-                                          applyGitIgnoreRules ?? false,
-                                    );
-                                  }
-
-                                  final remoteFiles =
-                                      (await ReadWebsiteUseCases().getRemote(
-                                    transactionRefAddress,
-                                  ))!
-                                          .content!
-                                          .metaData;
-
-                                  context.goNamed(
-                                    'updateWebsiteSync',
-                                    extra: {
-                                      'websiteName': websiteName,
-                                      'genesisAddress': genesisAddress,
-                                      'path': path ?? '',
-                                      'zipFile':
-                                          zipFile ?? Uint8List.fromList([]),
-                                      'localFiles': localFiles,
-                                      'comparedFiles': SyncWebsiteUseCases()
-                                          .compareFileLists(
-                                        localFiles!,
-                                        remoteFiles,
-                                      ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
                                     },
-                                  );
-                                },
-                                child: Text(
-                                  'Sync',
-                                  style: TextStyle(
-                                    color: _colorScheme.onSurfaceVariant,
+                                    child: Row(
+                                      children: const [
+                                        Icon(
+                                          Iconsax.close_square,
+                                          size: 12,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          'Close',
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ),
+                                  const SizedBox(width: 20),
+                                  ElevatedButton(
+                                    onPressed: () async {
+                                      late final Map<String,
+                                              HostingRefContentMetaData>?
+                                          localFiles;
+                                      if (kIsWeb) {
+                                        if (zipFile == null) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Please, select a zip file',
+                                              ),
+                                              duration: Duration(seconds: 3),
+                                            ),
+                                          );
+                                        }
+                                        localFiles =
+                                            await FileMixin.listFilesFromZip(
+                                          zipFile!,
+                                          applyGitIgnoreRules:
+                                              applyGitIgnoreRules ?? false,
+                                        );
+                                      } else {
+                                        if (path == null || path!.isEmpty) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(
+                                            const SnackBar(
+                                              content: Text(
+                                                'Please, select a folder',
+                                              ),
+                                              duration: Duration(seconds: 3),
+                                            ),
+                                          );
+                                        }
+
+                                        localFiles =
+                                            await FileMixin.listFilesFromPath(
+                                          path!,
+                                          applyGitIgnoreRules:
+                                              applyGitIgnoreRules ?? false,
+                                        );
+                                      }
+
+                                      final remoteFiles =
+                                          (await ReadWebsiteUseCases()
+                                                  .getRemote(
+                                        transactionRefAddress,
+                                      ))!
+                                              .content!
+                                              .metaData;
+
+                                      context.goNamed(
+                                        'updateWebsiteSync',
+                                        extra: {
+                                          'websiteName': websiteName,
+                                          'genesisAddress': genesisAddress,
+                                          'path': path ?? '',
+                                          'zipFile':
+                                              zipFile ?? Uint8List.fromList([]),
+                                          'localFiles': localFiles,
+                                          'comparedFiles': SyncWebsiteUseCases()
+                                              .compareFileLists(
+                                            localFiles!,
+                                            remoteFiles,
+                                          ),
+                                        },
+                                      );
+                                    },
+                                    child: Row(
+                                      children: const [
+                                        Icon(
+                                          Iconsax.refresh_circle,
+                                          size: 12,
+                                        ),
+                                        SizedBox(width: 8),
+                                        Text(
+                                          'Sync',
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                           ],
