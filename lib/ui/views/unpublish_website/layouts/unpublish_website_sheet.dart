@@ -9,8 +9,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UnpublishWebsiteSheet extends ConsumerWidget {
   const UnpublishWebsiteSheet({
+    required this.websiteName,
     super.key,
   });
+
+  final String websiteName;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -18,7 +21,9 @@ class UnpublishWebsiteSheet extends ConsumerWidget {
       overrides: [
         UnpublishWebsiteFormProvider.initialUnpublishWebsiteForm
             .overrideWithValue(
-          const UnpublishWebsiteFormState(),
+          UnpublishWebsiteFormState(
+            name: websiteName,
+          ),
         ),
       ],
       child: const UnpublishWebsiteSheetBody(),

@@ -130,5 +130,22 @@
   "websitesListVersionsTableHeaderSize": "Size",
   "websitesListVersionsTableHeaderCertificate": "Certificate",
   "websitesListVersionsTableHeaderActions": "Actions",
-  "disclaimer": "Disclaimer"
+  "disclaimer": "Disclaimer",
+  "unpublishWebSiteWaitingStep1": "Information retrieved from the blockchain.",
+  "unpublishWebSiteConfirmedStep1": "Information retrieved from the blockchain",
+  "unpublishWebSiteWaitingStep2": "Clearing the reference transaction listing the website's files in progress",
+  "unpublishWebSiteConfirmedStep2": "Empty reference transaction created.",
+  "unpublishWebSiteWaitingStep3": "Signing the reference transaction in progress. Please confirm in your Archethic wallet to sign it.",
+  "unpublishWebSiteConfirmedStep3": "Reference transaction signed.",
+  "unpublishWebSiteWaitingStep4": "Calculating fees to provision the transaction chains containing the website.",
+  "unpublishWebSiteConfirmedStep4": "Fees to provision the transaction chains containing the website calculated.",
+  "unpublishWebSiteWaitingStep5": "Creating the funds transfer transaction to provision the transaction chains containing the website in progress.",
+  "unpublishWebSiteConfirmedStep5": "Funds transfer transaction to provision the transaction chains created.",
+  "unpublishWebSiteWaitingStep6": "Signing the funds transfer transaction in progress. Please confirm in your Archethic wallet to sign it.",
+  "unpublishWebSiteConfirmedStep6": "Funds transfer transaction to provision the transaction chains signed.",
+  "unpublishWebSiteWaitingStep7": "Calculating overall fees in progress.",
+  "unpublishWebSiteConfirmedStep7": "Overall fees calculated: %1 UCO.",
+  "unpublishWebSiteConfirmStep8": "Do you confirm the unpublish of the website?",
+  "unpublishWebSiteWaitingStep9": "Unpublish the website on the Archethic blockchain in progress.",
+  "unpublishWebSiteConfirmedStep10": "The website has been successfully unpublished!"
 }

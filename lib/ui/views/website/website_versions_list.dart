@@ -403,7 +403,13 @@ Widget _popupMenuButton(
           );
           break;
         case 'Unpublish':
-          context.go('/unpublishWebsite');
+          context.go(
+            '/unpublishWebsite',
+            extra: {
+              'websiteName': websiteName,
+            },
+          );
+
           break;
         case 'refTx':
           launchUrl(

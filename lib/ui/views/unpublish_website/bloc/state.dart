@@ -6,6 +6,7 @@ part 'state.freezed.dart';
 @freezed
 class UnpublishWebsiteFormState with _$UnpublishWebsiteFormState {
   const factory UnpublishWebsiteFormState({
+    @Default('') String name,
     @Default(0) int step,
     @Default('') String stepError,
     @Default(0.0) double globalFees,
@@ -16,7 +17,7 @@ class UnpublishWebsiteFormState with _$UnpublishWebsiteFormState {
 
   bool get isControlsOk => errorText == '';
 
-  bool get unpublishInProgress => step > 0 && step < 13 && stepError.isEmpty;
+  bool get unpublishInProgress => step > 0 && step < 11 && stepError.isEmpty;
 
   bool get canUnpublishWebsite => isControlsOk;
 }

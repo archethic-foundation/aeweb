@@ -16,6 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$UnpublishWebsiteFormState {
+  String get name => throw _privateConstructorUsedError;
   int get step => throw _privateConstructorUsedError;
   String get stepError => throw _privateConstructorUsedError;
   double get globalFees => throw _privateConstructorUsedError;
@@ -34,7 +35,8 @@ abstract class $UnpublishWebsiteFormStateCopyWith<$Res> {
       _$UnpublishWebsiteFormStateCopyWithImpl<$Res, UnpublishWebsiteFormState>;
   @useResult
   $Res call(
-      {int step,
+      {String name,
+      int step,
       String stepError,
       double globalFees,
       bool? globalFeesValidated,
@@ -55,6 +57,7 @@ class _$UnpublishWebsiteFormStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? step = null,
     Object? stepError = null,
     Object? globalFees = null,
@@ -62,6 +65,10 @@ class _$UnpublishWebsiteFormStateCopyWithImpl<$Res,
     Object? errorText = null,
   }) {
     return _then(_value.copyWith(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       step: null == step
           ? _value.step
           : step // ignore: cast_nullable_to_non_nullable
@@ -96,7 +103,8 @@ abstract class _$$_UnpublishWebsiteFormStateCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int step,
+      {String name,
+      int step,
       String stepError,
       double globalFees,
       bool? globalFeesValidated,
@@ -116,6 +124,7 @@ class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? name = null,
     Object? step = null,
     Object? stepError = null,
     Object? globalFees = null,
@@ -123,6 +132,10 @@ class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
     Object? errorText = null,
   }) {
     return _then(_$_UnpublishWebsiteFormState(
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
       step: null == step
           ? _value.step
           : step // ignore: cast_nullable_to_non_nullable
@@ -151,13 +164,17 @@ class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
 
 class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
   const _$_UnpublishWebsiteFormState(
-      {this.step = 0,
+      {this.name = '',
+      this.step = 0,
       this.stepError = '',
       this.globalFees = 0.0,
       this.globalFeesValidated,
       this.errorText = ''})
       : super._();
 
+  @override
+  @JsonKey()
+  final String name;
   @override
   @JsonKey()
   final int step;
@@ -175,7 +192,7 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
 
   @override
   String toString() {
-    return 'UnpublishWebsiteFormState(step: $step, stepError: $stepError, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, errorText: $errorText)';
+    return 'UnpublishWebsiteFormState(name: $name, step: $step, stepError: $stepError, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, errorText: $errorText)';
   }
 
   @override
@@ -183,6 +200,7 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_UnpublishWebsiteFormState &&
+            (identical(other.name, name) || other.name == name) &&
             (identical(other.step, step) || other.step == step) &&
             (identical(other.stepError, stepError) ||
                 other.stepError == stepError) &&
@@ -195,8 +213,8 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, step, stepError, globalFees, globalFeesValidated, errorText);
+  int get hashCode => Object.hash(runtimeType, name, step, stepError,
+      globalFees, globalFeesValidated, errorText);
 
   @JsonKey(ignore: true)
   @override
@@ -208,13 +226,16 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
 
 abstract class _UnpublishWebsiteFormState extends UnpublishWebsiteFormState {
   const factory _UnpublishWebsiteFormState(
-      {final int step,
+      {final String name,
+      final int step,
       final String stepError,
       final double globalFees,
       final bool? globalFeesValidated,
       final String errorText}) = _$_UnpublishWebsiteFormState;
   const _UnpublishWebsiteFormState._() : super._();
 
+  @override
+  String get name;
   @override
   int get step;
   @override
