@@ -135,29 +135,11 @@ flutter:
   fonts:
     - family: Caveat
       fonts:
-        - asset: assets/fonts/Caveat-Bold.ttf
-        - asset: assets/fonts/Caveat-Medium.ttf
         - asset: assets/fonts/Caveat-Regular.ttf
-        - asset: assets/fonts/Caveat-SemiBold.ttf
     - family: Equinox
       fonts:
         - asset: assets/fonts/Equinox Bold.otf
         - asset: assets/fonts/Equinox Regular.otf
-    - family: Montserrat
+    - family: Roboto
       fonts:
-        - asset: assets/fonts/Montserrat-Black.ttf
-        - asset: assets/fonts/Montserrat-BlackItalic.ttf
-        - asset: assets/fonts/Montserrat-Bold.ttf
-        - asset: assets/fonts/Montserrat-BoldItalic.ttf
-        - asset: assets/fonts/Montserrat-ExtraBold.ttf
-        - asset: assets/fonts/Montserrat-ExtraBoldItalic.ttf
-        - asset: assets/fonts/Montserrat-ExtraLight.ttf
-        - asset: assets/fonts/Montserrat-ExtraLightItalic.ttf
-        - asset: assets/fonts/Montserrat-Italic.ttf
-        - asset: assets/fonts/Montserrat-Light.ttf
-        - asset: assets/fonts/Montserrat-LightItalic.ttf
-        - asset: assets/fonts/Montserrat-Medium.ttf
-        - asset: assets/fonts/Montserrat-MediumItalic.ttf
-        - asset: assets/fonts/Montserrat-Regular.ttf
-        - asset: assets/fonts/Montserrat-SemiBold.ttf
-        - asset: assets/fonts/Montserrat-SemiBoldItalic.ttf
+        - asset: assets/fonts/RobotoMono-Regular.ttf

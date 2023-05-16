@@ -1,10 +1,12 @@
 import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
+import 'package:aeweb/model/website_version_tx.dart';
 import 'package:aeweb/ui/views/util/certificate_infos_popup.dart';
 import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/website/explorer.dart';
+import 'package:aeweb/ui/views/website/explorer_tx.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
@@ -114,6 +116,8 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                   }
                   return Align(
                     child: DataTable(
+                      horizontalMargin: 0,
+                      columnSpacing: 60,
                       dividerThickness: 1,
                       columns: [
                         DataColumn(
@@ -140,6 +144,15 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                             child: Text(
                               AppLocalizations.of(context)!
                                   .websitesListVersionsTableHeaderSize,
+                              textAlign: TextAlign.center,
+                            ),
+                          ),
+                        ),
+                        DataColumn(
+                          label: Expanded(
+                            child: Text(
+                              AppLocalizations.of(context)!
+                                  .websitesListVersionsTableHeaderFees,
                               textAlign: TextAlign.center,
                             ),
                           ),
@@ -183,17 +196,31 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                                     ),
                                   ),
                                   DataCell(
-                                    SelectableText(
-                                      websiteVersion.filesCount.toString(),
-                                      textAlign: TextAlign.center,
+                                    Align(
+                                      child: SelectableText(
+                                        websiteVersion.filesCount.toString(),
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                   DataCell(
-                                    SelectableText(
-                                      filesize(
-                                        websiteVersion.size.toString(),
+                                    Align(
+                                      child: SelectableText(
+                                        filesize(
+                                          websiteVersion.size.toString(),
+                                        ),
+                                        textAlign: TextAlign.center,
                                       ),
-                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  DataCell(
+                                    Align(
+                                      child: SelectableText(
+                                        '${fromBigInt(
+                                          websiteVersion.fees,
+                                        ).toStringAsPrecision(5)} UCO',
+                                        textAlign: TextAlign.center,
+                                      ),
                                     ),
                                   ),
                                   DataCell(
@@ -232,13 +259,15 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                                     ),
                                   ),
                                   DataCell(
-                                    _popupMenuButton(
-                                      context,
-                                      ref,
-                                      index == 0,
-                                      websiteVersion,
-                                      websiteName,
-                                      genesisAddress,
+                                    Align(
+                                      child: _popupMenuButton(
+                                        context,
+                                        ref,
+                                        index == 0,
+                                        websiteVersion,
+                                        websiteName,
+                                        genesisAddress,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -285,6 +314,21 @@ Widget _popupMenuButton(
                 child: Text(
                   AppLocalizations.of(context)!
                       .websitesListVersionsPopupExplore,
+                ),
+              ),
+            ],
+          ),
+        ),
+        PopupMenuItem(
+          value: 'ExploreTx',
+          child: Row(
+            children: [
+              const Icon(Iconsax.receipt_text),
+              const SizedBox(width: 8),
+              Flexible(
+                child: Text(
+                  AppLocalizations.of(context)!
+                      .websitesListVersionsPopupExploreTx,
                 ),
               ),
             ],
@@ -383,6 +427,54 @@ Widget _popupMenuButton(
               .setWidget(
                 ExplorerScreen(
                   filesAndFolders: websiteVersion.content!,
+                )
+                    .animate()
+                    .fade(
+                      duration: const Duration(milliseconds: 350),
+                    )
+                    .scale(
+                      duration: const Duration(milliseconds: 350),
+                    ),
+              );
+
+          break;
+        case 'ExploreTx':
+          final websiteVersionTxListAddresses = <String>{};
+          if (websiteVersion.content != null) {
+            websiteVersion.content!.metaData.forEach(
+              (key, value) {
+                for (final address in value.addresses) {
+                  websiteVersionTxListAddresses.add(address);
+                }
+              },
+            );
+          }
+
+          final websiteVersionTxList = <WebsiteVersionTx>[];
+          websiteVersionTxList.add(
+            WebsiteVersionTx(
+              address: websiteVersion.transactionRefAddress,
+              typeHostingTx: 'ref',
+            ),
+          );
+          for (final websiteVersionTxListAddress
+              in websiteVersionTxListAddresses) {
+            websiteVersionTxList.add(
+              WebsiteVersionTx(
+                address: websiteVersionTxListAddress,
+                typeHostingTx: 'files',
+              ),
+            );
+          }
+
+          ref
+              .read(
+                MainScreenThirdPartProviders
+                    .mainScreenThirdPartProvider.notifier,
+              )
+              .setWidget(
+                ExplorerTxScreen(
+                  websiteVersionTxList: websiteVersionTxList,
                 )
                     .animate()
                     .fade(

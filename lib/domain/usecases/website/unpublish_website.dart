@@ -98,6 +98,7 @@ class UnpublishWebsiteUseCases with TransactionMixin {
 
     unpublishWebsiteNotifier.setStep(7);
     final feesTrf = await calculateFees(transactionTransfer);
+    log('feesTrf: $feesTrf');
 
     unpublishWebsiteNotifier.setGlobalFees(feesTrf + feesRef);
     log('Global fees : ${feesTrf + feesRef} UCO');
@@ -188,6 +189,10 @@ class UnpublishWebsiteUseCases with TransactionMixin {
                   unpublishWebsiteNotifier.setStepError('Invalid Confirmation');
                   log('invalid Confirmation');
                 },
+                insufficientFunds: (_) {
+                  unpublishWebsiteNotifier.setStepError('Insufficient funds');
+                  log('insufficientFunds');
+                },
                 other: (error) {
                   unpublishWebsiteNotifier.setStepError(error.message);
                   log('error');
@@ -219,6 +224,10 @@ class UnpublishWebsiteUseCases with TransactionMixin {
           invalidConfirmation: (_) {
             unpublishWebsiteNotifier.setStepError('Invalid Confirmation');
             log('invalid Confirmation');
+          },
+          insufficientFunds: (_) {
+            unpublishWebsiteNotifier.setStepError('Insufficient funds');
+            log('insufficientFunds');
           },
           other: (error) {
             unpublishWebsiteNotifier.setStepError(error.message);

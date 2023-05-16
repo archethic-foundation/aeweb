@@ -13,6 +13,7 @@ class WebsiteVersion with _$WebsiteVersion {
     @Default('') String publisher,
     @Default(0) int filesCount,
     @Default(0) int size,
+    @Default(0) int fees,
     HostingRef? content,
     X509CertificateData? sslCertificate,
   }) = _WebsiteVersion;

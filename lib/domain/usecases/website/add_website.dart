@@ -148,7 +148,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
 
       final _fees = await calculateFees(transactionsList[i]);
       feesFiles = feesFiles + _fees;
-      log('feesFiles: ${transactionsList[i].address} $feesFiles');
+      log('feesFiles: ${transactionsList[i].address} $_fees');
     }
     log('feesFiles: $feesFiles');
 
@@ -188,6 +188,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
 
     addWebsiteNotifier.setStep(10);
     final feesTrf = await calculateFees(transactionTransfer);
+    log('feesTrf: $feesTrf');
 
     addWebsiteNotifier.setGlobalFees(feesFiles + feesTrf + feesRef);
     log('Global fees : ${feesFiles + feesTrf + feesRef} UCO');
@@ -234,59 +235,67 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
     await transactionRepository.send(
       transaction: transactionTransfer,
       onConfirmation: (confirmation) async {
-        log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
-        transactionRepository.close();
-        final allTransactions = <Transaction>[
-          ...transactionsList,
-          transactionReference
-        ];
+        if (confirmation.isFullyConfirmed) {
+          log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
+          transactionRepository.close();
+          final allTransactions = <Transaction>[
+            ...transactionsList,
+            transactionReference
+          ];
 
-        for (final transaction in allTransactions) {
-          log('Send ${transaction.address!.address}');
-          transactionRepository = ArchethicTransactionSender(
-            phoenixHttpEndpoint:
-                '${sl.get<ApiService>().endpoint}/socket/websocket',
-            websocketEndpoint:
-                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
-          );
+          for (final transaction in allTransactions) {
+            log('Send ${transaction.address!.address}');
+            transactionRepository = ArchethicTransactionSender(
+              phoenixHttpEndpoint:
+                  '${sl.get<ApiService>().endpoint}/socket/websocket',
+              websocketEndpoint:
+                  '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
+            );
 
-          await transactionRepository.send(
-            transaction: transaction,
-            onConfirmation: (confirmation) async {
-              log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
-              transactionRepository.close();
-            },
-            onError: (error) async {
-              transactionRepository.close();
-              error.maybeMap(
-                connectivity: (_) {
-                  addWebsiteNotifier.setStepError('No connection');
-                  log('no connection');
-                },
-                consensusNotReached: (_) {
-                  addWebsiteNotifier.setStepError('Consensus not reached');
-                  log('consensus not reached');
-                },
-                timeout: (_) {
-                  addWebsiteNotifier.setStepError('Timeout');
-                  log('timeout');
-                },
-                invalidConfirmation: (_) {
-                  addWebsiteNotifier.setStepError('Invalid Confirmation');
-                  log('invalid Confirmation');
-                },
-                other: (error) {
-                  addWebsiteNotifier.setStepError(error.message);
-                  log('error');
-                },
-                orElse: () {
-                  addWebsiteNotifier.setStepError('An error is occured');
-                  log('other');
-                },
-              );
-              return;
-            },
-          );
+            await transactionRepository.send(
+              transaction: transaction,
+              onConfirmation: (confirmation) async {
+                if (confirmation.isFullyConfirmed) {
+                  log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
+                  transactionRepository.close();
+                }
+              },
+              onError: (error) async {
+                transactionRepository.close();
+                error.maybeMap(
+                  connectivity: (_) {
+                    addWebsiteNotifier.setStepError('No connection');
+                    log('no connection');
+                  },
+                  consensusNotReached: (_) {
+                    addWebsiteNotifier.setStepError('Consensus not reached');
+                    log('consensus not reached');
+                  },
+                  timeout: (_) {
+                    addWebsiteNotifier.setStepError('Timeout');
+                    log('timeout');
+                  },
+                  invalidConfirmation: (_) {
+                    addWebsiteNotifier.setStepError('Invalid Confirmation');
+                    log('invalid Confirmation');
+                  },
+                  insufficientFunds: (_) {
+                    addWebsiteNotifier.setStepError('Insufficient funds');
+                    log('insufficientFunds');
+                  },
+                  other: (error) {
+                    addWebsiteNotifier.setStepError(error.message);
+                    log('error');
+                  },
+                  orElse: () {
+                    addWebsiteNotifier.setStepError('An error is occured');
+                    log('other');
+                  },
+                );
+                return;
+              },
+            );
+          }
         }
       },
       onError: (error) async {
@@ -306,6 +315,10 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
           invalidConfirmation: (_) {
             addWebsiteNotifier.setStepError('Invalid Confirmation');
             log('invalid Confirmation');
+          },
+          insufficientFunds: (_) {
+            addWebsiteNotifier.setStepError('Insufficient funds');
+            log('insufficientFunds');
           },
           other: (error) {
             addWebsiteNotifier.setStepError(error.message);

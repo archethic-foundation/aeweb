@@ -55,29 +55,53 @@ class _AddWebsiteTextFieldNameState
               child: Row(
                 children: [
                   Expanded(
-                    child: TextField(
-                      style: textTheme.labelMedium,
-                      autocorrect: false,
-                      controller: nameController,
-                      onChanged: (text) async {
-                        addWebsiteNotifier.setName(
-                          text,
-                        );
-                      },
-                      focusNode: nameFocusNode,
-                      textAlign: TextAlign.left,
-                      textInputAction: TextInputAction.next,
-                      keyboardType: TextInputType.text,
-                      inputFormatters: <TextInputFormatter>[
-                        UpperCaseTextFormatter(),
-                        LengthLimitingTextInputFormatter(20),
-                      ],
-                      decoration: InputDecoration(
-                        hintText: "Website's name?",
-                        hintStyle: textTheme.labelMedium!
-                            .copyWith(fontWeight: FontWeight.w300),
-                        border: InputBorder.none,
-                        contentPadding: const EdgeInsets.only(left: 10),
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(
+                          10,
+                        ),
+                        border: Border.all(
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                          width: 0.5,
+                        ),
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context)
+                                .colorScheme
+                                .background
+                                .withOpacity(1),
+                            Theme.of(context)
+                                .colorScheme
+                                .background
+                                .withOpacity(0.3),
+                          ],
+                          stops: const [0, 1],
+                        ),
+                      ),
+                      child: TextField(
+                        style: textTheme.labelMedium,
+                        autocorrect: false,
+                        controller: nameController,
+                        onChanged: (text) async {
+                          addWebsiteNotifier.setName(
+                            text,
+                          );
+                        },
+                        focusNode: nameFocusNode,
+                        textAlign: TextAlign.left,
+                        textInputAction: TextInputAction.next,
+                        keyboardType: TextInputType.text,
+                        inputFormatters: <TextInputFormatter>[
+                          UpperCaseTextFormatter(),
+                          LengthLimitingTextInputFormatter(20),
+                        ],
+                        decoration: InputDecoration(
+                          hintText: "Website's name?",
+                          hintStyle: textTheme.labelMedium!
+                              .copyWith(fontWeight: FontWeight.w300),
+                          border: InputBorder.none,
+                          contentPadding: const EdgeInsets.only(left: 10),
+                        ),
                       ),
                     ),
                   ),

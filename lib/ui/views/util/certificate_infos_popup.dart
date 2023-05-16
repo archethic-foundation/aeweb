@@ -262,7 +262,10 @@ class CertificateInfosPopup with CertificateMixin {
                                                   '',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .labelMedium,
+                                                  .labelMedium!
+                                                  .copyWith(
+                                                    fontFamily: 'Roboto',
+                                                  ),
                                             ),
                                           ],
                                         ),
@@ -286,7 +289,10 @@ class CertificateInfosPopup with CertificateMixin {
                                               certificate.sha1Thumbprint ?? '',
                                               style: Theme.of(context)
                                                   .textTheme
-                                                  .labelMedium,
+                                                  .labelMedium!
+                                                  .copyWith(
+                                                    fontFamily: 'Roboto',
+                                                  ),
                                             ),
                                           ],
                                         ),

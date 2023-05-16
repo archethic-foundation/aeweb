@@ -110,7 +110,7 @@ mixin TransactionMixin {
   }
 
   Future<double> calculateFees(Transaction transaction) async {
-    const slippage = 2.01;
+    const slippage = 1.01;
     final transactionFee =
         await sl.get<ApiService>().getTransactionFee(transaction);
     final fees = fromBigInt(transactionFee.fee) * slippage;

@@ -187,7 +187,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
 
       final _fees = await calculateFees(transactionsList[i]);
       feesFiles = feesFiles + _fees;
-      log('feesFiles: ${transactionsList[i].address} $feesFiles');
+      log('feesFiles: ${transactionsList[i].address} $_fees');
     }
     log('feesFiles: $feesFiles');
 
@@ -229,6 +229,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
 
     updateWebsiteSyncNotifier.setStep(10);
     final feesTrf = await calculateFees(transactionTransfer);
+    log('feesTrf: $feesTrf');
 
     updateWebsiteSyncNotifier.setGlobalFees(feesFiles + feesTrf + feesRef);
     log('Global fees : ${feesFiles + feesTrf + feesRef} UCO');
@@ -323,6 +324,10 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
                       .setStepError('Invalid Confirmation');
                   log('invalid Confirmation');
                 },
+                insufficientFunds: (_) {
+                  updateWebsiteSyncNotifier.setStepError('Insufficient funds');
+                  log('insufficientFunds');
+                },
                 other: (error) {
                   updateWebsiteSyncNotifier.setStepError(error.message);
                   log('error');
@@ -354,6 +359,10 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
           invalidConfirmation: (_) {
             updateWebsiteSyncNotifier.setStepError('Invalid Confirmation');
             log('invalid Confirmation');
+          },
+          insufficientFunds: (_) {
+            updateWebsiteSyncNotifier.setStepError('Insufficient funds');
+            log('insufficientFunds');
           },
           other: (error) {
             updateWebsiteSyncNotifier.setStepError(error.message);

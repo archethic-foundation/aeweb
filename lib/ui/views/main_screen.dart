@@ -106,7 +106,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
                             .scale(duration: const Duration(milliseconds: 200)),
                       ),
                       Expanded(
-                        flex: _size.width > 1340 ? 4 : 4,
+                        flex: 4,
                         child: const Padding(
                           padding: EdgeInsets.only(
                             top: 30,
@@ -121,7 +121,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
                             .scale(duration: const Duration(milliseconds: 250)),
                       ),
                       Expanded(
-                        flex: _size.width > 1340 ? 8 : 10,
+                        flex: _size.width > 1340 ? 9 : 10,
                         child: Padding(
                           padding: const EdgeInsets.only(
                             top: 30,

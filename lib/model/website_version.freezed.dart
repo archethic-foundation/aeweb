@@ -21,6 +21,7 @@ mixin _$WebsiteVersion {
   String get publisher => throw _privateConstructorUsedError;
   int get filesCount => throw _privateConstructorUsedError;
   int get size => throw _privateConstructorUsedError;
+  int get fees => throw _privateConstructorUsedError;
   HostingRef? get content => throw _privateConstructorUsedError;
   X509CertificateData? get sslCertificate => throw _privateConstructorUsedError;
 
@@ -41,6 +42,7 @@ abstract class $WebsiteVersionCopyWith<$Res> {
       String publisher,
       int filesCount,
       int size,
+      int fees,
       HostingRef? content,
       X509CertificateData? sslCertificate});
 
@@ -65,6 +67,7 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
     Object? publisher = null,
     Object? filesCount = null,
     Object? size = null,
+    Object? fees = null,
     Object? content = freezed,
     Object? sslCertificate = freezed,
   }) {
@@ -88,6 +91,10 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
       size: null == size
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
+              as int,
+      fees: null == fees
+          ? _value.fees
+          : fees // ignore: cast_nullable_to_non_nullable
               as int,
       content: freezed == content
           ? _value.content
@@ -127,6 +134,7 @@ abstract class _$$_WebsiteVersionCopyWith<$Res>
       String publisher,
       int filesCount,
       int size,
+      int fees,
       HostingRef? content,
       X509CertificateData? sslCertificate});
 
@@ -150,6 +158,7 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
     Object? publisher = null,
     Object? filesCount = null,
     Object? size = null,
+    Object? fees = null,
     Object? content = freezed,
     Object? sslCertificate = freezed,
   }) {
@@ -174,6 +183,10 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
           ? _value.size
           : size // ignore: cast_nullable_to_non_nullable
               as int,
+      fees: null == fees
+          ? _value.fees
+          : fees // ignore: cast_nullable_to_non_nullable
+              as int,
       content: freezed == content
           ? _value.content
           : content // ignore: cast_nullable_to_non_nullable
@@ -195,6 +208,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
       this.publisher = '',
       this.filesCount = 0,
       this.size = 0,
+      this.fees = 0,
       this.content,
       this.sslCertificate});
 
@@ -212,13 +226,16 @@ class _$_WebsiteVersion implements _WebsiteVersion {
   @JsonKey()
   final int size;
   @override
+  @JsonKey()
+  final int fees;
+  @override
   final HostingRef? content;
   @override
   final X509CertificateData? sslCertificate;
 
   @override
   String toString() {
-    return 'WebsiteVersion(transactionRefAddress: $transactionRefAddress, timestamp: $timestamp, publisher: $publisher, filesCount: $filesCount, size: $size, content: $content, sslCertificate: $sslCertificate)';
+    return 'WebsiteVersion(transactionRefAddress: $transactionRefAddress, timestamp: $timestamp, publisher: $publisher, filesCount: $filesCount, size: $size, fees: $fees, content: $content, sslCertificate: $sslCertificate)';
   }
 
   @override
@@ -235,6 +252,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
             (identical(other.filesCount, filesCount) ||
                 other.filesCount == filesCount) &&
             (identical(other.size, size) || other.size == size) &&
+            (identical(other.fees, fees) || other.fees == fees) &&
             (identical(other.content, content) || other.content == content) &&
             (identical(other.sslCertificate, sslCertificate) ||
                 other.sslCertificate == sslCertificate));
@@ -242,7 +260,7 @@ class _$_WebsiteVersion implements _WebsiteVersion {
 
   @override
   int get hashCode => Object.hash(runtimeType, transactionRefAddress, timestamp,
-      publisher, filesCount, size, content, sslCertificate);
+      publisher, filesCount, size, fees, content, sslCertificate);
 
   @JsonKey(ignore: true)
   @override
@@ -258,6 +276,7 @@ abstract class _WebsiteVersion implements WebsiteVersion {
       final String publisher,
       final int filesCount,
       final int size,
+      final int fees,
       final HostingRef? content,
       final X509CertificateData? sslCertificate}) = _$_WebsiteVersion;
 
@@ -271,6 +290,8 @@ abstract class _WebsiteVersion implements WebsiteVersion {
   int get filesCount;
   @override
   int get size;
+  @override
+  int get fees;
   @override
   HostingRef? get content;
   @override

@@ -84,9 +84,11 @@ class WebsitesRepository {
   Future<List<WebsiteVersion>> getWebsiteVersions(String genesisAddress) async {
     final websiteVersions = <WebsiteVersion>[];
 
+    var fees = 0;
     final transactionChainMap = await sl.get<ApiService>().getTransactionChain(
       {genesisAddress: ''},
-      request: 'address, validationStamp { timestamp } data { content }',
+      request:
+          'address, validationStamp { timestamp, ledgerOperations { fee } } data { content , }',
       orderAsc: false,
     );
 
@@ -97,8 +99,30 @@ class WebsitesRepository {
         jsonDecode(transaction.data!.content!),
       );
 
+      if (transaction.validationStamp != null &&
+          transaction.validationStamp!.ledgerOperations != null &&
+          transaction.validationStamp!.ledgerOperations!.fee != null) {
+        fees = fees + transaction.validationStamp!.ledgerOperations!.fee!;
+      }
+
+      final filesTxAddress = <String>{};
       hosting.metaData.forEach((key, value) {
+        for (final address in value.addresses) {
+          filesTxAddress.add(address);
+        }
         size = size + value.size;
+      });
+
+      final transactionsFeesMap = await sl.get<ApiService>().getTransaction(
+            filesTxAddress.toList(),
+            request: 'validationStamp { ledgerOperations { fee } } ',
+          );
+      transactionsFeesMap.forEach((key, value) {
+        if (value.validationStamp != null &&
+            value.validationStamp!.ledgerOperations != null &&
+            value.validationStamp!.ledgerOperations!.fee != null) {
+          fees = fees + value.validationStamp!.ledgerOperations!.fee!;
+        }
       });
 
       if (hosting.sslCertificate.isNotEmpty) {
@@ -110,6 +134,7 @@ class WebsitesRepository {
             timestamp: transaction.validationStamp!.timestamp!,
             filesCount: hosting.metaData.length,
             size: size,
+            fees: fees,
             content: hosting,
             sslCertificate: x509Certificate,
           ),
@@ -121,6 +146,7 @@ class WebsitesRepository {
             timestamp: transaction.validationStamp!.timestamp!,
             filesCount: hosting.metaData.length,
             size: size,
+            fees: fees,
             content: hosting,
           ),
         );

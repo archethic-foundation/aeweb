@@ -70,16 +70,17 @@ class MyApp extends ConsumerWidget {
           builder: (context, state) => const AddWebsiteSheet(),
         ),
         GoRoute(
-            path: '/unpublishWebsite',
-            name: 'unpublishWebsite',
-            builder: (context, state) {
-              final args = state.extra! as Map<String, Object?>;
-              return UnpublishWebsiteSheet(
-                websiteName: args['websiteName'] == null
-                    ? ''
-                    : args['websiteName']! as String,
-              );
-            }),
+          path: '/unpublishWebsite',
+          name: 'unpublishWebsite',
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return UnpublishWebsiteSheet(
+              websiteName: args['websiteName'] == null
+                  ? ''
+                  : args['websiteName']! as String,
+            );
+          },
+        ),
         GoRoute(
           path: '/websiteVersions',
           name: 'websiteVersions',

@@ -235,7 +235,7 @@ Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
             textAlign: TextAlign.center,
           ),
           SizedBox(
-            width: 100,
+            width: 80,
             height: 20,
             child: OutlinedButton(
               onPressed: () async {
