@@ -32,7 +32,7 @@ void main() {
 
       // Create transaction reference
       final transactionReference =
-          TestTransactionMixin().newTransactionReference(files);
+          await TestTransactionMixin().newTransactionReference(files);
       log(
         const JsonEncoder.withIndent('  ').convert(
           transactionReference.data!.content,

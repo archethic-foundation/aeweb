@@ -162,7 +162,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     log('Create transaction reference');
     updateWebsiteSyncNotifier.setStep(5);
     var transactionReference =
-        newTransactionReference(filesWithAddressWithLast);
+        await newTransactionReference(filesWithAddressWithLast);
 
     log('Sign transaction reference');
     updateWebsiteSyncNotifier.setStep(6);

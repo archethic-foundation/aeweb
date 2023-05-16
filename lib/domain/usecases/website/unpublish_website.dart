@@ -46,7 +46,7 @@ class UnpublishWebsiteUseCases with TransactionMixin {
     log('Create empty transaction reference');
     unpublishWebsiteNotifier.setStep(2);
     var transactionReference =
-        newTransactionReference(<String, HostingRefContentMetaData>{});
+        await newTransactionReference(<String, HostingRefContentMetaData>{});
 
     log('Sign transaction reference');
     unpublishWebsiteNotifier.setStep(3);

@@ -1,15 +1,18 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math' as math;
+import 'dart:typed_data';
 import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 
 mixin TransactionMixin {
-  Transaction newTransactionReference(
-    Map<String, HostingRefContentMetaData> metaData,
-  ) {
+  Future<Transaction> newTransactionReference(
+    Map<String, HostingRefContentMetaData> metaData, {
+    Uint8List? sslKey,
+  }) async {
     final metaDataSorted = Map.fromEntries(
       metaData.entries.toList()
         ..sort(
@@ -22,8 +25,29 @@ mixin TransactionMixin {
       hashFunction: 'sha1',
       metaData: metaDataSorted,
     );
-    return Transaction(type: 'hosting', data: Transaction.initData())
-        .setContent(jsonEncode(hosting));
+    final transaction =
+        Transaction(type: 'hosting', data: Transaction.initData())
+            .setContent(jsonEncode(hosting));
+
+    if (sslKey != null) {
+      final storageNoncePublicKey =
+          await sl.get<ApiService>().getStorageNoncePublicKey();
+      final aesKey = uint8ListToHex(
+        Uint8List.fromList(
+          List<int>.generate(32, (int i) => math.Random.secure().nextInt(256)),
+        ),
+      );
+      final encryptedSecretKey = ecEncrypt(aesKey, storageNoncePublicKey);
+      final encryptedSslKey = aesEncrypt(sslKey, aesKey);
+      final authorizedKey = AuthorizedKey(
+        encryptedSecretKey: uint8ListToHex(encryptedSecretKey),
+        publicKey: storageNoncePublicKey,
+      );
+      transaction
+          .addOwnership(uint8ListToHex(encryptedSslKey), [authorizedKey]);
+    }
+
+    return transaction;
   }
 
   Transaction newTransactionFile(

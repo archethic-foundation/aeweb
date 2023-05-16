@@ -122,7 +122,8 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
 
     log('Create transaction reference');
     addWebsiteNotifier.setStep(5);
-    var transactionReference = newTransactionReference(filesWithAddress);
+    var transactionReference =
+        await newTransactionReference(filesWithAddress, sslKey: privateKey);
 
     log('Sign transaction reference');
     addWebsiteNotifier.setStep(6);
