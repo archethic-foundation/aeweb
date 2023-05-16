@@ -153,7 +153,7 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
     if (kIsWeb) {
       if (state.zipFilePath.isEmpty) {
         state = state.copyWith(
-          errorText: AppLocalizations.of(context)!.addWebsitePathMissing,
+          errorText: AppLocalizations.of(context)!.addWebsiteZipFileMissing,
         );
         return false;
       }

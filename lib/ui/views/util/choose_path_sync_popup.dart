@@ -7,6 +7,7 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 
@@ -56,7 +57,8 @@ class PathSyncPopup with FileMixin {
                               children: [
                                 SelectionArea(
                                   child: Text(
-                                    'Sync from local folder',
+                                    AppLocalizations.of(context)!
+                                        .pathSyncPopupTitle,
                                     style:
                                         Theme.of(context).textTheme.titleSmall,
                                   ),
@@ -91,8 +93,9 @@ class PathSyncPopup with FileMixin {
                                 children: [
                                   Row(
                                     children: [
-                                      const Text(
-                                        'Sélectionnez le fichier zip contenant la mise à jour de votre site web',
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .pathSyncPopupSelectArchiveFile,
                                       ),
                                       const SizedBox(width: 2),
                                       TextButton(
@@ -102,7 +105,11 @@ class PathSyncPopup with FileMixin {
                                                 .platform
                                                 .pickFiles(
                                               type: FileType.custom,
-                                              allowedExtensions: ['zip', '7z'],
+                                              allowedExtensions: [
+                                                'zip',
+                                                '7z',
+                                                'rar'
+                                              ],
                                             );
                                             if (result != null) {
                                               zipFile =
@@ -133,8 +140,9 @@ class PathSyncPopup with FileMixin {
                                 children: [
                                   Row(
                                     children: [
-                                      const Text(
-                                        'Sélectionnez le dossier racine de votre site web',
+                                      Text(
+                                        AppLocalizations.of(context)!
+                                            .pathSyncPopupSelectFolder,
                                       ),
                                       const SizedBox(width: 2),
                                       TextButton(
@@ -168,8 +176,9 @@ class PathSyncPopup with FileMixin {
                             ),
                             Row(
                               children: [
-                                const Text(
-                                  'Apply .gitignore rules?',
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .pathSyncPopupGitignoreLabel,
                                 ),
                                 const SizedBox(width: 2),
                                 SizedBox(
@@ -207,14 +216,15 @@ class PathSyncPopup with FileMixin {
                                       Navigator.of(context).pop();
                                     },
                                     child: Row(
-                                      children: const [
-                                        Icon(
+                                      children: [
+                                        const Icon(
                                           Iconsax.close_square,
                                           size: 12,
                                         ),
-                                        SizedBox(width: 5),
+                                        const SizedBox(width: 5),
                                         Text(
-                                          'Close',
+                                          AppLocalizations.of(context)!
+                                              .btn_close,
                                         ),
                                       ],
                                     ),
@@ -229,11 +239,13 @@ class PathSyncPopup with FileMixin {
                                         if (zipFile == null) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            const SnackBar(
+                                            SnackBar(
                                               content: Text(
-                                                'Please, select a zip file',
+                                                AppLocalizations.of(context)!
+                                                    .pathSyncPopupArchiveFileMissing,
                                               ),
-                                              duration: Duration(seconds: 3),
+                                              duration:
+                                                  const Duration(seconds: 3),
                                             ),
                                           );
                                         }
@@ -247,11 +259,13 @@ class PathSyncPopup with FileMixin {
                                         if (path == null || path!.isEmpty) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
-                                            const SnackBar(
+                                            SnackBar(
                                               content: Text(
-                                                'Please, select a folder',
+                                                AppLocalizations.of(context)!
+                                                    .pathSyncPopupPathMissing,
                                               ),
-                                              duration: Duration(seconds: 3),
+                                              duration:
+                                                  const Duration(seconds: 3),
                                             ),
                                           );
                                         }
@@ -290,14 +304,15 @@ class PathSyncPopup with FileMixin {
                                       );
                                     },
                                     child: Row(
-                                      children: const [
-                                        Icon(
+                                      children: [
+                                        const Icon(
                                           Iconsax.refresh_circle,
                                           size: 12,
                                         ),
-                                        SizedBox(width: 8),
+                                        const SizedBox(width: 8),
                                         Text(
-                                          'Sync',
+                                          AppLocalizations.of(context)!
+                                              .btn_sync,
                                         ),
                                       ],
                                     ),

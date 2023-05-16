@@ -133,6 +133,11 @@ flutter:
     - assets/images/
 
   fonts:
+    - family: Lato
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf
+        - asset: assets/fonts/Lato-Italic.ttf
+        - asset: assets/fonts/Lato-Bold.ttf
     - family: Caveat
       fonts:
         - asset: assets/fonts/Caveat-Regular.ttf

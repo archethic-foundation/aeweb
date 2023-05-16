@@ -21,7 +21,7 @@ class _AddWebsiteSelectZipFileState
 
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['zip', '7z'],
+        allowedExtensions: ['zip', '7z', 'rar'],
       );
       if (result != null) {
         if (kIsWeb) {

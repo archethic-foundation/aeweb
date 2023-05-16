@@ -5,6 +5,7 @@ import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:gradient_borders/gradient_borders.dart';
 import 'package:iconsax/iconsax.dart';
 
 class ConnectionToWalletStatus extends ConsumerStatefulWidget {
@@ -88,8 +89,26 @@ class _ConnectionToWalletStatusState
               ),
             ),
           )
-        : Card(
-            elevation: 0,
+        : DecoratedBox(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  Theme.of(context).colorScheme.background.withOpacity(1),
+                  Theme.of(context).colorScheme.background.withOpacity(0.3),
+                ],
+                stops: const [0, 1],
+              ),
+              border: GradientBoxBorder(
+                gradient: LinearGradient(
+                  colors: [
+                    Theme.of(context).colorScheme.background.withOpacity(0.5),
+                    Theme.of(context).colorScheme.background.withOpacity(0.7),
+                  ],
+                  stops: const [0, 1],
+                ),
+              ),
+              borderRadius: BorderRadius.circular(12),
+            ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
