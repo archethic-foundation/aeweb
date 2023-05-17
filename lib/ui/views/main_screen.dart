@@ -32,7 +32,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
                   image: AssetImage(
                     'assets/images/background.png',
                   ),
-                  fit: BoxFit.fill,
+                  fit: BoxFit.cover,
                 ),
               ),
             ),

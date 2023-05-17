@@ -37,7 +37,6 @@ class AddWebsiteFormSheet extends ConsumerWidget {
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
 
     return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: [

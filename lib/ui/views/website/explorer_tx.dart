@@ -137,7 +137,7 @@ class ExplorerTxScreen extends ConsumerWidget {
                                     child:
                                         websiteVersionTx.typeHostingTx == 'ref'
                                             ? const Icon(
-                                                Iconsax.receipt_text,
+                                                Iconsax.archive_book,
                                               )
                                             : const Icon(Iconsax.document),
                                   ),

@@ -43,6 +43,24 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                     ],
                   ),
                 )
+              else if (addWebsite.processFinished)
+                ElevatedButton(
+                  onPressed: () {
+                    context.go('/');
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(
+                        Iconsax.close_square,
+                        size: 12,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        AppLocalizations.of(context)!.btn_close,
+                      ),
+                    ],
+                  ),
+                )
               else
                 ElevatedButton(
                   onPressed: () {

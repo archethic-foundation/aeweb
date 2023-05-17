@@ -45,8 +45,10 @@ class UnpublishWebsiteSheetBody extends ConsumerWidget {
 
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
+            backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
             content: Text(
               unpublishWebsite.errorText,
+              style: Theme.of(context).snackBarTheme.contentTextStyle,
             ),
             duration: const Duration(seconds: 3),
             action: SnackBarAction(

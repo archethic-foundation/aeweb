@@ -240,9 +240,15 @@ class PathSyncPopup with FileMixin {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
+                                              backgroundColor: Theme.of(context)
+                                                  .snackBarTheme
+                                                  .backgroundColor,
                                               content: Text(
                                                 AppLocalizations.of(context)!
                                                     .pathSyncPopupArchiveFileMissing,
+                                                style: Theme.of(context)
+                                                    .snackBarTheme
+                                                    .contentTextStyle,
                                               ),
                                               duration:
                                                   const Duration(seconds: 3),
@@ -260,9 +266,15 @@ class PathSyncPopup with FileMixin {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(
                                             SnackBar(
+                                              backgroundColor: Theme.of(context)
+                                                  .snackBarTheme
+                                                  .backgroundColor,
                                               content: Text(
                                                 AppLocalizations.of(context)!
                                                     .pathSyncPopupPathMissing,
+                                                style: Theme.of(context)
+                                                    .snackBarTheme
+                                                    .contentTextStyle,
                                               ),
                                               duration:
                                                   const Duration(seconds: 3),

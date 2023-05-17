@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
@@ -20,6 +21,8 @@ class ConnectionToWalletStatus extends ConsumerStatefulWidget {
 
 class _ConnectionToWalletStatusState
     extends ConsumerState<ConnectionToWalletStatus> {
+  bool _over = false;
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context)
@@ -29,64 +32,79 @@ class _ConnectionToWalletStatusState
     final sessionNotifier = ref.watch(SessionProviders.session.notifier);
 
     return session.isConnectedToWallet == false
-        ? OutlinedButton(
-            style: ButtonStyle(
-              side: MaterialStateProperty.all(BorderSide.none),
-            ),
-            onPressed: () async {
-              await sessionNotifier.connectToWallet();
-
-              if (session.error.isNotEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(
-                      session.error,
-                    ),
-                    duration: const Duration(seconds: 1),
-                  ),
-                );
-              }
+        ? MouseRegion(
+            onEnter: (_) {
+              setState(() {
+                _over = true;
+              });
             },
-            child: Container(
-              alignment: Alignment.center,
-              height: 50,
-              padding: const EdgeInsets.only(left: 20, right: 20),
-              decoration: ShapeDecoration(
-                gradient: const LinearGradient(
-                  colors: <Color>[
-                    Color(0xFF00A4DB),
-                    Color(0xFFCC00FF),
-                  ],
-                  transform: GradientRotation(pi / 9),
-                ),
-                shape: const StadiumBorder(),
-                shadows: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.5),
-                    blurRadius: 7,
-                    spreadRadius: 1,
-                    offset: const Offset(0, 5),
-                  ),
-                ],
+            onExit: (_) {
+              setState(() {
+                _over = false;
+              });
+            },
+            child: OutlinedButton(
+              style: ButtonStyle(
+                side: MaterialStateProperty.all(BorderSide.none),
               ),
-              child: Row(
-                children: [
-                  Icon(
-                    Iconsax.empty_wallet,
-                    color: Theme.of(context).textTheme.labelMedium!.color,
-                    size: 20,
-                  ),
-                  const SizedBox(width: 10),
-                  Text(
-                    AppLocalizations.of(context)!.connectionWalletConnect,
-                    style: TextStyle(
-                      color: Theme.of(context).textTheme.labelMedium!.color,
-                      fontFamily: 'Equinox',
-                      fontSize: 16,
+              onPressed: () async {
+                await sessionNotifier.connectToWallet();
+
+                if (session.error.isNotEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      backgroundColor:
+                          Theme.of(context).snackBarTheme.backgroundColor,
+                      content: Text(
+                        session.error,
+                        style: Theme.of(context).snackBarTheme.contentTextStyle,
+                      ),
+                      duration: const Duration(seconds: 2),
                     ),
+                  );
+                }
+              },
+              child: Container(
+                alignment: Alignment.center,
+                height: 50,
+                padding: const EdgeInsets.only(left: 20, right: 20),
+                decoration: ShapeDecoration(
+                  gradient: const LinearGradient(
+                    colors: <Color>[
+                      Color(0xFF00A4DB),
+                      Color(0xFFCC00FF),
+                    ],
+                    transform: GradientRotation(pi / 9),
                   ),
-                ],
-              ),
+                  shape: const StadiumBorder(),
+                  shadows: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.5),
+                      blurRadius: 7,
+                      spreadRadius: 1,
+                      offset: const Offset(0, 5),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Icon(
+                      Iconsax.empty_wallet,
+                      color: Theme.of(context).textTheme.labelMedium!.color,
+                      size: 20,
+                    ),
+                    const SizedBox(width: 10),
+                    Text(
+                      AppLocalizations.of(context)!.connectionWalletConnect,
+                      style: TextStyle(
+                        color: Theme.of(context).textTheme.labelMedium!.color,
+                        fontFamily: 'Equinox',
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                ),
+              ).animate(target: _over ? 0 : 1).fade(end: 0.8),
             ),
           )
         : DecoratedBox(

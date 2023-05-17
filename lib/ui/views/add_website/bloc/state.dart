@@ -29,5 +29,7 @@ class AddWebsiteFormState with _$AddWebsiteFormState {
 
   bool get creationInProgress => step > 0 && step < 13 && stepError.isEmpty;
 
+  bool get processFinished => stepError.isNotEmpty || step == 12;
+
   bool get canAddWebsite => isControlsOk;
 }
