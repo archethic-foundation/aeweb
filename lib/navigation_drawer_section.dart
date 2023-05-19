@@ -1,6 +1,6 @@
 import 'package:aeweb/application/version.dart';
-import 'package:aeweb/header.dart';
 import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
+import 'package:aeweb/ui/views/util/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

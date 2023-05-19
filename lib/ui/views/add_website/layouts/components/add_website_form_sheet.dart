@@ -1,12 +1,12 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
 
-import 'package:aeweb/header.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_steps.dart';
 import 'package:aeweb/ui/views/util/components/resizable_box.dart';
 import 'package:aeweb/ui/views/util/components/upload_file.dart';
 import 'package:aeweb/ui/views/util/generic/formatters.dart';
+import 'package:aeweb/ui/views/util/header.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';

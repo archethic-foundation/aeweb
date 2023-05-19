@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:aeweb/application/session/provider.dart';
+import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -30,6 +31,28 @@ class _ConnectionToWalletStatusState
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
     final session = ref.watch(SessionProviders.session);
     final sessionNotifier = ref.watch(SessionProviders.session.notifier);
+
+    if (session.oldNameAccount.isNotEmpty &&
+        session.oldNameAccount != session.nameAccount) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Theme.of(context).snackBarTheme.backgroundColor,
+            content: Text(
+              AppLocalizations.of(context)!.changeCurrentAccountWarning,
+              style: Theme.of(context).snackBarTheme.contentTextStyle,
+            ),
+            duration: const Duration(seconds: 3),
+          ),
+        );
+
+        ref.read(SessionProviders.session.notifier).setOldNameAccount();
+
+        ref
+          ..invalidate(WebsitesProviders.fetchWebsites)
+          ..invalidate(WebsitesProviders.fetchWebsiteVersions);
+      });
+    }
 
     return session.isConnectedToWallet == false
         ? MouseRegion(

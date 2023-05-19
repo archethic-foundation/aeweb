@@ -11,6 +11,7 @@ class Session with _$Session {
   const factory Session({
     @Default('') String endpoint,
     @Default('') String nameAccount,
+    @Default('') String oldNameAccount,
     @Default('') String genesisAddress,
     @Default('') String error,
     Subscription<Account>? accountSub,

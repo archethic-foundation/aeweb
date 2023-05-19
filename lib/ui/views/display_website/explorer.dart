@@ -3,10 +3,11 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
-class ExplorerScreen extends StatefulWidget {
+class ExplorerScreen extends ConsumerStatefulWidget {
   const ExplorerScreen({super.key, required this.filesAndFolders});
 
   final archethic.HostingRef filesAndFolders;
@@ -15,7 +16,7 @@ class ExplorerScreen extends StatefulWidget {
   ExplorerScreenState createState() => ExplorerScreenState();
 }
 
-class ExplorerScreenState extends State<ExplorerScreen> {
+class ExplorerScreenState extends ConsumerState<ExplorerScreen> {
   final List<Node> _nodes = [];
   String _selectedNode = '';
   late TreeViewController treeViewController;

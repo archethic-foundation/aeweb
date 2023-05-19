@@ -46,6 +46,7 @@ class _SessionNotifier extends Notifier<Session> {
               accountSub: success,
               accountStreamSub: success.updates.listen((event) {
                 state = state.copyWith(
+                  oldNameAccount: state.nameAccount,
                   genesisAddress: event.genesisAddress,
                   nameAccount: event.name,
                 );
@@ -60,6 +61,10 @@ class _SessionNotifier extends Notifier<Session> {
         );
       },
     );
+  }
+
+  void setOldNameAccount() {
+    state = state.copyWith(oldNameAccount: state.nameAccount);
   }
 
   Future<void> cancelConnection() async {

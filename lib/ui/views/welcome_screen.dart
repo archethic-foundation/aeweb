@@ -1,8 +1,8 @@
 import 'package:aeweb/application/version.dart';
-import 'package:aeweb/header.dart';
+import 'package:aeweb/ui/views/display_website/website_list.dart';
 import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/util/generic/responsive.dart';
-import 'package:aeweb/ui/views/website/website_list.dart';
+import 'package:aeweb/ui/views/util/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';

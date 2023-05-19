@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$Session {
   String get endpoint => throw _privateConstructorUsedError;
   String get nameAccount => throw _privateConstructorUsedError;
+  String get oldNameAccount => throw _privateConstructorUsedError;
   String get genesisAddress => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
   Subscription<Account>? get accountSub => throw _privateConstructorUsedError;
@@ -36,6 +37,7 @@ abstract class $SessionCopyWith<$Res> {
   $Res call(
       {String endpoint,
       String nameAccount,
+      String oldNameAccount,
       String genesisAddress,
       String error,
       Subscription<Account>? accountSub,
@@ -59,6 +61,7 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
   $Res call({
     Object? endpoint = null,
     Object? nameAccount = null,
+    Object? oldNameAccount = null,
     Object? genesisAddress = null,
     Object? error = null,
     Object? accountSub = freezed,
@@ -72,6 +75,10 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
       nameAccount: null == nameAccount
           ? _value.nameAccount
           : nameAccount // ignore: cast_nullable_to_non_nullable
+              as String,
+      oldNameAccount: null == oldNameAccount
+          ? _value.oldNameAccount
+          : oldNameAccount // ignore: cast_nullable_to_non_nullable
               as String,
       genesisAddress: null == genesisAddress
           ? _value.genesisAddress
@@ -115,6 +122,7 @@ abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
   $Res call(
       {String endpoint,
       String nameAccount,
+      String oldNameAccount,
       String genesisAddress,
       String error,
       Subscription<Account>? accountSub,
@@ -136,6 +144,7 @@ class __$$_SessionCopyWithImpl<$Res>
   $Res call({
     Object? endpoint = null,
     Object? nameAccount = null,
+    Object? oldNameAccount = null,
     Object? genesisAddress = null,
     Object? error = null,
     Object? accountSub = freezed,
@@ -149,6 +158,10 @@ class __$$_SessionCopyWithImpl<$Res>
       nameAccount: null == nameAccount
           ? _value.nameAccount
           : nameAccount // ignore: cast_nullable_to_non_nullable
+              as String,
+      oldNameAccount: null == oldNameAccount
+          ? _value.oldNameAccount
+          : oldNameAccount // ignore: cast_nullable_to_non_nullable
               as String,
       genesisAddress: null == genesisAddress
           ? _value.genesisAddress
@@ -176,6 +189,7 @@ class _$_Session extends _Session {
   const _$_Session(
       {this.endpoint = '',
       this.nameAccount = '',
+      this.oldNameAccount = '',
       this.genesisAddress = '',
       this.error = '',
       this.accountSub,
@@ -190,6 +204,9 @@ class _$_Session extends _Session {
   final String nameAccount;
   @override
   @JsonKey()
+  final String oldNameAccount;
+  @override
+  @JsonKey()
   final String genesisAddress;
   @override
   @JsonKey()
@@ -201,7 +218,7 @@ class _$_Session extends _Session {
 
   @override
   String toString() {
-    return 'Session(endpoint: $endpoint, nameAccount: $nameAccount, genesisAddress: $genesisAddress, error: $error, accountSub: $accountSub, accountStreamSub: $accountStreamSub)';
+    return 'Session(endpoint: $endpoint, nameAccount: $nameAccount, oldNameAccount: $oldNameAccount, genesisAddress: $genesisAddress, error: $error, accountSub: $accountSub, accountStreamSub: $accountStreamSub)';
   }
 
   @override
@@ -213,6 +230,8 @@ class _$_Session extends _Session {
                 other.endpoint == endpoint) &&
             (identical(other.nameAccount, nameAccount) ||
                 other.nameAccount == nameAccount) &&
+            (identical(other.oldNameAccount, oldNameAccount) ||
+                other.oldNameAccount == oldNameAccount) &&
             (identical(other.genesisAddress, genesisAddress) ||
                 other.genesisAddress == genesisAddress) &&
             (identical(other.error, error) || other.error == error) &&
@@ -224,7 +243,7 @@ class _$_Session extends _Session {
 
   @override
   int get hashCode => Object.hash(runtimeType, endpoint, nameAccount,
-      genesisAddress, error, accountSub, accountStreamSub);
+      oldNameAccount, genesisAddress, error, accountSub, accountStreamSub);
 
   @JsonKey(ignore: true)
   @override
@@ -237,6 +256,7 @@ abstract class _Session extends Session {
   const factory _Session(
       {final String endpoint,
       final String nameAccount,
+      final String oldNameAccount,
       final String genesisAddress,
       final String error,
       final Subscription<Account>? accountSub,
@@ -247,6 +267,8 @@ abstract class _Session extends Session {
   String get endpoint;
   @override
   String get nameAccount;
+  @override
+  String get oldNameAccount;
   @override
   String get genesisAddress;
   @override

@@ -2,11 +2,11 @@ import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/model/website_version_tx.dart';
+import 'package:aeweb/ui/views/display_website/explorer.dart';
+import 'package:aeweb/ui/views/display_website/explorer_tx.dart';
 import 'package:aeweb/ui/views/util/certificate_infos_popup.dart';
 import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
-import 'package:aeweb/ui/views/website/explorer.dart';
-import 'package:aeweb/ui/views/website/explorer_tx.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
@@ -280,7 +280,16 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                   );
                 },
                 error: (error, stacktrace) => const SizedBox(),
-                loading: () => const SizedBox(),
+                loading: () => const Padding(
+                  padding: EdgeInsets.only(
+                    left: 30,
+                    right: 30,
+                    top: 230,
+                  ),
+                  child: LinearProgressIndicator(
+                    minHeight: 1,
+                  ),
+                ),
               ),
             ],
           ),
@@ -305,7 +314,7 @@ Widget _popupMenuButton(
     itemBuilder: (context) {
       return [
         PopupMenuItem(
-          value: 'Explore',
+          value: 'ExploreFiles',
           child: Row(
             children: [
               const Icon(Iconsax.folder_open),
@@ -416,9 +425,9 @@ Widget _popupMenuButton(
         ),
       ];
     },
-    onSelected: (value) async {
+    onSelected: (value) {
       switch (value) {
-        case 'Explore':
+        case 'ExploreFiles':
           ref
               .read(
                 MainScreenThirdPartProviders

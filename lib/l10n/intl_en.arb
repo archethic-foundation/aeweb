@@ -161,5 +161,6 @@
   "pathSyncPopupTitle": "Sync from local folder",
   "pathSyncPopupGitignoreLabel": "Apply .gitignore rules?",
   "pathSyncPopupPathMissing": "Please fill the path containing the files to be uploaded.",
-  "pathSyncPopupArchiveFileMissing": "Please choose an archive file containing the files to be uploaded. Accepted formats include: zip, rar, and 7z."
+  "pathSyncPopupArchiveFileMissing": "Please choose an archive file containing the files to be uploaded. Accepted formats include: zip, rar, and 7z.",
+  "changeCurrentAccountWarning": "Warning, your current account has been updated."
 }
