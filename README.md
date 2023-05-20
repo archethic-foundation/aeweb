@@ -1,4 +1,4 @@
-[![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev) [![CodeFactor](https://www.codefactor.io/repository/github/archethic-foundation/aeweb/badge)](https://www.codefactor.io/repository/github/archethic-foundation/aeweb)
+[![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev) [![CodeFactor](https://www.codefactor.io/repository/github/archethic-foundation/aeweb/badge?s=810cd469a6616c8595c8691096e21af5d1238a85)](https://www.codefactor.io/repository/github/archethic-foundation/aeweb)
 
 # AE Web
 
