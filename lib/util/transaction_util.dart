@@ -21,8 +21,6 @@ mixin TransactionMixin {
     );
 
     final hosting = HostingRef(
-      aewebVersion: 1,
-      hashFunction: 'sha1',
       metaData: metaDataSorted,
     );
     final transaction =

@@ -144,7 +144,6 @@ class WebsitesRepository {
               size: size,
               fees: fees,
               content: hosting,
-              published: true,
               sslCertificate: x509Certificate,
             ),
           );
@@ -156,7 +155,6 @@ class WebsitesRepository {
               filesCount: hosting.metaData.length,
               size: size,
               fees: fees,
-              published: true,
               content: hosting,
             ),
           );
@@ -168,8 +166,6 @@ class WebsitesRepository {
           WebsiteVersion(
             transactionRefAddress: transaction.address!.address!,
             timestamp: transaction.validationStamp!.timestamp!,
-            filesCount: 0,
-            size: 0,
             fees: fees,
             published: false,
           ),
