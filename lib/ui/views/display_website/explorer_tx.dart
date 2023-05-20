@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/model/website_version_tx.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
@@ -37,9 +38,8 @@ class ExplorerTxScreen extends ConsumerWidget {
         ),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Scrollbar(
-        thumbVisibility: true,
-        child: SingleChildScrollView(
+      child: ArchethicScrollbar(
+        child: SizedBox(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

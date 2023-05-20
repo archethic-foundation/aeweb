@@ -117,6 +117,7 @@
   "updateWebSiteConfirmStep11": "Do you confirm the website update?",
   "updateWebSiteWaitingStep12": "Updating the website on the Archethic blockchain in progress",
   "updateWebSiteConfirmedStep13": "The site has been successfully updated!",
+  "updateWebSiteNoUpdateNecessary": "No update necessary",
   "websitesListVersionsPopupExplore": "Explore files",
   "websitesListVersionsPopupExploreTx": "Explore transactions",
   "websitesListVersionsPopupRefTx": "See reference transaction",

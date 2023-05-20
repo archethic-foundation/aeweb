@@ -254,6 +254,7 @@ class PathSyncPopup with FileMixin {
                                                   const Duration(seconds: 3),
                                             ),
                                           );
+                                          return;
                                         }
                                         localFiles =
                                             await FileMixin.listFilesFromZip(
@@ -280,6 +281,7 @@ class PathSyncPopup with FileMixin {
                                                   const Duration(seconds: 3),
                                             ),
                                           );
+                                          return;
                                         }
 
                                         localFiles =

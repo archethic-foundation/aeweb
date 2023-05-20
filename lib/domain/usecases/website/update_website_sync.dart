@@ -96,8 +96,11 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     }
 
     if (refChanged == false) {
-      updateWebsiteSyncNotifier.setStepError('No update necessary');
-      log('No update necessary');
+      updateWebsiteSyncNotifier
+        ..setStep(1)
+        ..setStepError(
+          AppLocalizations.of(context)!.updateWebSiteNoUpdateNecessary,
+        );
       return;
     }
 

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -40,9 +41,8 @@ class UpdateWebsiteSyncSteps extends ConsumerWidget {
         padding: const EdgeInsets.all(20),
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
-        child: Scrollbar(
-          thumbVisibility: true,
-          child: SingleChildScrollView(
+        child: ArchethicScrollbar(
+          child: SizedBox(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

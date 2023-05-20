@@ -1,3 +1,4 @@
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
@@ -36,20 +37,24 @@ class WelcomeAdvert extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Column(
-        children: [
-          Text(
-            welcomeArgTitle,
-            style: Theme.of(context).textTheme.titleMedium,
+      child: ArchethicScrollbar(
+        child: SizedBox(
+          child: Column(
+            children: [
+              Text(
+                welcomeArgTitle,
+                style: Theme.of(context).textTheme.titleMedium,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                welcomeArgDesc,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          Text(
-            welcomeArgDesc,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ],
+        ),
       ),
     );
   }

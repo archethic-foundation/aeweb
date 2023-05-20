@@ -68,7 +68,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
                     height: 20,
                   ),
                   Expanded(
-                    flex: _size.width > 1340 ? 8 : 10,
+                    flex: 10,
                     child: WebsiteVersionsList(
                       genesisAddress: websiteSelection.genesisAddress,
                       websiteName: websiteSelection.name,
@@ -90,9 +90,11 @@ class MainScreenState extends ConsumerState<MainScreen> {
                   child: WebsiteList(),
                 ),
                 if (websiteSelection.genesisAddress.isNotEmpty)
-                  WebsiteVersionsList(
-                    genesisAddress: websiteSelection.genesisAddress,
-                    websiteName: websiteSelection.name,
+                  Expanded(
+                    child: WebsiteVersionsList(
+                      genesisAddress: websiteSelection.genesisAddress,
+                      websiteName: websiteSelection.name,
+                    ),
                   ),
               ],
             ),

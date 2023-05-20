@@ -110,20 +110,18 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                     selectedIcon: destination.icon,
                   );
                 }),
-                Expanded(
-                  child: Container(
-                    width: 50,
-                    height: 1,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0x003C89B9),
-                          Color(0xFFCC00FF),
-                        ],
-                        stops: [0, 1],
-                        begin: AlignmentDirectional.centerEnd,
-                        end: AlignmentDirectional.centerStart,
-                      ),
+                Container(
+                  width: 50,
+                  height: 1,
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        Color(0x003C89B9),
+                        Color(0xFFCC00FF),
+                      ],
+                      stops: [0, 1],
+                      begin: AlignmentDirectional.centerEnd,
+                      end: AlignmentDirectional.centerStart,
                     ),
                   ),
                 ),
