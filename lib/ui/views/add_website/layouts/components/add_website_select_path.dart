@@ -1,5 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'add_website_form_sheet.dart';
+import 'dart:developer';
+
+import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
+import 'package:aeweb/ui/views/util/components/upload_file.dart';
+import 'package:aeweb/util/file_util.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddWebsiteSelectPath extends ConsumerStatefulWidget {
   const AddWebsiteSelectPath({

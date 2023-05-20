@@ -9,7 +9,7 @@ import 'package:aeweb/ui/views/main_screen.dart';
 import 'package:aeweb/ui/views/route_screen.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
-import 'package:aeweb/ui/views/welcome_screen.dart';
+import 'package:aeweb/ui/views/welcome/welcome_screen.dart';
 import 'package:aeweb/util/generic/providers_observer.dart';
 import 'package:aeweb/util/service_locator.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';

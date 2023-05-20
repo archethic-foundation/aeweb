@@ -14,6 +14,7 @@ class WebsiteVersion with _$WebsiteVersion {
     @Default(0) int filesCount,
     @Default(0) int size,
     @Default(0) int fees,
+    @Default(true) bool published,
     HostingRef? content,
     X509CertificateData? sslCertificate,
   }) = _WebsiteVersion;

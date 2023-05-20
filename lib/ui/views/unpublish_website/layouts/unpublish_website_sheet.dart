@@ -1,8 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/state.dart';
+import 'package:aeweb/ui/views/unpublish_website/layouts/components/unpublish_website_bottom_bar.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/components/unpublish_website_form_sheet.dart';
+import 'package:aeweb/ui/views/unpublish_website/layouts/components/unpublish_website_steps.dart';
+import 'package:aeweb/ui/views/util/components/page_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,6 +68,10 @@ class UnpublishWebsiteSheetBody extends ConsumerWidget {
       },
     );
 
-    return const UnpublishebsiteFormSheet();
+    return const PageDetail(
+      firstChild: UnpublishWebsiteFormSheet(),
+      secondChild: UnpublishWebsiteSteps(),
+      bottomBar: UnpublishWebsiteBottomBar(),
+    );
   }
 }

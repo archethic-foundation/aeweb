@@ -27,12 +27,14 @@ class MainScreenState extends ConsumerState<MainScreen> {
           Opacity(
             opacity: 0.2,
             child: Container(
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                 image: DecorationImage(
-                  image: AssetImage(
+                  image: const AssetImage(
                     'assets/images/background.png',
                   ),
-                  fit: BoxFit.cover,
+                  fit: Responsive.isMobile(context)
+                      ? BoxFit.fitHeight
+                      : BoxFit.fill,
                 ),
               ),
             ),
@@ -49,121 +51,122 @@ class MainScreenState extends ConsumerState<MainScreen> {
               ),
             ),
           ),
-          Column(
-            children: [
-              Expanded(
-                child: Responsive(
-                  mobile: Column(
-                    children: [
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      const Expanded(
-                        flex: 6,
-                        child: WebsiteList(),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      Expanded(
-                        flex: _size.width > 1340 ? 8 : 10,
-                        child: WebsiteVersionsList(
-                          genesisAddress: websiteSelection.genesisAddress,
-                          websiteName: websiteSelection.name,
-                        ),
-                      ),
-                    ],
+          Responsive(
+            mobile: Container(
+              height: MediaQuery.of(context).size.height - 100,
+              padding: const EdgeInsets.only(left: 20, right: 20),
+              child: Column(
+                children: [
+                  const SizedBox(
+                    height: 20,
                   ),
-                  tablet: Row(
-                    children: [
-                      const Expanded(
-                        flex: 6,
-                        child: WebsiteList(),
-                      ),
-                      if (websiteSelection.genesisAddress.isNotEmpty)
-                        WebsiteVersionsList(
-                          genesisAddress: websiteSelection.genesisAddress,
-                          websiteName: websiteSelection.name,
-                        ),
-                    ],
+                  const Expanded(
+                    flex: 6,
+                    child: WebsiteList(),
                   ),
-                  desktop: Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Expanded(
-                        flex: _size.width > 1340 ? 3 : 4,
-                        child: const Padding(
-                          padding: EdgeInsets.only(
-                            top: 30,
-                            bottom: 30,
-                            left: 30,
-                            right: 10,
-                          ),
-                          child: NavigationDrawerSection(),
-                        )
-                            .animate()
-                            .fade(duration: const Duration(milliseconds: 200))
-                            .scale(duration: const Duration(milliseconds: 200)),
-                      ),
-                      Expanded(
-                        flex: 4,
-                        child: const Padding(
-                          padding: EdgeInsets.only(
-                            top: 30,
-                            bottom: 30,
-                            left: 10,
-                            right: 10,
-                          ),
-                          child: WebsiteList(),
-                        )
-                            .animate()
-                            .fade(duration: const Duration(milliseconds: 250))
-                            .scale(duration: const Duration(milliseconds: 250)),
-                      ),
-                      Expanded(
-                        flex: _size.width > 1340 ? 9 : 10,
-                        child: Padding(
-                          padding: const EdgeInsets.only(
-                            top: 30,
-                            bottom: 30,
-                            left: 10,
-                            right: 10,
-                          ),
-                          child: Column(
-                            children: [
-                              if (websiteSelection.genesisAddress.isNotEmpty)
-                                WebsiteVersionsList(
-                                  genesisAddress:
-                                      websiteSelection.genesisAddress,
-                                  websiteName: websiteSelection.name,
-                                )
-                                    .animate()
-                                    .fade(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                    )
-                                    .scale(
-                                      duration:
-                                          const Duration(milliseconds: 300),
-                                    )
-                              else
-                                const SizedBox(),
-                              const SizedBox(
-                                height: 20,
-                              ),
-                              ref.watch(
-                                MainScreenThirdPartProviders
-                                    .mainScreenThirdPartProvider,
-                              ),
-                            ],
-                          ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  Expanded(
+                    flex: _size.width > 1340 ? 8 : 10,
+                    child: WebsiteVersionsList(
+                      genesisAddress: websiteSelection.genesisAddress,
+                      websiteName: websiteSelection.name,
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  ref.watch(
+                    MainScreenThirdPartProviders.mainScreenThirdPartProvider,
+                  ),
+                ],
+              ),
+            ),
+            tablet: Row(
+              children: [
+                const Expanded(
+                  flex: 6,
+                  child: WebsiteList(),
+                ),
+                if (websiteSelection.genesisAddress.isNotEmpty)
+                  WebsiteVersionsList(
+                    genesisAddress: websiteSelection.genesisAddress,
+                    websiteName: websiteSelection.name,
+                  ),
+              ],
+            ),
+            desktop: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Expanded(
+                  flex: _size.width > 1340 ? 3 : 4,
+                  child: const Padding(
+                    padding: EdgeInsets.only(
+                      top: 30,
+                      bottom: 30,
+                      left: 30,
+                      right: 10,
+                    ),
+                    child: NavigationDrawerSection(),
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200)),
+                ),
+                Expanded(
+                  flex: 4,
+                  child: const Padding(
+                    padding: EdgeInsets.only(
+                      top: 30,
+                      bottom: 30,
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: WebsiteList(),
+                  )
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 250))
+                      .scale(duration: const Duration(milliseconds: 250)),
+                ),
+                Expanded(
+                  flex: _size.width > 1340 ? 9 : 10,
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                      top: 30,
+                      bottom: 30,
+                      left: 10,
+                      right: 10,
+                    ),
+                    child: Column(
+                      children: [
+                        if (websiteSelection.genesisAddress.isNotEmpty)
+                          WebsiteVersionsList(
+                            genesisAddress: websiteSelection.genesisAddress,
+                            websiteName: websiteSelection.name,
+                          )
+                              .animate()
+                              .fade(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                              .scale(
+                                duration: const Duration(milliseconds: 300),
+                              )
+                        else
+                          const SizedBox(),
+                        const SizedBox(
+                          height: 20,
                         ),
-                      ),
-                    ],
+                        ref.watch(
+                          MainScreenThirdPartProviders
+                              .mainScreenThirdPartProvider,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ],
       ),

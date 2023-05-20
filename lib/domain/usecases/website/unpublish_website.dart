@@ -3,16 +3,18 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
-import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/transaction_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UnpublishWebsiteUseCases with TransactionMixin {
   Future<void> run(
     WidgetRef ref,
+    BuildContext context,
   ) async {
     final unpublishWebsiteNotifier =
         ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm.notifier)
@@ -37,18 +39,18 @@ class UnpublishWebsiteUseCases with TransactionMixin {
     );
     final lastTransactionReference = lastTransactionReferenceMap[addressTxRef];
     if (lastTransactionReference == null) {
-      unpublishWebsiteNotifier
-          .setStepError('Unable to get the last transaction reference');
+      unpublishWebsiteNotifier.setStepError(
+        AppLocalizations.of(context)!.unpublishWebsiteStepErrorGetLastRef,
+      );
       log('Unable to get the last transaction reference');
       return;
     }
 
     log('Create empty transaction reference');
     unpublishWebsiteNotifier.setStep(2);
-    var transactionReference =
-        await newTransactionReference(<String, HostingRefContentMetaData>{});
+    var transactionReference = newEmptyTransaction();
 
-    log('Sign transaction reference');
+    log('Sign empty transaction reference');
     unpublishWebsiteNotifier.setStep(3);
     try {
       transactionReference = (await signTx(
@@ -103,12 +105,6 @@ class UnpublishWebsiteUseCases with TransactionMixin {
     unpublishWebsiteNotifier.setGlobalFees(feesTrf + feesRef);
     log('Global fees : ${feesTrf + feesRef} UCO');
 
-    var transactionRepository = ArchethicTransactionSender(
-      phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
-      websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
-    );
-
     unpublishWebsiteNotifier.setStep(8);
     final startTime = DateTime.now();
     var timeout = false;
@@ -131,8 +127,9 @@ class UnpublishWebsiteUseCases with TransactionMixin {
             .globalFeesValidated ==
         null) {
       unpublishWebsiteNotifier.setStepError(
-        "La mise à jour du site web n'a pas été déployée car vous n'avez pas validé les frais à temps.",
+        AppLocalizations.of(context)!.unpublishWebsiteStepErrorFeesTimeout,
       );
+
       return;
     }
 
@@ -141,112 +138,29 @@ class UnpublishWebsiteUseCases with TransactionMixin {
             .globalFeesValidated ==
         false) {
       unpublishWebsiteNotifier.setStepError(
-        "La mise à jour du site web n'a pas été déployée car les frais n'ont pas été validés.",
+        AppLocalizations.of(context)!.unpublishWebsiteStepErrorFeesUnvalidated,
       );
       return;
     }
 
     unpublishWebsiteNotifier.setStep(9);
-    await transactionRepository.send(
-      transaction: transactionTransfer,
-      onConfirmation: (confirmation) async {
-        log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
-        transactionRepository.close();
-        final allTransactions = <Transaction>[transactionReference];
 
-        for (final transaction in allTransactions) {
-          log('Send ${transaction.address!.address}');
-          transactionRepository = ArchethicTransactionSender(
-            phoenixHttpEndpoint:
-                '${sl.get<ApiService>().endpoint}/socket/websocket',
-            websocketEndpoint:
-                '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
-          );
+    try {
+      await sendTransactions(
+        <Transaction>[transactionTransfer, transactionReference],
+      );
 
-          await transactionRepository.send(
-            transaction: transaction,
-            onConfirmation: (confirmation) async {
-              log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
-              transactionRepository.close();
-            },
-            onError: (error) async {
-              transactionRepository.close();
-              error.maybeMap(
-                connectivity: (_) {
-                  unpublishWebsiteNotifier.setStepError('No connection');
-                  log('no connection');
-                },
-                consensusNotReached: (_) {
-                  unpublishWebsiteNotifier
-                      .setStepError('Consensus not reached');
-                  log('consensus not reached');
-                },
-                timeout: (_) {
-                  unpublishWebsiteNotifier.setStepError('Timeout');
-                  log('timeout');
-                },
-                invalidConfirmation: (_) {
-                  unpublishWebsiteNotifier.setStepError('Invalid Confirmation');
-                  log('invalid Confirmation');
-                },
-                insufficientFunds: (_) {
-                  unpublishWebsiteNotifier.setStepError('Insufficient funds');
-                  log('insufficientFunds');
-                },
-                other: (error) {
-                  unpublishWebsiteNotifier.setStepError(error.message);
-                  log('error');
-                },
-                orElse: () {
-                  unpublishWebsiteNotifier.setStepError('An error is occured');
-                  log('other');
-                },
-              );
-              return;
-            },
-          );
-        }
-      },
-      onError: (error) async {
-        error.maybeMap(
-          connectivity: (_) {
-            unpublishWebsiteNotifier.setStepError('No connection');
-            log('no connection');
-          },
-          consensusNotReached: (_) {
-            unpublishWebsiteNotifier.setStepError('Consensus not reached');
-            log('consensus not reached');
-          },
-          timeout: (_) {
-            unpublishWebsiteNotifier.setStepError('Timeout');
-            log('timeout');
-          },
-          invalidConfirmation: (_) {
-            unpublishWebsiteNotifier.setStepError('Invalid Confirmation');
-            log('invalid Confirmation');
-          },
-          insufficientFunds: (_) {
-            unpublishWebsiteNotifier.setStepError('Insufficient funds');
-            log('insufficientFunds');
-          },
-          other: (error) {
-            unpublishWebsiteNotifier.setStepError(error.message);
-            log('error');
-          },
-          orElse: () {
-            unpublishWebsiteNotifier.setStepError('An error is occured');
-            log('other');
-          },
-        );
-        return;
-      },
-    );
-    if (ref
-        .read(UnpublishWebsiteFormProvider.unpublishWebsiteForm)
-        .stepError
-        .isEmpty) {
-      unpublishWebsiteNotifier.setStep(10);
-      log('The Website is unpublished at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+      if (ref
+          .read(UnpublishWebsiteFormProvider.unpublishWebsiteForm)
+          .stepError
+          .isEmpty) {
+        unpublishWebsiteNotifier.setStep(10);
+        log('The Website is unpublished at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+      }
+    } catch (e) {
+      unpublishWebsiteNotifier
+        ..setStep(11)
+        ..setStepError(e.toString().replaceAll('Exception: ', '').trim());
     }
   }
 }

@@ -2,7 +2,10 @@
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
-import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_form_sheet.dart';
+import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_bottom_bar.dart';
+import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_comparison_list.dart';
+import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_steps.dart';
+import 'package:aeweb/ui/views/util/components/page_detail.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -82,7 +85,10 @@ class UpdateWebsiteSyncSheetBody extends ConsumerWidget {
             );
       },
     );
-
-    return const UpdateWebsiteSyncFormSheet();
+    return const PageDetail(
+      firstChild: UpdateWebsiteSyncComparisonSheet(),
+      secondChild: UpdateWebsiteSyncSteps(),
+      bottomBar: UpdateWebsiteSyncBottomBar(),
+    );
   }
 }

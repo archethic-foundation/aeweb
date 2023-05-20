@@ -1,5 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'add_website_form_sheet.dart';
+import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 
 class AddWebsiteBottomBar extends ConsumerWidget {
   const AddWebsiteBottomBar({super.key});

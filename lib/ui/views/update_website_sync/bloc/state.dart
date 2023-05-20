@@ -34,7 +34,7 @@ class UpdateWebsiteSyncFormState with _$UpdateWebsiteSyncFormState {
 
   bool get updateInProgress => step > 0 && step < 13 && stepError.isEmpty;
 
-  bool get processFinished => stepError.isNotEmpty || step == 13;
+  bool get processFinished => stepError.isNotEmpty || step >= 13;
 
   bool get canUpdateWebsiteSync => isControlsOk;
 }

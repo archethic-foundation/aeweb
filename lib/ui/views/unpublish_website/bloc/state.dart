@@ -17,9 +17,9 @@ class UnpublishWebsiteFormState with _$UnpublishWebsiteFormState {
 
   bool get isControlsOk => errorText == '';
 
-  bool get unpublishInProgress => step > 0 && step < 11 && stepError.isEmpty;
+  bool get unpublishInProgress => step > 0 && step < 10 && stepError.isEmpty;
 
-  bool get processFinished => stepError.isNotEmpty || step == 10;
+  bool get processFinished => stepError.isNotEmpty || step >= 10;
 
   bool get canUnpublishWebsite => isControlsOk;
 }

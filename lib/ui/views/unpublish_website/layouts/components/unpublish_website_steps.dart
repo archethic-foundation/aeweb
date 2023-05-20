@@ -1,5 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -150,7 +149,7 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
                     ref,
                     AppLocalizations.of(context)!.unpublishWebSiteWaitingStep9,
                   ),
-                if (unpublishWebsite.step >= 10)
+                if (unpublishWebsite.step == 10)
                   _confirmedStep(
                     context,
                     AppLocalizations.of(context)!
@@ -174,7 +173,8 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-    final unpublishWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
+    final unpublishWebsite =
+        ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm);
     return SizedBox(
       height: 50,
       child: Row(
@@ -290,7 +290,10 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
                 child: OutlinedButton(
                   onPressed: () async {
                     ref
-                        .read(AddWebsiteFormProvider.addWebsiteForm.notifier)
+                        .read(
+                          UnpublishWebsiteFormProvider
+                              .unpublishWebsiteForm.notifier,
+                        )
                         .setGlobalFeesValidated(true);
                   },
                   child: Row(
@@ -318,7 +321,10 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
                 child: OutlinedButton(
                   onPressed: () async {
                     ref
-                        .read(AddWebsiteFormProvider.addWebsiteForm.notifier)
+                        .read(
+                          UnpublishWebsiteFormProvider
+                              .unpublishWebsiteForm.notifier,
+                        )
                         .setGlobalFeesValidated(false);
                   },
                   child: Row(

@@ -1,5 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'unpublish_website_form_sheet.dart';
+import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 
 class UnpublishWebsiteBottomBar extends ConsumerWidget {
   const UnpublishWebsiteBottomBar({super.key});
@@ -10,9 +15,6 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
         ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm);
 
     Future<bool> _submitForm() async {
-      final unpublishWebsiteNotifier =
-          ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm.notifier);
-
       return true;
     }
 
@@ -164,6 +166,7 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
                                                 final ctlOk =
                                                     await _submitForm();
                                                 if (ctlOk) {
+                                                  Navigator.of(context).pop();
                                                   final unpublishWebsiteNotifier =
                                                       ref.watch(
                                                     UnpublishWebsiteFormProvider
@@ -177,7 +180,6 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
                                                     ref,
                                                   );
                                                 }
-                                                Navigator.of(context).pop();
                                               },
                                               child: Text(
                                                 AppLocalizations.of(context)!

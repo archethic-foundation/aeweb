@@ -2,7 +2,7 @@ import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/model/website_version_tx.dart';
-import 'package:aeweb/ui/views/display_website/explorer.dart';
+import 'package:aeweb/ui/views/display_website/explorer_files.dart';
 import 'package:aeweb/ui/views/display_website/explorer_tx.dart';
 import 'package:aeweb/ui/views/util/certificate_infos_popup.dart';
 import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
@@ -115,167 +115,189 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                     );
                   }
                   return Align(
-                    child: DataTable(
-                      horizontalMargin: 0,
-                      columnSpacing: 60,
-                      dividerThickness: 1,
-                      columns: [
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderDate,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderFiles,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          numeric: true,
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderSize,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderFees,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderCertificate,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderActions,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                      rows: versions
-                          .asMap()
-                          .map(
-                            (index, websiteVersion) => MapEntry(
-                              index,
-                              DataRow(
-                                cells: [
-                                  DataCell(
-                                    SelectableText(
-                                      DateFormat.yMd(
-                                        Localizations.localeOf(context)
-                                            .languageCode,
-                                      ).add_Hms().format(
-                                            DateTime.fromMillisecondsSinceEpoch(
-                                              websiteVersion.timestamp * 1000,
-                                            ).toLocal(),
-                                          ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: SelectableText(
-                                        websiteVersion.filesCount.toString(),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: SelectableText(
-                                        filesize(
-                                          websiteVersion.size.toString(),
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: SelectableText(
-                                        '${fromBigInt(
-                                          websiteVersion.fees,
-                                        ).toStringAsPrecision(5)} UCO',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: websiteVersion.sslCertificate !=
-                                                  null &&
-                                              CertificateMixin.validCertificate(
-                                                websiteVersion.sslCertificate!,
-                                              )
-                                          ? IconButtonAnimated(
-                                              icon: const Icon(
-                                                Iconsax.security_safe,
-                                              ),
-                                              onPressed: () {
-                                                CertificateInfosPopup.getDialog(
-                                                  context,
-                                                  websiteVersion.sslCertificate,
-                                                );
-                                              },
-                                              color: Theme.of(context)
-                                                  .colorScheme
-                                                  .primary,
-                                            )
-                                          : IconButtonAnimated(
-                                              icon: const Icon(
-                                                Iconsax.shield_slash,
-                                              ),
-                                              onPressed: () {
-                                                CertificateInfosPopup.getDialog(
-                                                  context,
-                                                  websiteVersion.sslCertificate,
-                                                );
-                                              },
-                                              color: Colors.red,
-                                            ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: _popupMenuButton(
-                                        context,
-                                        ref,
-                                        index == 0,
-                                        websiteVersion,
-                                        websiteName,
-                                        genesisAddress,
-                                      ),
-                                    ),
-                                  ),
-                                ],
+                    child: Scrollbar(
+                      thumbVisibility: true,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: DataTable(
+                          horizontalMargin: 0,
+                          columnSpacing: 60,
+                          dividerThickness: 1,
+                          columns: [
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .websitesListVersionsTableHeaderDate,
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                             ),
-                          )
-                          .values
-                          .toList(),
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .websitesListVersionsTableHeaderFiles,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              numeric: true,
+                            ),
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .websitesListVersionsTableHeaderSize,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .websitesListVersionsTableHeaderFees,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .websitesListVersionsTableHeaderCertificate,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .websitesListVersionsTableHeaderActions,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
+                          rows: versions
+                              .asMap()
+                              .map(
+                                (index, websiteVersion) => MapEntry(
+                                  index,
+                                  DataRow(
+                                    cells: [
+                                      DataCell(
+                                        SelectableText(
+                                          DateFormat.yMd(
+                                            Localizations.localeOf(context)
+                                                .languageCode,
+                                          ).add_Hms().format(
+                                                DateTime
+                                                    .fromMillisecondsSinceEpoch(
+                                                  websiteVersion.timestamp *
+                                                      1000,
+                                                ).toLocal(),
+                                              ),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Align(
+                                          child: SelectableText(
+                                            websiteVersion.filesCount == 0
+                                                ? '-'
+                                                : websiteVersion.filesCount
+                                                    .toString(),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Align(
+                                          child: SelectableText(
+                                            websiteVersion.size == 0
+                                                ? '-'
+                                                : filesize(
+                                                    websiteVersion.size
+                                                        .toString(),
+                                                  ),
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Align(
+                                          child: SelectableText(
+                                            '${fromBigInt(
+                                              websiteVersion.fees,
+                                            ).toStringAsPrecision(5)} UCO',
+                                            textAlign: TextAlign.center,
+                                          ),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Align(
+                                          child: websiteVersion.published
+                                              ? websiteVersion.sslCertificate !=
+                                                          null &&
+                                                      CertificateMixin
+                                                          .validCertificate(
+                                                        websiteVersion
+                                                            .sslCertificate!,
+                                                      )
+                                                  ? IconButtonAnimated(
+                                                      icon: const Icon(
+                                                        Iconsax.security_safe,
+                                                      ),
+                                                      onPressed: () {
+                                                        CertificateInfosPopup
+                                                            .getDialog(
+                                                          context,
+                                                          websiteVersion
+                                                              .sslCertificate,
+                                                        );
+                                                      },
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primary,
+                                                    )
+                                                  : IconButtonAnimated(
+                                                      icon: const Icon(
+                                                        Iconsax.shield_slash,
+                                                      ),
+                                                      onPressed: () {
+                                                        CertificateInfosPopup
+                                                            .getDialog(
+                                                          context,
+                                                          websiteVersion
+                                                              .sslCertificate,
+                                                        );
+                                                      },
+                                                      color: Colors.red,
+                                                    )
+                                              : const Text('-'),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Align(
+                                          child: _popupMenuButton(
+                                            context,
+                                            ref,
+                                            index == 0,
+                                            websiteVersion,
+                                            websiteName,
+                                            genesisAddress,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .values
+                              .toList(),
+                        ),
+                      ),
                     ),
                   );
                 },
@@ -377,7 +399,7 @@ Widget _popupMenuButton(
               ],
             ),
           ),
-        if (lastVersion)
+        if (lastVersion && websiteVersion.published)
           PopupMenuItem(
             value: 'Unpublish',
             child: Row(
@@ -408,21 +430,22 @@ Widget _popupMenuButton(
             ],
           ),
         ),
-        PopupMenuItem(
-          value: 'Certificate',
-          child: Row(
-            children: [
-              const Icon(Iconsax.security_safe),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .websitesListVersionsPopupCertificate,
+        if (websiteVersion.published)
+          PopupMenuItem(
+            value: 'Certificate',
+            child: Row(
+              children: [
+                const Icon(Iconsax.security_safe),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .websitesListVersionsPopupCertificate,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
       ];
     },
     onSelected: (value) {
@@ -434,7 +457,7 @@ Widget _popupMenuButton(
                     .mainScreenThirdPartProvider.notifier,
               )
               .setWidget(
-                ExplorerScreen(
+                ExplorerFilesScreen(
                   filesAndFolders: websiteVersion.content!,
                 )
                     .animate()

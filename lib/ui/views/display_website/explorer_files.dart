@@ -7,16 +7,16 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
-class ExplorerScreen extends ConsumerStatefulWidget {
-  const ExplorerScreen({super.key, required this.filesAndFolders});
+class ExplorerFilesScreen extends ConsumerStatefulWidget {
+  const ExplorerFilesScreen({super.key, required this.filesAndFolders});
 
   final archethic.HostingRef filesAndFolders;
 
   @override
-  ExplorerScreenState createState() => ExplorerScreenState();
+  ExplorerFilesScreenState createState() => ExplorerFilesScreenState();
 }
 
-class ExplorerScreenState extends ConsumerState<ExplorerScreen> {
+class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
   final List<Node> _nodes = [];
   String _selectedNode = '';
   late TreeViewController treeViewController;

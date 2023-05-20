@@ -1,5 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'add_website_form_sheet.dart';
+import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
+import 'package:aeweb/ui/views/util/generic/formatters.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddWebsiteTextFieldName extends ConsumerStatefulWidget {
   const AddWebsiteTextFieldName({

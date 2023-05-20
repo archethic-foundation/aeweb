@@ -4,18 +4,20 @@ import 'dart:developer';
 
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/util/certificate_util.dart';
-import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/transaction_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
   Future<void> run(
     WidgetRef ref,
+    BuildContext context,
   ) async {
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
@@ -31,7 +33,9 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
         ref.read(AddWebsiteFormProvider.addWebsiteForm).privateKey;
     if (publicCert != null) {
       if (CertificateMixin.validCertificatFromFile(publicCert) == false) {
-        addWebsiteNotifier.setStepError('SSL Certificate is invalid.');
+        addWebsiteNotifier.setStepError(
+          AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertInvalid,
+        );
         return;
       }
     }
@@ -74,7 +78,9 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
       );
     }
     if (files == null) {
-      addWebsiteNotifier.setStepError('Unable to get the list of files.');
+      addWebsiteNotifier.setStepError(
+        AppLocalizations.of(context)!.addWebsiteStepErrorGetListFiles,
+      );
       log('Unable to get the list of files');
       return;
     }
@@ -213,7 +219,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
     if (ref.read(AddWebsiteFormProvider.addWebsiteForm).globalFeesValidated ==
         null) {
       addWebsiteNotifier.setStepError(
-        "Le site web n'a pas été déployé car vous n'avez pas validé les frais à temps.",
+        AppLocalizations.of(context)!.addWebsiteStepErrorFeesTimeout,
       );
       return;
     }
@@ -221,122 +227,29 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
     if (ref.read(AddWebsiteFormProvider.addWebsiteForm).globalFeesValidated ==
         false) {
       addWebsiteNotifier.setStepError(
-        "Le site web n'a pas été déployé car les frais n'ont pas été validés.",
+        AppLocalizations.of(context)!.addWebsiteStepErrorFeesUnvalidated,
       );
       return;
     }
 
-    var transactionRepository = ArchethicTransactionSender(
-      phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
-      websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
-    );
-
     addWebsiteNotifier.setStep(12);
-    await transactionRepository.send(
-      transaction: transactionTransfer,
-      onConfirmation: (confirmation) async {
-        if (confirmation.isFullyConfirmed) {
-          log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
-          transactionRepository.close();
-          final allTransactions = <Transaction>[
-            ...transactionsList,
-            transactionReference
-          ];
+    try {
+      await sendTransactions(
+        <Transaction>[
+          transactionTransfer,
+          ...transactionsList,
+          transactionReference
+        ],
+      );
 
-          for (final transaction in allTransactions) {
-            log('Send ${transaction.address!.address}');
-            transactionRepository = ArchethicTransactionSender(
-              phoenixHttpEndpoint:
-                  '${sl.get<ApiService>().endpoint}/socket/websocket',
-              websocketEndpoint:
-                  '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
-            );
-
-            await transactionRepository.send(
-              transaction: transaction,
-              onConfirmation: (confirmation) async {
-                if (confirmation.isFullyConfirmed) {
-                  log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
-                  transactionRepository.close();
-                }
-              },
-              onError: (error) async {
-                transactionRepository.close();
-                error.maybeMap(
-                  connectivity: (_) {
-                    addWebsiteNotifier.setStepError('No connection');
-                    log('no connection');
-                  },
-                  consensusNotReached: (_) {
-                    addWebsiteNotifier.setStepError('Consensus not reached');
-                    log('consensus not reached');
-                  },
-                  timeout: (_) {
-                    addWebsiteNotifier.setStepError('Timeout');
-                    log('timeout');
-                  },
-                  invalidConfirmation: (_) {
-                    addWebsiteNotifier.setStepError('Invalid Confirmation');
-                    log('invalid Confirmation');
-                  },
-                  insufficientFunds: (_) {
-                    addWebsiteNotifier.setStepError('Insufficient funds');
-                    log('insufficientFunds');
-                  },
-                  other: (error) {
-                    addWebsiteNotifier.setStepError(error.message);
-                    log('error');
-                  },
-                  orElse: () {
-                    addWebsiteNotifier.setStepError('An error is occured');
-                    log('other');
-                  },
-                );
-                return;
-              },
-            );
-          }
-        }
-      },
-      onError: (error) async {
-        error.maybeMap(
-          connectivity: (_) {
-            addWebsiteNotifier.setStepError('No connection');
-            log('no connection');
-          },
-          consensusNotReached: (_) {
-            addWebsiteNotifier.setStepError('Consensus not reached');
-            log('consensus not reached');
-          },
-          timeout: (_) {
-            addWebsiteNotifier.setStepError('Timeout');
-            log('timeout');
-          },
-          invalidConfirmation: (_) {
-            addWebsiteNotifier.setStepError('Invalid Confirmation');
-            log('invalid Confirmation');
-          },
-          insufficientFunds: (_) {
-            addWebsiteNotifier.setStepError('Insufficient funds');
-            log('insufficientFunds');
-          },
-          other: (error) {
-            addWebsiteNotifier.setStepError(error.message);
-            log('error');
-          },
-          orElse: () {
-            addWebsiteNotifier.setStepError('An error is occured');
-            log('other');
-          },
-        );
-        return;
-      },
-    );
-
-    if (ref.read(AddWebsiteFormProvider.addWebsiteForm).stepError.isEmpty) {
-      addWebsiteNotifier.setStep(13);
-      log('Website is deployed at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+      if (ref.read(AddWebsiteFormProvider.addWebsiteForm).stepError.isEmpty) {
+        addWebsiteNotifier.setStep(13);
+        log('Website is deployed at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+      }
+    } catch (e) {
+      addWebsiteNotifier
+        ..setStep(14)
+        ..setStepError(e.toString().replaceAll('Exception: ', '').trim());
     }
   }
 }

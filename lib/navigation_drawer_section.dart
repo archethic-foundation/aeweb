@@ -4,6 +4,7 @@ import 'package:aeweb/ui/views/util/header.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -175,18 +176,30 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
           padding: const EdgeInsets.only(
             top: 10,
           ),
-          child: Consumer(
-            builder: (context, ref, child) {
-              final asyncVersionString = ref.watch(
-                versionStringProvider(
-                  AppLocalizations.of(context)!,
-                ),
-              );
-              return Text(
-                asyncVersionString.asData?.value ?? '',
-                style: Theme.of(context).textTheme.labelSmall,
-              );
-            },
+          child: Column(
+            children: [
+              SvgPicture.asset(
+                'assets/images/AELogo-Public Blockchain-White.svg',
+                semanticsLabel: 'AE Logo',
+                height: 18,
+              ),
+              const SizedBox(
+                height: 5,
+              ),
+              Consumer(
+                builder: (context, ref, child) {
+                  final asyncVersionString = ref.watch(
+                    versionStringProvider(
+                      AppLocalizations.of(context)!,
+                    ),
+                  );
+                  return Text(
+                    asyncVersionString.asData?.value ?? '',
+                    style: Theme.of(context).textTheme.labelSmall,
+                  );
+                },
+              ),
+            ],
           ),
         ),
         const Padding(

@@ -88,16 +88,13 @@ class WebsitesRepository {
     final transactionChainMap = await sl.get<ApiService>().getTransactionChain(
       {genesisAddress: ''},
       request:
-          'address, validationStamp { timestamp, ledgerOperations { fee } } data { content , }',
+          'type, address, validationStamp { timestamp, ledgerOperations { fee } } data { content , }',
       orderAsc: false,
     );
 
     final transactions = transactionChainMap[genesisAddress];
     for (final transaction in transactions!) {
       var size = 0;
-      final hosting = HostingRef.fromJson(
-        jsonDecode(transaction.data!.content!),
-      );
 
       if (transaction.validationStamp != null &&
           transaction.validationStamp!.ledgerOperations != null &&
@@ -105,54 +102,74 @@ class WebsitesRepository {
         fees = fees + transaction.validationStamp!.ledgerOperations!.fee!;
       }
 
-      final filesTxAddress = <String>{};
-      hosting.metaData.forEach((key, value) {
-        for (final address in value.addresses) {
-          filesTxAddress.add(address);
-        }
-        size = size + value.size;
-      });
-
-      final transactionsFeesMap = await sl.get<ApiService>().getTransaction(
-            filesTxAddress.toList(),
-            request: 'validationStamp { ledgerOperations { fee } } ',
-          );
-      transactionsFeesMap.forEach((key, value) {
-        if (value.validationStamp != null &&
-            value.validationStamp!.ledgerOperations != null &&
-            value.validationStamp!.ledgerOperations!.fee != null) {
-          fees = fees + value.validationStamp!.ledgerOperations!.fee!;
-        }
-      });
-
-      if (hosting.sslCertificate.isNotEmpty) {
-        final x509Certificate =
-            X509Utils.x509CertificateFromPem(hosting.sslCertificate);
-        websiteVersions.add(
-          WebsiteVersion(
-            transactionRefAddress: transaction.address!.address!,
-            timestamp: transaction.validationStamp!.timestamp!,
-            filesCount: hosting.metaData.length,
-            size: size,
-            fees: fees,
-            content: hosting,
-            sslCertificate: x509Certificate,
-          ),
+      if (transaction.type == 'hosting') {
+        final hosting = HostingRef.fromJson(
+          jsonDecode(transaction.data!.content!),
         );
-      } else {
+
+        final filesTxAddress = <String>{};
+        hosting.metaData.forEach((key, value) {
+          for (final address in value.addresses) {
+            filesTxAddress.add(address);
+          }
+          size = size + value.size;
+        });
+
+        final transactionsFeesMap = await sl.get<ApiService>().getTransaction(
+              filesTxAddress.toList(),
+              request: 'validationStamp { ledgerOperations { fee } } ',
+            );
+        transactionsFeesMap.forEach((key, value) {
+          if (value.validationStamp != null &&
+              value.validationStamp!.ledgerOperations != null &&
+              value.validationStamp!.ledgerOperations!.fee != null) {
+            fees = fees + value.validationStamp!.ledgerOperations!.fee!;
+          }
+        });
+
+        if (hosting.sslCertificate.isNotEmpty) {
+          final x509Certificate =
+              X509Utils.x509CertificateFromPem(hosting.sslCertificate);
+          websiteVersions.add(
+            WebsiteVersion(
+              transactionRefAddress: transaction.address!.address!,
+              timestamp: transaction.validationStamp!.timestamp!,
+              filesCount: hosting.metaData.length,
+              size: size,
+              fees: fees,
+              content: hosting,
+              published: true,
+              sslCertificate: x509Certificate,
+            ),
+          );
+        } else {
+          websiteVersions.add(
+            WebsiteVersion(
+              transactionRefAddress: transaction.address!.address!,
+              timestamp: transaction.validationStamp!.timestamp!,
+              filesCount: hosting.metaData.length,
+              size: size,
+              fees: fees,
+              published: true,
+              content: hosting,
+            ),
+          );
+        }
+      }
+
+      if (transaction.type == 'data') {
         websiteVersions.add(
           WebsiteVersion(
             transactionRefAddress: transaction.address!.address!,
             timestamp: transaction.validationStamp!.timestamp!,
-            filesCount: hosting.metaData.length,
-            size: size,
+            filesCount: 0,
+            size: 0,
             fees: fees,
-            content: hosting,
+            published: false,
           ),
         );
       }
     }
-
     return websiteVersions;
   }
 }

@@ -50,6 +50,11 @@ mixin TransactionMixin {
     return transaction;
   }
 
+  Transaction newEmptyTransaction() {
+    return Transaction(type: 'data', data: Transaction.initData())
+        .setContent('website unpublished');
+  }
+
   Transaction newTransactionFile(
     Map<String, dynamic> txsContent,
   ) {
@@ -199,5 +204,72 @@ mixin TransactionMixin {
       websocketEndpoint:
           '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
     );
+  }
+
+  Future<void> sendTransactions(
+    List<Transaction> transactions,
+  ) async {
+    var errorDetail = '';
+    for (final transaction in transactions) {
+      if (errorDetail.isNotEmpty) {
+        break;
+      }
+      var next = false;
+      final transactionRepository = ArchethicTransactionSender(
+        phoenixHttpEndpoint:
+            '${sl.get<ApiService>().endpoint}/socket/websocket',
+        websocketEndpoint:
+            '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
+      );
+      log('Send ${transaction.address!.address}');
+
+      await transactionRepository.send(
+        transaction: transaction,
+        onConfirmation: (confirmation) async {
+          if (confirmation.isFullyConfirmed) {
+            log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
+            transactionRepository.close();
+            if (confirmation.nbConfirmations >= confirmation.maxConfirmations) {
+              next = true;
+            }
+          }
+        },
+        onError: (error) async {
+          transactionRepository.close();
+          error.maybeMap(
+            connectivity: (_) {
+              errorDetail = 'No connection';
+            },
+            consensusNotReached: (_) {
+              errorDetail = 'Consensus not reached';
+            },
+            timeout: (_) {
+              errorDetail = 'Timeout';
+            },
+            invalidConfirmation: (_) {
+              errorDetail = 'Invalid Confirmation';
+            },
+            insufficientFunds: (_) {
+              errorDetail = 'Insufficient funds';
+            },
+            other: (error) {
+              errorDetail = error.message;
+            },
+            orElse: () {
+              errorDetail = 'An error is occured';
+            },
+          );
+        },
+      );
+
+      while (next == false && errorDetail.isEmpty) {
+        await Future.delayed(const Duration(seconds: 1));
+        log('wait...');
+      }
+    }
+
+    if (errorDetail.isNotEmpty) {
+      throw Exception(errorDetail);
+    }
   }
 }

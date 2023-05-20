@@ -162,5 +162,15 @@
   "pathSyncPopupGitignoreLabel": "Apply .gitignore rules?",
   "pathSyncPopupPathMissing": "Please fill the path containing the files to be uploaded.",
   "pathSyncPopupArchiveFileMissing": "Please choose an archive file containing the files to be uploaded. Accepted formats include: zip, rar, and 7z.",
-  "changeCurrentAccountWarning": "Warning, your current account has been updated."
+  "changeCurrentAccountWarning": "Warning, your current account has been updated.",
+  "unpublishWebsiteStepErrorGetLastRef": "Unable to get the last transaction reference",
+  "unpublishWebsiteStepErrorFeesTimeout": "The website hasn't depublished because you didn't validate the fees in time.",
+  "unpublishWebsiteStepErrorFeesUnvalidated": "The website hasn't been depublished because the fees haven't been validated.",
+  "addWebsiteStepErrorSSLCertInvalid": "SSL Certificate is invalid.",
+  "addWebsiteStepErrorGetListFiles": "Unable to get the list of files.",
+  "addWebsiteStepErrorFeesTimeout": "The website hasn't deployed because you didn't validate the fees in time.",
+  "addWebsiteStepErrorFeesUnvalidated": "The website hasn't been deployed because the fees haven't been validated.",
+  "updateWebsiteSyncStepErrorGetLastRef": "Unable to get the last transaction reference",
+  "updateWebsiteSyncStepErrorFeesTimeout": "The website hasn't updated because you didn't validate the fees in time.",
+  "updateWebsiteSyncStepErrorFeesUnvalidated": "The website hasn't been updated because the fees haven't been validated."
 }

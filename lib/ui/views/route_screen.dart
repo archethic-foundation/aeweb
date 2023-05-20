@@ -1,6 +1,6 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/main_screen.dart';
-import 'package:aeweb/ui/views/welcome_screen.dart';
+import 'package:aeweb/ui/views/welcome/welcome_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -65,6 +65,7 @@ class UnpublishWebsiteFormNotifier
   Future<void> unpublishWebsite(BuildContext context, WidgetRef ref) async {
     await UnpublishWebsiteUseCases().run(
       ref,
+      context,
     );
   }
 }

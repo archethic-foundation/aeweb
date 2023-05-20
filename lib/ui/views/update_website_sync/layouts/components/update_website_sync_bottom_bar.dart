@@ -1,5 +1,9 @@
-/// SPDX-License-Identifier: AGPL-3.0-or-later
-part of 'update_website_sync_form_sheet.dart';
+import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:iconsax/iconsax.dart';
 
 class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
   const UpdateWebsiteSyncBottomBar({super.key});
