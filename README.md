@@ -10,7 +10,7 @@
 - Security access with your Archethic Wallet
 
 ## Application Initial Screen
-<img src="assets/images/Github-Img.png?v=20221202" width="300"/>
+<img src="assets/images/Github-Img.png?v=20221202" width="500"/>
 
 ### Pre-requisites
 
