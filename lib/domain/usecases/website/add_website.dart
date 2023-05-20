@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aeweb/model/hive/db_helper.dart';
+import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
@@ -57,6 +59,17 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
       return;
     }
 
+    final keychainWebsiteService = Uri.encodeFull(
+      'aeweb-${ref.read(AddWebsiteFormProvider.addWebsiteForm).name}',
+    );
+    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
+    await sl.get<DBHelper>().saveWebsite(
+          Website(
+            name: ref.read(AddWebsiteFormProvider.addWebsiteForm).name,
+            genesisAddress: addressTxRef,
+          ),
+        );
+
     log('Get the list of files in the path');
     addWebsiteNotifier.setStep(2);
     late final Map<String, HostingRefContentMetaData>? files;
@@ -108,9 +121,6 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
     }
 
     log('Sign ${transactionsList.length} files transactions');
-    final keychainWebsiteService = Uri.encodeFull(
-      'aeweb-${ref.read(AddWebsiteFormProvider.addWebsiteForm).name}',
-    );
     addWebsiteNotifier.setStep(4);
     try {
       transactionsList = await signTx(
@@ -164,7 +174,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
 
     log('Create transfer transaction to manage fees');
     addWebsiteNotifier.setStep(8);
-    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
+
     final addressTxFiles =
         await getDeriveAddress(keychainWebsiteService, 'files');
     log('keychainWebsiteService: $keychainWebsiteService');

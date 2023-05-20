@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
-import 'package:aeweb/model/hive/appdb.dart';
+import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
