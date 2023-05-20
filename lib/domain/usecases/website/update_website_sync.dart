@@ -125,19 +125,20 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
         newTransactionFile(content),
       );
     }
-
-    log('Sign ${transactionsList.length} files transactions');
-    updateWebsiteSyncNotifier.setStep(4);
-    try {
-      transactionsList = await signTx(
-        keychainWebsiteService,
-        'files',
-        transactionsList,
-      );
-    } catch (e) {
-      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
-      log('Signature failed');
-      return;
+    if (transactionsList.isNotEmpty) {
+      log('Sign ${transactionsList.length} files transactions');
+      updateWebsiteSyncNotifier.setStep(4);
+      try {
+        transactionsList = await signTx(
+          keychainWebsiteService,
+          'files',
+          transactionsList,
+        );
+      } catch (e) {
+        updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+        log('Signature failed');
+        return;
+      }
     }
 
     final filesWithAddressNew =

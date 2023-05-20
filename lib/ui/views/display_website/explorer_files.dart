@@ -10,7 +10,7 @@ import 'package:gradient_borders/gradient_borders.dart';
 class ExplorerFilesScreen extends ConsumerStatefulWidget {
   const ExplorerFilesScreen({super.key, required this.filesAndFolders});
 
-  final archethic.HostingRef filesAndFolders;
+  final Map<String, archethic.HostingRefContentMetaData> filesAndFolders;
 
   @override
   ExplorerFilesScreenState createState() => ExplorerFilesScreenState();
@@ -23,6 +23,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
   final ExpanderPosition _expanderPosition = ExpanderPosition.start;
   final ExpanderType _expanderType = ExpanderType.none;
   final ExpanderModifier _expanderModifier = ExpanderModifier.none;
+
   @override
   void initState() {
     super.initState();
@@ -31,7 +32,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       selectedKey: _selectedNode,
     );
 
-    widget.filesAndFolders.metaData.forEach(_addPathToTree);
+    widget.filesAndFolders.forEach(_addPathToTree);
   }
 
   void _addPathToTree(

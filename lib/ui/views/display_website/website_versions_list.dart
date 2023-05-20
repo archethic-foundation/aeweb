@@ -411,6 +411,8 @@ Widget _popupMenuButton(
     onSelected: (value) {
       switch (value) {
         case 'ExploreFiles':
+          final explorerFilesScreenKey = GlobalKey<NavigatorState>();
+
           ref
               .read(
                 MainScreenThirdPartProviders
@@ -418,7 +420,8 @@ Widget _popupMenuButton(
               )
               .setWidget(
                 ExplorerFilesScreen(
-                  filesAndFolders: websiteVersion.content!,
+                  key: explorerFilesScreenKey,
+                  filesAndFolders: websiteVersion.content!.metaData,
                 )
                     .animate()
                     .fade(
