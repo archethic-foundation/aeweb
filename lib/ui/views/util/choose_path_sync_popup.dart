@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:aeweb/domain/usecases/website/read_website.dart';
+import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -293,7 +293,7 @@ class PathSyncPopup with FileMixin {
                                       }
 
                                       final remoteFiles =
-                                          (await ReadWebsiteUseCases()
+                                          (await ReadWebsiteVersionUseCases()
                                                   .getRemote(
                                         transactionRefAddress,
                                       ))!

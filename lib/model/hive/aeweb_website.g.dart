@@ -20,26 +20,19 @@ class AEWebLocalWebsiteAdapter extends TypeAdapter<AEWebLocalWebsite> {
       name: fields[0] as String,
       genesisAddress: fields[1] as String,
       lastSaving: fields[2] as int?,
-      localPath: fields[3] as String?,
-      aewebLocalWebsiteVersionList:
-          (fields[4] as List?)?.cast<AEWebLocalWebsiteVersion>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, AEWebLocalWebsite obj) {
     writer
-      ..writeByte(5)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.genesisAddress)
       ..writeByte(2)
-      ..write(obj.lastSaving)
-      ..writeByte(3)
-      ..write(obj.localPath)
-      ..writeByte(4)
-      ..write(obj.aewebLocalWebsiteVersionList);
+      ..write(obj.lastSaving);
   }
 
   @override

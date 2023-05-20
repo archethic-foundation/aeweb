@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:convert';
 
+import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
@@ -32,52 +33,57 @@ Future<List<WebsiteVersion>> _fetchWebsiteVersions(
 
 class WebsitesRepository {
   Future<List<Website>> getWebsites() async {
-    final websites = <Website>[];
-    final services =
-        await sl.get<ArchethicDAppClient>().getServicesFromKeychain();
+    final websites = await sl.get<DBHelper>().getLocalWebsites();
+    if (websites.isEmpty) {
+      final services =
+          await sl.get<ArchethicDAppClient>().getServicesFromKeychain();
 
-    await services.when(
-      success: (success) async {
-        const kDerivationPathAEWebWithoutService = "m/650'/aeweb-";
+      await services.when(
+        success: (success) async {
+          const kDerivationPathAEWebWithoutService = "m/650'/aeweb-";
 
-        for (final service in success.services) {
-          if (service.derivationPath
-              .startsWith(kDerivationPathAEWebWithoutService)) {
-            final path = service.derivationPath
-                .replaceAll(kDerivationPathAEWebWithoutService, '')
-                .split('/')
-              ..last = '';
-            var name = path.join('/');
-            name = name.substring(0, name.length - 1);
+          for (final service in success.services) {
+            if (service.derivationPath
+                .startsWith(kDerivationPathAEWebWithoutService)) {
+              final path = service.derivationPath
+                  .replaceAll(kDerivationPathAEWebWithoutService, '')
+                  .split('/')
+                ..last = '';
+              var name = path.join('/');
+              name = name.substring(0, name.length - 1);
 
-            var genesisAddress = '';
-            // Get genesis address
-            final response = await sl
-                .get<ArchethicDAppClient>()
-                .keychainDeriveAddress({
-              'serviceName': 'aeweb-$name',
-              'index': 0,
-              'pathSuffix': ''
-            });
-            response.when(
-              failure: (failure) {},
-              success: (result) async {
-                genesisAddress = result.address;
-              },
-            );
-            websites.add(
-              Website(
-                name: Uri.decodeFull(name),
-                genesisAddress: genesisAddress,
-              ),
-            );
+              var genesisAddress = '';
+              // Get genesis address
+              final response = await sl
+                  .get<ArchethicDAppClient>()
+                  .keychainDeriveAddress({
+                'serviceName': 'aeweb-$name',
+                'index': 0,
+                'pathSuffix': ''
+              });
+              response.when(
+                failure: (failure) {},
+                success: (result) async {
+                  genesisAddress = result.address;
+                },
+              );
+              websites.add(
+                Website(
+                  name: Uri.decodeFull(name),
+                  genesisAddress: genesisAddress,
+                ),
+              );
+            }
           }
-        }
-      },
-      failure: (failure) async {
-        return [];
-      },
-    );
+        },
+        failure: (failure) async {
+          return [];
+        },
+      );
+
+      await sl.get<DBHelper>().saveWebsites(websites);
+    }
+
     return websites;
   }
 

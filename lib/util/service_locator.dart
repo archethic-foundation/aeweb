@@ -1,3 +1,4 @@
+import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
@@ -10,9 +11,11 @@ Future<void> setupServiceLocator() async {
     replyBaseUrl: 'aeweb://archethic.tech',
   );
 
-  sl.registerLazySingleton<ArchethicDAppClient>(
-    () => archethicDAppClient,
-  );
+  sl
+    ..registerLazySingleton<ArchethicDAppClient>(
+      () => archethicDAppClient,
+    )
+    ..registerLazySingleton<DBHelper>(DBHelper.new);
 }
 
 Future<void> setupServiceLocatorApiService(String endpoint) async {

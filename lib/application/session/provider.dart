@@ -4,6 +4,7 @@ import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/selected_website.dart';
 import 'package:aeweb/application/session/state.dart';
 import 'package:aeweb/application/websites.dart';
+import 'package:aeweb/model/hive/appdb.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/service_locator.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -72,6 +73,7 @@ class _SessionNotifier extends Notifier<Session> {
 
   Future<void> cancelConnection() async {
     await sl.get<ArchethicDAppClient>().close();
+    await sl.get<DBHelper>().clearWebsites();
     sl.unregister<ApiService>();
     ref
       ..invalidate(WebsitesProviders.fetchWebsiteVersions)

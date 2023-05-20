@@ -213,8 +213,6 @@ mixin ArchethicTransactionParser {
         return const TransactionError.timeout();
       }
 
-      // TODO(reddwarf03): Handle other error types.
-
       return TransactionError.other(reason: reason);
     } catch (e) {
       return const TransactionError.other();
