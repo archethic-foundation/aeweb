@@ -89,14 +89,6 @@ class WebsiteList extends ConsumerWidget {
                 tooltip: AppLocalizations.of(context)!.tooltip_addNewWebsite,
                 color: Theme.of(context).colorScheme.primary,
               ),
-              IconButtonAnimated(
-                onPressed: () {
-                  ref.read(WebsitesProviders.fetchWebsites);
-                },
-                icon: const Icon(Iconsax.global_refresh),
-                tooltip: AppLocalizations.of(context)!.tooltip_refreshWebsite,
-                color: Theme.of(context).colorScheme.primary,
-              ),
             ],
           ),
           websitesList.map(
