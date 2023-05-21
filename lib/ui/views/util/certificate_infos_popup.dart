@@ -1,3 +1,4 @@
+import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
@@ -303,18 +304,13 @@ class CertificateInfosPopup with CertificateMixin {
                                     ],
                                   ),
                                 Align(
-                                  child: ElevatedButton(
+                                  child: AppButton(
+                                    labelBtn:
+                                        AppLocalizations.of(context)!.btn_close,
+                                    icon: Iconsax.close_square,
                                     onPressed: () async {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Text(
-                                      AppLocalizations.of(context)!.btn_close,
-                                      style: TextStyle(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .onSurfaceVariant,
-                                      ),
-                                    ),
                                   ),
                                 ),
                               ],

@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
+import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
@@ -211,26 +212,18 @@ class PathSyncPopup with FileMixin {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  ElevatedButton(
-                                    onPressed: () {
+                                  AppButton(
+                                    labelBtn:
+                                        AppLocalizations.of(context)!.btn_close,
+                                    icon: Iconsax.close_square,
+                                    onPressed: () async {
                                       Navigator.of(context).pop();
                                     },
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Iconsax.close_square,
-                                          size: 12,
-                                        ),
-                                        const SizedBox(width: 5),
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .btn_close,
-                                        ),
-                                      ],
-                                    ),
                                   ),
-                                  const SizedBox(width: 20),
-                                  ElevatedButton(
+                                  AppButton(
+                                    labelBtn:
+                                        AppLocalizations.of(context)!.btn_sync,
+                                    icon: Iconsax.refresh_circle,
                                     onPressed: () async {
                                       late final Map<String,
                                               HostingRefContentMetaData>?
@@ -317,19 +310,6 @@ class PathSyncPopup with FileMixin {
                                         },
                                       );
                                     },
-                                    child: Row(
-                                      children: [
-                                        const Icon(
-                                          Iconsax.refresh_circle,
-                                          size: 12,
-                                        ),
-                                        const SizedBox(width: 8),
-                                        Text(
-                                          AppLocalizations.of(context)!
-                                              .btn_sync,
-                                        ),
-                                      ],
-                                    ),
                                   ),
                                 ],
                               ),

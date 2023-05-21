@@ -1,4 +1,5 @@
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
+import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,78 +21,35 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
           Row(
             children: [
               if (updateWebsiteSync.updateInProgress)
-                ElevatedButton(
-                  onPressed: null,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Iconsax.close_square,
-                        size: 12,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        AppLocalizations.of(context)!.btn_cancel,
-                      ),
-                    ],
-                  ),
+                AppButton(
+                  labelBtn: AppLocalizations.of(context)!.btn_cancel,
+                  icon: Iconsax.close_square,
                 )
               else if (updateWebsiteSync.processFinished)
-                ElevatedButton(
+                AppButton(
+                  labelBtn: AppLocalizations.of(context)!.btn_close,
+                  icon: Iconsax.close_square,
                   onPressed: () {
                     context.go('/');
                   },
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Iconsax.close_square,
-                        size: 12,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        AppLocalizations.of(context)!.btn_close,
-                      ),
-                    ],
-                  ),
                 )
               else
-                ElevatedButton(
+                AppButton(
+                  labelBtn: AppLocalizations.of(context)!.btn_cancel,
+                  icon: Iconsax.close_square,
                   onPressed: () {
                     context.go('/');
                   },
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Iconsax.close_square,
-                        size: 12,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        AppLocalizations.of(context)!.btn_cancel,
-                      ),
-                    ],
-                  ),
                 ),
-              const SizedBox(
-                width: 10,
-              ),
               if (updateWebsiteSync.updateInProgress)
-                ElevatedButton(
-                  onPressed: null,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Iconsax.global_edit,
-                        size: 12,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        AppLocalizations.of(context)!.btn_update_website,
-                      ),
-                    ],
-                  ),
+                AppButton(
+                  labelBtn: AppLocalizations.of(context)!.btn_update_website,
+                  icon: Iconsax.global_edit,
                 )
               else
-                ElevatedButton(
+                AppButton(
+                  labelBtn: AppLocalizations.of(context)!.btn_update_website,
+                  icon: Iconsax.global_edit,
                   onPressed: () async {
                     final updateWebsiteSyncNotifier = ref.watch(
                       UpdateWebsiteSyncFormProvider
@@ -99,20 +57,7 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                     );
                     await updateWebsiteSyncNotifier.update(context, ref);
                   },
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Iconsax.global_edit,
-                        size: 12,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        AppLocalizations.of(context)!.btn_update_website,
-                      ),
-                    ],
-                  ),
-                ),
-              const SizedBox(height: 16),
+                )
             ],
           ),
         ],

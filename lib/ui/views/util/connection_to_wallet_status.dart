@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/websites.dart';
+import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -228,26 +229,23 @@ class _ConnectionToWalletStatusState
                                           mainAxisAlignment:
                                               MainAxisAlignment.center,
                                           children: [
-                                            ElevatedButton(
+                                            AppButton(
+                                              labelBtn:
+                                                  AppLocalizations.of(context)!
+                                                      .no,
                                               onPressed: () async {
                                                 Navigator.of(context).pop();
                                               },
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .no,
-                                              ),
                                             ),
-                                            const SizedBox(width: 10),
-                                            ElevatedButton(
+                                            AppButton(
+                                              labelBtn:
+                                                  AppLocalizations.of(context)!
+                                                      .yes,
                                               onPressed: () async {
                                                 await sessionNotifier
                                                     .cancelConnection();
                                                 Navigator.of(context).pop();
                                               },
-                                              child: Text(
-                                                AppLocalizations.of(context)!
-                                                    .yes,
-                                              ),
                                             ),
                                           ],
                                         ),
