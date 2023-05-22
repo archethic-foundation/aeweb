@@ -19,8 +19,8 @@ class AddWebsiteBottomBar extends ConsumerWidget {
 
       final isNameOk = addWebsiteNotifier.controlName(context);
       final isPathOk = addWebsiteNotifier.controlPath(context);
-
-      if (isNameOk && isPathOk) {
+      final isCertOk = addWebsiteNotifier.controlCert(context);
+      if (isNameOk && isPathOk && isCertOk) {
         return true;
       }
       return false;

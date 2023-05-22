@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/upload_file.dart';
@@ -30,16 +31,22 @@ class _AddWebsiteSelectPrivateKeyPathState
 
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['pem', 'crt'],
+        allowedExtensions: ['pem', 'key', 'txt'],
       );
-      if (result != null) {
+      if (result != null && result.files.isNotEmpty) {
         if (kIsWeb) {
-          addWebsiteNotifier.setPrivateKeyPath(result.files.first.name);
+          addWebsiteNotifier
+            ..setPrivateKeyPath(result.files.first.name)
+            ..setPrivateKey(
+              File.fromRawPath(result.files.single.bytes!).readAsBytesSync(),
+            );
         } else {
-          addWebsiteNotifier.setPrivateKeyPath(result.files.single.path!);
+          addWebsiteNotifier
+            ..setPrivateKeyPath(result.files.single.path!)
+            ..setPrivateKey(
+              File(result.files.single.path!).readAsBytesSync(),
+            );
         }
-
-        addWebsiteNotifier.setPrivateKey(result.files.first.bytes!);
       }
     } on Exception catch (e) {
       log('Error while picking private key file: $e');
@@ -50,7 +57,9 @@ class _AddWebsiteSelectPrivateKeyPathState
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
     // ignore: cascade_invocations
-    addWebsiteNotifier.setPrivateKeyPath('');
+    addWebsiteNotifier
+      ..setPrivateKeyPath('')
+      ..setPrivateKey(null);
   }
 
   @override
@@ -67,6 +76,7 @@ class _AddWebsiteSelectPrivateKeyPathState
           value: addWebsiteProvider.privateKeyPath,
           onTap: _selectPrivateKeyFile,
           onDelete: _resetPath,
+          extensionsLabel: '(.pem, .key, .txt)',
           helpLink: 'https://wiki.archethic.net/participate/aeweb/dns/#ssl',
         ),
       ],

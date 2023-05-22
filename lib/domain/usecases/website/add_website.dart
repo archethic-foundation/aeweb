@@ -28,26 +28,6 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
           ..setGlobalFees(0)
           ..setGlobalFeesValidated(null);
 
-    // TODO(reddwarf03): Move to widget
-    final publicCert =
-        ref.read(AddWebsiteFormProvider.addWebsiteForm).publicCert;
-    final privateKey =
-        ref.read(AddWebsiteFormProvider.addWebsiteForm).privateKey;
-    if (publicCert != null) {
-      if (CertificateMixin.validCertificatFromFile(publicCert) == false) {
-        addWebsiteNotifier.setStepError(
-          AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertInvalid,
-        );
-        return;
-      }
-    }
-    /*if (privateKey != null) {
-      if (FileMixin.validCertificate(privateKey) == false) {
-        addWebsiteNotifier.setStepError('SSL Key is invalid.');
-        return;
-      }
-    }*/
-
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
     final resultCreate = await createWebsiteServiceInKeychain(
@@ -138,8 +118,15 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
 
     log('Create transaction reference');
     addWebsiteNotifier.setStep(5);
-    var transactionReference =
-        await newTransactionReference(filesWithAddress, sslKey: privateKey);
+    final privateKey =
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).privateKey;
+    final publicCert =
+        ref.read(AddWebsiteFormProvider.addWebsiteForm).publicCert;
+    var transactionReference = await newTransactionReference(
+      filesWithAddress,
+      sslKey: privateKey,
+      cert: publicCert,
+    );
 
     log('Sign transaction reference');
     addWebsiteNotifier.setStep(6);

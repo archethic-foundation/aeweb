@@ -12,6 +12,7 @@ mixin TransactionMixin {
   Future<Transaction> newTransactionReference(
     Map<String, HostingRefContentMetaData> metaData, {
     Uint8List? sslKey,
+    Uint8List? cert,
   }) async {
     final metaDataSorted = Map.fromEntries(
       metaData.entries.toList()
@@ -20,9 +21,16 @@ mixin TransactionMixin {
         ),
     );
 
-    final hosting = HostingRef(
+    var hosting = HostingRef(
       metaData: metaDataSorted,
     );
+
+    if (cert != null) {
+      hosting = hosting.copyWith(
+        sslCertificate: utf8.decode(cert),
+      );
+    }
+
     final transaction =
         Transaction(type: 'hosting', data: Transaction.initData())
             .setContent(jsonEncode(hosting));

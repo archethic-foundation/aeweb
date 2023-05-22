@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/domain/usecases/website/add_website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
+import 'package:aeweb/util/certificate_util.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -22,7 +23,8 @@ final _addWebsiteFormProvider =
   ],
 );
 
-class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
+class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
+    with CertificateMixin {
   AddWebsiteFormNotifier();
 
   @override
@@ -80,7 +82,7 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
   }
 
   void setPublicCert(
-    Uint8List publicCert,
+    Uint8List? publicCert,
   ) {
     state = state.copyWith(
       publicCert: publicCert,
@@ -88,7 +90,7 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
   }
 
   void setPrivateKey(
-    Uint8List privateKey,
+    Uint8List? privateKey,
   ) {
     state = state.copyWith(
       privateKey: privateKey,
@@ -164,6 +166,29 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState> {
         );
         return false;
       }
+    }
+
+    return true;
+  }
+
+  bool controlCert(BuildContext context) {
+    if (state.publicCert == null && state.privateKey == null) {
+      return true;
+    }
+    if ((state.publicCert == null && state.privateKey != null) ||
+        (state.publicCert != null && state.privateKey == null)) {
+      state = state.copyWith(
+        errorText:
+            AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertKeyEmpty,
+      );
+      return false;
+    }
+    if (CertificateMixin.validCertificatFromFile(state.publicCert!) == false) {
+      state = state.copyWith(
+        errorText:
+            AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertInvalid,
+      );
+      return false;
     }
 
     return true;

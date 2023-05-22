@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
+import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PathSyncPopup with FileMixin {
   static Future<void> getDialog(
@@ -198,6 +200,19 @@ class PathSyncPopup with FileMixin {
                                       },
                                     ),
                                   ),
+                                ),
+                                IconButtonAnimated(
+                                  icon: const Icon(Icons.help),
+                                  onPressed: () {
+                                    launchUrl(
+                                      Uri.parse(
+                                        'https://wiki.archethic.net/FAQ/aeweb#what-is-the-purpose-of-a-gitignore-file',
+                                      ),
+                                    );
+                                  },
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
                                 ),
                               ],
                             ),

@@ -109,14 +109,14 @@ class CertificateInfosPopup with CertificateMixin {
                                               const EdgeInsets.only(left: 10),
                                           child: Row(
                                             children: [
-                                              Text(
+                                              SelectableText(
                                                 property['label'] ?? '',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium,
                                               ),
                                               const SizedBox(width: 10),
-                                              Text(
+                                              SelectableText(
                                                 certificate.tbsCertificate!
                                                             .subject[
                                                         property['code']] ??
@@ -147,14 +147,14 @@ class CertificateInfosPopup with CertificateMixin {
                                               const EdgeInsets.only(left: 10),
                                           child: Row(
                                             children: [
-                                              Text(
+                                              SelectableText(
                                                 property['label'] ?? '',
                                                 style: Theme.of(context)
                                                     .textTheme
                                                     .labelMedium,
                                               ),
                                               const SizedBox(width: 10),
-                                              Text(
+                                              SelectableText(
                                                 certificate.tbsCertificate!
                                                             .issuer[
                                                         property['code']] ??
@@ -184,14 +184,14 @@ class CertificateInfosPopup with CertificateMixin {
                                             const EdgeInsets.only(left: 10),
                                         child: Row(
                                           children: [
-                                            Text(
+                                            SelectableText(
                                               AppLocalizations.of(context)!
                                                   .certificateInfosValidityStart,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelMedium,
                                             ),
-                                            Text(
+                                            SelectableText(
                                               DateFormat.yMMMEd(
                                                 Localizations.localeOf(context)
                                                     .languageCode,
@@ -211,14 +211,14 @@ class CertificateInfosPopup with CertificateMixin {
                                             const EdgeInsets.only(left: 10),
                                         child: Row(
                                           children: [
-                                            Text(
+                                            SelectableText(
                                               AppLocalizations.of(context)!
                                                   .certificateInfosValidityEnd,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .labelMedium,
                                             ),
-                                            Text(
+                                            SelectableText(
                                               DateFormat.yMMMEd(
                                                 Localizations.localeOf(context)
                                                     .languageCode,
@@ -258,7 +258,7 @@ class CertificateInfosPopup with CertificateMixin {
                                             const SizedBox(
                                               width: 10,
                                             ),
-                                            Text(
+                                            SelectableText(
                                               certificate.sha256Thumbprint ??
                                                   '',
                                               style: Theme.of(context)
@@ -286,7 +286,7 @@ class CertificateInfosPopup with CertificateMixin {
                                             const SizedBox(
                                               width: 10,
                                             ),
-                                            Text(
+                                            SelectableText(
                                               certificate.sha1Thumbprint ?? '',
                                               style: Theme.of(context)
                                                   .textTheme
@@ -303,15 +303,18 @@ class CertificateInfosPopup with CertificateMixin {
                                       ),
                                     ],
                                   ),
-                                Align(
-                                  child: AppButton(
-                                    labelBtn:
-                                        AppLocalizations.of(context)!.btn_close,
-                                    icon: Iconsax.close_square,
-                                    onPressed: () async {
-                                      Navigator.of(context).pop();
-                                    },
-                                  ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    AppButton(
+                                      labelBtn: AppLocalizations.of(context)!
+                                          .btn_close,
+                                      icon: Iconsax.close_square,
+                                      onPressed: () async {
+                                        Navigator.of(context).pop();
+                                      },
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),

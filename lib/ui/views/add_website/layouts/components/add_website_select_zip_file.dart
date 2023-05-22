@@ -67,6 +67,7 @@ class _AddWebsiteSelectZipFileState
           value: addWebsiteProvider.zipFilePath,
           onTap: _selectZipFile,
           onDelete: _resetPath,
+          extensionsLabel: '(.zip, .7z, .rar)',
         ),
       ],
     );

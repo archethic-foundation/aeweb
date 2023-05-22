@@ -1,8 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
+import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AddWebsiteSwitchGitignore extends ConsumerStatefulWidget {
   const AddWebsiteSwitchGitignore({
@@ -57,6 +59,17 @@ class _AddWebsiteSwitchGitignoreState
                       : addWebsiteNotifier.setApplyGitIgnoreRules,
                 ),
               ),
+            ),
+            IconButtonAnimated(
+              icon: const Icon(Icons.help),
+              onPressed: () {
+                launchUrl(
+                  Uri.parse(
+                    'https://wiki.archethic.net/FAQ/aeweb#what-is-the-purpose-of-a-gitignore-file',
+                  ),
+                );
+              },
+              color: Theme.of(context).colorScheme.primaryContainer,
             ),
           ],
         ),

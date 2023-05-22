@@ -15,6 +15,7 @@ class UploadFile extends ConsumerWidget {
     required this.onTap,
     required this.onDelete,
     this.helpLink,
+    this.extensionsLabel,
     super.key,
   });
 
@@ -23,6 +24,7 @@ class UploadFile extends ConsumerWidget {
   final String title;
   final String? value;
   final String? helpLink;
+  final String? extensionsLabel;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -99,6 +101,12 @@ class UploadFile extends ConsumerWidget {
                     style: textTheme.labelSmall!
                         .copyWith(fontWeight: FontWeight.w300),
                   ),
+                  if (extensionsLabel != null)
+                    Text(
+                      extensionsLabel!,
+                      style: textTheme.labelSmall!
+                          .copyWith(fontWeight: FontWeight.w300),
+                    )
                 ],
               ),
             ),

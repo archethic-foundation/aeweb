@@ -6,7 +6,7 @@ import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 Future<void> setupServiceLocator() async {
   final archethicDAppClient = ArchethicDAppClient.auto(
     origin: const RequestOrigin(
-      name: 'aeweb',
+      name: 'AEWeb',
     ),
     replyBaseUrl: 'aeweb://archethic.tech',
   );

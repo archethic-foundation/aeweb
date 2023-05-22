@@ -1,8 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/upload_file.dart';
+import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -29,16 +31,22 @@ class _AddWebsiteSelectPublicCertPathState
 
       final result = await FilePicker.platform.pickFiles(
         type: FileType.custom,
-        allowedExtensions: ['pem', 'crt'],
+        allowedExtensions: ['pem', 'crt', 'txt'],
       );
-      if (result != null) {
+      if (result != null && result.files.isNotEmpty) {
         if (kIsWeb) {
-          addWebsiteNotifier.setPublicCertPath(result.files.first.name);
+          addWebsiteNotifier
+            ..setPublicCertPath(result.files.first.name)
+            ..setPublicCert(
+              File.fromRawPath(result.files.single.bytes!).readAsBytesSync(),
+            );
         } else {
-          addWebsiteNotifier.setPublicCertPath(result.files.single.path!);
+          addWebsiteNotifier
+            ..setPublicCertPath(result.files.single.path!)
+            ..setPublicCert(
+              File(result.files.single.path!).readAsBytesSync(),
+            );
         }
-
-        addWebsiteNotifier.setPublicCert(result.files.first.bytes!);
       }
     } on Exception catch (e) {
       log('Error while picking public cert file: $e');
@@ -49,7 +57,9 @@ class _AddWebsiteSelectPublicCertPathState
     final addWebsiteNotifier =
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
     // ignore: cascade_invocations
-    addWebsiteNotifier.setPublicCertPath('');
+    addWebsiteNotifier
+      ..setPublicCertPath('')
+      ..setPublicCert(null);
   }
 
   @override
@@ -67,6 +77,7 @@ class _AddWebsiteSelectPublicCertPathState
           value: addWebsiteProvider.publicCertPath,
           onTap: _selectPublicCertFile,
           onDelete: _resetPath,
+          extensionsLabel: '(.pem, .crt, .txt)',
           helpLink: 'https://wiki.archethic.net/participate/aeweb/dns/#ssl',
         ),
       ],
