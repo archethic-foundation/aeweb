@@ -139,10 +139,14 @@ class UpdateWebsiteSyncComparisonSheetState
                 padding: const EdgeInsets.only(top: 8, bottom: 8),
                 child: Text(
                   '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
+                  style: textTheme.labelMedium,
                 ),
               ),
               Expanded(
-                child: ListView.builder(
+                child: ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                    height: 10,
+                  ),
                   padding: EdgeInsets.zero,
                   shrinkWrap: true,
                   itemCount: filteredFiles.length,
@@ -178,16 +182,38 @@ class UpdateWebsiteSyncComparisonSheetState
                         break;
                     }
                     return Center(
-                      child: Card(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .background
-                            .withOpacity(0.5),
-                        elevation: 0,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(12)),
+                      child: DecoratedBox(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Theme.of(context)
+                                  .colorScheme
+                                  .background
+                                  .withOpacity(1),
+                              Theme.of(context)
+                                  .colorScheme
+                                  .background
+                                  .withOpacity(0.3),
+                            ],
+                            stops: const [0, 1],
+                          ),
+                          border: GradientBoxBorder(
+                            gradient: LinearGradient(
+                              colors: [
+                                Theme.of(context)
+                                    .colorScheme
+                                    .background
+                                    .withOpacity(0.5),
+                                Theme.of(context)
+                                    .colorScheme
+                                    .background
+                                    .withOpacity(0.7),
+                              ],
+                              stops: const [0, 1],
+                            ),
+                          ),
+                          borderRadius: BorderRadius.circular(12),
                         ),
-                        clipBehavior: Clip.antiAlias,
                         child: ListTile(
                           leading: SizedBox(
                             height: double.infinity,

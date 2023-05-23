@@ -230,6 +230,9 @@ Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
             width: 80,
             height: 20,
             child: OutlinedButton(
+              style: ButtonStyle(
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
+              ),
               onPressed: () async {
                 final url =
                     '${sl.get<ApiService>().endpoint}/api/web_hosting/${website.genesisAddress}';

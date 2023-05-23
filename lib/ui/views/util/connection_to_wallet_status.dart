@@ -70,6 +70,7 @@ class _ConnectionToWalletStatusState
             child: OutlinedButton(
               style: ButtonStyle(
                 side: MaterialStateProperty.all(BorderSide.none),
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: () async {
                 await sessionNotifier.connectToWallet();
@@ -157,6 +158,7 @@ class _ConnectionToWalletStatusState
                 OutlinedButton(
                   style: ButtonStyle(
                     side: MaterialStateProperty.all(BorderSide.none),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
                   onPressed: () {},
                   child: Row(

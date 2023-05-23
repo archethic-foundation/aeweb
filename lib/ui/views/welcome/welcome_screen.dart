@@ -1,4 +1,3 @@
-import 'package:aeweb/ui/views/display_website/website_list.dart';
 import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:aeweb/ui/views/util/header.dart';
 import 'package:aeweb/ui/views/welcome/components/welcome_advert.dart';

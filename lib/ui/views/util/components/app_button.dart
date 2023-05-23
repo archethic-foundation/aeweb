@@ -45,6 +45,7 @@ class AppButtonState extends State<AppButton> {
           ? OutlinedButton(
               style: ButtonStyle(
                 side: MaterialStateProperty.all(BorderSide.none),
+                overlayColor: MaterialStateProperty.all(Colors.transparent),
               ),
               onPressed: null,
               child: _buttonContent(),
@@ -53,6 +54,7 @@ class AppButtonState extends State<AppButton> {
               ? OutlinedButton(
                   style: ButtonStyle(
                     side: MaterialStateProperty.all(BorderSide.none),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
                   onPressed: null,
                   child: _buttonContent(),
@@ -60,6 +62,7 @@ class AppButtonState extends State<AppButton> {
               : OutlinedButton(
                   style: ButtonStyle(
                     side: MaterialStateProperty.all(BorderSide.none),
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
                   ),
                   onPressed: () {
                     widget.onPressed!();

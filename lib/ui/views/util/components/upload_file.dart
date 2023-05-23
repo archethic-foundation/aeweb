@@ -43,7 +43,10 @@ class UploadFile extends ConsumerWidget {
             ),
             if (helpLink != null)
               IconButtonAnimated(
-                icon: const Icon(Icons.help),
+                icon: Icon(
+                  Icons.help,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
                 onPressed: () {
                   launchUrl(
                     Uri.parse(

@@ -288,6 +288,9 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
                 width: 100,
                 height: 20,
                 child: OutlinedButton(
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
                   onPressed: () async {
                     ref
                         .read(
@@ -319,6 +322,9 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
                 width: 100,
                 height: 20,
                 child: OutlinedButton(
+                  style: ButtonStyle(
+                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  ),
                   onPressed: () async {
                     ref
                         .read(
