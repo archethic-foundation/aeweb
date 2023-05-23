@@ -138,11 +138,91 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                       const WelcomeInfoVersion(),
                     ],
                   ),
-                  tablet: Row(
-                    children: const [
-                      Expanded(
-                        flex: 6,
-                        child: WebsiteList(),
+                  tablet: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.only(top: 60),
+                        width: MediaQuery.of(context).size.width,
+                        height: 420,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 6,
+                              child: WelcomeAdvert(
+                                welcomeArgTitle: AppLocalizations.of(context)!
+                                    .welcomeArg1Title,
+                                welcomeArgDesc: AppLocalizations.of(context)!
+                                    .welcomeArg1Desc,
+                              )
+                                  .animate()
+                                  .fade(
+                                    duration: const Duration(milliseconds: 200),
+                                  )
+                                  .scale(
+                                    duration: const Duration(milliseconds: 200),
+                                  ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 6,
+                              child: WelcomeAdvert(
+                                welcomeArgTitle: AppLocalizations.of(context)!
+                                    .welcomeArg2Title,
+                                welcomeArgDesc: AppLocalizations.of(context)!
+                                    .welcomeArg2Desc,
+                              )
+                                  .animate()
+                                  .fade(
+                                    duration: const Duration(milliseconds: 250),
+                                  )
+                                  .scale(
+                                    duration: const Duration(milliseconds: 250),
+                                  ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 6,
+                              child: WelcomeAdvert(
+                                welcomeArgTitle: AppLocalizations.of(context)!
+                                    .welcomeArg3Title,
+                                welcomeArgDesc: AppLocalizations.of(context)!
+                                    .welcomeArg3Desc,
+                              )
+                                  .animate()
+                                  .fade(
+                                    duration: const Duration(milliseconds: 300),
+                                  )
+                                  .scale(
+                                    duration: const Duration(milliseconds: 300),
+                                  ),
+                            ),
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width / 6,
+                              child: WelcomeAdvert(
+                                welcomeArgTitle: AppLocalizations.of(context)!
+                                    .welcomeArg4Title,
+                                welcomeArgDesc: AppLocalizations.of(context)!
+                                    .welcomeArg4Desc,
+                              )
+                                  .animate()
+                                  .fade(
+                                    duration: const Duration(milliseconds: 350),
+                                  )
+                                  .scale(
+                                    duration: const Duration(milliseconds: 350),
+                                  ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const WelcomeConnectWalletBtn(),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width - 300,
+                        ),
+                        child: const WelcomeInfoVersion(),
                       ),
                     ],
                   ),

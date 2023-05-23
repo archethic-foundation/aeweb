@@ -38,7 +38,8 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     final lastTransactionReferenceMap =
         await sl.get<ApiService>().getLastTransaction(
       [addressTxRef],
-      request: 'data {content}',
+      request:
+          'data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } }',
     );
     final lastTransactionReference = lastTransactionReferenceMap[addressTxRef];
     if (lastTransactionReference == null) {
@@ -168,8 +169,23 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
 
     log('Create transaction reference');
     updateWebsiteSyncNotifier.setStep(5);
-    var transactionReference =
-        await newTransactionReference(filesWithAddressWithLast);
+
+    var transactionReference = await newTransactionReference(
+      filesWithAddressWithLast,
+      cert: Uint8List.fromList(
+        utf8.encode(
+          lastHostingTransactionReference.sslCertificate,
+        ),
+      ),
+    );
+    if (lastTransactionReference.data != null &&
+        lastTransactionReference.data!.ownerships.length > 1 &&
+        lastTransactionReference.data!.ownerships[0].secret != null) {
+      transactionReference.addOwnership(
+        lastTransactionReference.data!.ownerships[0].secret!,
+        lastTransactionReference.data!.ownerships[0].authorizedPublicKeys,
+      );
+    }
 
     log('Sign transaction reference');
     updateWebsiteSyncNotifier.setStep(6);

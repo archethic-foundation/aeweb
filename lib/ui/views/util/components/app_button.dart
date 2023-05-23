@@ -9,10 +9,12 @@ class AppButton extends StatefulWidget {
     required this.labelBtn,
     this.icon,
     this.onPressed,
+    this.disabled = false,
   });
   final IconData? icon;
   final String labelBtn;
   final Function? onPressed;
+  final bool disabled;
 
   @override
   AppButtonState createState() => AppButtonState();
@@ -39,23 +41,31 @@ class AppButtonState extends State<AppButton> {
           _over = false;
         });
       },
-      child: widget.onPressed != null
+      child: widget.disabled
           ? OutlinedButton(
-              style: ButtonStyle(
-                side: MaterialStateProperty.all(BorderSide.none),
-              ),
-              onPressed: () {
-                widget.onPressed!();
-              },
-              child: _buttonContent(),
-            ).animate(target: _over ? 0 : 1).fade(end: 0.8)
-          : OutlinedButton(
               style: ButtonStyle(
                 side: MaterialStateProperty.all(BorderSide.none),
               ),
               onPressed: null,
               child: _buttonContent(),
-            ).animate(target: _over ? 0 : 1).fade(end: 0.8),
+            )
+          : widget.onPressed == null
+              ? OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(BorderSide.none),
+                  ),
+                  onPressed: null,
+                  child: _buttonContent(),
+                ).animate(target: _over ? 0 : 1).fade(end: 0.8)
+              : OutlinedButton(
+                  style: ButtonStyle(
+                    side: MaterialStateProperty.all(BorderSide.none),
+                  ),
+                  onPressed: () {
+                    widget.onPressed!();
+                  },
+                  child: _buttonContent(),
+                ).animate(target: _over ? 0 : 1).fade(end: 0.8),
     );
   }
 
@@ -87,14 +97,26 @@ class AppButtonState extends State<AppButton> {
           if (widget.icon != null)
             Icon(
               widget.icon,
-              color: Theme.of(context).textTheme.labelMedium!.color,
+              color: widget.disabled
+                  ? Theme.of(context)
+                      .textTheme
+                      .labelMedium!
+                      .color!
+                      .withOpacity(0.3)
+                  : Theme.of(context).textTheme.labelMedium!.color,
               size: 12,
             ),
           if (widget.icon != null) const SizedBox(width: 5),
           Text(
             widget.labelBtn,
             style: TextStyle(
-              color: Theme.of(context).textTheme.labelMedium!.color,
+              color: widget.disabled
+                  ? Theme.of(context)
+                      .textTheme
+                      .labelMedium!
+                      .color!
+                      .withOpacity(0.3)
+                  : Theme.of(context).textTheme.labelMedium!.color,
               fontFamily: 'Equinox',
               fontSize: 12,
               fontWeight: FontWeight.w400,

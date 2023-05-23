@@ -4,7 +4,6 @@ import 'dart:io';
 
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/upload_file.dart';
-import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';

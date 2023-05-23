@@ -1,4 +1,3 @@
-
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_path.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_private_key_path.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_public_cert_path.dart';
@@ -49,6 +48,37 @@ class AddWebsiteFormSheet extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: SelectionArea(
+                        child: Text(
+                          AppLocalizations.of(context)!.addWebSiteFormTitle,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: 50,
+                        height: 1,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0x003C89B9),
+                              Color(0xFFCC00FF),
+                            ],
+                            stops: [0, 1],
+                            begin: AlignmentDirectional.centerEnd,
+                            end: AlignmentDirectional.centerStart,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
                 Text(
                   AppLocalizations.of(context)!.addWebSiteDesc,
                   style: textTheme.labelMedium,
@@ -73,6 +103,38 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                   style: textTheme.labelMedium,
                 ),
                 const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: SelectionArea(
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .addWebSiteFormRequiredInfo,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: 50,
+                        height: 1,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0x003C89B9),
+                              Color(0xFFCC00FF),
+                            ],
+                            stops: [0, 1],
+                            begin: AlignmentDirectional.centerEnd,
+                            end: AlignmentDirectional.centerStart,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 16),
                 const AddWebsiteTextFieldName(),
                 const SizedBox(height: 16),
                 if (kIsWeb)
@@ -81,6 +143,38 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                   const AddWebsiteSelectPath(),
                 const SizedBox(height: 16),
                 const AddWebsiteSwitchGitignore(),
+                const SizedBox(height: 16),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 15),
+                      child: SelectionArea(
+                        child: Text(
+                          AppLocalizations.of(context)!
+                              .addWebSiteFormOptionalInfo,
+                          style: Theme.of(context).textTheme.titleSmall,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: Container(
+                        width: 50,
+                        height: 1,
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0x003C89B9),
+                              Color(0xFFCC00FF),
+                            ],
+                            stops: [0, 1],
+                            begin: AlignmentDirectional.centerEnd,
+                            end: AlignmentDirectional.centerStart,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 const SizedBox(height: 16),
                 const AddWebsiteSelectPublicCertPath(),
                 const SizedBox(height: 16),

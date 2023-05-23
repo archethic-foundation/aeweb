@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aeweb/application/main_screen_third_part.dart';
+import 'package:aeweb/application/selected_website.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
@@ -242,6 +244,17 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
       if (ref.read(AddWebsiteFormProvider.addWebsiteForm).stepError.isEmpty) {
         addWebsiteNotifier.setStep(13);
         log('Website is deployed at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+        ref
+            .read(SelectedWebsiteProviders.selectedWebsiteProvider.notifier)
+            .setSelection(
+              addressTxRef,
+              ref.read(AddWebsiteFormProvider.addWebsiteForm).name,
+            );
+        ref
+            .read(
+              MainScreenThirdPartProviders.mainScreenThirdPartProvider.notifier,
+            )
+            .setWidget(const SizedBox());
       }
     } catch (e) {
       addWebsiteNotifier

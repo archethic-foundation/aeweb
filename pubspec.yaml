@@ -13,7 +13,7 @@ dependencies:
   archethic_lib_dart: ^3.1.1
 
   # A client dart library to interact with Archethic Wallet RPC API.
-  archethic_wallet_client: ^1.0.5
+  archethic_wallet_client: ^1.0.6
 
   # Compression
   archive: ^3.3.7

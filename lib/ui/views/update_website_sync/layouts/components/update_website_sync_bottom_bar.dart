@@ -24,6 +24,7 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                 AppButton(
                   labelBtn: AppLocalizations.of(context)!.btn_cancel,
                   icon: Iconsax.close_square,
+                  disabled: true,
                 )
               else if (updateWebsiteSync.processFinished)
                 AppButton(
@@ -45,6 +46,7 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                 AppButton(
                   labelBtn: AppLocalizations.of(context)!.btn_update_website,
                   icon: Iconsax.global_edit,
+                  disabled: true,
                 )
               else
                 AppButton(

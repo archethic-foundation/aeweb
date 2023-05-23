@@ -26,7 +26,6 @@ class PathSyncPopup with FileMixin {
     bool? applyGitIgnoreRules;
     final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
       (Set<MaterialState> states) {
-        // Thumb icon when the switch is selected.
         if (states.contains(MaterialState.selected)) {
           return const Icon(Icons.check);
         }

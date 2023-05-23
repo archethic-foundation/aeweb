@@ -56,18 +56,73 @@ class MainScreenState extends ConsumerState<MainScreen> {
           ),
         ),
         tablet: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Expanded(
-              flex: 6,
-              child: WebsiteList(),
+            Expanded(
+              flex: _size.width > 1340 ? 3 : 4,
+              child: const Padding(
+                padding: EdgeInsets.only(
+                  top: 30,
+                  bottom: 30,
+                  left: 30,
+                  right: 10,
+                ),
+                child: NavigationDrawerSection(),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 200))
+                  .scale(duration: const Duration(milliseconds: 200)),
             ),
-            if (websiteSelection.genesisAddress.isNotEmpty)
-              Expanded(
-                child: WebsiteVersionsList(
-                  genesisAddress: websiteSelection.genesisAddress,
-                  websiteName: websiteSelection.name,
+            Expanded(
+              flex: 4,
+              child: const Padding(
+                padding: EdgeInsets.only(
+                  top: 30,
+                  bottom: 30,
+                  left: 10,
+                  right: 10,
+                ),
+                child: WebsiteList(),
+              )
+                  .animate()
+                  .fade(duration: const Duration(milliseconds: 250))
+                  .scale(duration: const Duration(milliseconds: 250)),
+            ),
+            Expanded(
+              flex: _size.width > 1340 ? 9 : 10,
+              child: Padding(
+                padding: const EdgeInsets.only(
+                  top: 30,
+                  bottom: 30,
+                  left: 10,
+                  right: 10,
+                ),
+                child: Column(
+                  children: [
+                    if (websiteSelection.genesisAddress.isNotEmpty)
+                      WebsiteVersionsList(
+                        genesisAddress: websiteSelection.genesisAddress,
+                        websiteName: websiteSelection.name,
+                      )
+                          .animate()
+                          .fade(
+                            duration: const Duration(milliseconds: 300),
+                          )
+                          .scale(
+                            duration: const Duration(milliseconds: 300),
+                          )
+                    else
+                      const SizedBox(),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    ref.watch(
+                      MainScreenThirdPartProviders.mainScreenThirdPartProvider,
+                    ),
+                  ],
                 ),
               ),
+            ),
           ],
         ),
         desktop: Row(

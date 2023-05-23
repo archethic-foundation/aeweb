@@ -41,6 +41,37 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
             children: [
               Row(
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: SelectionArea(
+                      child: Text(
+                        AppLocalizations.of(context)!.unpublishWebSiteFormTitle,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: 50,
+                      height: 1,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0x003C89B9),
+                            Color(0xFFCC00FF),
+                          ],
+                          stops: [0, 1],
+                          begin: AlignmentDirectional.centerEnd,
+                          end: AlignmentDirectional.centerStart,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
                   const Icon(
                     Iconsax.warning_2,
                     color: Colors.red,

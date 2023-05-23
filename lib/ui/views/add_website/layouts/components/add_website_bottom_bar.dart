@@ -34,6 +34,7 @@ class AddWebsiteBottomBar extends ConsumerWidget {
             AppButton(
               labelBtn: AppLocalizations.of(context)!.btn_cancel,
               icon: Iconsax.close_square,
+              disabled: true,
             )
           else if (addWebsite.processFinished)
             AppButton(
@@ -55,6 +56,7 @@ class AddWebsiteBottomBar extends ConsumerWidget {
             AppButton(
               labelBtn: AppLocalizations.of(context)!.btn_add_website,
               icon: Iconsax.global,
+              disabled: true,
             )
           else
             AppButton(

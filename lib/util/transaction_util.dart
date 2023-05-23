@@ -25,7 +25,7 @@ mixin TransactionMixin {
       metaData: metaDataSorted,
     );
 
-    if (cert != null) {
+    if (cert != null && cert.isNotEmpty) {
       hosting = hosting.copyWith(
         sslCertificate: utf8.decode(cert),
       );

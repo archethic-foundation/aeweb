@@ -27,6 +27,7 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
             AppButton(
               labelBtn: AppLocalizations.of(context)!.btn_cancel,
               icon: Iconsax.close_square,
+              disabled: true,
             )
           else if (unpublishWebsite.processFinished)
             AppButton(
@@ -48,6 +49,7 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
             AppButton(
               labelBtn: AppLocalizations.of(context)!.btn_unpublish_website,
               icon: Iconsax.folder_cross,
+              disabled: true,
             )
           else
             AppButton(
