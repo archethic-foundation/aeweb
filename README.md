@@ -10,8 +10,14 @@
 - Security access with your Archethic Wallet
 
 ## Application Initial Screen
-<img src="assets/images/Github-Img.png?v=20221202" width="500"/>
-
+<img src="assets/images/Github-Img1.png?v=20230524" width="500"/>
+<br/><br/>
+<img src="assets/images/Github-Img2.png?v=20230524" width="500"/>
+<br/><br/>
+<img src="assets/images/Github-Img3.png?v=20230524" width="500"/>
+<br/><br/>
+<img src="assets/images/Github-Img4.png?v=20230524" width="500"/>
+<br/><br/>
 ### Pre-requisites
 
 - Flutter 3.7+
