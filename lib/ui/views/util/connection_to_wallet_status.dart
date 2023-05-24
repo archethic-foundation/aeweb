@@ -4,6 +4,8 @@ import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -155,26 +157,39 @@ class _ConnectionToWalletStatusState
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                OutlinedButton(
-                  style: ButtonStyle(
-                    side: MaterialStateProperty.all(BorderSide.none),
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
-                  ),
-                  onPressed: () {},
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Iconsax.empty_wallet_tick,
-                        color: Colors.green,
-                        size: 13,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    OutlinedButton(
+                      style: ButtonStyle(
+                        side: MaterialStateProperty.all(BorderSide.none),
+                        overlayColor:
+                            MaterialStateProperty.all(Colors.transparent),
                       ),
-                      const SizedBox(width: 4),
-                      Text(
-                        session.nameAccount,
-                        style: textTheme.labelMedium,
+                      onPressed: () {},
+                      child: Row(
+                        children: [
+                          const Icon(
+                            Iconsax.empty_wallet_tick,
+                            color: Colors.green,
+                            size: 13,
+                          ),
+                          const SizedBox(width: 4),
+                          Text(
+                            session.nameAccount,
+                            style: textTheme.labelMedium,
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 15, bottom: 5),
+                      child: Text(
+                        sl.get<ApiService>().endpoint,
+                        style: textTheme.labelSmall,
+                      ),
+                    ),
+                  ],
                 ),
                 IconButtonAnimated(
                   onPressed: () async {

@@ -326,21 +326,22 @@ Widget _popupMenuButton(
     ),
     itemBuilder: (context) {
       return [
-        PopupMenuItem(
-          value: 'ExploreFiles',
-          child: Row(
-            children: [
-              const Icon(Iconsax.folder_open),
-              const SizedBox(width: 8),
-              Flexible(
-                child: Text(
-                  AppLocalizations.of(context)!
-                      .websitesListVersionsPopupExplore,
+        if (websiteVersion.published)
+          PopupMenuItem(
+            value: 'ExploreFiles',
+            child: Row(
+              children: [
+                const Icon(Iconsax.folder_open),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .websitesListVersionsPopupExplore,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
         PopupMenuItem(
           value: 'ExploreTx',
           child: Row(

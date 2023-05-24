@@ -221,11 +221,23 @@ mixin TransactionMixin {
         break;
       }
       var next = false;
+      String websocketEndpoint;
+      switch (sl.get<ApiService>().endpoint) {
+        case 'https://mainnet.archethic.net':
+        case 'https://testnet.archethic.net':
+          websocketEndpoint =
+              "${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket";
+          break;
+        default:
+          websocketEndpoint =
+              "${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket";
+          break;
+      }
+
       final transactionRepository = ArchethicTransactionSender(
         phoenixHttpEndpoint:
             '${sl.get<ApiService>().endpoint}/socket/websocket',
-        websocketEndpoint:
-            '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
+        websocketEndpoint: websocketEndpoint,
       );
       log('Send ${transaction.address!.address}');
 
