@@ -94,7 +94,7 @@ class _ConnectionToWalletStatusState
               child: Container(
                 alignment: Alignment.center,
                 height: 50,
-                padding: const EdgeInsets.only(left: 20, right: 20),
+                padding: const EdgeInsets.only(left: 20),
                 decoration: ShapeDecoration(
                   gradient: const LinearGradient(
                     colors: <Color>[

@@ -8,10 +8,10 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SvgPicture.asset(
               'assets/images/AELogo.svg',
@@ -23,6 +23,16 @@ class Header extends StatelessWidget {
               style: TextStyle(
                 fontFamily: 'Caveat',
                 fontSize: 50,
+              ),
+            ),
+            const SizedBox(
+              width: 20,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 30),
+              child: Text(
+                'Beta',
+                style: Theme.of(context).textTheme.labelMedium,
               ),
             ),
           ],
