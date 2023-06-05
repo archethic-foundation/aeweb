@@ -94,7 +94,6 @@ class _ConnectionToWalletStatusState
               child: Container(
                 alignment: Alignment.center,
                 height: 50,
-                padding: const EdgeInsets.only(left: 20),
                 decoration: ShapeDecoration(
                   gradient: const LinearGradient(
                     colors: <Color>[
@@ -114,6 +113,7 @@ class _ConnectionToWalletStatusState
                   ],
                 ),
                 child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(
                       Iconsax.empty_wallet,
@@ -126,7 +126,7 @@ class _ConnectionToWalletStatusState
                       style: TextStyle(
                         color: Theme.of(context).textTheme.labelMedium!.color,
                         fontFamily: 'Equinox',
-                        fontSize: 16,
+                        fontSize: 15,
                       ),
                     ),
                   ],

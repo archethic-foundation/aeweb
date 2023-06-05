@@ -9,12 +9,14 @@ class AppButton extends StatefulWidget {
     required this.labelBtn,
     this.icon,
     this.onPressed,
+    this.height = 30,
     this.disabled = false,
   });
   final IconData? icon;
   final String labelBtn;
   final Function? onPressed;
   final bool disabled;
+  final double height;
 
   @override
   AppButtonState createState() => AppButtonState();
@@ -75,7 +77,7 @@ class AppButtonState extends State<AppButton> {
   Widget _buttonContent() {
     return Container(
       alignment: Alignment.center,
-      height: 30,
+      height: widget.height,
       padding: const EdgeInsets.only(left: 20, right: 20),
       decoration: ShapeDecoration(
         gradient: const LinearGradient(
