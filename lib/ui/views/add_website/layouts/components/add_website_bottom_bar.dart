@@ -1,5 +1,6 @@
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
+import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -21,7 +22,12 @@ class AddWebsiteBottomBar extends ConsumerWidget {
       final isPathOk = addWebsiteNotifier.controlPath(context);
       final isCertOk = addWebsiteNotifier.controlCert(context);
       if (isNameOk && isPathOk && isCertOk) {
-        return true;
+        final acceptRules = await ContentWebsiteWarningPopup.getDialog(
+          context,
+          AppLocalizations.of(context)!.addWebsiteContentWarningHeader,
+          AppLocalizations.of(context)!.addWebsiteContentWarningText,
+        );
+        return acceptRules ?? false;
       }
       return false;
     }
