@@ -1,5 +1,6 @@
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
+import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -53,6 +54,18 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                   labelBtn: AppLocalizations.of(context)!.btn_update_website,
                   icon: Iconsax.global_edit,
                   onPressed: () async {
+                    final acceptRules =
+                        await ContentWebsiteWarningPopup.getDialog(
+                      context,
+                      AppLocalizations.of(context)!
+                          .updateWebsiteContentWarningHeader,
+                      AppLocalizations.of(context)!
+                          .updateWebsiteContentWarningText,
+                    );
+                    if (acceptRules == null || acceptRules == false) {
+                      return;
+                    }
+
                     final updateWebsiteSyncNotifier = ref.watch(
                       UpdateWebsiteSyncFormProvider
                           .updateWebsiteSyncForm.notifier,
