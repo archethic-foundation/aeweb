@@ -63,178 +63,176 @@ class UpdateWebsiteSyncComparisonSheetState
         ),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Expanded(
-        child: Padding(
-          padding: const EdgeInsets.only(right: 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: SelectionArea(
-                      child: Text(
-                        AppLocalizations.of(context)!.updateWebSiteFormTitle,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: SelectionArea(
+                    child: Text(
+                      AppLocalizations.of(context)!.updateWebSiteFormTitle,
+                      style: Theme.of(context).textTheme.titleSmall,
                     ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: 50,
-                      height: 1,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0x003C89B9),
-                            Color(0xFFCC00FF),
-                          ],
-                          stops: [0, 1],
-                          begin: AlignmentDirectional.centerEnd,
-                          end: AlignmentDirectional.centerStart,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Text(
-                AppLocalizations.of(context)!.updateWebSiteDesc,
-                style: textTheme.labelMedium,
-              ),
-              const SizedBox(height: 30),
-              Row(
-                children: [
-                  const Icon(
-                    Iconsax.warning_2,
-                    color: Colors.red,
-                  ),
-                  const SizedBox(width: 5),
-                  Text(
-                    AppLocalizations.of(context)!.disclaimer,
-                    style: textTheme.labelMedium,
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16),
-              Text(
-                AppLocalizations.of(context)!.updateWebSiteDisclaimer,
-                style: textTheme.labelMedium,
-              ),
-              const SizedBox(height: 16),
-              Padding(
-                padding: const EdgeInsets.all(8),
-                child: TextField(
-                  controller: _searchController,
-                  decoration: InputDecoration(
-                    hintText: AppLocalizations.of(context)!.hint_searchFiles,
                   ),
                 ),
-              ),
-              _buildFilterStatusWidget(),
-              Padding(
-                padding: const EdgeInsets.only(top: 8, bottom: 8),
-                child: Text(
-                  '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
+                Expanded(
+                  child: Container(
+                    width: 50,
+                    height: 1,
+                    decoration: const BoxDecoration(
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0x003C89B9),
+                          Color(0xFFCC00FF),
+                        ],
+                        stops: [0, 1],
+                        begin: AlignmentDirectional.centerEnd,
+                        end: AlignmentDirectional.centerStart,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              AppLocalizations.of(context)!.updateWebSiteDesc,
+              style: textTheme.labelMedium,
+            ),
+            const SizedBox(height: 30),
+            Row(
+              children: [
+                const Icon(
+                  Iconsax.warning_2,
+                  color: Colors.red,
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  AppLocalizations.of(context)!.disclaimer,
                   style: textTheme.labelMedium,
                 ),
+              ],
+            ),
+            const SizedBox(height: 16),
+            Text(
+              AppLocalizations.of(context)!.updateWebSiteDisclaimer,
+              style: textTheme.labelMedium,
+            ),
+            const SizedBox(height: 16),
+            Padding(
+              padding: const EdgeInsets.all(8),
+              child: TextField(
+                controller: _searchController,
+                decoration: InputDecoration(
+                  hintText: AppLocalizations.of(context)!.hint_searchFiles,
+                ),
               ),
-              Expanded(
-                child: ListView.separated(
-                  separatorBuilder: (context, index) => const SizedBox(
-                    height: 10,
-                  ),
-                  padding: EdgeInsets.zero,
-                  shrinkWrap: true,
-                  itemCount: filteredFiles.length,
-                  itemBuilder: (context, index) {
-                    final file = filteredFiles[index];
-                    IconData iconData;
-                    Color iconColor;
-                    String statusText;
-                    switch (file.status) {
-                      case HostingContentComparisonStatus.localOnly:
-                        iconData = Iconsax.document;
-                        iconColor = Colors.orange;
-                        statusText =
-                            AppLocalizations.of(context)!.status_localOnly;
-                        break;
-                      case HostingContentComparisonStatus.remoteOnly:
-                        iconData = Iconsax.document_cloud;
-                        iconColor = Colors.blue;
-                        statusText =
-                            AppLocalizations.of(context)!.status_remoteOnly;
-                        break;
-                      case HostingContentComparisonStatus.differentContent:
-                        iconData = Iconsax.note_remove;
-                        iconColor = Colors.red;
-                        statusText = AppLocalizations.of(context)!
-                            .status_differentContent;
-                        break;
-                      case HostingContentComparisonStatus.sameContent:
-                        iconData = Iconsax.document_copy;
-                        iconColor = Colors.green;
-                        statusText =
-                            AppLocalizations.of(context)!.status_sameContent;
-                        break;
-                    }
-                    return Center(
-                      child: DecoratedBox(
-                        decoration: BoxDecoration(
+            ),
+            _buildFilterStatusWidget(),
+            Padding(
+              padding: const EdgeInsets.only(top: 8, bottom: 8),
+              child: Text(
+                '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
+                style: textTheme.labelMedium,
+              ),
+            ),
+            Expanded(
+              child: ListView.separated(
+                separatorBuilder: (context, index) => const SizedBox(
+                  height: 10,
+                ),
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
+                itemCount: filteredFiles.length,
+                itemBuilder: (context, index) {
+                  final file = filteredFiles[index];
+                  IconData iconData;
+                  Color iconColor;
+                  String statusText;
+                  switch (file.status) {
+                    case HostingContentComparisonStatus.localOnly:
+                      iconData = Iconsax.document;
+                      iconColor = Colors.orange;
+                      statusText =
+                          AppLocalizations.of(context)!.status_localOnly;
+                      break;
+                    case HostingContentComparisonStatus.remoteOnly:
+                      iconData = Iconsax.document_cloud;
+                      iconColor = Colors.blue;
+                      statusText =
+                          AppLocalizations.of(context)!.status_remoteOnly;
+                      break;
+                    case HostingContentComparisonStatus.differentContent:
+                      iconData = Iconsax.note_remove;
+                      iconColor = Colors.red;
+                      statusText =
+                          AppLocalizations.of(context)!.status_differentContent;
+                      break;
+                    case HostingContentComparisonStatus.sameContent:
+                      iconData = Iconsax.document_copy;
+                      iconColor = Colors.green;
+                      statusText =
+                          AppLocalizations.of(context)!.status_sameContent;
+                      break;
+                  }
+                  return Center(
+                    child: DecoratedBox(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Theme.of(context)
+                                .colorScheme
+                                .background
+                                .withOpacity(1),
+                            Theme.of(context)
+                                .colorScheme
+                                .background
+                                .withOpacity(0.3),
+                          ],
+                          stops: const [0, 1],
+                        ),
+                        border: GradientBoxBorder(
                           gradient: LinearGradient(
                             colors: [
                               Theme.of(context)
                                   .colorScheme
                                   .background
-                                  .withOpacity(1),
+                                  .withOpacity(0.5),
                               Theme.of(context)
                                   .colorScheme
                                   .background
-                                  .withOpacity(0.3),
+                                  .withOpacity(0.7),
                             ],
                             stops: const [0, 1],
                           ),
-                          border: GradientBoxBorder(
-                            gradient: LinearGradient(
-                              colors: [
-                                Theme.of(context)
-                                    .colorScheme
-                                    .background
-                                    .withOpacity(0.5),
-                                Theme.of(context)
-                                    .colorScheme
-                                    .background
-                                    .withOpacity(0.7),
-                              ],
-                              stops: const [0, 1],
-                            ),
-                          ),
-                          borderRadius: BorderRadius.circular(12),
                         ),
-                        child: ListTile(
-                          leading: SizedBox(
-                            height: double.infinity,
-                            child: Icon(iconData, color: iconColor),
-                          ),
-                          title: Text(
-                            file.path,
-                            style: const TextStyle(fontSize: 12),
-                          ),
-                          subtitle: Text(
-                            statusText,
-                            style: const TextStyle(fontSize: 10),
-                          ),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: ListTile(
+                        leading: SizedBox(
+                          height: double.infinity,
+                          child: Icon(iconData, color: iconColor),
+                        ),
+                        title: Text(
+                          file.path,
+                          style: const TextStyle(fontSize: 12),
+                        ),
+                        subtitle: Text(
+                          statusText,
+                          style: const TextStyle(fontSize: 10),
                         ),
                       ),
-                    );
-                  },
-                ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
@@ -254,131 +252,120 @@ class UpdateWebsiteSyncComparisonSheetState
       spacing: 8,
       runSpacing: 8,
       children: [
-        Flexible(
-          child: TextButton.icon(
-            onPressed: () {
-              setState(() {
-                _selectedStatus = null;
-              });
-            },
-            icon: const Icon(
-              Iconsax.filter,
-              size: 16,
-            ),
-            label: Text(
-              AppLocalizations.of(context)!.status_all,
-              style: textTheme.labelMedium,
-            ),
-            style: ButtonStyle(
-              backgroundColor: _selectedStatus == null
-                  ? MaterialStateProperty.all(
-                      Colors.blue[100]!.withOpacity(0.2),
-                    )
-                  : null,
-            ),
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              _selectedStatus = null;
+            });
+          },
+          icon: const Icon(
+            Iconsax.filter,
+            size: 16,
+          ),
+          label: Text(
+            AppLocalizations.of(context)!.status_all,
+            style: textTheme.labelMedium,
+          ),
+          style: ButtonStyle(
+            backgroundColor: _selectedStatus == null
+                ? MaterialStateProperty.all(
+                    Colors.blue[100]!.withOpacity(0.2),
+                  )
+                : null,
           ),
         ),
-        Flexible(
-          child: TextButton.icon(
-            onPressed: () {
-              setState(() {
-                _selectedStatus = HostingContentComparisonStatus.localOnly;
-              });
-            },
-            icon: const Icon(
-              Iconsax.document,
-              color: Colors.orange,
-              size: 16,
-            ),
-            label: Text(
-              AppLocalizations.of(context)!.status_localOnly,
-              style: textTheme.labelMedium,
-            ),
-            style: ButtonStyle(
-              backgroundColor:
-                  _selectedStatus == HostingContentComparisonStatus.localOnly
-                      ? MaterialStateProperty.all(
-                          Colors.orange[100]!.withOpacity(0.2),
-                        )
-                      : null,
-            ),
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              _selectedStatus = HostingContentComparisonStatus.localOnly;
+            });
+          },
+          icon: const Icon(
+            Iconsax.document,
+            color: Colors.orange,
+            size: 16,
+          ),
+          label: Text(
+            AppLocalizations.of(context)!.status_localOnly,
+            style: textTheme.labelMedium,
+          ),
+          style: ButtonStyle(
+            backgroundColor:
+                _selectedStatus == HostingContentComparisonStatus.localOnly
+                    ? MaterialStateProperty.all(
+                        Colors.orange[100]!.withOpacity(0.2),
+                      )
+                    : null,
           ),
         ),
-        Flexible(
-          child: TextButton.icon(
-            onPressed: () {
-              setState(() {
-                _selectedStatus = HostingContentComparisonStatus.remoteOnly;
-              });
-            },
-            icon: const Icon(
-              Iconsax.document_cloud,
-              color: Colors.blue,
-              size: 16,
-            ),
-            label: Text(
-              AppLocalizations.of(context)!.status_remoteOnly,
-              style: textTheme.labelMedium,
-            ),
-            style: ButtonStyle(
-              backgroundColor:
-                  _selectedStatus == HostingContentComparisonStatus.remoteOnly
-                      ? MaterialStateProperty.all(
-                          Colors.blue[100]!.withOpacity(0.2),
-                        )
-                      : null,
-            ),
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              _selectedStatus = HostingContentComparisonStatus.remoteOnly;
+            });
+          },
+          icon: const Icon(
+            Iconsax.document_cloud,
+            color: Colors.blue,
+            size: 16,
+          ),
+          label: Text(
+            AppLocalizations.of(context)!.status_remoteOnly,
+            style: textTheme.labelMedium,
+          ),
+          style: ButtonStyle(
+            backgroundColor:
+                _selectedStatus == HostingContentComparisonStatus.remoteOnly
+                    ? MaterialStateProperty.all(
+                        Colors.blue[100]!.withOpacity(0.2),
+                      )
+                    : null,
           ),
         ),
-        Flexible(
-          child: TextButton.icon(
-            onPressed: () {
-              setState(() {
-                _selectedStatus =
-                    HostingContentComparisonStatus.differentContent;
-              });
-            },
-            icon: const Icon(
-              Iconsax.note_remove,
-              color: Colors.red,
-              size: 16,
-            ),
-            label: Text(
-              AppLocalizations.of(context)!.status_differentContent,
-              style: textTheme.labelMedium,
-            ),
-            style: ButtonStyle(
-              backgroundColor: _selectedStatus ==
-                      HostingContentComparisonStatus.differentContent
-                  ? MaterialStateProperty.all(Colors.red[100]!.withOpacity(0.2))
-                  : null,
-            ),
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              _selectedStatus = HostingContentComparisonStatus.differentContent;
+            });
+          },
+          icon: const Icon(
+            Iconsax.note_remove,
+            color: Colors.red,
+            size: 16,
+          ),
+          label: Text(
+            AppLocalizations.of(context)!.status_differentContent,
+            style: textTheme.labelMedium,
+          ),
+          style: ButtonStyle(
+            backgroundColor: _selectedStatus ==
+                    HostingContentComparisonStatus.differentContent
+                ? MaterialStateProperty.all(Colors.red[100]!.withOpacity(0.2))
+                : null,
           ),
         ),
-        Flexible(
-          child: TextButton.icon(
-            onPressed: () {
-              setState(() {
-                _selectedStatus = HostingContentComparisonStatus.sameContent;
-              });
-            },
-            icon: const Icon(
-              Iconsax.document_copy,
-              color: Colors.green,
-              size: 16,
-            ),
-            label: Text(
-              AppLocalizations.of(context)!.status_sameContent,
-              style: textTheme.labelMedium,
-            ),
-            style: ButtonStyle(
-              backgroundColor:
-                  _selectedStatus == HostingContentComparisonStatus.sameContent
-                      ? MaterialStateProperty.all(
-                          Colors.green[100]!.withOpacity(0.2),
-                        )
-                      : null,
-            ),
+        TextButton.icon(
+          onPressed: () {
+            setState(() {
+              _selectedStatus = HostingContentComparisonStatus.sameContent;
+            });
+          },
+          icon: const Icon(
+            Iconsax.document_copy,
+            color: Colors.green,
+            size: 16,
+          ),
+          label: Text(
+            AppLocalizations.of(context)!.status_sameContent,
+            style: textTheme.labelMedium,
+          ),
+          style: ButtonStyle(
+            backgroundColor:
+                _selectedStatus == HostingContentComparisonStatus.sameContent
+                    ? MaterialStateProperty.all(
+                        Colors.green[100]!.withOpacity(0.2),
+                      )
+                    : null,
           ),
         ),
       ],
