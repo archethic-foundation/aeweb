@@ -8,6 +8,7 @@ import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
 import 'package:aeweb/ui/views/main_screen.dart';
 import 'package:aeweb/ui/views/route_screen.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
+import 'package:aeweb/ui/views/update_certificate/layouts/update_certificate_sheet.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
 import 'package:aeweb/ui/views/welcome/welcome_screen.dart';
 import 'package:aeweb/util/generic/providers_observer.dart';
@@ -68,6 +69,18 @@ class MyApp extends ConsumerWidget {
         GoRoute(
           path: '/addWebsite',
           builder: (context, state) => const AddWebsiteSheet(),
+        ),
+        GoRoute(
+          path: '/updateCert',
+          name: 'updateCert',
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return UpdateCertificateSheet(
+              websiteName: args['websiteName'] == null
+                  ? ''
+                  : args['websiteName']! as String,
+            );
+          },
         ),
         GoRoute(
           path: '/unpublishWebsite',

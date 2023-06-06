@@ -393,6 +393,27 @@ Widget _popupMenuButton(
           ),
         if (lastVersion && websiteVersion.published)
           PopupMenuItem(
+            value: 'ManageCert',
+            child: Row(
+              children: [
+                const Icon(Iconsax.shield),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: websiteVersion.sslCertificate == null
+                      ? Text(
+                          AppLocalizations.of(context)!
+                              .websitesListVersionsPopupAddCertif,
+                        )
+                      : Text(
+                          AppLocalizations.of(context)!
+                              .websitesListVersionsPopupUpdateCertif,
+                        ),
+                ),
+              ],
+            ),
+          ),
+        if (lastVersion && websiteVersion.published)
+          PopupMenuItem(
             value: 'Unpublish',
             child: Row(
               children: [
@@ -488,6 +509,14 @@ Widget _popupMenuButton(
             websiteVersion.transactionRefAddress,
             websiteName,
             genesisAddress,
+          );
+          break;
+        case 'ManageCert':
+          context.go(
+            '/updateCert',
+            extra: {
+              'websiteName': websiteName,
+            },
           );
           break;
         case 'Unpublish':
