@@ -16,7 +16,6 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
   const UpdateWebsiteSyncSheet({
     super.key,
     required this.websiteName,
-    required this.genesisAddress,
     required this.path,
     required this.zipFile,
     required this.localFiles,
@@ -24,7 +23,6 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
   });
 
   final String websiteName;
-  final String genesisAddress;
   final String path;
   final Uint8List zipFile;
   final Map<String, HostingRefContentMetaData> localFiles;
@@ -38,7 +36,6 @@ class UpdateWebsiteSyncSheet extends ConsumerWidget {
             .overrideWithValue(
           UpdateWebsiteSyncFormState(
             name: websiteName,
-            genesisAddress: genesisAddress,
             path: path,
             zipFile: zipFile,
             localFiles: localFiles,

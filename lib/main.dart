@@ -118,9 +118,6 @@ class MyApp extends ConsumerWidget {
               websiteName: args['websiteName'] == null
                   ? ''
                   : args['websiteName']! as String,
-              genesisAddress: args['genesisAddress'] == null
-                  ? ''
-                  : args['genesisAddress']! as String,
               path: args['path'] == null ? '' : args['path']! as String,
               zipFile: args['zipFile'] == null
                   ? Uint8List.fromList([])

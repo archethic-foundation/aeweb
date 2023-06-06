@@ -19,7 +19,6 @@ mixin _$UpdateWebsiteSyncFormState {
   int get step => throw _privateConstructorUsedError;
   String get stepError => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  String get genesisAddress => throw _privateConstructorUsedError;
   String get path => throw _privateConstructorUsedError;
   String get publicCertPath => throw _privateConstructorUsedError;
   Uint8List? get publicCert => throw _privateConstructorUsedError;
@@ -52,7 +51,6 @@ abstract class $UpdateWebsiteSyncFormStateCopyWith<$Res> {
       {int step,
       String stepError,
       String name,
-      String genesisAddress,
       String path,
       String publicCertPath,
       Uint8List? publicCert,
@@ -85,7 +83,6 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
     Object? step = null,
     Object? stepError = null,
     Object? name = null,
-    Object? genesisAddress = null,
     Object? path = null,
     Object? publicCertPath = null,
     Object? publicCert = freezed,
@@ -112,10 +109,6 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      genesisAddress: null == genesisAddress
-          ? _value.genesisAddress
-          : genesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
       path: null == path
           ? _value.path
@@ -186,7 +179,6 @@ abstract class _$$_UpdateWebsiteSyncFormStateCopyWith<$Res>
       {int step,
       String stepError,
       String name,
-      String genesisAddress,
       String path,
       String publicCertPath,
       Uint8List? publicCert,
@@ -218,7 +210,6 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
     Object? step = null,
     Object? stepError = null,
     Object? name = null,
-    Object? genesisAddress = null,
     Object? path = null,
     Object? publicCertPath = null,
     Object? publicCert = freezed,
@@ -245,10 +236,6 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      genesisAddress: null == genesisAddress
-          ? _value.genesisAddress
-          : genesisAddress // ignore: cast_nullable_to_non_nullable
               as String,
       path: null == path
           ? _value.path
@@ -313,7 +300,6 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
       {this.step = 0,
       this.stepError = '',
       this.name = '',
-      this.genesisAddress = '',
       this.path = '',
       this.publicCertPath = '',
       this.publicCert,
@@ -340,9 +326,6 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   @override
   @JsonKey()
   final String name;
-  @override
-  @JsonKey()
-  final String genesisAddress;
   @override
   @JsonKey()
   final String path;
@@ -391,7 +374,7 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
 
   @override
   String toString() {
-    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, genesisAddress: $genesisAddress, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
+    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
   }
 
   @override
@@ -403,8 +386,6 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
             (identical(other.stepError, stepError) ||
                 other.stepError == stepError) &&
             (identical(other.name, name) || other.name == name) &&
-            (identical(other.genesisAddress, genesisAddress) ||
-                other.genesisAddress == genesisAddress) &&
             (identical(other.path, path) || other.path == path) &&
             (identical(other.publicCertPath, publicCertPath) ||
                 other.publicCertPath == publicCertPath) &&
@@ -437,7 +418,6 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
       step,
       stepError,
       name,
-      genesisAddress,
       path,
       publicCertPath,
       const DeepCollectionEquality().hash(publicCert),
@@ -465,7 +445,6 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
           {final int step,
           final String stepError,
           final String name,
-          final String genesisAddress,
           final String path,
           final String publicCertPath,
           final Uint8List? publicCert,
@@ -488,8 +467,6 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   String get stepError;
   @override
   String get name;
-  @override
-  String get genesisAddress;
   @override
   String get path;
   @override
