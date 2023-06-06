@@ -107,19 +107,25 @@ class UpdateCertificateFormNotifier
   bool controlCert(BuildContext context) {
     if (state.publicCert == null || state.privateKey == null) {
       state = state.copyWith(
-        errorText:
-            AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertKeyEmpty,
+        errorText: AppLocalizations.of(context)!
+            .updateCertificateStepErrorSSLCertKeyEmpty,
       );
       return false;
     }
     if (CertificateMixin.validCertificatFromFile(state.publicCert!) == false) {
       state = state.copyWith(
-        errorText:
-            AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertInvalid,
+        errorText: AppLocalizations.of(context)!
+            .updateCertificateStepErrorSSLCertInvalid,
       );
       return false;
     }
-
+    if (CertificateMixin.validPrivateKeyFromFile(state.privateKey!) == false) {
+      state = state.copyWith(
+        errorText: AppLocalizations.of(context)!
+            .updateCertificateStepErrorPrivateKeyInvalid,
+      );
+      return false;
+    }
     return true;
   }
 

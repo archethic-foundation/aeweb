@@ -200,6 +200,13 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
       );
       return false;
     }
+    if (CertificateMixin.validPrivateKeyFromFile(state.privateKey!) == false) {
+      state = state.copyWith(
+        errorText:
+            AppLocalizations.of(context)!.addWebsiteStepErrorPrivateKeyInvalid,
+      );
+      return false;
+    }
 
     return true;
   }

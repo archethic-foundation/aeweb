@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/foundation.dart';
@@ -32,6 +33,17 @@ mixin CertificateMixin {
       return x509Certificate.tbsCertificate!.validity.notAfter
           .isAfter(DateTime.now());
     } catch (e) {
+      log(e.toString());
+      return false;
+    }
+  }
+
+  static bool validPrivateKeyFromFile(Uint8List privateKey) {
+    try {
+      CryptoUtils.rsaPrivateKeyFromPem(utf8.decode(privateKey));
+      return true;
+    } catch (e) {
+      log(e.toString());
       return false;
     }
   }
