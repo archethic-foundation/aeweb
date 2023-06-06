@@ -131,7 +131,8 @@ class CertificateInfosPopup with CertificateMixin {
                                       height: 10,
                                     ),
                                     Text(
-                                      'Emis par',
+                                      AppLocalizations.of(context)!
+                                          .certificateInfosIssuerTitle,
                                       style: Theme.of(context)
                                           .textTheme
                                           .titleSmall,
