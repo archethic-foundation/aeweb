@@ -4,6 +4,7 @@ import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
+import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
@@ -170,6 +171,13 @@ class PathSyncPopup with FileMixin {
                                   ),
                                   Text(
                                     path ?? '',
+                                  ),
+                                  const SizedBox(
+                                    height: 10,
+                                  ),
+                                  const WarningSizeLabel(),
+                                  const SizedBox(
+                                    height: 10,
                                   ),
                                 ],
                               ),

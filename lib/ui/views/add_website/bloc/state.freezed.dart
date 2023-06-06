@@ -29,6 +29,7 @@ mixin _$AddWebsiteFormState {
   double get globalFees => throw _privateConstructorUsedError;
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get applyGitIgnoreRules => throw _privateConstructorUsedError;
+  bool? get controlInProgress => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -56,6 +57,7 @@ abstract class $AddWebsiteFormStateCopyWith<$Res> {
       double globalFees,
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
+      bool? controlInProgress,
       String errorText});
 }
 
@@ -85,6 +87,7 @@ class _$AddWebsiteFormStateCopyWithImpl<$Res, $Val extends AddWebsiteFormState>
     Object? globalFees = null,
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
+    Object? controlInProgress = freezed,
     Object? errorText = null,
   }) {
     return _then(_value.copyWith(
@@ -140,6 +143,10 @@ class _$AddWebsiteFormStateCopyWithImpl<$Res, $Val extends AddWebsiteFormState>
           ? _value.applyGitIgnoreRules
           : applyGitIgnoreRules // ignore: cast_nullable_to_non_nullable
               as bool?,
+      controlInProgress: freezed == controlInProgress
+          ? _value.controlInProgress
+          : controlInProgress // ignore: cast_nullable_to_non_nullable
+              as bool?,
       errorText: null == errorText
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
@@ -170,6 +177,7 @@ abstract class _$$_AddWebsiteFormStateCopyWith<$Res>
       double globalFees,
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
+      bool? controlInProgress,
       String errorText});
 }
 
@@ -197,6 +205,7 @@ class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
     Object? globalFees = null,
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
+    Object? controlInProgress = freezed,
     Object? errorText = null,
   }) {
     return _then(_$_AddWebsiteFormState(
@@ -252,6 +261,10 @@ class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
           ? _value.applyGitIgnoreRules
           : applyGitIgnoreRules // ignore: cast_nullable_to_non_nullable
               as bool?,
+      controlInProgress: freezed == controlInProgress
+          ? _value.controlInProgress
+          : controlInProgress // ignore: cast_nullable_to_non_nullable
+              as bool?,
       errorText: null == errorText
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
@@ -277,6 +290,7 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
       this.globalFees = 0.0,
       this.globalFeesValidated,
       this.applyGitIgnoreRules,
+      this.controlInProgress = false,
       this.errorText = ''})
       : super._();
 
@@ -316,11 +330,14 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
   final bool? applyGitIgnoreRules;
   @override
   @JsonKey()
+  final bool? controlInProgress;
+  @override
+  @JsonKey()
   final String errorText;
 
   @override
   String toString() {
-    return 'AddWebsiteFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText)';
+    return 'AddWebsiteFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, controlInProgress: $controlInProgress, errorText: $errorText)';
   }
 
   @override
@@ -350,6 +367,8 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
                 other.globalFeesValidated == globalFeesValidated) &&
             (identical(other.applyGitIgnoreRules, applyGitIgnoreRules) ||
                 other.applyGitIgnoreRules == applyGitIgnoreRules) &&
+            (identical(other.controlInProgress, controlInProgress) ||
+                other.controlInProgress == controlInProgress) &&
             (identical(other.errorText, errorText) ||
                 other.errorText == errorText));
   }
@@ -370,6 +389,7 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
       globalFees,
       globalFeesValidated,
       applyGitIgnoreRules,
+      controlInProgress,
       errorText);
 
   @JsonKey(ignore: true)
@@ -395,6 +415,7 @@ abstract class _AddWebsiteFormState extends AddWebsiteFormState {
       final double globalFees,
       final bool? globalFeesValidated,
       final bool? applyGitIgnoreRules,
+      final bool? controlInProgress,
       final String errorText}) = _$_AddWebsiteFormState;
   const _AddWebsiteFormState._() : super._();
 
@@ -424,6 +445,8 @@ abstract class _AddWebsiteFormState extends AddWebsiteFormState {
   bool? get globalFeesValidated;
   @override
   bool? get applyGitIgnoreRules;
+  @override
+  bool? get controlInProgress;
   @override
   String get errorText;
   @override

@@ -4,6 +4,7 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_zip_file.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_switch_gitignore.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_textfield_name.dart';
+import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -139,6 +140,8 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                 const AddWebsiteSelectZipFile()
               else
                 const AddWebsiteSelectPath(),
+              const SizedBox(height: 16),
+              const WarningSizeLabel(),
               const SizedBox(height: 16),
               const AddWebsiteSwitchGitignore(),
               const SizedBox(height: 16),
