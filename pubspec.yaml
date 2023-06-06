@@ -134,7 +134,6 @@ flutter:
   generate: true
   uses-material-design: true
   assets:
-    - assets/ssl/isrg-root-x1.pem
     - assets/images/
 
   fonts:

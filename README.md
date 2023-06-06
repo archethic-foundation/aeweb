@@ -3,7 +3,7 @@
 # AE Web
 
 ### Main features
-- Deploy and update static websites on the Archethic Blockchain
+- Deploy and update static sites on the Archethic Blockchain
 - SSL Certificate management
 
 ### Security
@@ -20,8 +20,8 @@
 <br/><br/>
 ### Pre-requisites
 
-- Flutter 3.7+
-- Dart 2.19+
+- Flutter 3.10+
+- Dart 3+
 
 ### Note
 

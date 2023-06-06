@@ -1,6 +1,6 @@
 {
     "name": "aeweb",
-    "short_name": "aeweb",
+    "short_name": "AEWeb",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

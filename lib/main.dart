@@ -1,6 +1,4 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'dart:io';
-
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
@@ -36,14 +34,6 @@ Future<void> main() async {
       child: const MyApp(),
     ),
   );
-
-  if (!kIsWeb && Platform.isAndroid) {
-    // Fix LetsEncrypt root certificate for Android<7.1
-    final x1cert = await rootBundle.load('assets/ssl/isrg-root-x1.pem');
-    SecurityContext.defaultContext.setTrustedCertificatesBytes(
-      x1cert.buffer.asUint8List(),
-    );
-  }
 }
 
 class MyApp extends ConsumerWidget {
