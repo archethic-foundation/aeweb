@@ -13,7 +13,6 @@ class UpdateWebsiteSyncFormState with _$UpdateWebsiteSyncFormState {
     @Default(0) int step,
     @Default('') String stepError,
     @Default('') String name,
-    @Default('') String genesisAddress,
     @Default('') String path,
     @Default('') String publicCertPath,
     Uint8List? publicCert,
