@@ -15,13 +15,16 @@ class AddWebsiteBottomBar extends ConsumerWidget {
     final addWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 
     Future<bool> _submitForm() async {
-      final addWebsiteNotifier =
-          ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
-
+      final addWebsiteNotifier = ref
+          .watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
+        ..setControlInProgress(true);
       final isNameOk = addWebsiteNotifier.controlName(context);
       final isPathOk = addWebsiteNotifier.controlPath(context);
       final isCertOk = addWebsiteNotifier.controlCert(context);
-      if (isNameOk && isPathOk && isCertOk) {
+      final isSiteSizeOk =
+          await addWebsiteNotifier.controlNbOfTransactionFiles(context);
+      addWebsiteNotifier.setControlInProgress(false);
+      if (isNameOk && isPathOk && isCertOk && isSiteSizeOk) {
         final acceptRules = await ContentWebsiteWarningPopup.getDialog(
           context,
           AppLocalizations.of(context)!.addWebsiteContentWarningHeader,

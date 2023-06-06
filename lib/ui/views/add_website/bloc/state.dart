@@ -21,13 +21,15 @@ class AddWebsiteFormState with _$AddWebsiteFormState {
     @Default(0.0) double globalFees,
     bool? globalFeesValidated,
     bool? applyGitIgnoreRules,
+    @Default(false) bool? controlInProgress,
     @Default('') String errorText,
   }) = _AddWebsiteFormState;
   const AddWebsiteFormState._();
 
   bool get isControlsOk => errorText == '';
 
-  bool get creationInProgress => step > 0 && step < 12 && stepError.isEmpty;
+  bool get creationInProgress =>
+      (step > 0 && step < 12 && stepError.isEmpty) || controlInProgress == true;
 
   bool get processFinished => stepError.isNotEmpty || step >= 12;
 

@@ -120,6 +120,14 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
       );
     }
 
+    log('Nb of files transaction: ${contents.length}');
+    if (contents.length > 1) {
+      updateWebsiteSyncNotifier.setStepError(
+        AppLocalizations.of(context)!.updateWebsiteTooManyFiles,
+      );
+      return;
+    }
+
     var transactionsList = <Transaction>[];
     for (final content in contents) {
       transactionsList.add(

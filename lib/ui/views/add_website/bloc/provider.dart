@@ -1,7 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:developer';
+
 import 'package:aeweb/domain/usecases/website/add_website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:aeweb/util/certificate_util.dart';
+import 'package:aeweb/util/file_util.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -24,7 +28,7 @@ final _addWebsiteFormProvider =
 );
 
 class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
-    with CertificateMixin {
+    with CertificateMixin, FileMixin {
   AddWebsiteFormNotifier();
 
   @override
@@ -125,6 +129,12 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
     );
   }
 
+  void setControlInProgress(bool controlInProgress) {
+    state = state.copyWith(
+      controlInProgress: controlInProgress,
+    );
+  }
+
   void setGlobalFees(double globalFees) {
     state = state.copyWith(
       globalFees: globalFees,
@@ -191,6 +201,45 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
       return false;
     }
 
+    return true;
+  }
+
+  Future<bool> controlNbOfTransactionFiles(BuildContext context) async {
+    late final List<Map<String, dynamic>> contents;
+    late final Map<String, HostingRefContentMetaData>? files;
+
+    if (kIsWeb) {
+      files = await FileMixin.listFilesFromZip(
+        state.zipFile!,
+        applyGitIgnoreRules: state.applyGitIgnoreRules ?? false,
+      );
+      if (files == null) {
+        return true;
+      }
+      contents = setContentsFromZip(
+        state.zipFile!,
+        files.keys.toList(),
+      );
+    } else {
+      files = await FileMixin.listFilesFromPath(
+        state.path,
+        applyGitIgnoreRules: state.applyGitIgnoreRules ?? false,
+      );
+      if (files == null) {
+        return true;
+      }
+      contents = setContentsFromPath(
+        state.path,
+        files.keys.toList(),
+      );
+    }
+    log('Nb of files transaction: ${contents.length}');
+    if (contents.length > 1) {
+      state = state.copyWith(
+        errorText: AppLocalizations.of(context)!.addWebsiteTooManyFiles,
+      );
+      return false;
+    }
     return true;
   }
 
