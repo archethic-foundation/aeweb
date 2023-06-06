@@ -40,147 +40,144 @@ class AddWebsiteFormSheet extends ConsumerWidget {
         ),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Scrollbar(
-        thumbVisibility: true,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SelectionArea(
-                        child: Text(
-                          AppLocalizations.of(context)!.addWebSiteFormTitle,
-                          style: Theme.of(context).textTheme.titleSmall,
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.only(right: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: SelectionArea(
+                      child: Text(
+                        AppLocalizations.of(context)!.addWebSiteFormTitle,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: 50,
+                      height: 1,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0x003C89B9),
+                            Color(0xFFCC00FF),
+                          ],
+                          stops: [0, 1],
+                          begin: AlignmentDirectional.centerEnd,
+                          end: AlignmentDirectional.centerStart,
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        width: 50,
-                        height: 1,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0x003C89B9),
-                              Color(0xFFCC00FF),
-                            ],
-                            stops: [0, 1],
-                            begin: AlignmentDirectional.centerEnd,
-                            end: AlignmentDirectional.centerStart,
-                          ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Text(
+                AppLocalizations.of(context)!.addWebSiteDesc,
+                style: textTheme.labelMedium,
+              ),
+              const SizedBox(height: 30),
+              Row(
+                children: [
+                  const Icon(
+                    Iconsax.warning_2,
+                    color: Colors.red,
+                  ),
+                  const SizedBox(width: 5),
+                  Text(
+                    AppLocalizations.of(context)!.disclaimer,
+                    style: textTheme.labelMedium,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              Text(
+                AppLocalizations.of(context)!.addWebSiteDisclaimer,
+                style: textTheme.labelMedium,
+              ),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: SelectionArea(
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .addWebSiteFormRequiredInfo,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: 50,
+                      height: 1,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0x003C89B9),
+                            Color(0xFFCC00FF),
+                          ],
+                          stops: [0, 1],
+                          begin: AlignmentDirectional.centerEnd,
+                          end: AlignmentDirectional.centerStart,
                         ),
                       ),
                     ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  AppLocalizations.of(context)!.addWebSiteDesc,
-                  style: textTheme.labelMedium,
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    const Icon(
-                      Iconsax.warning_2,
-                      color: Colors.red,
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              const AddWebsiteTextFieldName(),
+              const SizedBox(height: 16),
+              if (kIsWeb)
+                const AddWebsiteSelectZipFile()
+              else
+                const AddWebsiteSelectPath(),
+              const SizedBox(height: 16),
+              const AddWebsiteSwitchGitignore(),
+              const SizedBox(height: 16),
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(right: 15),
+                    child: SelectionArea(
+                      child: Text(
+                        AppLocalizations.of(context)!
+                            .addWebSiteFormOptionalInfo,
+                        style: Theme.of(context).textTheme.titleSmall,
+                      ),
                     ),
-                    const SizedBox(width: 5),
-                    Text(
-                      AppLocalizations.of(context)!.disclaimer,
-                      style: textTheme.labelMedium,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  AppLocalizations.of(context)!.addWebSiteDisclaimer,
-                  style: textTheme.labelMedium,
-                ),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SelectionArea(
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .addWebSiteFormRequiredInfo,
-                          style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  Expanded(
+                    child: Container(
+                      width: 50,
+                      height: 1,
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            Color(0x003C89B9),
+                            Color(0xFFCC00FF),
+                          ],
+                          stops: [0, 1],
+                          begin: AlignmentDirectional.centerEnd,
+                          end: AlignmentDirectional.centerStart,
                         ),
                       ),
                     ),
-                    Expanded(
-                      child: Container(
-                        width: 50,
-                        height: 1,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0x003C89B9),
-                              Color(0xFFCC00FF),
-                            ],
-                            stops: [0, 1],
-                            begin: AlignmentDirectional.centerEnd,
-                            end: AlignmentDirectional.centerStart,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                const AddWebsiteTextFieldName(),
-                const SizedBox(height: 16),
-                if (kIsWeb)
-                  const AddWebsiteSelectZipFile()
-                else
-                  const AddWebsiteSelectPath(),
-                const SizedBox(height: 16),
-                const AddWebsiteSwitchGitignore(),
-                const SizedBox(height: 16),
-                Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: SelectionArea(
-                        child: Text(
-                          AppLocalizations.of(context)!
-                              .addWebSiteFormOptionalInfo,
-                          style: Theme.of(context).textTheme.titleSmall,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Container(
-                        width: 50,
-                        height: 1,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0x003C89B9),
-                              Color(0xFFCC00FF),
-                            ],
-                            stops: [0, 1],
-                            begin: AlignmentDirectional.centerEnd,
-                            end: AlignmentDirectional.centerStart,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                const AddWebsiteSelectPublicCertPath(),
-                const SizedBox(height: 16),
-                const AddWebsiteSelectPrivateKeyPath(),
-              ],
-            ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              const AddWebsiteSelectPublicCertPath(),
+              const SizedBox(height: 16),
+              const AddWebsiteSelectPrivateKeyPath(),
+            ],
           ),
         ),
       ),
