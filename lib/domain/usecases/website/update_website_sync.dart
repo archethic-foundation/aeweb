@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/util/file_util.dart';
@@ -121,7 +122,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     }
 
     log('Nb of files transaction: ${contents.length}');
-    if (contents.length > 1) {
+    if (contents.length > 1 && FeatureFlags.websiteSizeLimit) {
       updateWebsiteSyncNotifier.setStepError(
         AppLocalizations.of(context)!.updateWebsiteTooManyFiles,
       );

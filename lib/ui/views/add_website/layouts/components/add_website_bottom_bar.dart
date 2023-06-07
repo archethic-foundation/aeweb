@@ -1,3 +1,4 @@
+import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
@@ -21,8 +22,11 @@ class AddWebsiteBottomBar extends ConsumerWidget {
       final isNameOk = addWebsiteNotifier.controlName(context);
       final isPathOk = addWebsiteNotifier.controlPath(context);
       final isCertOk = addWebsiteNotifier.controlCert(context);
-      final isSiteSizeOk =
-          await addWebsiteNotifier.controlNbOfTransactionFiles(context);
+      var isSiteSizeOk = true;
+      if (FeatureFlags.websiteSizeLimit) {
+        isSiteSizeOk =
+            await addWebsiteNotifier.controlNbOfTransactionFiles(context);
+      }
       addWebsiteNotifier.setControlInProgress(false);
       if (isNameOk && isPathOk && isCertOk && isSiteSizeOk) {
         final acceptRules = await ContentWebsiteWarningPopup.getDialog(
