@@ -153,6 +153,8 @@
   "updateWebSiteConfirmedStep13": "The site has been successfully updated!",
   "updateWebSiteNoUpdateNecessary": "No update necessary",
   "websitesListVersionsPopupExplore": "Explore files",
+  "exploreFilesPopupDownload": "Download",
+  "exploreFilesPopupSeeFilesTx": "See files transaction(s)",
   "websitesListVersionsPopupExploreTx": "Explore transactions",
   "websitesListVersionsPopupRefTx": "See reference transaction",
   "websitesListVersionsPopupSync": "Sync from local folder",

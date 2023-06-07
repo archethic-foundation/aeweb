@@ -8,8 +8,8 @@ class IconButtonAnimated extends ConsumerStatefulWidget {
     required this.onPressed,
     required this.color,
     this.iconSize = 20,
-    super.key,
     this.tooltip = '',
+    super.key,
   });
 
   final Icon icon;

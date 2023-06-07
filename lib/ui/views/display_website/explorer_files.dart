@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/ui/views/util/components/icon_animated.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
@@ -6,6 +8,8 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:gradient_borders/gradient_borders.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExplorerFilesScreen extends ConsumerStatefulWidget {
   const ExplorerFilesScreen({super.key, required this.filesAndFolders});
@@ -59,9 +63,10 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
         orElse: () {
           final node = Node(
             label: _getLabel(part, isFolder, metaData.size),
+            data: metaData,
             key: currentKey.toString(),
             children: [],
-            icon: isFolder ? Icons.folder : Icons.insert_drive_file,
+            icon: isFolder ? Iconsax.folder : Icons.insert_drive_file,
           );
           siblings.add(node);
           return node;
@@ -91,7 +96,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       key,
       node.copyWith(
         expanded: expanded,
-        icon: expanded ? Icons.folder_open : Icons.folder,
+        icon: expanded ? Iconsax.folder_open : Iconsax.folder,
       ),
     );
 
@@ -194,11 +199,106 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                   });
                 },
                 theme: _treeViewTheme,
+                nodeBuilder: (BuildContext context, Node node) {
+                  return Container(
+                    padding: const EdgeInsets.all(4),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          flex: 10,
+                          child: IconAnimated(
+                            icon: node.icon!,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                        ),
+                        Expanded(
+                          flex: 80,
+                          child: Text(node.label),
+                        ),
+                        Expanded(
+                          flex: 10,
+                          child: Align(
+                            child: _popupMenuButton(
+                              context,
+                              ref,
+                              node,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  );
+                },
               ),
             ),
           ],
         ),
       ),
+    );
+  }
+
+  Widget _popupMenuButton(
+    BuildContext context,
+    WidgetRef ref,
+    Node node,
+  ) {
+    return PopupMenuButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(20),
+      ),
+      itemBuilder: (context) {
+        return [
+          PopupMenuItem(
+            value: 'Download',
+            child: Row(
+              children: [
+                const Icon(Iconsax.document_download),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    AppLocalizations.of(context)!.exploreFilesPopupDownload,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          PopupMenuItem(
+            value: 'SeeFilesTx',
+            child: Row(
+              children: [
+                const Icon(Iconsax.document),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    AppLocalizations.of(context)!.exploreFilesPopupSeeFilesTx,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                const Icon(
+                  Iconsax.export_3,
+                  size: 12,
+                ),
+              ],
+            ),
+          ),
+        ];
+      },
+      onSelected: (value) {
+        switch (value) {
+          case 'Download':
+            break;
+          case 'SeeFilesTx':
+            final archethic.HostingRefContentMetaData metaData = node.data;
+            for (final address in metaData.addresses) {
+              launchUrl(
+                Uri.parse(
+                  '${sl.get<archethic.ApiService>().endpoint}/explorer/transaction/$address',
+                ),
+              );
+            }
+            break;
+        }
+      },
     );
   }
 }
