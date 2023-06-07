@@ -37,7 +37,7 @@ class _AddWebsiteSelectPublicCertPathState
           addWebsiteNotifier
             ..setPublicCertPath(result.files.first.name)
             ..setPublicCert(
-              File.fromRawPath(result.files.single.bytes!).readAsBytesSync(),
+              result.files.single.bytes,
             );
         } else {
           addWebsiteNotifier

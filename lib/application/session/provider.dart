@@ -74,6 +74,7 @@ class _SessionNotifier extends Notifier<Session> {
   Future<void> cancelConnection() async {
     await sl.get<ArchethicDAppClient>().close();
     await sl.get<DBHelper>().clearWebsites();
+    log('Unregister', name: 'ApiService');
     sl.unregister<ApiService>();
     ref
       ..invalidate(WebsitesProviders.fetchWebsiteVersions)
