@@ -38,7 +38,7 @@ class _AddWebsiteSelectPrivateKeyPathState
           addWebsiteNotifier
             ..setPrivateKeyPath(result.files.first.name)
             ..setPrivateKey(
-              File.fromRawPath(result.files.single.bytes!).readAsBytesSync(),
+              result.files.single.bytes,
             );
         } else {
           addWebsiteNotifier
