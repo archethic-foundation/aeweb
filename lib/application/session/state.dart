@@ -14,10 +14,9 @@ class Session with _$Session {
     @Default('') String oldNameAccount,
     @Default('') String genesisAddress,
     @Default('') String error,
+    @Default(false) bool isConnected,
     Subscription<Account>? accountSub,
     StreamSubscription<Account>? accountStreamSub,
   }) = _Session;
   const Session._();
-
-  bool get isConnectedToWallet => nameAccount != '' && genesisAddress != '';
 }

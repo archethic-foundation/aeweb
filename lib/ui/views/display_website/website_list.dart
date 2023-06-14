@@ -1,5 +1,6 @@
 import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/selected_website.dart';
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
@@ -20,7 +21,7 @@ class WebsiteList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final websitesList = ref.watch(WebsitesProviders.fetchWebsites);
-
+    final session = ref.watch(SessionProviders.session);
     final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Container(
@@ -49,7 +50,7 @@ class WebsiteList extends ConsumerWidget {
             IconButton(
               icon: const Icon(Icons.menu),
               onPressed: () {
-                _scaffoldKey.currentState!.openDrawer();
+                _scaffoldKey.currentState?.openDrawer();
               },
             ),
           if (!Responsive.isDesktop(context)) const SizedBox(width: 20),
@@ -81,14 +82,15 @@ class WebsiteList extends ConsumerWidget {
                   ),
                 ),
               ),
-              IconButtonAnimated(
-                onPressed: () {
-                  context.go('/addWebsite');
-                },
-                icon: const Icon(Iconsax.add_circle),
-                tooltip: AppLocalizations.of(context)!.tooltip_addNewWebsite,
-                color: Theme.of(context).colorScheme.primary,
-              ),
+              if (session.isConnected)
+                IconButtonAnimated(
+                  onPressed: () {
+                    context.go('/addWebsite');
+                  },
+                  icon: const Icon(Iconsax.add_circle),
+                  tooltip: AppLocalizations.of(context)!.tooltip_addNewWebsite,
+                  color: Theme.of(context).colorScheme.primary,
+                ),
             ],
           ),
           websitesList.map(
@@ -205,14 +207,17 @@ Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
       borderRadius: BorderRadius.circular(10),
     ),
     onTap: () {
-      ref
-          .read(SelectedWebsiteProviders.selectedWebsiteProvider.notifier)
-          .setSelection(website.genesisAddress, website.name);
-      ref
-          .read(
-            MainScreenThirdPartProviders.mainScreenThirdPartProvider.notifier,
-          )
-          .setWidget(const SizedBox());
+      final session = ref.watch(SessionProviders.session);
+      if (session.isConnected) {
+        ref
+            .read(SelectedWebsiteProviders.selectedWebsiteProvider.notifier)
+            .setSelection(website.genesisAddress, website.name);
+        ref
+            .read(
+              MainScreenThirdPartProviders.mainScreenThirdPartProvider.notifier,
+            )
+            .setWidget(const SizedBox());
+      }
     },
     child: Padding(
       padding: const EdgeInsets.all(10),

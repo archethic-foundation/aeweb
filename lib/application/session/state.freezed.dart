@@ -21,6 +21,7 @@ mixin _$Session {
   String get oldNameAccount => throw _privateConstructorUsedError;
   String get genesisAddress => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
+  bool get isConnected => throw _privateConstructorUsedError;
   Subscription<Account>? get accountSub => throw _privateConstructorUsedError;
   StreamSubscription<Account>? get accountStreamSub =>
       throw _privateConstructorUsedError;
@@ -40,6 +41,7 @@ abstract class $SessionCopyWith<$Res> {
       String oldNameAccount,
       String genesisAddress,
       String error,
+      bool isConnected,
       Subscription<Account>? accountSub,
       StreamSubscription<Account>? accountStreamSub});
 
@@ -64,6 +66,7 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
     Object? oldNameAccount = null,
     Object? genesisAddress = null,
     Object? error = null,
+    Object? isConnected = null,
     Object? accountSub = freezed,
     Object? accountStreamSub = freezed,
   }) {
@@ -88,6 +91,10 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
+      isConnected: null == isConnected
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
       accountSub: freezed == accountSub
           ? _value.accountSub
           : accountSub // ignore: cast_nullable_to_non_nullable
@@ -125,6 +132,7 @@ abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
       String oldNameAccount,
       String genesisAddress,
       String error,
+      bool isConnected,
       Subscription<Account>? accountSub,
       StreamSubscription<Account>? accountStreamSub});
 
@@ -147,6 +155,7 @@ class __$$_SessionCopyWithImpl<$Res>
     Object? oldNameAccount = null,
     Object? genesisAddress = null,
     Object? error = null,
+    Object? isConnected = null,
     Object? accountSub = freezed,
     Object? accountStreamSub = freezed,
   }) {
@@ -171,6 +180,10 @@ class __$$_SessionCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
+      isConnected: null == isConnected
+          ? _value.isConnected
+          : isConnected // ignore: cast_nullable_to_non_nullable
+              as bool,
       accountSub: freezed == accountSub
           ? _value.accountSub
           : accountSub // ignore: cast_nullable_to_non_nullable
@@ -192,6 +205,7 @@ class _$_Session extends _Session {
       this.oldNameAccount = '',
       this.genesisAddress = '',
       this.error = '',
+      this.isConnected = false,
       this.accountSub,
       this.accountStreamSub})
       : super._();
@@ -212,13 +226,16 @@ class _$_Session extends _Session {
   @JsonKey()
   final String error;
   @override
+  @JsonKey()
+  final bool isConnected;
+  @override
   final Subscription<Account>? accountSub;
   @override
   final StreamSubscription<Account>? accountStreamSub;
 
   @override
   String toString() {
-    return 'Session(endpoint: $endpoint, nameAccount: $nameAccount, oldNameAccount: $oldNameAccount, genesisAddress: $genesisAddress, error: $error, accountSub: $accountSub, accountStreamSub: $accountStreamSub)';
+    return 'Session(endpoint: $endpoint, nameAccount: $nameAccount, oldNameAccount: $oldNameAccount, genesisAddress: $genesisAddress, error: $error, isConnected: $isConnected, accountSub: $accountSub, accountStreamSub: $accountStreamSub)';
   }
 
   @override
@@ -235,6 +252,8 @@ class _$_Session extends _Session {
             (identical(other.genesisAddress, genesisAddress) ||
                 other.genesisAddress == genesisAddress) &&
             (identical(other.error, error) || other.error == error) &&
+            (identical(other.isConnected, isConnected) ||
+                other.isConnected == isConnected) &&
             (identical(other.accountSub, accountSub) ||
                 other.accountSub == accountSub) &&
             (identical(other.accountStreamSub, accountStreamSub) ||
@@ -242,8 +261,16 @@ class _$_Session extends _Session {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, endpoint, nameAccount,
-      oldNameAccount, genesisAddress, error, accountSub, accountStreamSub);
+  int get hashCode => Object.hash(
+      runtimeType,
+      endpoint,
+      nameAccount,
+      oldNameAccount,
+      genesisAddress,
+      error,
+      isConnected,
+      accountSub,
+      accountStreamSub);
 
   @JsonKey(ignore: true)
   @override
@@ -259,6 +286,7 @@ abstract class _Session extends Session {
       final String oldNameAccount,
       final String genesisAddress,
       final String error,
+      final bool isConnected,
       final Subscription<Account>? accountSub,
       final StreamSubscription<Account>? accountStreamSub}) = _$_Session;
   const _Session._() : super._();
@@ -273,6 +301,8 @@ abstract class _Session extends Session {
   String get genesisAddress;
   @override
   String get error;
+  @override
+  bool get isConnected;
   @override
   Subscription<Account>? get accountSub;
   @override

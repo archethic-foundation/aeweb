@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
 import 'dart:developer';
-import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/selected_website.dart';
 import 'package:aeweb/application/session/state.dart';
-import 'package:aeweb/application/websites.dart';
+import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/service_locator.dart';
@@ -15,56 +15,153 @@ part 'provider.g.dart';
 
 @Riverpod(keepAlive: true)
 class _SessionNotifier extends Notifier<Session> {
+  StreamSubscription? connectionStatusSubscription;
+
   @override
   Session build() {
+    ref.onDispose(() {
+      log('dispose SessionNotifier');
+      connectionStatusSubscription?.cancel();
+    });
     return const Session();
   }
 
   Future<void> connectToWallet() async {
-    final endpointResponse = await sl.get<ArchethicDAppClient>().getEndpoint();
-    endpointResponse.when(
-      failure: (failure) {
-        switch (failure.code) {
-          case 4901:
-            state = state.copyWith(
-              error: 'Please, open your Archethic Wallet.',
-            );
-            break;
-          default:
-            state = state.copyWith(
-              error: failure.message ?? 'Connection failed',
-            );
-        }
-      },
-      success: (result) async {
-        log('DApp is connected to archethic wallet.');
-        state = state.copyWith(endpoint: result.endpointUrl);
-        await setupServiceLocatorApiService(result.endpointUrl);
+    try {
+      await sl.get<DBHelper>().clearWebsites();
+      state = state.copyWith(
+        isConnected: false,
+        error: '',
+      );
 
-        final subscription =
-            await sl.get<ArchethicDAppClient>().subscribeCurrentAccount();
+      final archethicDAppClient = ArchethicDAppClient.auto(
+        origin: const RequestOrigin(
+          name: 'AEWeb',
+        ),
+        replyBaseUrl: 'aeweb://archethic.tech',
+      );
 
-        subscription.when(
-          success: (success) async {
+      final endpointResponse = await archethicDAppClient.getEndpoint();
+      endpointResponse.when(
+        failure: (failure) {
+          switch (failure.code) {
+            case 4901:
+              state = state.copyWith(
+                isConnected: false,
+                error: 'Please, open your Archethic Wallet.',
+              );
+              break;
+            default:
+              log(failure.message ?? 'Connection failed');
+              state = state.copyWith(
+                isConnected: false,
+                error: 'Please, open your Archethic Wallet.',
+              );
+          }
+        },
+        success: (result) async {
+          log('DApp is connected to archethic wallet.');
+
+          if (FeatureFlags.mainnetActive == false &&
+              result.endpointUrl == 'https://mainnet.archethic.net') {
             state = state.copyWith(
-              accountSub: success,
-              accountStreamSub: success.updates.listen((event) {
+              isConnected: false,
+              error:
+                  'AEWeb is not currently available on the Archethic mainnet.',
+            );
+            return;
+          }
+
+          state = state.copyWith(endpoint: result.endpointUrl);
+          connectionStatusSubscription =
+              archethicDAppClient.connectionStateStream.listen((event) {
+            event.when(
+              disconnected: () {
+                log('Disconnected', name: 'Wallet connection');
                 state = state.copyWith(
-                  oldNameAccount: state.nameAccount,
-                  genesisAddress: event.genesisAddress,
-                  nameAccount: event.name,
+                  endpoint: '',
+                  error: '',
+                  genesisAddress: '',
+                  nameAccount: '',
+                  oldNameAccount: '',
+                  isConnected: false,
                 );
-              }),
+              },
+              connected: () async {
+                log('Connected', name: 'Wallet connection');
+                state = state.copyWith(
+                  isConnected: true,
+                  error: '',
+                );
+              },
+              connecting: () {
+                log('Connecting', name: 'Wallet connection');
+                state = state.copyWith(
+                  endpoint: '',
+                  error: '',
+                  genesisAddress: '',
+                  nameAccount: '',
+                  oldNameAccount: '',
+                  isConnected: false,
+                );
+              },
             );
-          },
-          failure: (failure) {
-            state = state.copyWith(
-              error: failure.message ?? 'Connection failed',
-            );
-          },
-        );
-      },
-    );
+          });
+          if (sl.isRegistered<ApiService>()) {
+            sl.unregister<ApiService>();
+          }
+          if (sl.isRegistered<ArchethicDAppClient>()) {
+            sl.unregister<ArchethicDAppClient>();
+          }
+          sl.registerLazySingleton<ArchethicDAppClient>(
+            () => archethicDAppClient,
+          );
+          setupServiceLocatorApiService(result.endpointUrl);
+          final subscription =
+              await archethicDAppClient.subscribeCurrentAccount();
+
+          subscription.when(
+            success: (success) async {
+              state = state.copyWith(
+                accountSub: success,
+                error: '',
+                isConnected: true,
+                accountStreamSub: success.updates.listen((event) {
+                  if (event.name.isEmpty && event.genesisAddress.isEmpty) {
+                    state = state.copyWith(
+                      oldNameAccount: state.nameAccount,
+                      genesisAddress: event.genesisAddress,
+                      nameAccount: event.name,
+                      error: 'Please, open your Archethic Wallet.',
+                      isConnected: false,
+                    );
+                    return;
+                  }
+                  state = state.copyWith(
+                    oldNameAccount: state.nameAccount,
+                    genesisAddress: event.genesisAddress,
+                    nameAccount: event.name,
+                  );
+                }),
+              );
+              ref.invalidate(SelectedWebsiteProviders.selectedWebsiteProvider);
+            },
+            failure: (failure) {
+              state = state.copyWith(
+                isConnected: false,
+                error: failure.message ?? 'Connection failed',
+              );
+            },
+          );
+        },
+      );
+    } catch (e) {
+      log(e.toString());
+      state = state.copyWith(
+        isConnected: false,
+        error: 'Please, open your Archethic Wallet.',
+      );
+    }
   }
 
   void setOldNameAccount() {
@@ -75,12 +172,10 @@ class _SessionNotifier extends Notifier<Session> {
     await sl.get<ArchethicDAppClient>().close();
     await sl.get<DBHelper>().clearWebsites();
     log('Unregister', name: 'ApiService');
-    sl.unregister<ApiService>();
-    ref
-      ..invalidate(WebsitesProviders.fetchWebsiteVersions)
-      ..invalidate(WebsitesProviders.fetchWebsites)
-      ..invalidate(SelectedWebsiteProviders.selectedWebsiteProvider)
-      ..invalidate(MainScreenThirdPartProviders.mainScreenThirdPartProvider);
+    if (sl.isRegistered<ApiService>()) {
+      sl.unregister<ApiService>();
+    }
+
     state = state.copyWith(
       accountSub: null,
       accountStreamSub: null,

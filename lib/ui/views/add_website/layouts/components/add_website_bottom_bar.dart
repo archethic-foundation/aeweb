@@ -1,3 +1,4 @@
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
@@ -39,6 +40,8 @@ class AddWebsiteBottomBar extends ConsumerWidget {
       return false;
     }
 
+    final session = ref.watch(SessionProviders.session);
+
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
       child: Row(
@@ -65,27 +68,28 @@ class AddWebsiteBottomBar extends ConsumerWidget {
                 context.go('/');
               },
             ),
-          if (addWebsite.creationInProgress)
-            AppButton(
-              labelBtn: AppLocalizations.of(context)!.btn_add_website,
-              icon: Iconsax.global,
-              disabled: true,
-            )
-          else
-            AppButton(
-              labelBtn: AppLocalizations.of(context)!.btn_add_website,
-              icon: Iconsax.global,
-              onPressed: () async {
-                final ctlOk = await _submitForm();
-                if (ctlOk) {
-                  final addWebsiteNotifier = ref.watch(
-                    AddWebsiteFormProvider.addWebsiteForm.notifier,
-                  );
+          if (session.isConnected)
+            if (addWebsite.creationInProgress)
+              AppButton(
+                labelBtn: AppLocalizations.of(context)!.btn_add_website,
+                icon: Iconsax.global,
+                disabled: true,
+              )
+            else
+              AppButton(
+                labelBtn: AppLocalizations.of(context)!.btn_add_website,
+                icon: Iconsax.global,
+                onPressed: () async {
+                  final ctlOk = await _submitForm();
+                  if (ctlOk) {
+                    final addWebsiteNotifier = ref.watch(
+                      AddWebsiteFormProvider.addWebsiteForm.notifier,
+                    );
 
-                  await addWebsiteNotifier.addWebsite(context, ref);
-                }
-              },
-            ),
+                    await addWebsiteNotifier.addWebsite(context, ref);
+                  }
+                },
+              ),
         ],
       ),
     );
