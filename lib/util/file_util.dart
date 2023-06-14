@@ -28,6 +28,12 @@ mixin FileMixin {
       final gitIgnoreContent = StringBuffer();
       if (directory.existsSync()) {
         for (final entity in directory.listSync(recursive: true)) {
+          // Exclude Desktop Services files
+          if (entity is File &&
+                  entity.path.toLowerCase().contains('.ds_store') ||
+              entity is File &&
+                  entity.path.toLowerCase().contains('desktop.ini')) continue;
+
           if (entity is File && entity.path.contains('/.git/') == false) {
             final contentBytes = await entity.readAsBytes();
             final contentHash = sha1.convert(contentBytes).toString();
@@ -87,6 +93,9 @@ mixin FileMixin {
 
       for (final file in archive) {
         if (!file.isFile) continue;
+        // Exclude Desktop Services files
+        if (file.name.toLowerCase() == '.ds_store' ||
+            file.name.toLowerCase() == 'desktop.ini') continue;
 
         final contentBytes = file.content;
         final contentHash = sha1.convert(contentBytes).toString();
