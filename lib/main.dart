@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
 import 'package:aeweb/ui/views/main_screen.dart';
-import 'package:aeweb/ui/views/route_screen.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/update_certificate_sheet.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
@@ -24,8 +24,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await DBHelper.setupDatabase();
-  await setupServiceLocator();
-
+  setupServiceLocator();
   runApp(
     ProviderScope(
       observers: [
@@ -47,7 +46,18 @@ class MyApp extends ConsumerWidget {
     // GoRouter configuration
     final _router = GoRouter(
       routes: [
-        GoRoute(path: '/', builder: (context, state) => const RouteScreen()),
+        GoRoute(
+          path: '/',
+          builder: (context, state) {
+            final session = ref.read(SessionProviders.session);
+
+            if (session.isConnected) {
+              return const MainScreen();
+            }
+
+            return const WelcomeScreen();
+          },
+        ),
         GoRoute(
           path: '/main',
           builder: (context, state) => const MainScreen(),

@@ -1,17 +1,11 @@
-import 'dart:math';
-
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
-import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:aeweb/ui/views/util/components/icon_close_connection.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:iconsax/iconsax.dart';
 
 class ConnectionToWalletStatus extends ConsumerStatefulWidget {
   const ConnectionToWalletStatus({
@@ -25,15 +19,12 @@ class ConnectionToWalletStatus extends ConsumerStatefulWidget {
 
 class _ConnectionToWalletStatusState
     extends ConsumerState<ConnectionToWalletStatus> {
-  bool _over = false;
-
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
     final session = ref.watch(SessionProviders.session);
-    final sessionNotifier = ref.watch(SessionProviders.session.notifier);
 
     if (session.oldNameAccount.isNotEmpty &&
         session.oldNameAccount != session.nameAccount) {
@@ -57,84 +48,8 @@ class _ConnectionToWalletStatusState
       });
     }
 
-    return session.isConnectedToWallet == false
-        ? MouseRegion(
-            onEnter: (_) {
-              setState(() {
-                _over = true;
-              });
-            },
-            onExit: (_) {
-              setState(() {
-                _over = false;
-              });
-            },
-            child: OutlinedButton(
-              style: ButtonStyle(
-                side: MaterialStateProperty.all(BorderSide.none),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-              ),
-              onPressed: () async {
-                await sessionNotifier.connectToWallet();
-
-                if (session.error.isNotEmpty) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      backgroundColor:
-                          Theme.of(context).snackBarTheme.backgroundColor,
-                      content: Text(
-                        session.error,
-                        style: Theme.of(context).snackBarTheme.contentTextStyle,
-                      ),
-                      duration: const Duration(seconds: 2),
-                    ),
-                  );
-                }
-              },
-              child: Container(
-                alignment: Alignment.center,
-                height: 50,
-                decoration: ShapeDecoration(
-                  gradient: const LinearGradient(
-                    colors: <Color>[
-                      Color(0xFF00A4DB),
-                      Color(0xFFCC00FF),
-                    ],
-                    transform: GradientRotation(pi / 9),
-                  ),
-                  shape: const StadiumBorder(),
-                  shadows: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.5),
-                      blurRadius: 7,
-                      spreadRadius: 1,
-                      offset: const Offset(0, 5),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Iconsax.empty_wallet,
-                      color: Theme.of(context).textTheme.labelMedium!.color,
-                      size: 20,
-                    ),
-                    const SizedBox(width: 10),
-                    Text(
-                      AppLocalizations.of(context)!.connectionWalletConnect,
-                      style: TextStyle(
-                        color: Theme.of(context).textTheme.labelMedium!.color,
-                        fontFamily: 'Equinox',
-                        fontSize: 15,
-                      ),
-                    ),
-                  ],
-                ),
-              ).animate(target: _over ? 0 : 1).fade(end: 0.8),
-            ),
-          )
-        : DecoratedBox(
+    return session.isConnected
+        ? DecoratedBox(
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: [
@@ -154,136 +69,57 @@ class _ConnectionToWalletStatusState
               ),
               borderRadius: BorderRadius.circular(12),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    OutlinedButton(
-                      style: ButtonStyle(
-                        side: MaterialStateProperty.all(BorderSide.none),
-                        overlayColor:
-                            MaterialStateProperty.all(Colors.transparent),
+            child: SizedBox(
+              height: 60,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15),
+                        child: Text(
+                          session.nameAccount,
+                          style: textTheme.labelMedium,
+                        ),
                       ),
-                      onPressed: () {},
-                      child: Row(
-                        children: [
-                          const Icon(
-                            Iconsax.empty_wallet_tick,
-                            color: Colors.green,
-                            size: 13,
-                          ),
-                          const SizedBox(width: 4),
-                          Text(
-                            session.nameAccount,
-                            style: textTheme.labelMedium,
-                          ),
-                        ],
+                      Padding(
+                        padding: const EdgeInsets.only(left: 15, bottom: 5),
+                        child: Text(
+                          session.endpoint,
+                          style: textTheme.labelSmall,
+                        ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 15, bottom: 5),
-                      child: Text(
-                        sl.get<ApiService>().endpoint,
-                        style: textTheme.labelSmall,
-                      ),
-                    ),
-                  ],
-                ),
-                IconButtonAnimated(
-                  onPressed: () async {
-                    return showDialog(
-                      context: context,
-                      builder: (context) {
-                        return ScaffoldMessenger(
-                          child: Builder(
-                            builder: (context) {
-                              return AlertDialog(
-                                contentPadding: const EdgeInsets.only(
-                                  top: 10,
-                                ),
-                                content: Container(
-                                  color: Colors.transparent,
-                                  padding: const EdgeInsets.only(
-                                    left: 10,
-                                    right: 10,
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .confirmationPopupTitle,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .titleMedium,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.all(10),
-                                        child: Text(
-                                          AppLocalizations.of(context)!
-                                              .connectionWalletDisconnectWarning,
-                                          style: Theme.of(context)
-                                              .textTheme
-                                              .bodyMedium,
-                                        ),
-                                      ),
-                                      const SizedBox(
-                                        height: 20,
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        padding: const EdgeInsets.only(
-                                          bottom: 20,
-                                        ),
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            AppButton(
-                                              labelBtn:
-                                                  AppLocalizations.of(context)!
-                                                      .no,
-                                              onPressed: () async {
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                            AppButton(
-                                              labelBtn:
-                                                  AppLocalizations.of(context)!
-                                                      .yes,
-                                              onPressed: () async {
-                                                await sessionNotifier
-                                                    .cancelConnection();
-                                                Navigator.of(context).pop();
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
-                        );
-                      },
-                    );
-                  },
-                  icon: const Icon(Icons.power_settings_new_rounded),
-                  color: Colors.red,
-                  tooltip:
-                      AppLocalizations.of(context)!.connectionWalletDisconnect,
-                ),
-              ],
+                    ],
+                  ),
+                  const IconCloseConnection(),
+                ],
+              ),
             ),
+          )
+        : AppButton(
+            labelBtn: AppLocalizations.of(context)!.btn_connect_wallet,
+            onPressed: () async {
+              final sessionNotifier =
+                  ref.watch(SessionProviders.session.notifier);
+              await sessionNotifier.connectToWallet();
+
+              if (ref.read(SessionProviders.session).error.isNotEmpty) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    backgroundColor:
+                        Theme.of(context).snackBarTheme.backgroundColor,
+                    content: Text(
+                      ref.read(SessionProviders.session).error,
+                      style: Theme.of(context).snackBarTheme.contentTextStyle,
+                    ),
+                    duration: const Duration(seconds: 2),
+                  ),
+                );
+              }
+            },
           );
   }
 }

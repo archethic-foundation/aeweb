@@ -1,5 +1,6 @@
 import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/selected_website.dart';
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/navigation_drawer_section.dart';
 import 'package:aeweb/ui/views/display_website/website_list.dart';
 import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
@@ -20,6 +21,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
   Widget build(BuildContext context) {
     final websiteSelection =
         ref.watch(SelectedWebsiteProviders.selectedWebsiteProvider);
+    final session = ref.watch(SessionProviders.session);
     final _size = MediaQuery.of(context).size;
     return Scaffold(
       backgroundColor: Colors.black,
@@ -39,19 +41,24 @@ class MainScreenState extends ConsumerState<MainScreen> {
               const SizedBox(
                 height: 20,
               ),
-              Expanded(
-                flex: 10,
-                child: WebsiteVersionsList(
-                  genesisAddress: websiteSelection.genesisAddress,
-                  websiteName: websiteSelection.name,
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              ref.watch(
-                MainScreenThirdPartProviders.mainScreenThirdPartProvider,
-              ),
+              if (session.isConnected)
+                if (websiteSelection.genesisAddress.isNotEmpty)
+                  Expanded(
+                    flex: 10,
+                    child: WebsiteVersionsList(
+                      genesisAddress: websiteSelection.genesisAddress,
+                      websiteName: websiteSelection.name,
+                    ),
+                  ),
+              if (session.isConnected)
+                if (websiteSelection.genesisAddress.isNotEmpty)
+                  const SizedBox(
+                    height: 20,
+                  ),
+              if (session.isConnected)
+                ref.watch(
+                  MainScreenThirdPartProviders.mainScreenThirdPartProvider,
+                )
             ],
           ),
         ),
@@ -88,41 +95,46 @@ class MainScreenState extends ConsumerState<MainScreen> {
                   .fade(duration: const Duration(milliseconds: 250))
                   .scale(duration: const Duration(milliseconds: 250)),
             ),
-            Expanded(
-              flex: _size.width > 1340 ? 9 : 10,
-              child: Padding(
-                padding: const EdgeInsets.only(
-                  top: 30,
-                  bottom: 30,
-                  left: 10,
-                  right: 10,
-                ),
-                child: Column(
-                  children: [
-                    if (websiteSelection.genesisAddress.isNotEmpty)
-                      WebsiteVersionsList(
-                        genesisAddress: websiteSelection.genesisAddress,
-                        websiteName: websiteSelection.name,
-                      )
-                          .animate()
-                          .fade(
-                            duration: const Duration(milliseconds: 300),
-                          )
-                          .scale(
-                            duration: const Duration(milliseconds: 300),
-                          )
-                    else
-                      const SizedBox(),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    ref.watch(
-                      MainScreenThirdPartProviders.mainScreenThirdPartProvider,
-                    ),
-                  ],
+            if (session.isConnected)
+              Expanded(
+                flex: _size.width > 1340 ? 9 : 10,
+                child: Padding(
+                  padding: const EdgeInsets.only(
+                    top: 30,
+                    bottom: 30,
+                    left: 10,
+                    right: 10,
+                  ),
+                  child: Column(
+                    children: [
+                      if (websiteSelection.genesisAddress.isNotEmpty)
+                        WebsiteVersionsList(
+                          genesisAddress: websiteSelection.genesisAddress,
+                          websiteName: websiteSelection.name,
+                        )
+                            .animate()
+                            .fade(
+                              duration: const Duration(milliseconds: 300),
+                            )
+                            .scale(
+                              duration: const Duration(milliseconds: 300),
+                            )
+                      else
+                        const SizedBox(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      if (session.isConnected)
+                        ref.watch(
+                          MainScreenThirdPartProviders
+                              .mainScreenThirdPartProvider,
+                        )
+                      else
+                        const SizedBox(),
+                    ],
+                  ),
                 ),
               ),
-            ),
           ],
         ),
         desktop: Row(
@@ -169,7 +181,8 @@ class MainScreenState extends ConsumerState<MainScreen> {
                 ),
                 child: Column(
                   children: [
-                    if (websiteSelection.genesisAddress.isNotEmpty)
+                    if (websiteSelection.genesisAddress.isNotEmpty &&
+                        session.isConnected)
                       WebsiteVersionsList(
                         genesisAddress: websiteSelection.genesisAddress,
                         websiteName: websiteSelection.name,
@@ -186,9 +199,11 @@ class MainScreenState extends ConsumerState<MainScreen> {
                     const SizedBox(
                       height: 20,
                     ),
-                    ref.watch(
-                      MainScreenThirdPartProviders.mainScreenThirdPartProvider,
-                    ),
+                    if (session.isConnected)
+                      ref.watch(
+                        MainScreenThirdPartProviders
+                            .mainScreenThirdPartProvider,
+                      ),
                   ],
                 ),
               ),

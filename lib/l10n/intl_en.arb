@@ -41,6 +41,7 @@
   "certificateInfosNotIncluded": "Not included in the certificate",
   "connectionWalletDisconnect": "Disconnect wallet",
   "connectionWalletConnect": "Connect your wallet",
+  "btn_connect_wallet": "Connect wallet",
   "connectionWalletDisconnectWarning": "Are you sure you want to disconnect your wallet\nand exit the application?",
   "unplublishWebsiteWarning": "Are you sure you want to unpublish your static site?",
   "confirmationPopupTitle": "Confirmation Request",

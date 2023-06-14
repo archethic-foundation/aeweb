@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:flutter/material.dart';
@@ -18,6 +19,8 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
     Future<bool> _submitForm() async {
       return true;
     }
+
+    final session = ref.watch(SessionProviders.session);
 
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
@@ -45,112 +48,115 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
                 context.go('/');
               },
             ),
-          if (unpublishWebsite.unpublishInProgress)
-            AppButton(
-              labelBtn: AppLocalizations.of(context)!.btn_unpublish_website,
-              icon: Iconsax.folder_cross,
-              disabled: true,
-            )
-          else
-            AppButton(
-              labelBtn: AppLocalizations.of(context)!.btn_unpublish_website,
-              icon: Iconsax.folder_cross,
-              onPressed: () async {
-                return showDialog(
-                  context: context,
-                  builder: (context) {
-                    return ScaffoldMessenger(
-                      child: Builder(
-                        builder: (context) {
-                          return AlertDialog(
-                            contentPadding: const EdgeInsets.only(
-                              top: 10,
-                            ),
-                            content: Container(
-                              color: Colors.transparent,
-                              padding: const EdgeInsets.only(
-                                left: 10,
-                                right: 10,
+          if (session.isConnected)
+            if (unpublishWebsite.unpublishInProgress)
+              AppButton(
+                labelBtn: AppLocalizations.of(context)!.btn_unpublish_website,
+                icon: Iconsax.folder_cross,
+                disabled: true,
+              )
+            else
+              AppButton(
+                labelBtn: AppLocalizations.of(context)!.btn_unpublish_website,
+                icon: Iconsax.folder_cross,
+                onPressed: () async {
+                  return showDialog(
+                    context: context,
+                    builder: (context) {
+                      return ScaffoldMessenger(
+                        child: Builder(
+                          builder: (context) {
+                            return AlertDialog(
+                              contentPadding: const EdgeInsets.only(
+                                top: 10,
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .confirmationPopupTitle,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .titleMedium,
+                              content: Container(
+                                color: Colors.transparent,
+                                padding: const EdgeInsets.only(
+                                  left: 10,
+                                  right: 10,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .confirmationPopupTitle,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.all(10),
-                                    child: Text(
-                                      AppLocalizations.of(context)!
-                                          .unplublishWebsiteWarning,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium,
+                                    Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Text(
+                                        AppLocalizations.of(context)!
+                                            .unplublishWebsiteWarning,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium,
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(
-                                    height: 20,
-                                  ),
-                                  Container(
-                                    width: double.infinity,
-                                    padding: const EdgeInsets.only(
-                                      bottom: 20,
+                                    const SizedBox(
+                                      height: 20,
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        AppButton(
-                                          labelBtn:
-                                              AppLocalizations.of(context)!.no,
-                                          onPressed: () async {
-                                            Navigator.of(context).pop();
-                                          },
-                                        ),
-                                        AppButton(
-                                          labelBtn:
-                                              AppLocalizations.of(context)!.yes,
-                                          onPressed: () async {
-                                            final ctlOk = await _submitForm();
-                                            if (ctlOk) {
+                                    Container(
+                                      width: double.infinity,
+                                      padding: const EdgeInsets.only(
+                                        bottom: 20,
+                                      ),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          AppButton(
+                                            labelBtn:
+                                                AppLocalizations.of(context)!
+                                                    .no,
+                                            onPressed: () async {
                                               Navigator.of(context).pop();
-                                              final unpublishWebsiteNotifier =
-                                                  ref.watch(
-                                                UnpublishWebsiteFormProvider
-                                                    .unpublishWebsiteForm
-                                                    .notifier,
-                                              );
+                                            },
+                                          ),
+                                          AppButton(
+                                            labelBtn:
+                                                AppLocalizations.of(context)!
+                                                    .yes,
+                                            onPressed: () async {
+                                              final ctlOk = await _submitForm();
+                                              if (ctlOk) {
+                                                Navigator.of(context).pop();
+                                                final unpublishWebsiteNotifier =
+                                                    ref.watch(
+                                                  UnpublishWebsiteFormProvider
+                                                      .unpublishWebsiteForm
+                                                      .notifier,
+                                                );
 
-                                              await unpublishWebsiteNotifier
-                                                  .unpublishWebsite(
-                                                context,
-                                                ref,
-                                              );
-                                            }
-                                          },
-                                        )
-                                      ],
+                                                await unpublishWebsiteNotifier
+                                                    .unpublishWebsite(
+                                                  context,
+                                                  ref,
+                                                );
+                                              }
+                                            },
+                                          )
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    );
-                  },
-                );
-              },
-            )
+                            );
+                          },
+                        ),
+                      );
+                    },
+                  );
+                },
+              )
         ],
       ),
     );

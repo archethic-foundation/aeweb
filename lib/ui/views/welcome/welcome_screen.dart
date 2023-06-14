@@ -73,7 +73,6 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
                     children: [
                       Container(
                         padding: const EdgeInsets.only(left: 20, right: 20),
-                        height: MediaQuery.of(context).size.height * 0.3,
                         child: PageView(
                           controller: pageController,
                           onPageChanged: (page) {

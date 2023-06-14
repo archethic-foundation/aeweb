@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,8 @@ class UpdateCertificateBottomBar extends ConsumerWidget {
       return isCertOk;
     }
 
+    final session = ref.watch(SessionProviders.session);
+
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),
       child: Row(
@@ -53,31 +56,32 @@ class UpdateCertificateBottomBar extends ConsumerWidget {
                 context.go('/');
               },
             ),
-          if (updateCertificate.creationInProgress)
-            AppButton(
-              labelBtn: AppLocalizations.of(context)!.btn_add_certificate,
-              icon: Iconsax.security_safe,
-              disabled: true,
-            )
-          else
-            AppButton(
-              labelBtn: AppLocalizations.of(context)!.btn_add_certificate,
-              icon: Iconsax.security_safe,
-              onPressed: () async {
-                final ctlOk = await _submitForm();
-                if (ctlOk) {
-                  final updateCertificateNotifier = ref.watch(
-                    UpdateCertificateFormProvider
-                        .updateCertificateForm.notifier,
-                  );
+          if (session.isConnected)
+            if (updateCertificate.creationInProgress)
+              AppButton(
+                labelBtn: AppLocalizations.of(context)!.btn_add_certificate,
+                icon: Iconsax.security_safe,
+                disabled: true,
+              )
+            else
+              AppButton(
+                labelBtn: AppLocalizations.of(context)!.btn_add_certificate,
+                icon: Iconsax.security_safe,
+                onPressed: () async {
+                  final ctlOk = await _submitForm();
+                  if (ctlOk) {
+                    final updateCertificateNotifier = ref.watch(
+                      UpdateCertificateFormProvider
+                          .updateCertificateForm.notifier,
+                    );
 
-                  await updateCertificateNotifier.updateCertificate(
-                    context,
-                    ref,
-                  );
-                }
-              },
-            ),
+                    await updateCertificateNotifier.updateCertificate(
+                      context,
+                      ref,
+                    );
+                  }
+                },
+              ),
         ],
       ),
     );

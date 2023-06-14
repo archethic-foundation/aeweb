@@ -1,3 +1,4 @@
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/version.dart';
 import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/util/header.dart';
@@ -10,26 +11,35 @@ import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuDestination {
-  const MenuDestination(this.label, this.icon, this.externalLink);
+  const MenuDestination(
+    this.label,
+    this.icon,
+    this.externalLink, {
+    this.readOnly = false,
+  });
 
   final String label;
   final Widget icon;
   final bool externalLink;
+  final bool readOnly;
 }
 
-class NavigationDrawerSection extends StatefulWidget {
+class NavigationDrawerSection extends ConsumerStatefulWidget {
   const NavigationDrawerSection({super.key});
 
   @override
-  State<NavigationDrawerSection> createState() =>
+  ConsumerState<NavigationDrawerSection> createState() =>
       _NavigationDrawerSectionState();
 }
 
-class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
+class _NavigationDrawerSectionState
+    extends ConsumerState<NavigationDrawerSection> {
   int navDrawerIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    final session = ref.watch(SessionProviders.session);
+
     return Column(
       children: [
         const Header(),
@@ -46,7 +56,9 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
 
                 switch (selectedIndex) {
                   case 1:
-                    context.go('/addWebsite');
+                    if (session.isConnected) {
+                      context.go('/addWebsite');
+                    }
                     break;
                   case 2:
                     launchUrl(
@@ -87,17 +99,21 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                     const Icon(Iconsax.global),
                     false,
                   ),
-                  MenuDestination(
-                    AppLocalizations.of(context)!.menu_addWebsite,
-                    const Icon(Iconsax.add_circle),
-                    false,
-                  ),
+                  if (session.isConnected)
+                    MenuDestination(
+                      AppLocalizations.of(context)!.menu_addWebsite,
+                      const Icon(Iconsax.add_circle),
+                      false,
+                    ),
                 ].map((destination) {
                   return NavigationDrawerDestination(
                     label: destination.externalLink
                         ? Row(
                             children: [
-                              Text(destination.label),
+                              Text(
+                                destination.label,
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
                               const SizedBox(width: 5),
                               const Icon(
                                 Iconsax.export_3,
@@ -110,6 +126,9 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                     selectedIcon: destination.icon,
                   );
                 }),
+                const SizedBox(
+                  height: 5,
+                ),
                 Container(
                   width: 50,
                   height: 1,
@@ -124,6 +143,9 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                       end: AlignmentDirectional.centerStart,
                     ),
                   ),
+                ),
+                const SizedBox(
+                  height: 5,
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
@@ -153,7 +175,10 @@ class _NavigationDrawerSectionState extends State<NavigationDrawerSection> {
                     label: destination.externalLink
                         ? Row(
                             children: [
-                              Text(destination.label),
+                              Text(
+                                destination.label,
+                                style: Theme.of(context).textTheme.labelLarge,
+                              ),
                               const SizedBox(width: 5),
                               const Icon(
                                 Iconsax.export_3,

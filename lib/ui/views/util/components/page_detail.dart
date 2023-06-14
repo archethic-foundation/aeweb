@@ -28,7 +28,7 @@ class PageDetail extends StatelessWidget {
           mobile: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Header(),
+              const Header(displayWalletConnectStatus: true),
               Expanded(
                 child: firstChild
                     .animate()
@@ -51,7 +51,7 @@ class PageDetail extends StatelessWidget {
           desktop: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Header(),
+              const Header(displayWalletConnectStatus: true),
               Expanded(
                 child: ResizableBox(
                   width: MediaQuery.of(context).size.width - 100,

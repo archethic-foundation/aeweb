@@ -1,14 +1,17 @@
+import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Header extends StatelessWidget {
   const Header({
+    this.displayWalletConnectStatus = false,
     super.key,
   });
+  final bool displayWalletConnectStatus;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return Stack(
       children: [
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -37,6 +40,16 @@ class Header extends StatelessWidget {
             ),
           ],
         ),
+        if (displayWalletConnectStatus)
+          const Positioned(
+            top: 7,
+            right: 0,
+            child: SizedBox(
+              width: 250,
+              height: 60,
+              child: ConnectionToWalletStatus(),
+            ),
+          )
       ],
     );
   }
