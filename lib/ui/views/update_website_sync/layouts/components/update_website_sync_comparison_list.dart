@@ -45,6 +45,7 @@ class UpdateWebsiteSyncComparisonSheetState
               (_selectedStatus == null || file.status == _selectedStatus),
         )
         .toList();
+
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
@@ -248,6 +249,31 @@ class UpdateWebsiteSyncComparisonSheetState
     final textTheme = Theme.of(context)
         .textTheme
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
+    final updateWebsiteSyncProvider =
+        ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm);
+    final nbOfAll = updateWebsiteSyncProvider.comparedFiles.length;
+    final nbOfLocalOnly = updateWebsiteSyncProvider.comparedFiles
+        .where(
+          (file) => file.status == HostingContentComparisonStatus.localOnly,
+        )
+        .length;
+    final nbOfDifferentContent = updateWebsiteSyncProvider.comparedFiles
+        .where(
+          (file) =>
+              file.status == HostingContentComparisonStatus.differentContent,
+        )
+        .length;
+    final nbOfRemoteOnly = updateWebsiteSyncProvider.comparedFiles
+        .where(
+          (file) => file.status == HostingContentComparisonStatus.remoteOnly,
+        )
+        .length;
+    final nbOfSameContent = updateWebsiteSyncProvider.comparedFiles
+        .where(
+          (file) => file.status == HostingContentComparisonStatus.sameContent,
+        )
+        .length;
+
     return Wrap(
       spacing: 8,
       runSpacing: 8,
@@ -263,7 +289,7 @@ class UpdateWebsiteSyncComparisonSheetState
             size: 16,
           ),
           label: Text(
-            AppLocalizations.of(context)!.status_all,
+            '${AppLocalizations.of(context)!.status_all} ($nbOfAll)',
             style: textTheme.labelMedium,
           ),
           style: ButtonStyle(
@@ -286,7 +312,7 @@ class UpdateWebsiteSyncComparisonSheetState
             size: 16,
           ),
           label: Text(
-            AppLocalizations.of(context)!.status_localOnly,
+            '${AppLocalizations.of(context)!.status_localOnly} ($nbOfLocalOnly)',
             style: textTheme.labelMedium,
           ),
           style: ButtonStyle(
@@ -310,7 +336,7 @@ class UpdateWebsiteSyncComparisonSheetState
             size: 16,
           ),
           label: Text(
-            AppLocalizations.of(context)!.status_remoteOnly,
+            '${AppLocalizations.of(context)!.status_remoteOnly} ($nbOfRemoteOnly)',
             style: textTheme.labelMedium,
           ),
           style: ButtonStyle(
@@ -334,7 +360,7 @@ class UpdateWebsiteSyncComparisonSheetState
             size: 16,
           ),
           label: Text(
-            AppLocalizations.of(context)!.status_differentContent,
+            '${AppLocalizations.of(context)!.status_differentContent} ($nbOfDifferentContent)',
             style: textTheme.labelMedium,
           ),
           style: ButtonStyle(
@@ -356,7 +382,7 @@ class UpdateWebsiteSyncComparisonSheetState
             size: 16,
           ),
           label: Text(
-            AppLocalizations.of(context)!.status_sameContent,
+            '${AppLocalizations.of(context)!.status_sameContent} ($nbOfSameContent)',
             style: textTheme.labelMedium,
           ),
           style: ButtonStyle(
