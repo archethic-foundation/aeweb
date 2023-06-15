@@ -248,7 +248,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       ),
       itemBuilder: (context) {
         return [
-          PopupMenuItem(
+          /*PopupMenuItem(
             value: 'Download',
             child: Row(
               children: [
@@ -261,7 +261,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                 ),
               ],
             ),
-          ),
+          ),*/
           PopupMenuItem(
             value: 'SeeFilesTx',
             child: Row(

@@ -54,16 +54,13 @@ class TransactionConfirmation with _$TransactionConfirmation {
   const TransactionConfirmation._();
 
   bool get isFullyConfirmed => nbConfirmations >= maxConfirmations;
-  bool get isEnoughConfirmed => isEnoughConfirmations(
-        nbConfirmations,
-        maxConfirmations,
-      );
+  bool get isEnoughConfirmed {
+    if (maxConfirmations <= 0) {
+      return false;
+    }
+    final percentage = nbConfirmations / maxConfirmations;
+    return percentage >= 0.7;
+  }
 
   double get confirmationRatio => max(1, maxConfirmations / nbConfirmations);
-
-  static bool isEnoughConfirmations(
-    int nbConfirmations,
-    int maxConfirmations,
-  ) =>
-      nbConfirmations > 0;
 }
