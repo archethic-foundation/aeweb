@@ -244,12 +244,10 @@ mixin TransactionMixin {
       await transactionRepository.send(
         transaction: transaction,
         onConfirmation: (confirmation) async {
-          if (confirmation.isFullyConfirmed) {
+          if (confirmation.isEnoughConfirmed) {
             log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
             transactionRepository.close();
-            if (confirmation.nbConfirmations >= confirmation.maxConfirmations) {
-              next = true;
-            }
+            next = true;
           }
         },
         onError: (error) async {
