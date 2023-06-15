@@ -4,6 +4,7 @@ import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -12,7 +13,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PathSyncPopup with FileMixin {

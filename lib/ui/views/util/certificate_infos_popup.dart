@@ -1,10 +1,10 @@
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:intl/intl.dart';
 
 class CertificateInfosPopup with CertificateMixin {

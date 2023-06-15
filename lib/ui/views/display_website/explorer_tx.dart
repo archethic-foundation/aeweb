@@ -2,13 +2,13 @@
 import 'package:aeweb/model/website_version_tx.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExplorerTxScreen extends ConsumerWidget {

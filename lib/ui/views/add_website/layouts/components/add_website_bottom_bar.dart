@@ -3,11 +3,11 @@ import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 
 class AddWebsiteBottomBar extends ConsumerWidget {
   const AddWebsiteBottomBar({super.key});

@@ -2,11 +2,11 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 
 class UpdateCertificateBottomBar extends ConsumerWidget {
   const UpdateCertificateBottomBar({super.key});

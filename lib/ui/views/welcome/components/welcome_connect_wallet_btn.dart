@@ -1,12 +1,12 @@
 import 'dart:math';
 
 import 'package:aeweb/application/session/provider.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeConnectWalletBtn extends ConsumerStatefulWidget {

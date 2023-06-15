@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
@@ -8,7 +9,6 @@ import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExplorerFilesScreen extends ConsumerStatefulWidget {

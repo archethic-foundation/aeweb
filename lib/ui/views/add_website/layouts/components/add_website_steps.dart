@@ -1,11 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 
 class AddWebsiteSteps extends ConsumerWidget {

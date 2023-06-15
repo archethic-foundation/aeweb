@@ -4,13 +4,13 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_zip_file.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_switch_gitignore.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_textfield_name.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gradient_borders/gradient_borders.dart';
-import 'package:iconsax/iconsax.dart';
 
 class AddWebsiteFormSheet extends ConsumerWidget {
   const AddWebsiteFormSheet({super.key});

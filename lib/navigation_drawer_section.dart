@@ -2,12 +2,12 @@ import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/version.dart';
 import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/util/header.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MenuDestination {
