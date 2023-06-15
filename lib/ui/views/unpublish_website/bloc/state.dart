@@ -9,7 +9,8 @@ class UnpublishWebsiteFormState with _$UnpublishWebsiteFormState {
     @Default('') String name,
     @Default(0) int step,
     @Default('') String stepError,
-    @Default(0.0) double globalFees,
+    @Default(0.0) double globalFeesUCO,
+    @Default(0.0) double globalFeesFiat,
     bool? globalFeesValidated,
     @Default('') String errorText,
   }) = _UnpublishWebsiteFormState;

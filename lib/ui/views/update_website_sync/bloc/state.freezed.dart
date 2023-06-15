@@ -26,7 +26,8 @@ mixin _$UpdateWebsiteSyncFormState {
   Uint8List? get privateKey => throw _privateConstructorUsedError;
   String get zipFilePath => throw _privateConstructorUsedError;
   Uint8List? get zipFile => throw _privateConstructorUsedError;
-  double get globalFees => throw _privateConstructorUsedError;
+  double get globalFeesUCO => throw _privateConstructorUsedError;
+  double get globalFeesFiat => throw _privateConstructorUsedError;
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get applyGitIgnoreRules => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
@@ -58,7 +59,8 @@ abstract class $UpdateWebsiteSyncFormStateCopyWith<$Res> {
       Uint8List? privateKey,
       String zipFilePath,
       Uint8List? zipFile,
-      double globalFees,
+      double globalFeesUCO,
+      double globalFeesFiat,
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText,
@@ -90,7 +92,8 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
     Object? privateKey = freezed,
     Object? zipFilePath = null,
     Object? zipFile = freezed,
-    Object? globalFees = null,
+    Object? globalFeesUCO = null,
+    Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
@@ -138,9 +141,13 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
           ? _value.zipFile
           : zipFile // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
+      globalFeesUCO: null == globalFeesUCO
+          ? _value.globalFeesUCO
+          : globalFeesUCO // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesFiat: null == globalFeesFiat
+          ? _value.globalFeesFiat
+          : globalFeesFiat // ignore: cast_nullable_to_non_nullable
               as double,
       globalFeesValidated: freezed == globalFeesValidated
           ? _value.globalFeesValidated
@@ -186,7 +193,8 @@ abstract class _$$_UpdateWebsiteSyncFormStateCopyWith<$Res>
       Uint8List? privateKey,
       String zipFilePath,
       Uint8List? zipFile,
-      double globalFees,
+      double globalFeesUCO,
+      double globalFeesFiat,
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText,
@@ -217,7 +225,8 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
     Object? privateKey = freezed,
     Object? zipFilePath = null,
     Object? zipFile = freezed,
-    Object? globalFees = null,
+    Object? globalFeesUCO = null,
+    Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
@@ -265,9 +274,13 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
           ? _value.zipFile
           : zipFile // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
+      globalFeesUCO: null == globalFeesUCO
+          ? _value.globalFeesUCO
+          : globalFeesUCO // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesFiat: null == globalFeesFiat
+          ? _value.globalFeesFiat
+          : globalFeesFiat // ignore: cast_nullable_to_non_nullable
               as double,
       globalFeesValidated: freezed == globalFeesValidated
           ? _value.globalFeesValidated
@@ -307,7 +320,8 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
       this.privateKey,
       this.zipFilePath = '',
       this.zipFile,
-      this.globalFees = 0.0,
+      this.globalFeesUCO = 0.0,
+      this.globalFeesFiat = 0.0,
       this.globalFeesValidated,
       this.applyGitIgnoreRules,
       this.errorText = '',
@@ -346,7 +360,10 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   final Uint8List? zipFile;
   @override
   @JsonKey()
-  final double globalFees;
+  final double globalFeesUCO;
+  @override
+  @JsonKey()
+  final double globalFeesFiat;
   @override
   final bool? globalFeesValidated;
   @override
@@ -374,7 +391,7 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
 
   @override
   String toString() {
-    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
+    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
   }
 
   @override
@@ -398,8 +415,10 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
             (identical(other.zipFilePath, zipFilePath) ||
                 other.zipFilePath == zipFilePath) &&
             const DeepCollectionEquality().equals(other.zipFile, zipFile) &&
-            (identical(other.globalFees, globalFees) ||
-                other.globalFees == globalFees) &&
+            (identical(other.globalFeesUCO, globalFeesUCO) ||
+                other.globalFeesUCO == globalFeesUCO) &&
+            (identical(other.globalFeesFiat, globalFeesFiat) ||
+                other.globalFeesFiat == globalFeesFiat) &&
             (identical(other.globalFeesValidated, globalFeesValidated) ||
                 other.globalFeesValidated == globalFeesValidated) &&
             (identical(other.applyGitIgnoreRules, applyGitIgnoreRules) ||
@@ -425,7 +444,8 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
       const DeepCollectionEquality().hash(privateKey),
       zipFilePath,
       const DeepCollectionEquality().hash(zipFile),
-      globalFees,
+      globalFeesUCO,
+      globalFeesFiat,
       globalFeesValidated,
       applyGitIgnoreRules,
       errorText,
@@ -452,7 +472,8 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
           final Uint8List? privateKey,
           final String zipFilePath,
           final Uint8List? zipFile,
-          final double globalFees,
+          final double globalFeesUCO,
+          final double globalFeesFiat,
           final bool? globalFeesValidated,
           final bool? applyGitIgnoreRules,
           final String errorText,
@@ -482,7 +503,9 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   @override
   Uint8List? get zipFile;
   @override
-  double get globalFees;
+  double get globalFeesUCO;
+  @override
+  double get globalFeesFiat;
   @override
   bool? get globalFeesValidated;
   @override

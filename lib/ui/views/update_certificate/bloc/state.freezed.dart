@@ -23,7 +23,8 @@ mixin _$UpdateCertificateFormState {
   Uint8List? get publicCert => throw _privateConstructorUsedError;
   String get privateKeyPath => throw _privateConstructorUsedError;
   Uint8List? get privateKey => throw _privateConstructorUsedError;
-  double get globalFees => throw _privateConstructorUsedError;
+  double get globalFeesUCO => throw _privateConstructorUsedError;
+  double get globalFeesFiat => throw _privateConstructorUsedError;
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get controlInProgress => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
@@ -48,7 +49,8 @@ abstract class $UpdateCertificateFormStateCopyWith<$Res> {
       Uint8List? publicCert,
       String privateKeyPath,
       Uint8List? privateKey,
-      double globalFees,
+      double globalFeesUCO,
+      double globalFeesFiat,
       bool? globalFeesValidated,
       bool? controlInProgress,
       String errorText});
@@ -75,7 +77,8 @@ class _$UpdateCertificateFormStateCopyWithImpl<$Res,
     Object? publicCert = freezed,
     Object? privateKeyPath = null,
     Object? privateKey = freezed,
-    Object? globalFees = null,
+    Object? globalFeesUCO = null,
+    Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? controlInProgress = freezed,
     Object? errorText = null,
@@ -109,9 +112,13 @@ class _$UpdateCertificateFormStateCopyWithImpl<$Res,
           ? _value.privateKey
           : privateKey // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
+      globalFeesUCO: null == globalFeesUCO
+          ? _value.globalFeesUCO
+          : globalFeesUCO // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesFiat: null == globalFeesFiat
+          ? _value.globalFeesFiat
+          : globalFeesFiat // ignore: cast_nullable_to_non_nullable
               as double,
       globalFeesValidated: freezed == globalFeesValidated
           ? _value.globalFeesValidated
@@ -146,7 +153,8 @@ abstract class _$$_UpdateCertificateFormStateCopyWith<$Res>
       Uint8List? publicCert,
       String privateKeyPath,
       Uint8List? privateKey,
-      double globalFees,
+      double globalFeesUCO,
+      double globalFeesFiat,
       bool? globalFeesValidated,
       bool? controlInProgress,
       String errorText});
@@ -172,7 +180,8 @@ class __$$_UpdateCertificateFormStateCopyWithImpl<$Res>
     Object? publicCert = freezed,
     Object? privateKeyPath = null,
     Object? privateKey = freezed,
-    Object? globalFees = null,
+    Object? globalFeesUCO = null,
+    Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? controlInProgress = freezed,
     Object? errorText = null,
@@ -206,9 +215,13 @@ class __$$_UpdateCertificateFormStateCopyWithImpl<$Res>
           ? _value.privateKey
           : privateKey // ignore: cast_nullable_to_non_nullable
               as Uint8List?,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
+      globalFeesUCO: null == globalFeesUCO
+          ? _value.globalFeesUCO
+          : globalFeesUCO // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesFiat: null == globalFeesFiat
+          ? _value.globalFeesFiat
+          : globalFeesFiat // ignore: cast_nullable_to_non_nullable
               as double,
       globalFeesValidated: freezed == globalFeesValidated
           ? _value.globalFeesValidated
@@ -237,7 +250,8 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
       this.publicCert,
       this.privateKeyPath = '',
       this.privateKey,
-      this.globalFees = 0.0,
+      this.globalFeesUCO = 0.0,
+      this.globalFeesFiat = 0.0,
       this.globalFeesValidated,
       this.controlInProgress = false,
       this.errorText = ''})
@@ -264,7 +278,10 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
   final Uint8List? privateKey;
   @override
   @JsonKey()
-  final double globalFees;
+  final double globalFeesUCO;
+  @override
+  @JsonKey()
+  final double globalFeesFiat;
   @override
   final bool? globalFeesValidated;
   @override
@@ -276,7 +293,7 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
 
   @override
   String toString() {
-    return 'UpdateCertificateFormState(step: $step, stepError: $stepError, name: $name, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, controlInProgress: $controlInProgress, errorText: $errorText)';
+    return 'UpdateCertificateFormState(step: $step, stepError: $stepError, name: $name, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, controlInProgress: $controlInProgress, errorText: $errorText)';
   }
 
   @override
@@ -296,8 +313,10 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
                 other.privateKeyPath == privateKeyPath) &&
             const DeepCollectionEquality()
                 .equals(other.privateKey, privateKey) &&
-            (identical(other.globalFees, globalFees) ||
-                other.globalFees == globalFees) &&
+            (identical(other.globalFeesUCO, globalFeesUCO) ||
+                other.globalFeesUCO == globalFeesUCO) &&
+            (identical(other.globalFeesFiat, globalFeesFiat) ||
+                other.globalFeesFiat == globalFeesFiat) &&
             (identical(other.globalFeesValidated, globalFeesValidated) ||
                 other.globalFeesValidated == globalFeesValidated) &&
             (identical(other.controlInProgress, controlInProgress) ||
@@ -316,7 +335,8 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
       const DeepCollectionEquality().hash(publicCert),
       privateKeyPath,
       const DeepCollectionEquality().hash(privateKey),
-      globalFees,
+      globalFeesUCO,
+      globalFeesFiat,
       globalFeesValidated,
       controlInProgress,
       errorText);
@@ -338,7 +358,8 @@ abstract class _UpdateCertificateFormState extends UpdateCertificateFormState {
       final Uint8List? publicCert,
       final String privateKeyPath,
       final Uint8List? privateKey,
-      final double globalFees,
+      final double globalFeesUCO,
+      final double globalFeesFiat,
       final bool? globalFeesValidated,
       final bool? controlInProgress,
       final String errorText}) = _$_UpdateCertificateFormState;
@@ -359,7 +380,9 @@ abstract class _UpdateCertificateFormState extends UpdateCertificateFormState {
   @override
   Uint8List? get privateKey;
   @override
-  double get globalFees;
+  double get globalFeesUCO;
+  @override
+  double get globalFeesFiat;
   @override
   bool? get globalFeesValidated;
   @override

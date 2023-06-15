@@ -20,7 +20,7 @@ class UpdateCertificateUseCases with TransactionMixin {
         ref.watch(UpdateCertificateFormProvider.updateCertificateForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFees(0)
+          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
@@ -120,7 +120,7 @@ class UpdateCertificateUseCases with TransactionMixin {
     final feesTrf = await calculateFees(transactionTransfer);
     log('feesTrf: $feesTrf');
 
-    updateCertificateNotifier.setGlobalFees(feesTrf + feesRef);
+    await updateCertificateNotifier.setGlobalFeesUCO(feesTrf + feesRef);
     log('Global fees : ${feesTrf + feesRef} UCO');
 
     updateCertificateNotifier.setStep(8);

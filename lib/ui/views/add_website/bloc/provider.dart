@@ -5,6 +5,7 @@ import 'package:aeweb/domain/usecases/website/add_website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -135,9 +136,11 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
     );
   }
 
-  void setGlobalFees(double globalFees) {
+  Future<void> setGlobalFeesUCO(double globalFeesUCO) async {
+    final oracleUcoPrice = await sl.get<OracleService>().getOracleData();
     state = state.copyWith(
-      globalFees: globalFees,
+      globalFeesUCO: globalFeesUCO,
+      globalFeesFiat: globalFeesUCO * (oracleUcoPrice.uco?.usd ?? 0),
     );
   }
 

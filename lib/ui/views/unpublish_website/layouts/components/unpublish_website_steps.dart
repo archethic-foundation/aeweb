@@ -128,12 +128,10 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
                 if (unpublishWebsite.step > 7)
                   _confirmedStep(
                     context,
-                    AppLocalizations.of(context)!
-                        .unpublishWebSiteConfirmedStep7
-                        .replaceAll(
+                    '${AppLocalizations.of(context)!.unpublishWebSiteConfirmedStep7.replaceAll(
                           '%1',
-                          unpublishWebsite.globalFees.toStringAsFixed(8),
-                        ),
+                          unpublishWebsite.globalFeesUCO.toStringAsFixed(8),
+                        )} (=${unpublishWebsite.globalFeesFiat.toStringAsFixed(2)}\$)',
                     icon: Iconsax.calculator,
                   ),
                 if (unpublishWebsite.step == 8 &&

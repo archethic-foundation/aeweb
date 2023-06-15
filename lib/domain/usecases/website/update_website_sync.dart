@@ -24,7 +24,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
         ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFees(0)
+          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
@@ -263,7 +263,8 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
     final feesTrf = await calculateFees(transactionTransfer);
     log('feesTrf: $feesTrf');
 
-    updateWebsiteSyncNotifier.setGlobalFees(feesFiles + feesTrf + feesRef);
+    await updateWebsiteSyncNotifier
+        .setGlobalFeesUCO(feesFiles + feesTrf + feesRef);
     log('Global fees : ${feesFiles + feesTrf + feesRef} UCO');
 
     updateWebsiteSyncNotifier.setStep(11);

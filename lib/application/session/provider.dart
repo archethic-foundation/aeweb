@@ -110,6 +110,9 @@ class _SessionNotifier extends Notifier<Session> {
           if (sl.isRegistered<ApiService>()) {
             sl.unregister<ApiService>();
           }
+          if (sl.isRegistered<OracleService>()) {
+            sl.unregister<OracleService>();
+          }
           if (sl.isRegistered<ArchethicDAppClient>()) {
             sl.unregister<ArchethicDAppClient>();
           }

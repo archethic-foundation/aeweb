@@ -158,12 +158,10 @@ class AddWebsiteSteps extends ConsumerWidget {
                 if (addWebsite.step > 10)
                   _confirmedStep(
                     context,
-                    AppLocalizations.of(context)!
-                        .addWebSiteConfirmedStep10
-                        .replaceAll(
+                    '${AppLocalizations.of(context)!.addWebSiteConfirmedStep10.replaceAll(
                           '%1',
-                          addWebsite.globalFees.toStringAsFixed(8),
-                        ),
+                          addWebsite.globalFeesUCO.toStringAsFixed(8),
+                        )} (=${addWebsite.globalFeesFiat.toStringAsFixed(2)}\$)',
                     icon: Iconsax.calculator,
                   ),
                 if (addWebsite.step == 11 &&

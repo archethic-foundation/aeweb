@@ -27,7 +27,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFees(0)
+          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
 
     log('Create service in the keychain');
@@ -196,7 +196,7 @@ class AddWebsiteUseCases with FileMixin, TransactionMixin, CertificateMixin {
     final feesTrf = await calculateFees(transactionTransfer);
     log('feesTrf: $feesTrf');
 
-    addWebsiteNotifier.setGlobalFees(feesFiles + feesTrf + feesRef);
+    await addWebsiteNotifier.setGlobalFeesUCO(feesFiles + feesTrf + feesRef);
     log('Global fees : ${feesFiles + feesTrf + feesRef} UCO');
 
     addWebsiteNotifier.setStep(11);

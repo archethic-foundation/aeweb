@@ -19,7 +19,8 @@ mixin _$UnpublishWebsiteFormState {
   String get name => throw _privateConstructorUsedError;
   int get step => throw _privateConstructorUsedError;
   String get stepError => throw _privateConstructorUsedError;
-  double get globalFees => throw _privateConstructorUsedError;
+  double get globalFeesUCO => throw _privateConstructorUsedError;
+  double get globalFeesFiat => throw _privateConstructorUsedError;
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
 
@@ -38,7 +39,8 @@ abstract class $UnpublishWebsiteFormStateCopyWith<$Res> {
       {String name,
       int step,
       String stepError,
-      double globalFees,
+      double globalFeesUCO,
+      double globalFeesFiat,
       bool? globalFeesValidated,
       String errorText});
 }
@@ -60,7 +62,8 @@ class _$UnpublishWebsiteFormStateCopyWithImpl<$Res,
     Object? name = null,
     Object? step = null,
     Object? stepError = null,
-    Object? globalFees = null,
+    Object? globalFeesUCO = null,
+    Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? errorText = null,
   }) {
@@ -77,9 +80,13 @@ class _$UnpublishWebsiteFormStateCopyWithImpl<$Res,
           ? _value.stepError
           : stepError // ignore: cast_nullable_to_non_nullable
               as String,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
+      globalFeesUCO: null == globalFeesUCO
+          ? _value.globalFeesUCO
+          : globalFeesUCO // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesFiat: null == globalFeesFiat
+          ? _value.globalFeesFiat
+          : globalFeesFiat // ignore: cast_nullable_to_non_nullable
               as double,
       globalFeesValidated: freezed == globalFeesValidated
           ? _value.globalFeesValidated
@@ -106,7 +113,8 @@ abstract class _$$_UnpublishWebsiteFormStateCopyWith<$Res>
       {String name,
       int step,
       String stepError,
-      double globalFees,
+      double globalFeesUCO,
+      double globalFeesFiat,
       bool? globalFeesValidated,
       String errorText});
 }
@@ -127,7 +135,8 @@ class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
     Object? name = null,
     Object? step = null,
     Object? stepError = null,
-    Object? globalFees = null,
+    Object? globalFeesUCO = null,
+    Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? errorText = null,
   }) {
@@ -144,9 +153,13 @@ class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
           ? _value.stepError
           : stepError // ignore: cast_nullable_to_non_nullable
               as String,
-      globalFees: null == globalFees
-          ? _value.globalFees
-          : globalFees // ignore: cast_nullable_to_non_nullable
+      globalFeesUCO: null == globalFeesUCO
+          ? _value.globalFeesUCO
+          : globalFeesUCO // ignore: cast_nullable_to_non_nullable
+              as double,
+      globalFeesFiat: null == globalFeesFiat
+          ? _value.globalFeesFiat
+          : globalFeesFiat // ignore: cast_nullable_to_non_nullable
               as double,
       globalFeesValidated: freezed == globalFeesValidated
           ? _value.globalFeesValidated
@@ -167,7 +180,8 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
       {this.name = '',
       this.step = 0,
       this.stepError = '',
-      this.globalFees = 0.0,
+      this.globalFeesUCO = 0.0,
+      this.globalFeesFiat = 0.0,
       this.globalFeesValidated,
       this.errorText = ''})
       : super._();
@@ -183,7 +197,10 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
   final String stepError;
   @override
   @JsonKey()
-  final double globalFees;
+  final double globalFeesUCO;
+  @override
+  @JsonKey()
+  final double globalFeesFiat;
   @override
   final bool? globalFeesValidated;
   @override
@@ -192,7 +209,7 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
 
   @override
   String toString() {
-    return 'UnpublishWebsiteFormState(name: $name, step: $step, stepError: $stepError, globalFees: $globalFees, globalFeesValidated: $globalFeesValidated, errorText: $errorText)';
+    return 'UnpublishWebsiteFormState(name: $name, step: $step, stepError: $stepError, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, errorText: $errorText)';
   }
 
   @override
@@ -204,8 +221,10 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
             (identical(other.step, step) || other.step == step) &&
             (identical(other.stepError, stepError) ||
                 other.stepError == stepError) &&
-            (identical(other.globalFees, globalFees) ||
-                other.globalFees == globalFees) &&
+            (identical(other.globalFeesUCO, globalFeesUCO) ||
+                other.globalFeesUCO == globalFeesUCO) &&
+            (identical(other.globalFeesFiat, globalFeesFiat) ||
+                other.globalFeesFiat == globalFeesFiat) &&
             (identical(other.globalFeesValidated, globalFeesValidated) ||
                 other.globalFeesValidated == globalFeesValidated) &&
             (identical(other.errorText, errorText) ||
@@ -214,7 +233,7 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
 
   @override
   int get hashCode => Object.hash(runtimeType, name, step, stepError,
-      globalFees, globalFeesValidated, errorText);
+      globalFeesUCO, globalFeesFiat, globalFeesValidated, errorText);
 
   @JsonKey(ignore: true)
   @override
@@ -229,7 +248,8 @@ abstract class _UnpublishWebsiteFormState extends UnpublishWebsiteFormState {
       {final String name,
       final int step,
       final String stepError,
-      final double globalFees,
+      final double globalFeesUCO,
+      final double globalFeesFiat,
       final bool? globalFeesValidated,
       final String errorText}) = _$_UnpublishWebsiteFormState;
   const _UnpublishWebsiteFormState._() : super._();
@@ -241,7 +261,9 @@ abstract class _UnpublishWebsiteFormState extends UnpublishWebsiteFormState {
   @override
   String get stepError;
   @override
-  double get globalFees;
+  double get globalFeesUCO;
+  @override
+  double get globalFeesFiat;
   @override
   bool? get globalFeesValidated;
   @override

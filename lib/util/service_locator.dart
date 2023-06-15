@@ -13,4 +13,8 @@ void setupServiceLocatorApiService(String endpoint) {
     () => ApiService(endpoint),
   );
   log('Register', name: 'ApiService');
+  sl.registerLazySingleton<OracleService>(
+    () => OracleService(endpoint),
+  );
+  log('Register', name: 'OracleService');
 }

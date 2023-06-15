@@ -159,12 +159,10 @@ class UpdateWebsiteSyncSteps extends ConsumerWidget {
                 if (updateWebsiteSync.step > 10)
                   _confirmedStep(
                     context,
-                    AppLocalizations.of(context)!
-                        .updateWebSiteConfirmedStep10
-                        .replaceAll(
+                    '${AppLocalizations.of(context)!.updateWebSiteConfirmedStep10.replaceAll(
                           '%1',
-                          updateWebsiteSync.globalFees.toStringAsFixed(8),
-                        ),
+                          updateWebsiteSync.globalFeesUCO.toStringAsFixed(8),
+                        )} (=${updateWebsiteSync.globalFeesFiat.toStringAsFixed(2)}\$)',
                     icon: Iconsax.calculator,
                   ),
                 if (updateWebsiteSync.step == 11 &&

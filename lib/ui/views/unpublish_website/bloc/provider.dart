@@ -1,6 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/domain/usecases/website/unpublish_website.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/state.dart';
+import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -50,9 +52,11 @@ class UnpublishWebsiteFormNotifier
     );
   }
 
-  void setGlobalFees(double globalFees) {
+  Future<void> setGlobalFeesUCO(double globalFeesUCO) async {
+    final oracleUcoPrice = await sl.get<OracleService>().getOracleData();
     state = state.copyWith(
-      globalFees: globalFees,
+      globalFeesUCO: globalFeesUCO,
+      globalFeesFiat: globalFeesUCO * (oracleUcoPrice.uco?.usd ?? 0),
     );
   }
 

@@ -131,12 +131,10 @@ class UpdateCertificateSteps extends ConsumerWidget {
                 if (updateCertificate.step > 7)
                   _confirmedStep(
                     context,
-                    AppLocalizations.of(context)!
-                        .updateCertificateConfirmedStep7
-                        .replaceAll(
+                    '${AppLocalizations.of(context)!.updateCertificateConfirmedStep7.replaceAll(
                           '%1',
-                          updateCertificate.globalFees.toStringAsFixed(8),
-                        ),
+                          updateCertificate.globalFeesUCO.toStringAsFixed(8),
+                        )} (=${updateCertificate.globalFeesFiat.toStringAsFixed(2)}\$)',
                     icon: Iconsax.calculator,
                   ),
                 if (updateCertificate.step == 8 &&

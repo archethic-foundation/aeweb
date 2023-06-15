@@ -20,7 +20,7 @@ class UnpublishWebsiteUseCases with TransactionMixin {
         ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFees(0)
+          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
@@ -102,7 +102,7 @@ class UnpublishWebsiteUseCases with TransactionMixin {
     final feesTrf = await calculateFees(transactionTransfer);
     log('feesTrf: $feesTrf');
 
-    unpublishWebsiteNotifier.setGlobalFees(feesTrf + feesRef);
+    await unpublishWebsiteNotifier.setGlobalFeesUCO(feesTrf + feesRef);
     log('Global fees : ${feesTrf + feesRef} UCO');
 
     unpublishWebsiteNotifier.setStep(8);
