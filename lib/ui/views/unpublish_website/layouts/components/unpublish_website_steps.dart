@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
+import 'package:aeweb/ui/views/util/components/countdown.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
@@ -276,9 +277,17 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            text,
-            style: textTheme.labelMedium,
+          Row(
+            children: [
+              Text(
+                text,
+                style: textTheme.labelMedium,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              const Countdown(),
+            ],
           ),
           Row(
             children: [
