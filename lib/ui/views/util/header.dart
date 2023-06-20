@@ -1,4 +1,5 @@
 import 'package:aeweb/ui/views/util/connection_to_wallet_status.dart';
+import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -11,6 +12,21 @@ class Header extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (Responsive.isMobile(context) || Responsive.isTablet(context)) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          SvgPicture.asset(
+            'assets/images/Archethic-Logo-Alone-White.svg',
+            semanticsLabel: 'AE Logo',
+            height: 40,
+          ),
+          const SizedBox(
+            height: 60,
+          ),
+        ],
+      );
+    }
     return Stack(
       children: [
         Row(

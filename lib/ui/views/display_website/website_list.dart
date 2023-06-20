@@ -22,7 +22,6 @@ class WebsiteList extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final websitesList = ref.watch(WebsitesProviders.fetchWebsites);
     final session = ref.watch(SessionProviders.session);
-    final _scaffoldKey = GlobalKey<ScaffoldState>();
 
     return Container(
       padding: const EdgeInsets.only(
@@ -46,13 +45,6 @@ class WebsiteList extends ConsumerWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          if (!Responsive.isDesktop(context))
-            IconButton(
-              icon: const Icon(Icons.menu),
-              onPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-            ),
           if (!Responsive.isDesktop(context)) const SizedBox(width: 20),
           Row(
             children: [
@@ -83,13 +75,16 @@ class WebsiteList extends ConsumerWidget {
                 ),
               ),
               if (session.isConnected)
-                IconButtonAnimated(
-                  onPressed: () {
-                    context.go('/addWebsite');
-                  },
-                  icon: const Icon(Iconsax.add_circle),
-                  tooltip: AppLocalizations.of(context)!.tooltip_addNewWebsite,
-                  color: Theme.of(context).colorScheme.primary,
+                Expanded(
+                  child: IconButtonAnimated(
+                    onPressed: () {
+                      context.go('/addWebsite');
+                    },
+                    icon: const Icon(Iconsax.add_circle),
+                    tooltip:
+                        AppLocalizations.of(context)!.tooltip_addNewWebsite,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
                 ),
             ],
           ),
@@ -198,10 +193,6 @@ Widget _buildWebsiteCard(BuildContext context, WidgetRef ref, Website website) {
 }
 
 Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
-  final textTheme = Theme.of(context)
-      .textTheme
-      .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-
   return InkWell(
     customBorder: RoundedRectangleBorder(
       borderRadius: BorderRadius.circular(10),
@@ -224,44 +215,37 @@ Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            website.name,
-            style: const TextStyle(
-              fontSize: 14,
+          Expanded(
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Text(
+                website.name,
+                style: const TextStyle(
+                  fontSize: 14,
+                ),
+                textAlign: TextAlign.center,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
-            textAlign: TextAlign.center,
           ),
-          SizedBox(
-            width: 90,
-            height: 20,
-            child: OutlinedButton(
-              style: ButtonStyle(
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
-              ),
-              onPressed: () async {
-                final url =
-                    '${sl.get<ApiService>().endpoint}/api/web_hosting/${website.genesisAddress}';
-                launchUrl(
-                  Uri.parse(
-                    url,
-                  ),
-                );
-              },
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Icon(
-                    Icons.remove_red_eye_outlined,
-                    size: 11,
-                  ),
-                  const SizedBox(width: 4),
-                  Text(
-                    AppLocalizations.of(context)!.btn_view,
-                    style: textTheme.labelSmall,
-                  ),
-                ],
-              ),
+          IconButton(
+            icon: const Icon(
+              Icons.remove_red_eye_outlined,
+              size: 16,
             ),
+            style: ButtonStyle(
+              overlayColor: MaterialStateProperty.all(Colors.transparent),
+            ),
+            onPressed: () async {
+              final url =
+                  '${sl.get<ApiService>().endpoint}/api/web_hosting/${website.genesisAddress}';
+              launchUrl(
+                Uri.parse(
+                  url,
+                ),
+              );
+            },
           ),
         ],
       ),

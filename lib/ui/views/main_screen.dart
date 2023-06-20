@@ -66,19 +66,22 @@ class MainScreenState extends ConsumerState<MainScreen> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-              flex: _size.width > 1340 ? 3 : 4,
-              child: const Padding(
-                padding: EdgeInsets.only(
+              flex: _size.width > 1340 ? 3 : 2,
+              child: Padding(
+                padding: const EdgeInsets.only(
                   top: 30,
                   bottom: 30,
                   left: 30,
                   right: 10,
                 ),
-                child: NavigationDrawerSection(),
-              )
-                  .animate()
-                  .fade(duration: const Duration(milliseconds: 200))
-                  .scale(duration: const Duration(milliseconds: 200)),
+                child: SizedBox(
+                  width: 80,
+                  child: const NavigationDrawerSection()
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200)),
+                ),
+              ),
             ),
             Expanded(
               flex: 4,

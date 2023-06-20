@@ -98,6 +98,7 @@ class AppButtonState extends State<AppButton> {
         ],
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (widget.icon != null)
             Icon(

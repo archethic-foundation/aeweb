@@ -2,6 +2,7 @@ import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_close_connection.dart';
+import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,56 +50,59 @@ class _ConnectionToWalletStatusState
     }
 
     return session.isConnected
-        ? DecoratedBox(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.background.withOpacity(1),
-                  Theme.of(context).colorScheme.background.withOpacity(0.3),
-                ],
-                stops: const [0, 1],
-              ),
-              border: GradientBoxBorder(
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.background.withOpacity(0.5),
-                    Theme.of(context).colorScheme.background.withOpacity(0.7),
-                  ],
-                  stops: const [0, 1],
-                ),
-              ),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: SizedBox(
-              height: 60,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15),
-                        child: Text(
-                          session.nameAccount,
-                          style: textTheme.labelMedium,
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 15, bottom: 5),
-                        child: Text(
-                          session.endpoint,
-                          style: textTheme.labelSmall,
-                        ),
-                      ),
+        ? Responsive.isDesktop(context)
+            ? Container(
+                height: 70,
+                padding: const EdgeInsets.only(left: 15),
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.background.withOpacity(1),
+                      Theme.of(context).colorScheme.background.withOpacity(0.3),
                     ],
+                    stops: const [0, 1],
                   ),
-                  const IconCloseConnection(),
-                ],
-              ),
-            ),
-          )
+                  border: GradientBoxBorder(
+                    gradient: LinearGradient(
+                      colors: [
+                        Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withOpacity(0.5),
+                        Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withOpacity(0.7),
+                      ],
+                      stops: const [0, 1],
+                    ),
+                  ),
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            session.nameAccount,
+                            style: textTheme.labelMedium,
+                          ),
+                          Text(
+                            session.endpoint,
+                            style: textTheme.labelSmall,
+                          ),
+                        ],
+                      ),
+                    ),
+                    const IconCloseConnection(),
+                  ],
+                ),
+              )
+            : const IconCloseConnection()
         : AppButton(
             labelBtn: AppLocalizations.of(context)!.btn_connect_wallet,
             onPressed: () async {
