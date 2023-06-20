@@ -47,7 +47,26 @@ class PageDetail extends StatelessWidget {
               bottomBar,
             ],
           ),
-          tablet: const SizedBox(),
+          tablet: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Header(displayWalletConnectStatus: true),
+              Expanded(
+                child: ResizableBox(
+                  width: MediaQuery.of(context).size.width - 100,
+                  childLeft: firstChild
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 200))
+                      .scale(duration: const Duration(milliseconds: 200)),
+                  childRight: secondChild
+                      .animate()
+                      .fade(duration: const Duration(milliseconds: 250))
+                      .scale(duration: const Duration(milliseconds: 250)),
+                ),
+              ),
+              bottomBar,
+            ],
+          ),
           desktop: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

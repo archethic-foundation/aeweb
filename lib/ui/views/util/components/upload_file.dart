@@ -37,25 +37,36 @@ class UploadFile extends ConsumerWidget {
       children: [
         Row(
           children: [
-            Text(
-              title,
-              style: textTheme.labelMedium,
-            ),
-            if (helpLink != null)
-              IconButtonAnimated(
-                icon: Icon(
-                  Icons.help,
-                  color: Theme.of(context).colorScheme.primary,
-                ),
-                onPressed: () {
-                  launchUrl(
-                    Uri.parse(
-                      helpLink!,
+            Expanded(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: title,
+                      style: textTheme.labelMedium,
                     ),
-                  );
-                },
-                color: Theme.of(context).colorScheme.primaryContainer,
+                    if (helpLink != null)
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: IconButtonAnimated(
+                          icon: Icon(
+                            Icons.help,
+                            color: Theme.of(context).colorScheme.primary,
+                          ),
+                          onPressed: () {
+                            launchUrl(
+                              Uri.parse(
+                                helpLink!,
+                              ),
+                            );
+                          },
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
+                      ),
+                  ],
+                ),
               ),
+            ),
           ],
         ),
         if (helpLink == null) const SizedBox(height: 12),
@@ -118,19 +129,30 @@ class UploadFile extends ConsumerWidget {
         if (value != null && value!.isNotEmpty)
           Row(
             children: [
-              Text(
-                value!,
-                style:
-                    textTheme.labelSmall!.copyWith(fontWeight: FontWeight.w300),
-              ),
-              IconButtonAnimated(
-                color: Theme.of(context).colorScheme.primary,
-                onPressed: onDelete,
-                icon: const Icon(
-                  Iconsax.trash4,
-                  size: 14,
+              Expanded(
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: value,
+                        style: textTheme.labelSmall!
+                            .copyWith(fontWeight: FontWeight.w300),
+                      ),
+                      WidgetSpan(
+                        alignment: PlaceholderAlignment.middle,
+                        child: IconButtonAnimated(
+                          color: Theme.of(context).colorScheme.primary,
+                          onPressed: onDelete,
+                          icon: const Icon(
+                            Iconsax.trash4,
+                            size: 14,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              )
+              ),
             ],
           ),
       ],

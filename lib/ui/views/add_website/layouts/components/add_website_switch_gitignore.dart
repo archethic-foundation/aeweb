@@ -42,37 +42,54 @@ class _AddWebsiteSwitchGitignoreState
       children: [
         Row(
           children: [
-            Text(
-              AppLocalizations.of(context)!.addWebsiteGitignoreLabel,
-              style: textTheme.labelMedium,
-            ),
-            const SizedBox(width: 2),
-            SizedBox(
-              height: 30,
-              child: FittedBox(
-                fit: BoxFit.fill,
-                child: Switch(
-                  thumbIcon: thumbIcon,
-                  value: addWebsiteProvider.applyGitIgnoreRules ?? false,
-                  onChanged: addWebsiteProvider.applyGitIgnoreRules == null
-                      ? null
-                      : addWebsiteNotifier.setApplyGitIgnoreRules,
+            Expanded(
+              child: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: AppLocalizations.of(context)!
+                          .addWebsiteGitignoreLabel,
+                      style: textTheme.labelMedium,
+                    ),
+                    WidgetSpan(
+                      alignment: PlaceholderAlignment.middle,
+                      child: Container(
+                        padding: const EdgeInsets.only(left: 2),
+                        height: 30,
+                        child: FittedBox(
+                          fit: BoxFit.fill,
+                          child: Switch(
+                            thumbIcon: thumbIcon,
+                            value:
+                                addWebsiteProvider.applyGitIgnoreRules ?? false,
+                            onChanged:
+                                addWebsiteProvider.applyGitIgnoreRules == null
+                                    ? null
+                                    : addWebsiteNotifier.setApplyGitIgnoreRules,
+                          ),
+                        ),
+                      ),
+                    ),
+                    WidgetSpan(
+                      alignment: PlaceholderAlignment.middle,
+                      child: IconButtonAnimated(
+                        icon: Icon(
+                          Icons.help,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
+                        onPressed: () {
+                          launchUrl(
+                            Uri.parse(
+                              'https://wiki.archethic.net/FAQ/aeweb#what-is-the-purpose-of-a-gitignore-file',
+                            ),
+                          );
+                        },
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ),
-            IconButtonAnimated(
-              icon: Icon(
-                Icons.help,
-                color: Theme.of(context).colorScheme.primary,
-              ),
-              onPressed: () {
-                launchUrl(
-                  Uri.parse(
-                    'https://wiki.archethic.net/FAQ/aeweb#what-is-the-purpose-of-a-gitignore-file',
-                  ),
-                );
-              },
-              color: Theme.of(context).colorScheme.primaryContainer,
             ),
           ],
         ),
