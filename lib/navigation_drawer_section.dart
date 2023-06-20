@@ -81,6 +81,13 @@ class _NavigationDrawerSectionState
                       ),
                     );
                     break;
+                  case 5:
+                    launchUrl(
+                      Uri.parse(
+                        'https://wiki.archethic.net/participate/aeweb/usage/aeweb-front',
+                      ),
+                    );
+                    break;
                   default:
                 }
               },
@@ -168,6 +175,11 @@ class _NavigationDrawerSectionState
                   MenuDestination(
                     AppLocalizations.of(context)!.menu_faq,
                     const Icon(Iconsax.message_question),
+                    true,
+                  ),
+                  MenuDestination(
+                    AppLocalizations.of(context)!.menu_tuto,
+                    const Icon(Iconsax.video_play),
                     true,
                   ),
                 ].map((destination) {
