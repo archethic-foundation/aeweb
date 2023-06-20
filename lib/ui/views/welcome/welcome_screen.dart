@@ -64,7 +64,9 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
             children: [
               const Padding(
                 padding: EdgeInsets.only(top: 20),
-                child: Header(),
+                child: Header(
+                  forceAELogo: true,
+                ),
               ),
               Expanded(
                 child: Responsive(

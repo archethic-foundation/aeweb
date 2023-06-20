@@ -6,13 +6,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 class Header extends StatelessWidget {
   const Header({
     this.displayWalletConnectStatus = false,
+    this.forceAELogo = false,
     super.key,
   });
   final bool displayWalletConnectStatus;
+  final bool forceAELogo;
 
   @override
   Widget build(BuildContext context) {
-    if (Responsive.isMobile(context) || Responsive.isTablet(context)) {
+    if (forceAELogo == false &&
+        (Responsive.isMobile(context) || Responsive.isTablet(context))) {
       return Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
