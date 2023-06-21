@@ -60,15 +60,14 @@ class _NavigationDrawerSectionState
                     },
                     selectedIndex: navDrawerIndex,
                     children: <Widget>[
-                      if (Responsive.isDesktop(context))
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
-                          child: Text(
-                            AppLocalizations.of(context)!.menu_section_hosting,
-                            style: Theme.of(context).textTheme.titleSmall,
-                            overflow: TextOverflow.ellipsis,
-                          ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(28, 16, 16, 10),
+                        child: Text(
+                          AppLocalizations.of(context)!.menu_section_hosting,
+                          style: Theme.of(context).textTheme.titleSmall,
+                          overflow: TextOverflow.ellipsis,
                         ),
+                      ),
                       ...<MenuDestination>[
                         MenuDestination(
                           AppLocalizations.of(context)!.menu_websitesList,
