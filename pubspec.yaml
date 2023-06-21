@@ -5,7 +5,7 @@ publish_to: "none"
 version: 0.0.9+1
 
 environment:
-  sdk: ">=2.19.0 <3.0.0"
+  sdk: ">=3.0.5 <4.0.0"
   flutter: "3.7.3"
 
 dependencies:
@@ -24,11 +24,11 @@ dependencies:
   # Collections and utilities functions and classes related to collections.
   collection: ^1.17.0
 
-  # A package to show context menus on right-click or long-press
-  context_menus: ^1.0.2
-
   # Implementations of SHA, MD5, and HMAC cryptographic functions
   crypto: ^3.0.3
+
+  # Use with the CupertinoIcons class for iOS style icons.
+  cupertino_icons: ^1.0.2
 
   # A flutter package to let users easily add a dashed border around any widget.
   dotted_border: ^2.0.0+3
