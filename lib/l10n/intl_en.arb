@@ -50,7 +50,6 @@
   "websitesListTitle": "My static sites",
   "tooltip_addNewWebsite": "Add new static site",
   "tooltip_refreshWebsite": "Refresh static sites",
-  "btn_view": "View",
   "welcomeArg1Title": "Easy, Secure and Simple way to Build",
   "welcomeArg1Desc": "The AEWeb experience enables you to deploy your static site with just a few clicks.\n\nThe interface is simple, secure, and user-friendly, making it easy for you to deploy your static site effortlessly, even if you have zero coding knowledge.",
   "welcomeArg2Title": "100% Secure & Tamperproof",
