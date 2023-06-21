@@ -1,7 +1,6 @@
 # Miscellaneous
 .tool-versions
 *.class
-*.lock
 *.log
 *.ninja_log
 *.pyc
