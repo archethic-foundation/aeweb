@@ -1,0 +1,33 @@
+name: Build and Package Flutter Web App
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        channel: "stable"
+    - run: flutter --version
+
+    - name: Install dependencies
+      run: flutter pub get
+
+    - name: Build web app
+      run: flutter build web --web-renderer canvaskit --release
+
+    - name: Create artifact
+      run: zip -r web-app.zip build/web
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: Web App
+        path: web-app.zip

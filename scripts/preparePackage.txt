@@ -2,3 +2,4 @@ flutter pub outdated
 flutter pub get
 dart fix --dry-run
 flutter pub run flutter_native_splash:create --path=flutter_native_splash.yaml 
+flutter build web --web-renderer canvaskit --release
