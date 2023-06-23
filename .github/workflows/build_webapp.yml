@@ -24,7 +24,10 @@ jobs:
       run: flutter build web --web-renderer canvaskit --release
 
     - name: Create artifact
-      run: zip -r web-app.zip build/web
+      run: |
+        mkdir packaged-web
+        cp -R build/web/* packaged-web
+        zip -r web-app.zip packaged-web
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
