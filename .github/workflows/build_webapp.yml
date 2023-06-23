@@ -25,9 +25,7 @@ jobs:
 
     - name: Create artifact
       run: |
-        mkdir packaged-web
-        cp -R build/web/* packaged-web
-        zip -r web-app.zip packaged-web
+        zip -r web-app.zip build/web/*
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
