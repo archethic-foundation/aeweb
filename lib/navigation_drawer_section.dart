@@ -154,6 +154,11 @@ class _NavigationDrawerSectionState
                           const Icon(Iconsax.video_play),
                           true,
                         ),
+                        MenuDestination(
+                          AppLocalizations.of(context)!.menu_report_bug,
+                          const Icon(Iconsax.reserve),
+                          true,
+                        ),
                       ].map((destination) {
                         return Responsive.isDesktop(context)
                             ? NavigationDrawerDestination(
@@ -335,6 +340,13 @@ class _NavigationDrawerSectionState
         launchUrl(
           Uri.parse(
             'https://wiki.archethic.net/participate/aeweb/usage/aeweb-front',
+          ),
+        );
+        break;
+      case 5:
+        launchUrl(
+          Uri.parse(
+            'https://github.com/archethic-foundation/aeweb/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml',
           ),
         );
         break;
