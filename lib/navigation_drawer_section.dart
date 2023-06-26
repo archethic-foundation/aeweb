@@ -309,6 +309,13 @@ class _NavigationDrawerSectionState
           ),
         );
         break;
+      case 6:
+        launchUrl(
+          Uri.parse(
+            'https://github.com/archethic-foundation/aeweb/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml',
+          ),
+        );
+        break;
       default:
     }
   }
