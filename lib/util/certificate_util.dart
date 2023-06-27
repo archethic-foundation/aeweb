@@ -26,25 +26,34 @@ mixin CertificateMixin {
     }
   }
 
-  static bool validCertificatFromFile(Uint8List cert) {
+  static (bool, String) validCertificatFromFile(Uint8List cert) {
     try {
       final x509Certificate =
           X509Utils.x509CertificateFromPem(utf8.decode(cert));
-      return x509Certificate.tbsCertificate!.validity.notAfter
-          .isAfter(DateTime.now());
+      return (
+        x509Certificate.tbsCertificate!.validity.notAfter
+            .isAfter(DateTime.now()),
+        ''
+      );
     } catch (e) {
       log(e.toString());
-      return false;
+      return (
+        false,
+        e.toString(),
+      );
     }
   }
 
-  static bool validPrivateKeyFromFile(Uint8List privateKey) {
+  static (bool, String) validPrivateKeyFromFile(Uint8List privateKey) {
     try {
       CryptoUtils.rsaPrivateKeyFromPem(utf8.decode(privateKey));
-      return true;
+      return (true, '');
     } catch (e) {
       log(e.toString());
-      return false;
+      return (
+        false,
+        e.toString(),
+      );
     }
   }
 }

@@ -116,20 +116,28 @@ class UpdateCertificateFormNotifier
       );
       return false;
     }
-    if (CertificateMixin.validCertificatFromFile(state.publicCert!) == false) {
+
+    final (bool controlCert, String errorCert) =
+        CertificateMixin.validCertificatFromFile(state.publicCert!);
+    if (controlCert == false) {
       state = state.copyWith(
-        errorText: AppLocalizations.of(context)!
-            .updateCertificateStepErrorSSLCertInvalid,
+        errorText:
+            '${AppLocalizations.of(context)!.updateCertificateStepErrorSSLCertInvalid}($errorCert)',
       );
       return false;
     }
-    if (CertificateMixin.validPrivateKeyFromFile(state.privateKey!) == false) {
+
+    final (bool controlKey, String errorKey) =
+        CertificateMixin.validPrivateKeyFromFile(state.privateKey!);
+
+    if (controlKey == false) {
       state = state.copyWith(
-        errorText: AppLocalizations.of(context)!
-            .updateCertificateStepErrorPrivateKeyInvalid,
+        errorText:
+            '${AppLocalizations.of(context)!.updateCertificateStepErrorPrivateKeyInvalid} ($errorKey)',
       );
       return false;
     }
+
     return true;
   }
 
