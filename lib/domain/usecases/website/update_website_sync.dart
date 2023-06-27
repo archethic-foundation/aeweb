@@ -188,7 +188,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionMixin {
       ),
     );
     if (lastTransactionReference.data != null &&
-        lastTransactionReference.data!.ownerships.length > 1 &&
+        lastTransactionReference.data!.ownerships.isNotEmpty &&
         lastTransactionReference.data!.ownerships[0].secret != null) {
       transactionReference.addOwnership(
         lastTransactionReference.data!.ownerships[0].secret!,
