@@ -196,17 +196,24 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
       );
       return false;
     }
-    if (CertificateMixin.validCertificatFromFile(state.publicCert!) == false) {
+
+    final (bool controlCert, String errorCert) =
+        CertificateMixin.validCertificatFromFile(state.publicCert!);
+    if (controlCert == false) {
       state = state.copyWith(
         errorText:
-            AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertInvalid,
+            '${AppLocalizations.of(context)!.addWebsiteStepErrorSSLCertInvalid}($errorCert)',
       );
       return false;
     }
-    if (CertificateMixin.validPrivateKeyFromFile(state.privateKey!) == false) {
+
+    final (bool controlKey, String errorKey) =
+        CertificateMixin.validPrivateKeyFromFile(state.privateKey!);
+
+    if (controlKey == false) {
       state = state.copyWith(
         errorText:
-            AppLocalizations.of(context)!.addWebsiteStepErrorPrivateKeyInvalid,
+            '${AppLocalizations.of(context)!.addWebsiteStepErrorPrivateKeyInvalid} ($errorKey)',
       );
       return false;
     }
