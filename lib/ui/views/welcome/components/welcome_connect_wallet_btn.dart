@@ -132,6 +132,65 @@ class WelcomeConnectWalletBtnState
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 30),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                InkWell(
+                  onTap: () {
+                    launchUrl(
+                      Uri.parse(
+                        'https://wiki.archethic.net/participate/aeweb/',
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(Iconsax.document_text),
+                      const SizedBox(width: 10),
+                      Text(
+                        AppLocalizations.of(context)!.menu_documentation,
+                        style: Theme.of(context).textTheme.labelLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(width: 5),
+                      const Icon(
+                        Iconsax.export_3,
+                        size: 12,
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 50),
+                InkWell(
+                  onTap: () {
+                    launchUrl(
+                      Uri.parse(
+                        'https://wiki.archethic.net/participate/aeweb/usage/aeweb-front',
+                      ),
+                    );
+                  },
+                  child: Row(
+                    children: [
+                      const Icon(Iconsax.video_play),
+                      const SizedBox(width: 10),
+                      Text(
+                        AppLocalizations.of(context)!.menu_tuto,
+                        style: Theme.of(context).textTheme.labelLarge,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(width: 5),
+                      const Icon(
+                        Iconsax.export_3,
+                        size: 12,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
