@@ -3,12 +3,11 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
 import 'dart:typed_data';
-import 'package:aeweb/util/confirmations/archethic_transaction_sender.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 
-mixin TransactionMixin {
+mixin TransactionAEWebMixin {
   Future<Transaction> newTransactionReference(
     Map<String, HostingRefContentMetaData> metaData, {
     Uint8List? sslKey,
@@ -206,6 +205,7 @@ mixin TransactionMixin {
 
   ArchethicTransactionSender getArchethicTransactionSender() {
     return ArchethicTransactionSender(
+      apiService: sl.get<ApiService>(),
       phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
       websocketEndpoint:
           '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
@@ -235,6 +235,7 @@ mixin TransactionMixin {
       }
 
       final transactionRepository = ArchethicTransactionSender(
+        apiService: sl.get<ApiService>(),
         phoenixHttpEndpoint:
             '${sl.get<ApiService>().endpoint}/socket/websocket',
         websocketEndpoint: websocketEndpoint,

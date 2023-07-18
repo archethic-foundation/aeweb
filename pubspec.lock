@@ -29,10 +29,10 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_lib_dart
-      sha256: d31ffda026cd8cffaead596df05572cb1bf3ee6998bb45157b948b4c56294d35
+      sha256: c5ca74a94135fd443b512961669f950e30848010036bdd31c538e28c97b7b4b3
       url: "https://pub.dev"
     source: hosted
-    version: "3.1.1"
+    version: "3.2.0"
   archethic_wallet_client:
     dependency: "direct main"
     description:

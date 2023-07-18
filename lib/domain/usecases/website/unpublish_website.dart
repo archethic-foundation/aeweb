@@ -4,14 +4,14 @@ import 'dart:developer';
 
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
-import 'package:aeweb/util/transaction_util.dart';
+import 'package:aeweb/util/transaction_aeweb_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UnpublishWebsiteUseCases with TransactionMixin {
+class UnpublishWebsiteUseCases with TransactionAEWebMixin {
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
