@@ -54,12 +54,11 @@ class WebsitesRepository {
 
               var genesisAddress = '';
               // Get genesis address
-              final response = await sl
-                  .get<ArchethicDAppClient>()
-                  .keychainDeriveAddress({
+              final response =
+                  await sl.get<ArchethicDAppClient>().keychainDeriveAddress({
                 'serviceName': 'aeweb-$name',
                 'index': 0,
-                'pathSuffix': ''
+                'pathSuffix': '',
               });
               response.when(
                 failure: (failure) {},

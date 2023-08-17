@@ -111,7 +111,7 @@ class PathSyncPopup with FileMixin {
                                               allowedExtensions: [
                                                 'zip',
                                                 '7z',
-                                                'rar'
+                                                'rar',
                                               ],
                                             );
                                             if (result != null) {

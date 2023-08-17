@@ -76,7 +76,7 @@ class UpdateWebsiteSyncBottomBar extends ConsumerWidget {
                       );
                       await updateWebsiteSyncNotifier.update(context, ref);
                     },
-                  )
+                  ),
             ],
           ),
         ],

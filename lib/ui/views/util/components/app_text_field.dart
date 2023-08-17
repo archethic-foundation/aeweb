@@ -204,7 +204,7 @@ class _AppTextFieldState extends ConsumerState<AppTextField> {
                               : CrossFadeState.showSecond,
                         )
                       else
-                        widget.suffixButton ?? const SizedBox()
+                        widget.suffixButton ?? const SizedBox(),
                     ],
                   ),
                 ],

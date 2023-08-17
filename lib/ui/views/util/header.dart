@@ -68,7 +68,7 @@ class Header extends StatelessWidget {
               height: 60,
               child: ConnectionToWalletStatus(),
             ),
-          )
+          ),
       ],
     );
   }

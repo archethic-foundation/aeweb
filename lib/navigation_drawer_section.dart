@@ -263,7 +263,7 @@ class _NavigationDrawerSectionState
         const Padding(
           padding: EdgeInsets.all(10),
           child: ConnectionToWalletStatus(),
-        )
+        ),
       ],
     );
   }

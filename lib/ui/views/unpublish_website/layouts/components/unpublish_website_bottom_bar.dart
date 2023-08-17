@@ -142,7 +142,7 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
                                                 );
                                               }
                                             },
-                                          )
+                                          ),
                                         ],
                                       ),
                                     ),
@@ -156,7 +156,7 @@ class UnpublishWebsiteBottomBar extends ConsumerWidget {
                     },
                   );
                 },
-              )
+              ),
         ],
       ),
     );

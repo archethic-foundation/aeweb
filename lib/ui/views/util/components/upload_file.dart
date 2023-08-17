@@ -120,7 +120,7 @@ class UploadFile extends ConsumerWidget {
                       extensionsLabel!,
                       style: textTheme.labelSmall!
                           .copyWith(fontWeight: FontWeight.w300),
-                    )
+                    ),
                 ],
               ),
             ),

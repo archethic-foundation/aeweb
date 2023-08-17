@@ -229,7 +229,7 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
             icon,
             color: Colors.green,
             size: 14,
-          )
+          ),
         ],
       ),
     );
@@ -258,7 +258,7 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
             icon,
             color: Colors.red,
             size: 14,
-          )
+          ),
         ],
       ),
     );

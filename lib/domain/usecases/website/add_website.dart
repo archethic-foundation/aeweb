@@ -238,7 +238,7 @@ class AddWebsiteUseCases
         <Transaction>[
           transactionTransfer,
           ...transactionsList,
-          transactionReference
+          transactionReference,
         ],
       );
 

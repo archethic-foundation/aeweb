@@ -224,7 +224,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                               node,
                             ),
                           ),
-                        )
+                        ),
                       ],
                     ),
                   );

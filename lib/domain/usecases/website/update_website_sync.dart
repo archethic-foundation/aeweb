@@ -311,7 +311,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
         <Transaction>[
           transactionTransfer,
           ...transactionsList,
-          transactionReference
+          transactionReference,
         ],
       );
 

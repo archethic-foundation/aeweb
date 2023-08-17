@@ -58,7 +58,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
               if (session.isConnected)
                 ref.watch(
                   MainScreenThirdPartProviders.mainScreenThirdPartProvider,
-                )
+                ),
             ],
           ),
         ),
