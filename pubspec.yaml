@@ -9,11 +9,12 @@ environment:
   flutter: "3.7.3"
 
 dependencies:
-  # Archethic dart library for Flutter based on Official Archethic Javascript library for Node and Browser
-  archethic_lib_dart: ^3.2.0
-
   # A client dart library to interact with Archethic Wallet RPC API.
-  archethic_wallet_client: ^1.0.6
+  #archethic_wallet_client: ^1.0.6
+  archethic_wallet_client:
+    git:
+      url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
+      ref: dev
 
   # Compression
   archive: ^3.3.7
@@ -69,14 +70,8 @@ dependencies:
   # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
   go_router: ^7.0.0
 
-  # GraphQL tools for parsing, transforming and printing GraphQL documents.
-  gql: ^0.14.0
-
   # Gradient borders for inputs and containers. Borders package integrated with a basic flutter widgets as a container and input decorations. Easy in use, platform independent.
   gradient_borders: ^1.0.0
-
-  # A GraphQL client for Flutter, bringing all the features from a modern GraphQL client to one easy to use package
-  graphql_flutter: ^5.1.2
 
   # Hive is a lightweight and blazing fast key-value database written in pure Dart
   hive: ^2.2.3

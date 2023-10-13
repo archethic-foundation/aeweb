@@ -179,7 +179,7 @@ mixin TransactionAEWebMixin {
         throw Exception('An error occurs');
       },
       success: (result) {
-        accountName = result.name;
+        accountName = result.shortName;
       },
     );
     return accountName;

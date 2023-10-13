@@ -177,5 +177,5 @@ class WebsitesRepository {
 
 abstract class WebsitesProviders {
   static final fetchWebsites = _fetchWebsitesProvider;
-  static final fetchWebsiteVersions = _fetchWebsiteVersionsProvider;
+  static const fetchWebsiteVersions = _fetchWebsiteVersionsProvider;
 }

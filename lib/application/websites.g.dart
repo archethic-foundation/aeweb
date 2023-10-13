@@ -6,7 +6,41 @@ part of 'websites.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-// ignore_for_file: avoid_private_typedef_functions, non_constant_identifier_names, subtype_of_sealed_class, invalid_use_of_internal_member, unused_element, constant_identifier_names, unnecessary_raw_strings, library_private_types_in_public_api
+String _$websitesRepositoryHash() =>
+    r'2d2a0ff7a595ecfa5b7c4f44f4460f6f9289984c';
+
+/// See also [_websitesRepository].
+@ProviderFor(_websitesRepository)
+final _websitesRepositoryProvider =
+    AutoDisposeProvider<WebsitesRepository>.internal(
+  _websitesRepository,
+  name: r'_websitesRepositoryProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$websitesRepositoryHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _WebsitesRepositoryRef = AutoDisposeProviderRef<WebsitesRepository>;
+String _$fetchWebsitesHash() => r'5df5cdc5be89b73c14e82e73bf7918c9d14894bb';
+
+/// See also [_fetchWebsites].
+@ProviderFor(_fetchWebsites)
+final _fetchWebsitesProvider =
+    AutoDisposeFutureProvider<List<Website>>.internal(
+  _fetchWebsites,
+  name: r'_fetchWebsitesProvider',
+  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
+      ? null
+      : _$fetchWebsitesHash,
+  dependencies: null,
+  allTransitiveDependencies: null,
+);
+
+typedef _FetchWebsitesRef = AutoDisposeFutureProviderRef<List<Website>>;
+String _$fetchWebsiteVersionsHash() =>
+    r'8d92709a0eb444847c6ae196deb4585b7b30bc15';
 
 /// Copied from Dart SDK
 class _SystemHash {
@@ -29,38 +63,59 @@ class _SystemHash {
   }
 }
 
-String $_websitesRepositoryHash() =>
-    r'2d2a0ff7a595ecfa5b7c4f44f4460f6f9289984c';
+typedef _FetchWebsiteVersionsRef
+    = AutoDisposeFutureProviderRef<List<WebsiteVersion>>;
 
-/// See also [_websitesRepository].
-final _websitesRepositoryProvider = AutoDisposeProvider<WebsitesRepository>(
-  _websitesRepository,
-  name: r'_websitesRepositoryProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_websitesRepositoryHash,
-);
-typedef _WebsitesRepositoryRef = AutoDisposeProviderRef<WebsitesRepository>;
-String $_fetchWebsitesHash() => r'5df5cdc5be89b73c14e82e73bf7918c9d14894bb';
+/// See also [_fetchWebsiteVersions].
+@ProviderFor(_fetchWebsiteVersions)
+const _fetchWebsiteVersionsProvider = _FetchWebsiteVersionsFamily();
 
-/// See also [_fetchWebsites].
-final _fetchWebsitesProvider = AutoDisposeFutureProvider<List<Website>>(
-  _fetchWebsites,
-  name: r'_fetchWebsitesProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : $_fetchWebsitesHash,
-);
-typedef _FetchWebsitesRef = AutoDisposeFutureProviderRef<List<Website>>;
-String $_fetchWebsiteVersionsHash() =>
-    r'8d92709a0eb444847c6ae196deb4585b7b30bc15';
+/// See also [_fetchWebsiteVersions].
+class _FetchWebsiteVersionsFamily
+    extends Family<AsyncValue<List<WebsiteVersion>>> {
+  /// See also [_fetchWebsiteVersions].
+  const _FetchWebsiteVersionsFamily();
+
+  /// See also [_fetchWebsiteVersions].
+  _FetchWebsiteVersionsProvider call(
+    dynamic genesisAddress,
+  ) {
+    return _FetchWebsiteVersionsProvider(
+      genesisAddress,
+    );
+  }
+
+  @override
+  _FetchWebsiteVersionsProvider getProviderOverride(
+    covariant _FetchWebsiteVersionsProvider provider,
+  ) {
+    return call(
+      provider.genesisAddress,
+    );
+  }
+
+  static const Iterable<ProviderOrFamily>? _dependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get dependencies => _dependencies;
+
+  static const Iterable<ProviderOrFamily>? _allTransitiveDependencies = null;
+
+  @override
+  Iterable<ProviderOrFamily>? get allTransitiveDependencies =>
+      _allTransitiveDependencies;
+
+  @override
+  String? get name => r'_fetchWebsiteVersionsProvider';
+}
 
 /// See also [_fetchWebsiteVersions].
 class _FetchWebsiteVersionsProvider
     extends AutoDisposeFutureProvider<List<WebsiteVersion>> {
+  /// See also [_fetchWebsiteVersions].
   _FetchWebsiteVersionsProvider(
     this.genesisAddress,
-  ) : super(
+  ) : super.internal(
           (ref) => _fetchWebsiteVersions(
             ref,
             genesisAddress,
@@ -70,7 +125,10 @@ class _FetchWebsiteVersionsProvider
           debugGetCreateSourceHash:
               const bool.fromEnvironment('dart.vm.product')
                   ? null
-                  : $_fetchWebsiteVersionsHash,
+                  : _$fetchWebsiteVersionsHash,
+          dependencies: _FetchWebsiteVersionsFamily._dependencies,
+          allTransitiveDependencies:
+              _FetchWebsiteVersionsFamily._allTransitiveDependencies,
         );
 
   final dynamic genesisAddress;
@@ -89,40 +147,5 @@ class _FetchWebsiteVersionsProvider
     return _SystemHash.finish(hash);
   }
 }
-
-typedef _FetchWebsiteVersionsRef
-    = AutoDisposeFutureProviderRef<List<WebsiteVersion>>;
-
-/// See also [_fetchWebsiteVersions].
-final _fetchWebsiteVersionsProvider = _FetchWebsiteVersionsFamily();
-
-class _FetchWebsiteVersionsFamily
-    extends Family<AsyncValue<List<WebsiteVersion>>> {
-  _FetchWebsiteVersionsFamily();
-
-  _FetchWebsiteVersionsProvider call(
-    dynamic genesisAddress,
-  ) {
-    return _FetchWebsiteVersionsProvider(
-      genesisAddress,
-    );
-  }
-
-  @override
-  AutoDisposeFutureProvider<List<WebsiteVersion>> getProviderOverride(
-    covariant _FetchWebsiteVersionsProvider provider,
-  ) {
-    return call(
-      provider.genesisAddress,
-    );
-  }
-
-  @override
-  List<ProviderOrFamily>? get allTransitiveDependencies => null;
-
-  @override
-  List<ProviderOrFamily>? get dependencies => null;
-
-  @override
-  String? get name => r'_fetchWebsiteVersionsProvider';
-}
+// ignore_for_file: type=lint
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
