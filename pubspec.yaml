@@ -22,6 +22,9 @@ dependencies:
   # Common util classes for Strings, Dates, X509, PKCS, Cryptographie and more.
   basic_utils: ^5.5.4
 
+  # Centralized loading widget management
+  busy: ^1.0.3
+
   # Collections and utilities functions and classes related to collections.
   collection: ^1.17.0
 
