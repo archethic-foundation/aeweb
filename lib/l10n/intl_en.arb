@@ -225,5 +225,12 @@
   "updateWebsiteTooManyFiles": "Sorry, during the beta phase, publishing a static website larger than 3 MB is not allowed.",
   "btn_accept": "I accept",
   "btn_decline": "I decline",
-  "betaVersionMaxFiles": "During the beta phase, please note that the maximum file upload size should not exceed 3 MB."
+  "betaVersionMaxFiles": "During the beta phase, please note that the maximum file upload size should not exceed 3 MB.",
+  "logout": "Logout",
+  "archethicDashboardMenuBridgeItem": "Bridge 2 ways",
+  "archethicDashboardMenuBridgeDesc": "The portal allowing seamless assets deposits & withdrawals",
+  "archethicDashboardMenuDEXItem": "DEX",
+  "archethicDashboardMenuDEXDesc": "SWAP assets on-chain, add liquidity & access LP staking",
+  "archethicDashboardMenuWalletOnWayItem": "AEWallet",
+  "archethicDashboardMenuWalletOnWayDesc": "Send, Receive and Exchange UCO and Tokens"
 }

@@ -4,7 +4,7 @@ import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
-import 'package:aeweb/ui/views/main_screen.dart';
+import 'package:aeweb/ui/views/main_screen/layouts/main_screen.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/update_certificate_sheet.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
