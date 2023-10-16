@@ -1,9 +1,8 @@
-import 'package:aeweb/application/main_screen_third_part.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/model/website_version_tx.dart';
-import 'package:aeweb/ui/views/display_website/explorer_files.dart';
-import 'package:aeweb/ui/views/display_website/explorer_tx.dart';
+import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/util/certificate_infos_popup.dart';
 import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
@@ -15,7 +14,6 @@ import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -38,275 +36,263 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
     final websiteVersionsList =
         ref.watch(WebsitesProviders.fetchWebsiteVersions(genesisAddress));
 
-    return Container(
-      height: 300,
-      padding: const EdgeInsets.only(
-        left: 30,
-        right: 30,
-        top: 20,
-        bottom: 20,
-      ),
-      decoration: BoxDecoration(
-        border: const GradientBoxBorder(
-          gradient: LinearGradient(
-            colors: [
-              Color(0x003C89B9),
-              Color(0xFFCC00FF),
-            ],
-            stops: [0, 1],
+    return Scaffold(
+      backgroundColor: AeWebThemeBase.backgroundColor,
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            websiteName,
           ),
         ),
-        borderRadius: BorderRadius.circular(16),
       ),
-      child: ArchethicScrollbar(
-        child: SizedBox(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: SelectionArea(
-                      child: Text(
-                        AppLocalizations.of(context)!.websitesListVersionsTitle,
-                        style: Theme.of(context).textTheme.titleSmall,
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: Container(
-                      width: 50,
-                      height: 1,
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          colors: [
-                            Color(0x003C89B9),
-                            Color(0xFFCC00FF),
-                          ],
-                          stops: [0, 1],
-                          begin: AlignmentDirectional.centerEnd,
-                          end: AlignmentDirectional.centerStart,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              websiteVersionsList.when(
-                data: (websiteVersions) {
-                  final versions = websiteVersions.cast<WebsiteVersion>();
-                  if (versions.isEmpty) {
-                    return Padding(
-                      padding: const EdgeInsets.only(top: 100),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const Icon(Iconsax.warning_2),
-                          const SizedBox(
-                            width: 5,
-                          ),
-                          Text(
-                            AppLocalizations.of(context)!
-                                .websitesListVersionsNoVersion,
-                          ),
-                        ],
-                      ),
-                    );
-                  }
-                  return Align(
-                    child: DataTable(
-                      horizontalMargin: 0,
-                      columnSpacing: 60,
-                      dividerThickness: 1,
-                      columns: [
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderDate,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderFiles,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                          numeric: true,
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderSize,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderFees,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderCertificate,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                        DataColumn(
-                          label: Expanded(
-                            child: Text(
-                              AppLocalizations.of(context)!
-                                  .websitesListVersionsTableHeaderActions,
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ),
-                      ],
-                      rows: versions
-                          .asMap()
-                          .map(
-                            (index, websiteVersion) => MapEntry(
-                              index,
-                              DataRow(
-                                cells: [
-                                  DataCell(
-                                    SelectableText(
-                                      DateFormat.yMd(
-                                        Localizations.localeOf(context)
-                                            .languageCode,
-                                      ).add_Hms().format(
-                                            DateTime.fromMillisecondsSinceEpoch(
-                                              websiteVersion.timestamp * 1000,
-                                            ).toLocal(),
-                                          ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: SelectableText(
-                                        websiteVersion.filesCount == 0
-                                            ? '-'
-                                            : websiteVersion.filesCount
-                                                .toString(),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: SelectableText(
-                                        websiteVersion.size == 0
-                                            ? '-'
-                                            : filesize(
-                                                websiteVersion.size.toString(),
-                                              ),
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: SelectableText(
-                                        '${fromBigInt(
-                                          websiteVersion.fees,
-                                        ).toStringAsPrecision(5)} UCO',
-                                        textAlign: TextAlign.center,
-                                      ),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: websiteVersion.published
-                                          ? websiteVersion.sslCertificate !=
-                                                      null &&
-                                                  CertificateMixin
-                                                      .validCertificate(
-                                                    websiteVersion
-                                                        .sslCertificate!,
-                                                  )
-                                              ? IconButtonAnimated(
-                                                  icon: const Icon(
-                                                    Iconsax.security_safe,
-                                                  ),
-                                                  onPressed: () {
-                                                    CertificateInfosPopup
-                                                        .getDialog(
-                                                      context,
-                                                      websiteVersion
-                                                          .sslCertificate,
-                                                    );
-                                                  },
-                                                  color: Theme.of(context)
-                                                      .colorScheme
-                                                      .primary,
-                                                )
-                                              : IconButtonAnimated(
-                                                  icon: const Icon(
-                                                    Iconsax.shield_slash,
-                                                  ),
-                                                  onPressed: () {
-                                                    CertificateInfosPopup
-                                                        .getDialog(
-                                                      context,
-                                                      websiteVersion
-                                                          .sslCertificate,
-                                                    );
-                                                  },
-                                                  color: Colors.red,
-                                                )
-                                          : const Text('-'),
-                                    ),
-                                  ),
-                                  DataCell(
-                                    Align(
-                                      child: _popupMenuButton(
-                                        context,
-                                        ref,
-                                        index == 0,
-                                        websiteVersion,
-                                        websiteName,
-                                        genesisAddress,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          )
-                          .values
-                          .toList(),
-                    ),
-                  );
-                },
-                error: (error, stacktrace) => const SizedBox(),
-                loading: () => const Padding(
-                  padding: EdgeInsets.only(
-                    left: 30,
-                    right: 30,
-                    top: 230,
-                  ),
-                  child: LinearProgressIndicator(
-                    minHeight: 1,
-                  ),
+      body: Stack(
+        children: [
+          const MainScreenBackground(),
+          Container(
+            height: 300,
+            padding: const EdgeInsets.only(
+              left: 30,
+              right: 30,
+              top: 20,
+              bottom: 20,
+            ),
+            decoration: BoxDecoration(
+              border: const GradientBoxBorder(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0x003C89B9),
+                    Color(0xFFCC00FF),
+                  ],
+                  stops: [0, 1],
                 ),
               ),
-            ],
+              borderRadius: BorderRadius.circular(16),
+            ),
+            child: ArchethicScrollbar(
+              child: SizedBox(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    websiteVersionsList.when(
+                      data: (websiteVersions) {
+                        final versions = websiteVersions.cast<WebsiteVersion>();
+                        if (versions.isEmpty) {
+                          return Padding(
+                            padding: const EdgeInsets.only(top: 100),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(Iconsax.warning_2),
+                                const SizedBox(
+                                  width: 5,
+                                ),
+                                Text(
+                                  AppLocalizations.of(context)!
+                                      .websitesListVersionsNoVersion,
+                                ),
+                              ],
+                            ),
+                          );
+                        }
+                        return Align(
+                          child: DataTable(
+                            horizontalMargin: 0,
+                            columnSpacing: 60,
+                            dividerThickness: 1,
+                            columns: [
+                              DataColumn(
+                                label: Expanded(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .websitesListVersionsTableHeaderDate,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Expanded(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .websitesListVersionsTableHeaderFiles,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                                numeric: true,
+                              ),
+                              DataColumn(
+                                label: Expanded(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .websitesListVersionsTableHeaderSize,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Expanded(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .websitesListVersionsTableHeaderFees,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Expanded(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .websitesListVersionsTableHeaderCertificate,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                              DataColumn(
+                                label: Expanded(
+                                  child: Text(
+                                    AppLocalizations.of(context)!
+                                        .websitesListVersionsTableHeaderActions,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                            rows: versions
+                                .asMap()
+                                .map(
+                                  (index, websiteVersion) => MapEntry(
+                                    index,
+                                    DataRow(
+                                      cells: [
+                                        DataCell(
+                                          SelectableText(
+                                            DateFormat.yMd(
+                                              Localizations.localeOf(context)
+                                                  .languageCode,
+                                            ).add_Hms().format(
+                                                  DateTime
+                                                      .fromMillisecondsSinceEpoch(
+                                                    websiteVersion.timestamp *
+                                                        1000,
+                                                  ).toLocal(),
+                                                ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Align(
+                                            child: SelectableText(
+                                              websiteVersion.filesCount == 0
+                                                  ? '-'
+                                                  : websiteVersion.filesCount
+                                                      .toString(),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Align(
+                                            child: SelectableText(
+                                              websiteVersion.size == 0
+                                                  ? '-'
+                                                  : filesize(
+                                                      websiteVersion.size
+                                                          .toString(),
+                                                    ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Align(
+                                            child: SelectableText(
+                                              '${fromBigInt(
+                                                websiteVersion.fees,
+                                              ).toStringAsPrecision(5)} UCO',
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Align(
+                                            child: websiteVersion.published
+                                                ? websiteVersion.sslCertificate !=
+                                                            null &&
+                                                        CertificateMixin
+                                                            .validCertificate(
+                                                          websiteVersion
+                                                              .sslCertificate!,
+                                                        )
+                                                    ? IconButtonAnimated(
+                                                        icon: const Icon(
+                                                          Iconsax.security_safe,
+                                                        ),
+                                                        onPressed: () {
+                                                          CertificateInfosPopup
+                                                              .getDialog(
+                                                            context,
+                                                            websiteVersion
+                                                                .sslCertificate,
+                                                          );
+                                                        },
+                                                        color: Theme.of(context)
+                                                            .colorScheme
+                                                            .primary,
+                                                      )
+                                                    : IconButtonAnimated(
+                                                        icon: const Icon(
+                                                          Iconsax.shield_slash,
+                                                        ),
+                                                        onPressed: () {
+                                                          CertificateInfosPopup
+                                                              .getDialog(
+                                                            context,
+                                                            websiteVersion
+                                                                .sslCertificate,
+                                                          );
+                                                        },
+                                                        color: Colors.red,
+                                                      )
+                                                : const Text('-'),
+                                          ),
+                                        ),
+                                        DataCell(
+                                          Align(
+                                            child: _popupMenuButton(
+                                              context,
+                                              ref,
+                                              index == 0,
+                                              websiteVersion,
+                                              websiteName,
+                                              genesisAddress,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                )
+                                .values
+                                .toList(),
+                          ),
+                        );
+                      },
+                      error: (error, stacktrace) => const SizedBox(),
+                      loading: () => const Padding(
+                        padding: EdgeInsets.only(
+                          left: 30,
+                          right: 30,
+                          top: 230,
+                        ),
+                        child: LinearProgressIndicator(
+                          minHeight: 1,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -433,26 +419,9 @@ Widget _popupMenuButton(
     onSelected: (value) {
       switch (value) {
         case 'ExploreFiles':
-          final explorerFilesScreenKey = GlobalKey<NavigatorState>();
-
-          ref
-              .read(
-                MainScreenThirdPartProviders
-                    .mainScreenThirdPartProvider.notifier,
-              )
-              .setWidget(
-                ExplorerFilesScreen(
-                  key: explorerFilesScreenKey,
-                  filesAndFolders: websiteVersion.content!.metaData,
-                )
-                    .animate()
-                    .fade(
-                      duration: const Duration(milliseconds: 350),
-                    )
-                    .scale(
-                      duration: const Duration(milliseconds: 350),
-                    ),
-              );
+          final filesAndFolders = websiteVersion.content!.metaData;
+          context.push('/exploreFile',
+              extra: {'filesAndFolders': filesAndFolders});
 
           break;
         case 'ExploreTx':
@@ -483,24 +452,8 @@ Widget _popupMenuButton(
               ),
             );
           }
-
-          ref
-              .read(
-                MainScreenThirdPartProviders
-                    .mainScreenThirdPartProvider.notifier,
-              )
-              .setWidget(
-                ExplorerTxScreen(
-                  websiteVersionTxList: websiteVersionTxList,
-                )
-                    .animate()
-                    .fade(
-                      duration: const Duration(milliseconds: 350),
-                    )
-                    .scale(
-                      duration: const Duration(milliseconds: 350),
-                    ),
-              );
+          context.push('/exploreTransaction',
+              extra: {'websiteVersionTxList': websiteVersionTxList});
 
           break;
         case 'Sync':

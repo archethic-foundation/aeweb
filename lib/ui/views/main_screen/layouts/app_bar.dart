@@ -24,6 +24,11 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       leading: const Header(),
       leadingWidth: Responsive.isMobile(context) ? null : 150,
+      title: Center(
+        child: Text(
+          AppLocalizations.of(context)!.websitesListTitle,
+        ),
+      ),
       actions: [
         if (Responsive.isDesktop(context) || Responsive.isTablet(context))
           const ConnectionToWalletStatus(),

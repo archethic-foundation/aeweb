@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
@@ -132,107 +133,121 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       ),
     );
 
-    return Container(
-      height: MediaQuery.of(context).size.height - 380,
-      decoration: BoxDecoration(
-        border: const GradientBoxBorder(
-          gradient: LinearGradient(
-            colors: [
-              Color(0x003C89B9),
-              Color(0xFFCC00FF),
-            ],
-            stops: [0, 1],
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            AppLocalizations.of(context)!.explorerTitle,
           ),
         ),
-        borderRadius: BorderRadius.circular(16),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 30,
-          right: 30,
-          top: 20,
-          bottom: 20,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: SelectionArea(
-                    child: Text(
-                      AppLocalizations.of(context)!.explorerTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ),
+      body: Stack(
+        children: [
+          const MainScreenBackground(),
+          Container(
+            height: MediaQuery.of(context).size.height - 380,
+            decoration: BoxDecoration(
+              border: const GradientBoxBorder(
+                gradient: LinearGradient(
+                  colors: [
+                    Color(0x003C89B9),
+                    Color(0xFFCC00FF),
+                  ],
+                  stops: [0, 1],
                 ),
-                Expanded(
-                  child: Container(
-                    width: 50,
-                    height: 1,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0x003C89B9),
-                          Color(0xFFCC00FF),
-                        ],
-                        stops: [0, 1],
-                        begin: AlignmentDirectional.centerEnd,
-                        end: AlignmentDirectional.centerStart,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+              ),
+              borderRadius: BorderRadius.circular(16),
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 460,
-              child: TreeView(
-                controller: treeViewController,
-                onExpansionChanged: _expandNode,
-                onNodeTap: (key) {
-                  setState(() {
-                    _selectedNode = key;
-                    treeViewController =
-                        treeViewController.copyWith(selectedKey: key);
-                  });
-                },
-                theme: _treeViewTheme,
-                nodeBuilder: (BuildContext context, Node node) {
-                  return Container(
-                    padding: const EdgeInsets.all(4),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 10,
-                          child: IconAnimated(
-                            icon: node.icon!,
-                            color: Theme.of(context).colorScheme.primary,
+            child: Padding(
+              padding: const EdgeInsets.only(
+                left: 30,
+                right: 30,
+                top: 20,
+                bottom: 20,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: SelectionArea(
+                          child: Text(
+                            AppLocalizations.of(context)!.explorerTitle,
+                            style: Theme.of(context).textTheme.titleSmall,
                           ),
                         ),
-                        Expanded(
-                          flex: 80,
-                          child: Text(node.label),
-                        ),
-                        Expanded(
-                          flex: 10,
-                          child: Align(
-                            child: _popupMenuButton(
-                              context,
-                              ref,
-                              node,
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: 50,
+                          height: 1,
+                          decoration: const BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color(0x003C89B9),
+                                Color(0xFFCC00FF),
+                              ],
+                              stops: [0, 1],
+                              begin: AlignmentDirectional.centerEnd,
+                              end: AlignmentDirectional.centerStart,
                             ),
                           ),
                         ),
-                      ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height - 460,
+                    child: TreeView(
+                      controller: treeViewController,
+                      onExpansionChanged: _expandNode,
+                      onNodeTap: (key) {
+                        setState(() {
+                          _selectedNode = key;
+                          treeViewController =
+                              treeViewController.copyWith(selectedKey: key);
+                        });
+                      },
+                      theme: _treeViewTheme,
+                      nodeBuilder: (BuildContext context, Node node) {
+                        return Container(
+                          padding: const EdgeInsets.all(4),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                flex: 10,
+                                child: IconAnimated(
+                                  icon: node.icon!,
+                                  color: Theme.of(context).colorScheme.primary,
+                                ),
+                              ),
+                              Expanded(
+                                flex: 80,
+                                child: Text(node.label),
+                              ),
+                              Expanded(
+                                flex: 10,
+                                child: Align(
+                                  child: _popupMenuButton(
+                                    context,
+                                    ref,
+                                    node,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      },
                     ),
-                  );
-                },
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

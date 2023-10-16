@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/main_screen/bloc/provider.dart';
@@ -9,6 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
@@ -35,6 +37,8 @@ class MainScreenState extends ConsumerState<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final session = ref.watch(SessionProviders.session);
+
     return GestureDetector(
       onTap: _closeSubMenu,
       child: BusyScaffold(
@@ -48,7 +52,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
             alignment: Alignment.center,
             children: [
               const MainScreenBackground(),
-              Body(),
+              const Body(),
               if (_isSubMenuOpen)
                 Positioned(
                   top: 0,
@@ -100,6 +104,17 @@ class MainScreenState extends ConsumerState<MainScreen> {
                 ),
             ],
           ),
+          floatingActionButton: session.isConnected
+              ? FloatingActionButton.extended(
+                  onPressed: () {
+                    context.go('/addWebsite');
+                  },
+                  icon: const Icon(Icons.add),
+                  label: Text(
+                    AppLocalizations.of(context)!.addWebsite,
+                  ),
+                )
+              : null,
         ),
       ),
     );

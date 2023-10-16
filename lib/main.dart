@@ -2,7 +2,10 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
+import 'package:aeweb/model/website_version_tx.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
+import 'package:aeweb/ui/views/display_website/explorer_files.dart';
+import 'package:aeweb/ui/views/display_website/explorer_tx.dart';
 import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/main_screen.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
@@ -69,6 +72,46 @@ class MyApp extends ConsumerWidget {
         GoRoute(
           path: '/addWebsite',
           builder: (context, state) => const AddWebsiteSheet(),
+        ),
+        GoRoute(
+          path: '/websiteDetails',
+          name: 'websiteDetails',
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return WebsiteVersionsList(
+              websiteName: args['websiteName'] == null
+                  ? ''
+                  : args['websiteName']! as String,
+              genesisAddress: args['genesisAddress'] == null
+                  ? ''
+                  : args['genesisAddress']! as String,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/exploreFile',
+          name: 'exploreFile',
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return ExplorerFilesScreen(
+              filesAndFolders: args['filesAndFolders'] == null
+                  ? {}
+                  : args['filesAndFolders']!
+                      as Map<String, HostingRefContentMetaData>,
+            );
+          },
+        ),
+        GoRoute(
+          path: '/exploreTransaction',
+          name: 'exploreTransaction',
+          builder: (context, state) {
+            final args = state.extra! as Map<String, Object?>;
+            return ExplorerTxScreen(
+              websiteVersionTxList: args['websiteVersionTxList'] == null
+                  ? []
+                  : args['websiteVersionTxList']! as List<WebsiteVersionTx>,
+            );
+          },
         ),
         GoRoute(
           path: '/updateCert',
