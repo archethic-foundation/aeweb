@@ -5,6 +5,7 @@ import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -319,8 +320,9 @@ class PathSyncPopup with FileMixin {
                                               .content!
                                               .metaData;
 
-                                      context.goNamed(
-                                        'updateWebsiteSync',
+                                      context.go(
+                                        RoutesPath()
+                                            .updateWebsiteSync(genesisAddress),
                                         extra: {
                                           'websiteName': websiteName,
                                           'genesisAddress': genesisAddress,

@@ -1,11 +1,9 @@
-import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
-import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
-import 'package:gradient_borders/gradient_borders.dart';
+
+import 'website_versions_list.dart';
 
 class WebsiteList extends ConsumerWidget {
   const WebsiteList({super.key});
@@ -16,26 +14,18 @@ class WebsiteList extends ConsumerWidget {
 
     return websitesList.map(
       data: (data) {
-        return Expanded(
-          child: SizedBox(
-            child: Padding(
-              padding: const EdgeInsets.only(
-                top: 30,
-                bottom: 30,
-                left: 10,
-                right: 10,
-              ),
-              child: ListView.builder(
-                padding: const EdgeInsets.all(8),
-                itemCount: data.value.length,
-                itemBuilder: (context, index) {
-                  return _buildWebsiteCard(
-                    context,
-                    ref,
-                    data.value[index],
-                  );
-                },
-              ),
+        return SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 30,
+              bottom: 30,
+              left: 10,
+              right: 10,
+            ),
+            child: ExpansionPanelList.radio(
+              children: data.value.map<ExpansionPanel>((Website website) {
+                return _contentCard(context, ref, website);
+              }).toList(),
             ),
           ),
         );
@@ -54,66 +44,34 @@ class WebsiteList extends ConsumerWidget {
   }
 }
 
-Widget _buildWebsiteCard(BuildContext context, WidgetRef ref, Website website) {
-  return Padding(
-    padding: const EdgeInsets.only(bottom: 10),
-    child: SizedBox(
-        height: 60,
-        child: DecoratedBox(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.background.withOpacity(1),
-                Theme.of(context).colorScheme.background.withOpacity(0.3),
-              ],
-              stops: const [0, 1],
+ExpansionPanel _contentCard(
+  BuildContext context,
+  WidgetRef ref,
+  Website website,
+) {
+  return ExpansionPanelRadio(
+    headerBuilder: (BuildContext context, bool isExpanded) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            website.name,
+            style: const TextStyle(
+              fontSize: 14,
             ),
-            border: GradientBoxBorder(
-              gradient: LinearGradient(
-                colors: [
-                  Theme.of(context).colorScheme.background.withOpacity(0.5),
-                  Theme.of(context).colorScheme.background.withOpacity(0.7),
-                ],
-                stops: const [0, 1],
-              ),
-            ),
-            borderRadius: BorderRadius.circular(12),
+            textAlign: TextAlign.center,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
           ),
-          child: _contentCard(context, ref, website),
-        )),
-  );
-}
-
-Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
-  return InkWell(
-    customBorder: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(10),
-    ),
-    onTap: () {
-      final session = ref.watch(SessionProviders.session);
-      if (session.isConnected) {
-        context.push(
-          RoutesPath().websiteDetails(website.name),
-          extra: {
-            'genesisAddress': website.genesisAddress,
-          },
-        );
-      }
-    },
-    child: Padding(
-      padding: const EdgeInsets.all(20),
-      child: Align(
-        alignment: Alignment.centerLeft,
-        child: Text(
-          website.name,
-          style: const TextStyle(
-            fontSize: 14,
-          ),
-          textAlign: TextAlign.center,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
         ),
-      ),
+      );
+    },
+    body: WebsiteVersionsList(
+      websiteName: website.name,
+      genesisAddress: website.genesisAddress,
     ),
+    value: website.genesisAddress,
+    canTapOnHeader: true,
   );
 }

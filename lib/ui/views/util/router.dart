@@ -4,7 +4,6 @@ import 'package:aeweb/model/website_version_tx.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/display_website/explorer_files.dart';
 import 'package:aeweb/ui/views/display_website/explorer_tx.dart';
-import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/main_screen.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/update_certificate_sheet.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
@@ -23,7 +22,7 @@ class RoutesPath {
   RoutesPath._internal();
   static final RoutesPath _singleton = RoutesPath._internal();
 
-  final String websiteNameParameter = 'websiteName';
+  final String genesisAddressParameter = 'genesisAddress';
 
   String home() {
     return '/';
@@ -38,59 +37,51 @@ class RoutesPath {
   }
 
   String addWebsite() {
-    return '${main()}/add_website';
+    return '${main()}/website';
   }
 
   String _addWebsite() {
-    return 'add_website';
+    return 'website';
   }
 
-  String websiteDetails(String websiteName) {
-    return '${main()}/$websiteName/details';
-  }
-
-  String _websiteDetails() {
-    return ':$websiteNameParameter/details';
-  }
-
-  String exploreFiles(String websiteName) {
-    return '${main()}/$websiteName/files';
+  String exploreFiles(String genesisAddress) {
+    return '${main()}/$genesisAddress/files';
   }
 
   String _exploreFiles() {
-    return ':$websiteNameParameter/files';
+    return ':$genesisAddressParameter/files';
   }
 
-  String exploreTransactions(String websiteName) {
-    return '${main()}/$websiteName/transactions';
+  String exploreTransactions(String genesisAddress) {
+    return '${main()}/$genesisAddress/transactions';
   }
 
   String _exploreTransactions() {
-    return ':$websiteNameParameter/transactions';
+    return ':$genesisAddressParameter/transactions';
   }
 
-  String updateCert(String websiteName) {
-    return '${main()}/$websiteName/update_cert';
+  String updateCert(String genesisAddress) {
+    return '${main()}/$genesisAddress/update_cert';
   }
 
   String _updateCert() {
-    return ':$websiteNameParameter/update_cert';
+    return ':$genesisAddressParameter/update_cert';
   }
 
-  String unpublishWebsite(String websiteName) {
-    return '${main()}/$websiteName/unpublish';
+  String unpublishWebsite(String genesisAddress) {
+    return '${main()}/$genesisAddress/unpublish';
   }
 
   String _unpublishWebsite() {
-    return ':$websiteNameParameter/unpublish';
+    return ':$genesisAddressParameter/unpublish';
   }
 
-  String updateWebsiteSync(String websiteName) {
-    return '${main()}/$websiteName/update_sync';
+  String updateWebsiteSync(String genesisAddress) {
+    return '${main()}/$genesisAddress/update_sync';
   }
 
   String _updateWebsiteSync() {
-    return ':$websiteNameParameter/update_sync';
+    return ':$genesisAddressParameter/update_sync';
   }
 
   List<RouteBase> aeWebRoutes(WidgetRef ref) {
@@ -126,20 +117,6 @@ class RoutesPath {
             },
           ),
           GoRoute(
-            path: _websiteDetails(),
-            builder: (context, state) {
-              final args = state.extra! as Map<String, Object?>;
-              final pathParameter = state.pathParameters;
-
-              return WebsiteVersionsList(
-                websiteName: pathParameter[websiteNameParameter]!,
-                genesisAddress: args['genesisAddress'] == null
-                    ? ''
-                    : args['genesisAddress']! as String,
-              );
-            },
-          ),
-          GoRoute(
             path: _exploreFiles(),
             builder: (context, state) {
               final args = state.extra! as Map<String, Object?>;
@@ -167,20 +144,24 @@ class RoutesPath {
           GoRoute(
             path: _updateCert(),
             builder: (context, state) {
-              final pathParameter = state.pathParameters;
+              final args = state.extra! as Map<String, Object?>;
 
               return UpdateCertificateSheet(
-                websiteName: pathParameter[websiteNameParameter]!,
+                websiteName: args['websiteName'] == null
+                    ? ''
+                    : args['websiteName']! as String,
               );
             },
           ),
           GoRoute(
             path: _unpublishWebsite(),
             builder: (context, state) {
-              final pathParameter = state.pathParameters;
+              final args = state.extra! as Map<String, Object?>;
 
               return UpdateCertificateSheet(
-                websiteName: pathParameter[websiteNameParameter]!,
+                websiteName: args['websiteName'] == null
+                    ? ''
+                    : args['websiteName']! as String,
               );
             },
           ),
@@ -188,10 +169,11 @@ class RoutesPath {
             path: _updateWebsiteSync(),
             builder: (context, state) {
               final args = state.extra! as Map<String, Object?>;
-              final pathParameter = state.pathParameters;
 
               return UpdateWebsiteSyncSheet(
-                websiteName: pathParameter[websiteNameParameter]!,
+                websiteName: args['websiteName'] == null
+                    ? ''
+                    : args['websiteName']! as String,
                 path: args['path'] == null ? '' : args['path']! as String,
                 zipFile: args['zipFile'] == null
                     ? Uint8List.fromList([])
