@@ -2,6 +2,7 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/ui/views/welcome/bloc/providers.dart';
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +72,7 @@ class WelcomeConnectWalletBtnState
                           ),
                         );
                       } else {
-                        context.go('/main');
+                        context.go(RoutesPath().main());
                       }
                     },
                     isBusyValueChanged: (isBusy) {

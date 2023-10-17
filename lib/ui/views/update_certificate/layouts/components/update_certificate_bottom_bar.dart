@@ -3,6 +3,7 @@ import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -45,7 +46,7 @@ class UpdateCertificateBottomBar extends ConsumerWidget {
               labelBtn: AppLocalizations.of(context)!.btn_close,
               icon: Iconsax.close_square,
               onPressed: () {
-                context.go('/');
+                context.go(RoutesPath().home());
               },
             )
           else
@@ -53,7 +54,7 @@ class UpdateCertificateBottomBar extends ConsumerWidget {
               labelBtn: AppLocalizations.of(context)!.btn_cancel,
               icon: Iconsax.close_square,
               onPressed: () {
-                context.go('/');
+                context.go(RoutesPath().home());
               },
             ),
           if (session.isConnected)

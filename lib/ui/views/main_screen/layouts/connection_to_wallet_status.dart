@@ -5,6 +5,7 @@ import 'package:aeweb/ui/views/main_screen/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -66,7 +67,7 @@ class _ConnectionToWalletStatusState
                 );
               }
             },
-            isBusyValueChanged: (isBusy) {
+            isBusyValueChanged: (isBusy) async {
               ref.read(isLoadingMainScreenProvider.notifier).state = isBusy;
             },
           );
@@ -277,7 +278,7 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
                                       onPressed: () async {
                                         await sessionNotifier
                                             .cancelConnection();
-                                        context.go('/welcome');
+                                        context.go(RoutesPath().welcome());
                                       },
                                     ),
                                   ],

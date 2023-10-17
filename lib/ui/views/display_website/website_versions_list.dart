@@ -8,6 +8,7 @@ import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
@@ -420,8 +421,13 @@ Widget _popupMenuButton(
       switch (value) {
         case 'ExploreFiles':
           final filesAndFolders = websiteVersion.content!.metaData;
-          context.push('/exploreFile',
-              extra: {'filesAndFolders': filesAndFolders});
+
+          context.push(
+            RoutesPath().exploreFiles(websiteName),
+            extra: {
+              'filesAndFolders': filesAndFolders,
+            },
+          );
 
           break;
         case 'ExploreTx':
@@ -452,8 +458,10 @@ Widget _popupMenuButton(
               ),
             );
           }
-          context.push('/exploreTransaction',
-              extra: {'websiteVersionTxList': websiteVersionTxList});
+          context.push(
+            RoutesPath().exploreTransactions(websiteName),
+            extra: {'websiteVersionTxList': websiteVersionTxList},
+          );
 
           break;
         case 'Sync':
@@ -465,21 +473,14 @@ Widget _popupMenuButton(
           );
           break;
         case 'ManageCert':
-          context.go(
-            '/updateCert',
-            extra: {
-              'websiteName': websiteName,
-            },
+          context.push(
+            RoutesPath().updateCert(websiteName),
           );
           break;
         case 'Unpublish':
-          context.go(
-            '/unpublishWebsite',
-            extra: {
-              'websiteName': websiteName,
-            },
+          context.push(
+            RoutesPath().unpublishWebsite(websiteName),
           );
-
           break;
         case 'refTx':
           launchUrl(

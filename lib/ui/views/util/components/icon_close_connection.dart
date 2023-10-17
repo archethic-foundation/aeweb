@@ -1,6 +1,7 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -74,7 +75,7 @@ class IconCloseConnection extends ConsumerWidget {
                                   labelBtn: AppLocalizations.of(context)!.yes,
                                   onPressed: () async {
                                     await sessionNotifier.cancelConnection();
-                                    context.go('/welcome');
+                                    context.go(RoutesPath().welcome());
                                   },
                                 ),
                               ],

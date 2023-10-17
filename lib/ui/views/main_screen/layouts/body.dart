@@ -10,14 +10,6 @@ class Body extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Padding(
-      padding: EdgeInsets.only(
-        top: 30,
-        bottom: 30,
-        left: 10,
-        right: 10,
-      ),
-      child: WebsiteList(),
-    );
+    return const WebsiteList();
   }
 }

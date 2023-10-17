@@ -1,6 +1,7 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -17,28 +18,35 @@ class WebsiteList extends ConsumerWidget {
       data: (data) {
         return Expanded(
           child: SizedBox(
-            child: ListView.builder(
-              padding: const EdgeInsets.all(8),
-              itemCount: data.value.length,
-              itemBuilder: (context, index) {
-                return _buildWebsiteCard(
-                  context,
-                  ref,
-                  data.value[index],
-                );
-              },
+            child: Padding(
+              padding: const EdgeInsets.only(
+                top: 30,
+                bottom: 30,
+                left: 10,
+                right: 10,
+              ),
+              child: ListView.builder(
+                padding: const EdgeInsets.all(8),
+                itemCount: data.value.length,
+                itemBuilder: (context, index) {
+                  return _buildWebsiteCard(
+                    context,
+                    ref,
+                    data.value[index],
+                  );
+                },
+              ),
             ),
           ),
         );
       },
       error: (error) => const SizedBox(),
-      loading: (loading) => Padding(
+      loading: (loading) => const Padding(
         padding: EdgeInsets.only(
           left: 30,
           right: 30,
-          top: MediaQuery.of(context).size.height - 200,
         ),
-        child: const LinearProgressIndicator(
+        child: LinearProgressIndicator(
           minHeight: 1,
         ),
       ),
@@ -85,9 +93,8 @@ Widget _contentCard(BuildContext context, WidgetRef ref, Website website) {
       final session = ref.watch(SessionProviders.session);
       if (session.isConnected) {
         context.push(
-          '/websiteDetails',
+          RoutesPath().websiteDetails(website.name),
           extra: {
-            'websiteName': website.name,
             'genesisAddress': website.genesisAddress,
           },
         );

@@ -5,6 +5,7 @@ import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/main_screen/bloc/provider.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/body.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -49,7 +50,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
             onAEMenuTapped: _toggleSubMenu,
           ),
           body: Stack(
-            alignment: Alignment.center,
+            alignment: Alignment.topCenter,
             children: [
               const MainScreenBackground(),
               const Body(),
@@ -107,7 +108,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
           floatingActionButton: session.isConnected
               ? FloatingActionButton.extended(
                   onPressed: () {
-                    context.go('/addWebsite');
+                    context.go(RoutesPath().addWebsite());
                   },
                   icon: const Icon(Icons.add),
                   label: Text(
