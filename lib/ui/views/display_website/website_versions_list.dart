@@ -281,6 +281,27 @@ Widget _popupMenuButton(
               ],
             ),
           ),
+        if (lastVersion)
+          PopupMenuItem(
+            value: 'BrowseFiles',
+            child: Row(
+              children: [
+                const Icon(Iconsax.folder_2),
+                const SizedBox(width: 8),
+                Flexible(
+                  child: Text(
+                    AppLocalizations.of(context)!
+                        .websitesListVersionsPopupBrowseFiles,
+                  ),
+                ),
+                const SizedBox(width: 5),
+                const Icon(
+                  Iconsax.export_3,
+                  size: 12,
+                ),
+              ],
+            ),
+          ),
         PopupMenuItem(
           value: 'ExploreTx',
           child: Row(
@@ -380,7 +401,16 @@ Widget _popupMenuButton(
               'filesAndFolders': filesAndFolders,
             },
           );
+          break;
 
+        case 'BrowseFiles':
+          final url =
+              '${sl.get<ApiService>().endpoint}/api/web_hosting/$genesisAddress';
+          launchUrl(
+            Uri.parse(
+              url,
+            ),
+          );
           break;
         case 'ExploreTx':
           final websiteVersionTxListAddresses = <String>{};

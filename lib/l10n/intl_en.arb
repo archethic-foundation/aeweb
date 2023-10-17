@@ -233,5 +233,6 @@
   "archethicDashboardMenuDEXDesc": "SWAP assets on-chain, add liquidity & access LP staking",
   "archethicDashboardMenuWalletOnWayItem": "AEWallet",
   "archethicDashboardMenuWalletOnWayDesc": "Send, Receive and Exchange UCO and Tokens",
-  "addWebsite": "Add a website"
+  "addWebsite": "Add a website",
+  "websitesListVersionsPopupBrowseFiles": "Browse files"
 }
