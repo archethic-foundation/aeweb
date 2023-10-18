@@ -51,7 +51,7 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
                 final versions = websiteVersions.cast<WebsiteVersion>();
                 if (versions.isEmpty) {
                   return Padding(
-                    padding: const EdgeInsets.only(top: 100),
+                    padding: const EdgeInsets.symmetric(vertical: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

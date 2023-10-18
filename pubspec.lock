@@ -36,17 +36,18 @@ packages:
   archethic_lib_dart:
     dependency: transitive
     description:
-      name: archethic_lib_dart
-      sha256: "74f3d361b87dec371b7d51d0a8ee098a0436fda071add9200a57912ab0a6ca53"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.3.0"
+      path: "."
+      ref: "114-abf-serialization-introduced-for-the-recipients-args"
+      resolved-ref: "2fe7a335d2fa4fff16d6f8d12ec36ecfad5d54cb"
+      url: "https://github.com/archethic-foundation/libdart.git"
+    source: git
+    version: "3.3.1"
   archethic_wallet_client:
     dependency: "direct main"
     description:
       path: "."
       ref: dev
-      resolved-ref: "64cc137a04daf09e65e4f7b5b110fe6b515694b8"
+      resolved-ref: ef7943cdacc1b8ec400e4cc9565b8c7cd6a8009b
       url: "https://github.com/archethic-foundation/archethic-wallet-client-dart.git"
     source: git
     version: "1.0.7"
@@ -1062,6 +1063,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.0"
+  step_progress_indicator:
+    dependency: "direct main"
+    description:
+      name: step_progress_indicator
+      sha256: b51bb1fcfc78454359f0658c5a2c21548c3825ebf76e826308e9ca10f383bbb8
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.2"
   stream_channel:
     dependency: transitive
     description:

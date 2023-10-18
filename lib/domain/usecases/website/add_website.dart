@@ -250,4 +250,39 @@ class AddWebsiteUseCases
         ..setStepError(e.toString().replaceAll('Exception: ', '').trim());
     }
   }
+
+  String getStepLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 1:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep1;
+      case 2:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep2;
+      case 3:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep3;
+      case 4:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep4;
+      case 5:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep5;
+      case 6:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep6;
+      case 7:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep7;
+      case 8:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep8;
+      case 9:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep9;
+      case 10:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep10;
+      // case 11 = user needs to validate
+      case 12:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep12;
+      case 13:
+        return AppLocalizations.of(context)!.addWebSiteWaitingStep13;
+      default:
+        return '';
+    }
+  }
 }

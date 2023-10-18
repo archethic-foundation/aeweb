@@ -30,7 +30,8 @@ class AddWebsiteFormState with _$AddWebsiteFormState {
   bool get isControlsOk => errorText == '';
 
   bool get creationInProgress =>
-      (step > 0 && step < 12 && stepError.isEmpty) || controlInProgress == true;
+      (step > 0 && step <= 12 && stepError.isEmpty) ||
+      controlInProgress == true;
 
   bool get processFinished => stepError.isNotEmpty || step >= 12;
 

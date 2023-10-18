@@ -1,9 +1,13 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_form_sheet.dart';
+import 'package:aeweb/ui/views/add_website/layouts/components/add_website_in_progress_popup.dart';
+import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +81,12 @@ class AddWebsiteSheet extends ConsumerWidget {
             AppLocalizations.of(context)!.addWebSiteFormTitle,
           ),
         ),
+        actions: const [
+          ConnectionToWalletStatus(),
+          SizedBox(
+            width: 10,
+          ),
+        ],
       ),
       body: const AddWebsiteFormSheet(),
       floatingActionButton: session.isConnected
@@ -90,7 +100,16 @@ class AddWebsiteSheet extends ConsumerWidget {
                           AddWebsiteFormProvider.addWebsiteForm.notifier,
                         );
 
-                        await addWebsiteNotifier.addWebsite(context, ref);
+                        unawaited(
+                          addWebsiteNotifier.addWebsite(context, ref),
+                        );
+
+                        if (!context.mounted) return;
+
+                        await AddWebsiteInProgressPopup.getDialog(
+                          context,
+                          ref,
+                        );
                       }
                     },
               icon: const Icon(

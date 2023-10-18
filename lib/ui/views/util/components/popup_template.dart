@@ -52,7 +52,7 @@ class PopupTemplate extends StatelessWidget {
                       padding: const EdgeInsets.only(
                         left: 10,
                       ),
-                      child: Row(
+                      child: Wrap(
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -61,7 +61,8 @@ class PopupTemplate extends StatelessWidget {
                             child: SelectionArea(
                               child: Text(
                                 popupTitle,
-                                style: Theme.of(context).textTheme.titleLarge,
+                                style: Theme.of(context).textTheme.titleMedium,
+                                overflow: TextOverflow.ellipsis,
                               ),
                             ),
                           ),
