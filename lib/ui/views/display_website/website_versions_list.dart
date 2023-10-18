@@ -41,8 +41,10 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
         child: SizedBox(
-          width: max(MediaQuery.of(context).size.width - 60,
-              600), // 600 is the minimum width for the DataTable
+          width: max(
+            MediaQuery.of(context).size.width - 60,
+            600,
+          ), // 600 is the minimum width for the DataTable
           child: ArchethicScrollbar(
             child: websiteVersionsList.when(
               data: (websiteVersions) {

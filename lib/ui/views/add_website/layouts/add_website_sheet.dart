@@ -17,24 +17,6 @@ class AddWebsiteSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ProviderScope(
-      overrides: [
-        AddWebsiteFormProvider.initialAddWebsiteForm.overrideWithValue(
-          const AddWebsiteFormState(),
-        ),
-      ],
-      child: const AddWebsiteSheetBody(),
-    );
-  }
-}
-
-class AddWebsiteSheetBody extends ConsumerWidget {
-  const AddWebsiteSheetBody({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(SessionProviders.session);
     final addWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 

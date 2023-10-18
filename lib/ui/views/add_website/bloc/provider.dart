@@ -12,20 +12,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final _initialAddWebsiteFormProvider = Provider<AddWebsiteFormState>(
-  (ref) {
-    throw UnimplementedError();
-  },
-);
-
 final _addWebsiteFormProvider =
     NotifierProvider.autoDispose<AddWebsiteFormNotifier, AddWebsiteFormState>(
   () {
     return AddWebsiteFormNotifier();
   },
-  dependencies: [
-    AddWebsiteFormProvider.initialAddWebsiteForm,
-  ],
 );
 
 class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
@@ -33,9 +24,9 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
   AddWebsiteFormNotifier();
 
   @override
-  AddWebsiteFormState build() => ref.watch(
-        AddWebsiteFormProvider.initialAddWebsiteForm,
-      );
+  AddWebsiteFormState build() {
+    return const AddWebsiteFormState();
+  }
 
   void setName(
     String name,
@@ -269,6 +260,5 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
 }
 
 abstract class AddWebsiteFormProvider {
-  static final initialAddWebsiteForm = _initialAddWebsiteFormProvider;
   static final addWebsiteForm = _addWebsiteFormProvider;
 }
