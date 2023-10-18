@@ -132,26 +132,28 @@ class UploadFile extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: value,
-                        style: textTheme.labelSmall!
-                            .copyWith(fontWeight: FontWeight.w300),
-                      ),
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: IconButtonAnimated(
-                          color: Theme.of(context).colorScheme.primary,
-                          onPressed: onDelete,
-                          icon: const Icon(
-                            Iconsax.trash4,
-                            size: 14,
+                child: Align(
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: value,
+                          style: textTheme.labelSmall!
+                              .copyWith(fontWeight: FontWeight.w300),
+                        ),
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: IconButtonAnimated(
+                            color: Theme.of(context).colorScheme.primary,
+                            onPressed: onDelete,
+                            icon: const Icon(
+                              Iconsax.trash4,
+                              size: 14,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
