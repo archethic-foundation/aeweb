@@ -83,7 +83,7 @@ class _AddWebsiteTextFieldNameState
                         ),
                       ),
                       child: TextField(
-                        style: textTheme.labelMedium,
+                        style: textTheme.bodyMedium,
                         autocorrect: false,
                         controller: nameController,
                         onChanged: (text) async {
@@ -101,7 +101,7 @@ class _AddWebsiteTextFieldNameState
                         ],
                         decoration: InputDecoration(
                           hintText: "Website's name?",
-                          hintStyle: textTheme.labelMedium!
+                          hintStyle: textTheme.bodyMedium!
                               .copyWith(fontWeight: FontWeight.w300),
                           border: InputBorder.none,
                           contentPadding: const EdgeInsets.only(left: 10),

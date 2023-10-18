@@ -75,7 +75,7 @@ class UpdateCertificateFormSheet extends ConsumerWidget {
               const SizedBox(height: 16),
               Text(
                 AppLocalizations.of(context)!.updateCertificateFormDesc,
-                style: textTheme.labelMedium,
+                style: textTheme.bodyMedium,
               ),
               const SizedBox(height: 30),
               Row(

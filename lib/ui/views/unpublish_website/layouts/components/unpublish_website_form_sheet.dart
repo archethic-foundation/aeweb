@@ -79,14 +79,14 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
                   const SizedBox(width: 5),
                   Text(
                     AppLocalizations.of(context)!.disclaimer,
-                    style: textTheme.labelMedium,
+                    style: textTheme.bodyMedium,
                   ),
                 ],
               ),
               const SizedBox(height: 16),
               Text(
                 AppLocalizations.of(context)!.unpublishWebSiteDesc,
-                style: textTheme.labelMedium,
+                style: textTheme.bodyMedium,
               ),
             ],
           ),

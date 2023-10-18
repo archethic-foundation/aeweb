@@ -182,7 +182,7 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
             flex: 4,
             child: Text(
               text,
-              style: textTheme.labelMedium,
+              style: textTheme.bodyMedium,
             ),
           ),
           const SizedBox(
@@ -220,7 +220,7 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
         children: [
           Text(
             text,
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           const SizedBox(
             width: 5,
@@ -249,7 +249,7 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
         children: [
           Text(
             text,
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           const SizedBox(
             width: 5,
@@ -281,7 +281,7 @@ class UnpublishWebsiteSteps extends ConsumerWidget {
             children: [
               Text(
                 text,
-                style: textTheme.labelMedium,
+                style: textTheme.bodyMedium,
               ),
               const SizedBox(
                 width: 10,

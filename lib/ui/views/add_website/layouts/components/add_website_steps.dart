@@ -44,7 +44,6 @@ class AddWebsiteSteps extends ConsumerWidget {
         child: ArchethicScrollbar(
           child: SizedBox(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (addWebsite.step == 1)
                   _waitingStep(
@@ -210,7 +209,7 @@ class AddWebsiteSteps extends ConsumerWidget {
             flex: 4,
             child: Text(
               text,
-              style: textTheme.labelMedium,
+              style: textTheme.bodyMedium,
             ),
           ),
           const SizedBox(
@@ -248,7 +247,7 @@ class AddWebsiteSteps extends ConsumerWidget {
         children: [
           Text(
             text,
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           const SizedBox(
             width: 5,
@@ -277,7 +276,7 @@ class AddWebsiteSteps extends ConsumerWidget {
         children: [
           Text(
             text,
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           const SizedBox(
             width: 5,
@@ -303,13 +302,12 @@ class AddWebsiteSteps extends ConsumerWidget {
     return SizedBox(
       height: 50,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
               Text(
                 text,
-                style: textTheme.labelMedium,
+                style: textTheme.bodyMedium,
               ),
               const SizedBox(
                 width: 10,

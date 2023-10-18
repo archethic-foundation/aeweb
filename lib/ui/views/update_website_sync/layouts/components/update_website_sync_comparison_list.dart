@@ -103,7 +103,7 @@ class UpdateWebsiteSyncComparisonSheetState
             const SizedBox(height: 16),
             Text(
               AppLocalizations.of(context)!.updateWebSiteDesc,
-              style: textTheme.labelMedium,
+              style: textTheme.bodyMedium,
             ),
             const SizedBox(height: 30),
             Row(
@@ -115,14 +115,14 @@ class UpdateWebsiteSyncComparisonSheetState
                 const SizedBox(width: 5),
                 Text(
                   AppLocalizations.of(context)!.disclaimer,
-                  style: textTheme.labelMedium,
+                  style: textTheme.bodyMedium,
                 ),
               ],
             ),
             const SizedBox(height: 16),
             Text(
               AppLocalizations.of(context)!.updateWebSiteDisclaimer,
-              style: textTheme.labelMedium,
+              style: textTheme.bodyMedium,
             ),
             const SizedBox(height: 16),
             Padding(
@@ -139,7 +139,7 @@ class UpdateWebsiteSyncComparisonSheetState
               padding: const EdgeInsets.only(top: 8, bottom: 8),
               child: Text(
                 '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
-                style: textTheme.labelMedium,
+                style: textTheme.bodyMedium,
               ),
             ),
             Expanded(
@@ -290,7 +290,7 @@ class UpdateWebsiteSyncComparisonSheetState
           ),
           label: Text(
             '${AppLocalizations.of(context)!.status_all} ($nbOfAll)',
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           style: ButtonStyle(
             backgroundColor: _selectedStatus == null
@@ -313,7 +313,7 @@ class UpdateWebsiteSyncComparisonSheetState
           ),
           label: Text(
             '${AppLocalizations.of(context)!.status_localOnly} ($nbOfLocalOnly)',
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           style: ButtonStyle(
             backgroundColor:
@@ -337,7 +337,7 @@ class UpdateWebsiteSyncComparisonSheetState
           ),
           label: Text(
             '${AppLocalizations.of(context)!.status_remoteOnly} ($nbOfRemoteOnly)',
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           style: ButtonStyle(
             backgroundColor:
@@ -361,7 +361,7 @@ class UpdateWebsiteSyncComparisonSheetState
           ),
           label: Text(
             '${AppLocalizations.of(context)!.status_differentContent} ($nbOfDifferentContent)',
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           style: ButtonStyle(
             backgroundColor: _selectedStatus ==
@@ -383,7 +383,7 @@ class UpdateWebsiteSyncComparisonSheetState
           ),
           label: Text(
             '${AppLocalizations.of(context)!.status_sameContent} ($nbOfSameContent)',
-            style: textTheme.labelMedium,
+            style: textTheme.bodyMedium,
           ),
           style: ButtonStyle(
             backgroundColor:

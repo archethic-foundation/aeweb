@@ -68,7 +68,6 @@ class _AddWebsiteSelectPublicCertPathState
     final addWebsiteProvider = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const SizedBox(width: 10),
         UploadFile(

@@ -283,15 +283,15 @@ Widget _popupMenuButton(
           ),
         if (lastVersion)
           PopupMenuItem(
-            value: 'BrowseFiles',
+            value: 'VisitWebsite',
             child: Row(
               children: [
-                const Icon(Iconsax.folder_2),
+                const Icon(Iconsax.global),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
                     AppLocalizations.of(context)!
-                        .websitesListVersionsPopupBrowseFiles,
+                        .websitesListVersionsPopupBVisitWebsite,
                   ),
                 ),
                 const SizedBox(width: 5),
@@ -403,7 +403,7 @@ Widget _popupMenuButton(
           );
           break;
 
-        case 'BrowseFiles':
+        case 'VisitWebsite':
           final url =
               '${sl.get<ApiService>().endpoint}/api/web_hosting/$genesisAddress';
           launchUrl(

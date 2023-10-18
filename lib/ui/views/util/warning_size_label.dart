@@ -15,25 +15,26 @@ class WarningSizeLabel extends ConsumerWidget {
       return const SizedBox();
     }
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
               Iconsax.info_circle,
               color: Colors.yellow,
-              size: 14,
+              size: 18,
             ),
             const SizedBox(width: 5),
             Text(
               AppLocalizations.of(context)!.informations,
-              style: Theme.of(context).textTheme.labelMedium,
+              style: Theme.of(context).textTheme.titleMedium,
             ),
           ],
         ),
+        const SizedBox(height: 8),
         Text(
           AppLocalizations.of(context)!.betaVersionMaxFiles,
-          style: Theme.of(context).textTheme.labelMedium,
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
     );

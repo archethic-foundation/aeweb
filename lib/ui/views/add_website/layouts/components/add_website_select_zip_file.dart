@@ -60,7 +60,6 @@ class _AddWebsiteSelectZipFileState
     final addWebsiteProvider = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         UploadFile(
           title: AppLocalizations.of(context)!.addWebsiteZipLabel,

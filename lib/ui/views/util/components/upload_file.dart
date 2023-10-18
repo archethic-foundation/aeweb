@@ -33,37 +33,39 @@ class UploadFile extends ConsumerWidget {
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             Expanded(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: title,
-                      style: textTheme.labelMedium,
-                    ),
-                    if (helpLink != null)
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: IconButtonAnimated(
-                          icon: Icon(
-                            Icons.help,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          onPressed: () {
-                            launchUrl(
-                              Uri.parse(
-                                helpLink!,
-                              ),
-                            );
-                          },
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                        ),
+              child: Align(
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: title,
+                        style: textTheme.bodyMedium,
                       ),
-                  ],
+                      if (helpLink != null)
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: IconButtonAnimated(
+                            icon: Icon(
+                              Icons.help,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            onPressed: () {
+                              launchUrl(
+                                Uri.parse(
+                                  helpLink!,
+                                ),
+                              );
+                            },
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
