@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
+import 'package:aeweb/ui/views/util/components/main_background.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -142,7 +142,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       ),
       body: Stack(
         children: [
-          const MainScreenBackground(),
+          const MainBackground(),
           Padding(
             padding: const EdgeInsets.only(
               left: 30,

@@ -5,6 +5,7 @@ import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/display_website/explorer_files.dart';
 import 'package:aeweb/ui/views/display_website/explorer_tx.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/main_screen.dart';
+import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/update_certificate_sheet.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
 import 'package:aeweb/ui/views/welcome/welcome_screen.dart';
@@ -158,7 +159,7 @@ class RoutesPath {
             builder: (context, state) {
               final args = state.extra! as Map<String, Object?>;
 
-              return UpdateCertificateSheet(
+              return UnpublishWebsiteSheet(
                 websiteName: args['websiteName'] == null
                     ? ''
                     : args['websiteName']! as String,

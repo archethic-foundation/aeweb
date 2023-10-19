@@ -1,8 +1,8 @@
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:flutter/material.dart';
 
-class MainScreenBackground extends StatelessWidget {
-  const MainScreenBackground({
+class MainBackground extends StatelessWidget {
+  const MainBackground({
     super.key,
   });
 

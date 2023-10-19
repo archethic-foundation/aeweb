@@ -52,7 +52,7 @@ class PopupTemplate extends StatelessWidget {
                       padding: const EdgeInsets.only(
                         left: 10,
                       ),
-                      child: Wrap(
+                      child: Row(
                         children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
@@ -68,7 +68,6 @@ class PopupTemplate extends StatelessWidget {
                           ),
                           Expanded(
                             child: Container(
-                              width: 50,
                               height: 1,
                               decoration: BoxDecoration(
                                 gradient: AeWebThemeBase.gradient,

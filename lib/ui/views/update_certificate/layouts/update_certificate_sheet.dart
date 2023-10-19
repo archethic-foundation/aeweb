@@ -1,10 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/state.dart';
-import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_bottom_bar.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_form_sheet.dart';
-import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_steps.dart';
-import 'package:aeweb/ui/views/util/components/page_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -68,10 +66,21 @@ class UpdateCertificateSheetBody extends ConsumerWidget {
       },
     );
 
-    return const PageDetail(
-      firstChild: UpdateCertificateFormSheet(),
-      secondChild: UpdateCertificateSteps(),
-      bottomBar: UpdateCertificateBottomBar(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            AppLocalizations.of(context)!.updateCertificateFormTitle,
+          ),
+        ),
+        actions: const [
+          ConnectionToWalletStatus(),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+      body: const UpdateCertificateFormSheet(),
     );
   }
 }

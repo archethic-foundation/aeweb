@@ -1,10 +1,10 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/main_screen/bloc/provider.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/body.dart';
+import 'package:aeweb/ui/views/util/components/main_background.dart';
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
@@ -52,7 +52,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
           body: Stack(
             alignment: Alignment.topCenter,
             children: [
-              const MainScreenBackground(),
+              const MainBackground(),
               const Body(),
               if (_isSubMenuOpen)
                 Positioned(

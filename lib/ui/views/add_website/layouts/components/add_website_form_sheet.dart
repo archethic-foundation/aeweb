@@ -1,12 +1,12 @@
 import 'dart:math' as math;
 
-import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_path.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_private_key_path.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_public_cert_path.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_zip_file.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_switch_gitignore.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_textfield_name.dart';
+import 'package:aeweb/ui/views/util/components/main_background.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:flutter/foundation.dart';
@@ -25,7 +25,7 @@ class AddWebsiteFormSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const MainScreenBackground(),
+        const MainBackground(),
         SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(

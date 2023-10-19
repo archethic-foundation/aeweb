@@ -2,8 +2,8 @@
 import 'dart:math';
 
 import 'package:aeweb/model/website_version_tx.dart';
-import 'package:aeweb/ui/utils/components/main_screen_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
+import 'package:aeweb/ui/views/util/components/main_background.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
@@ -30,7 +30,7 @@ class ExplorerTxScreen extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          const MainScreenBackground(),
+          const MainBackground(),
           if (websiteVersionTxList.isEmpty)
             Align(
               child: Row(

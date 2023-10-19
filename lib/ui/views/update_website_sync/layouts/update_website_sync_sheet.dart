@@ -1,11 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
+import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
-import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_bottom_bar.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_comparison_list.dart';
-import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_steps.dart';
-import 'package:aeweb/ui/views/util/components/page_detail.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -82,10 +80,22 @@ class UpdateWebsiteSyncSheetBody extends ConsumerWidget {
             );
       },
     );
-    return const PageDetail(
-      firstChild: UpdateWebsiteSyncComparisonSheet(),
-      secondChild: UpdateWebsiteSyncSteps(),
-      bottomBar: UpdateWebsiteSyncBottomBar(),
+
+    return Scaffold(
+      appBar: AppBar(
+        title: Center(
+          child: Text(
+            AppLocalizations.of(context)!.updateWebSiteFormTitle,
+          ),
+        ),
+        actions: const [
+          ConnectionToWalletStatus(),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+      body: const UpdateWebsiteSyncComparisonSheet(),
     );
   }
 }
