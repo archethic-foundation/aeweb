@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:math' as math;
+
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_private_key_path.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_public_cert_path.dart';
 import 'package:aeweb/ui/views/util/components/main_background.dart';
@@ -31,22 +33,42 @@ class UpdateCertificateFormSheet extends ConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.only(right: 10),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
                     AppLocalizations.of(context)!.updateCertificateFormDesc,
                     style: textTheme.bodyMedium,
+                    textAlign: TextAlign.center,
                   ),
                   const SizedBox(height: 30),
                   Row(
                     children: [
+                      Expanded(
+                        child: Transform.rotate(
+                          angle: -math.pi,
+                          child: Container(
+                            width: 50,
+                            height: 1,
+                            decoration: const BoxDecoration(
+                              gradient: LinearGradient(
+                                colors: [
+                                  Color(0x003C89B9),
+                                  Color(0xFFCC00FF),
+                                ],
+                                stops: [0, 1],
+                                begin: AlignmentDirectional.centerEnd,
+                                end: AlignmentDirectional.centerStart,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Padding(
-                        padding: const EdgeInsets.only(right: 15),
+                        padding: const EdgeInsets.symmetric(horizontal: 15),
                         child: SelectionArea(
                           child: Text(
                             AppLocalizations.of(context)!
                                 .updateCertificateRequiredInfo,
-                            style: Theme.of(context).textTheme.titleSmall,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         ),
                       ),

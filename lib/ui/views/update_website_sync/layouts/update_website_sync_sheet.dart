@@ -1,4 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
@@ -9,7 +11,6 @@ import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_web
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:busy/packages/synchronized-3.0.1/src/utils.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -142,7 +143,7 @@ class _UpdateWebsiteSyncSheetState
                       );
                     },
               icon: const Icon(
-                Iconsax.refresh_25,
+                Iconsax.global_edit,
               ),
               label: Text(
                 AppLocalizations.of(context)!.btn_update_website,

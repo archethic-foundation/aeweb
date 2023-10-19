@@ -179,4 +179,33 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
         ..setStepError(e.toString().replaceAll('Exception: ', '').trim());
     }
   }
+
+  String getStepLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 1:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep1;
+      case 2:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep2;
+      case 3:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep3;
+      case 4:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep4;
+      case 5:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep5;
+      case 6:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep6;
+      case 7:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep7;
+      // case 8 = user needs to validate
+      case 9:
+        return AppLocalizations.of(context)!.updateCertificateWaitingStep9;
+      case 10:
+        return AppLocalizations.of(context)!.updateCertificateConfirmedStep10;
+      default:
+        return '';
+    }
+  }
 }
