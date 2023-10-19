@@ -24,6 +24,11 @@ class UpdateCertificateFormNotifier
     return const UpdateCertificateFormState();
   }
 
+  void resetStep() {
+    setStep(0);
+    setError('');
+  }
+
   void setName(
     String name,
   ) {

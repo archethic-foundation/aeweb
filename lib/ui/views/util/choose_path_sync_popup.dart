@@ -241,21 +241,23 @@ class PathSyncPopup with FileMixin {
                               .content!
                               .metaData;
 
-                      context.go(
-                        RoutesPath().updateWebsiteSync(genesisAddress),
-                        extra: {
-                          'websiteName': websiteName,
-                          'genesisAddress': genesisAddress,
-                          'path': path ?? '',
-                          'zipFile': zipFile ?? Uint8List.fromList([]),
-                          'localFiles': localFiles,
-                          'comparedFiles':
-                              SyncWebsiteUseCases().compareFileLists(
-                            localFiles!,
-                            remoteFiles,
-                          ),
-                        },
-                      );
+                      context
+                        ..pop() // close popup
+                        ..go(
+                          RoutesPath().updateWebsiteSync(genesisAddress),
+                          extra: {
+                            'websiteName': websiteName,
+                            'genesisAddress': genesisAddress,
+                            'path': path ?? '',
+                            'zipFile': zipFile ?? Uint8List.fromList([]),
+                            'localFiles': localFiles,
+                            'comparedFiles':
+                                SyncWebsiteUseCases().compareFileLists(
+                              localFiles!,
+                              remoteFiles,
+                            ),
+                          },
+                        );
                     },
                   ),
                 ],

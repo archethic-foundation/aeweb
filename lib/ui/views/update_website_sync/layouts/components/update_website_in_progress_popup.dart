@@ -12,6 +12,7 @@ import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class UpdateWebsiteInProgressPopup {
   static Future<void> getDialog(
@@ -229,6 +230,19 @@ class UpdateWebsiteInProgressPopup {
                                 ref.invalidate(
                                   WebsitesProviders.fetchWebsiteVersions,
                                 );
+
+                                ref
+                                    .watch(
+                                      UpdateWebsiteSyncFormProvider
+                                          .updateWebsiteSyncForm.notifier,
+                                    )
+                                    .resetStep();
+
+                                if (updateWebsiteSync.updateInProgress ==
+                                        false &&
+                                    updateWebsiteSync.processFinished) {
+                                  context.pop(); // go to main screen
+                                }
                               },
                             ),
                           ),

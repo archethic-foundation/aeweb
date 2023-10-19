@@ -60,7 +60,11 @@ class UpdateWebsiteSyncComparisonSheetState
             return ArchethicScrollbar(
               child: Container(
                 padding: const EdgeInsets.only(
-                    top: 10, left: 5, right: 5, bottom: 10),
+                  top: 10,
+                  left: 5,
+                  right: 5,
+                  bottom: 10,
+                ),
                 child: Padding(
                   padding: const EdgeInsets.only(right: 10),
                   child: Column(
@@ -108,13 +112,11 @@ class UpdateWebsiteSyncComparisonSheetState
                       Row(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.only(top: 8, bottom: 8),
-                            child: Expanded(
-                              child: Text(
-                                '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
-                                style: textTheme.bodyMedium,
-                                textAlign: TextAlign.start,
-                              ),
+                            padding: const EdgeInsets.all(8),
+                            child: Text(
+                              '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
+                              style: textTheme.bodyMedium,
+                              textAlign: TextAlign.start,
                             ),
                           ),
                         ],

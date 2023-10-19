@@ -28,6 +28,11 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
     return const AddWebsiteFormState();
   }
 
+  void resetStep() {
+    setStep(0);
+    setError('');
+  }
+
   void setName(
     String name,
   ) {

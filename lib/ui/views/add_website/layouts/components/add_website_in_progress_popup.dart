@@ -12,6 +12,7 @@ import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class AddWebsiteInProgressPopup {
   static Future<void> getDialog(
@@ -217,6 +218,18 @@ class AddWebsiteInProgressPopup {
                                       : '',
                               warningCloseFunction: () async {
                                 ref.invalidate(WebsitesProviders.fetchWebsites);
+
+                                ref
+                                    .watch(
+                                      AddWebsiteFormProvider
+                                          .addWebsiteForm.notifier,
+                                    )
+                                    .resetStep();
+
+                                if (addWebsite.creationInProgress == false &&
+                                    addWebsite.processFinished) {
+                                  context.pop(); // go to main screen
+                                }
                               },
                             ),
                           ),

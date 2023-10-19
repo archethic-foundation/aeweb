@@ -22,6 +22,11 @@ class UnpublishWebsiteFormNotifier
     return const UnpublishWebsiteFormState();
   }
 
+  void resetStep() {
+    setStep(0);
+    setError('');
+  }
+
   void setName(
     String name,
   ) {

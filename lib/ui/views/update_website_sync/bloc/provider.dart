@@ -25,6 +25,11 @@ class UpdateWebsiteSyncFormNotifier
     return const UpdateWebsiteSyncFormState();
   }
 
+  void resetStep() {
+    setStep(0);
+    setError('');
+  }
+
   void setName(
     String name,
   ) {
