@@ -22,10 +22,9 @@ class ExplorerTxScreen extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.explorerTxTitle,
-          ),
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.explorerTxTitle,
         ),
       ),
       body: Stack(

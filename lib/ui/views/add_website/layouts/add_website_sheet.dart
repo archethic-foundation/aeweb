@@ -76,10 +76,9 @@ class AddWebsiteSheet extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.addWebSiteFormTitle,
-          ),
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.addWebSiteFormTitle,
         ),
         actions: const [
           ConnectionToWalletStatus(),

@@ -20,14 +20,13 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      centerTitle: true,
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: const Header(),
       leadingWidth: Responsive.isMobile(context) ? null : 150,
-      title: Center(
-        child: Text(
-          AppLocalizations.of(context)!.websitesListTitle,
-        ),
+      title: Text(
+        AppLocalizations.of(context)!.websitesListTitle,
       ),
       actions: [
         if (Responsive.isDesktop(context) || Responsive.isTablet(context))

@@ -82,10 +82,9 @@ class _UpdateCertificateSheetState
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.updateCertificateFormTitle,
-          ),
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.updateCertificateFormTitle,
         ),
         actions: const [
           ConnectionToWalletStatus(),

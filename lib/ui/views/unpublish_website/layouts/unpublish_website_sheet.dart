@@ -76,10 +76,9 @@ class _UnpublishWebsiteSheetState extends ConsumerState<UnpublishWebsiteSheet> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.unpublishWebSiteFormTitle,
-          ),
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.unpublishWebSiteFormTitle,
         ),
         actions: const [
           ConnectionToWalletStatus(),

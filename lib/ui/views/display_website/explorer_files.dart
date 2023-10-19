@@ -134,10 +134,9 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.explorerTitle,
-          ),
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.explorerTitle,
         ),
       ),
       body: Stack(

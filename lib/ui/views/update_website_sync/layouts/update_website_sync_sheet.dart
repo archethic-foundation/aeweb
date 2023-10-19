@@ -97,10 +97,9 @@ class _UpdateWebsiteSyncSheetState
 
     return Scaffold(
       appBar: AppBar(
-        title: Center(
-          child: Text(
-            AppLocalizations.of(context)!.updateWebSiteFormTitle,
-          ),
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.updateWebSiteFormTitle,
         ),
         actions: const [
           ConnectionToWalletStatus(),
