@@ -28,9 +28,9 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
           child: ArchethicScrollbar(
             child: SizedBox(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Icon(
                         Iconsax.warning_2,

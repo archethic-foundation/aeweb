@@ -163,4 +163,33 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
         ..setStepError(e.toString().replaceAll('Exception: ', '').trim());
     }
   }
+
+  String getStepLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 1:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep1;
+      case 2:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep2;
+      case 3:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep3;
+      case 4:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep4;
+      case 5:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep5;
+      case 6:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep6;
+      case 7:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep7;
+      // case 8 = user needs to validate
+      case 9:
+        return AppLocalizations.of(context)!.unpublishWebSiteWaitingStep9;
+      case 10:
+        return AppLocalizations.of(context)!.unpublishWebSiteConfirmedStep10;
+      default:
+        return '';
+    }
+  }
 }

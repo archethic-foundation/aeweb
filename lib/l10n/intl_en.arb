@@ -207,5 +207,6 @@
   "websitesListVersionsPopupBVisitWebsite": "Visit the website",
   "addWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website creation process?",
   "updateWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website update process?",
-  "updateCertificateProcessInterruptionWarning": "Are you sure you want to stop the certificate update process?"
+  "updateCertificateProcessInterruptionWarning": "Are you sure you want to stop the certificate update process?",
+  "unpublishWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website unpublishing process?"
 }
