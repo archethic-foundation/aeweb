@@ -7,6 +7,7 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_circul
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -143,7 +144,7 @@ class AddWebsiteInProgressPopup {
                       elevation: 0,
                       content: Stack(
                         children: <Widget>[
-                          SingleChildScrollView(
+                          ArchethicScrollbar(
                             child: Container(
                               margin: const EdgeInsets.only(
                                 top: 30,

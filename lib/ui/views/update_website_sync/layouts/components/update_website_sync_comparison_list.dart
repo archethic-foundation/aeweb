@@ -2,6 +2,7 @@
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/main_background.dart';
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -54,150 +55,157 @@ class UpdateWebsiteSyncComparisonSheetState
     return Stack(
       children: [
         const MainBackground(),
-        Container(
-          padding:
-              const EdgeInsets.only(top: 10, left: 5, right: 5, bottom: 10),
-          child: Padding(
-            padding: const EdgeInsets.only(right: 10),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  AppLocalizations.of(context)!.updateWebSiteDesc,
-                  style: textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 30),
-                Row(
-                  children: [
-                    const Icon(
-                      Iconsax.warning_2,
-                      color: Colors.red,
-                    ),
-                    const SizedBox(width: 5),
-                    Text(
-                      AppLocalizations.of(context)!.disclaimer,
-                      style: textTheme.bodyMedium,
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  AppLocalizations.of(context)!.updateWebSiteDisclaimer,
-                  style: textTheme.bodyMedium,
-                ),
-                const SizedBox(height: 16),
-                Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: AppLocalizations.of(context)!.hint_searchFiles,
-                    ),
-                  ),
-                ),
-                _buildFilterStatusWidget(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 8, bottom: 8),
-                  child: Text(
-                    '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
-                    style: textTheme.bodyMedium,
-                  ),
-                ),
-                Expanded(
-                  child: ListView.separated(
-                    separatorBuilder: (context, index) => const SizedBox(
-                      height: 10,
-                    ),
-                    padding: EdgeInsets.zero,
-                    shrinkWrap: true,
-                    itemCount: filteredFiles.length,
-                    itemBuilder: (context, index) {
-                      final file = filteredFiles[index];
-                      IconData iconData;
-                      Color iconColor;
-                      String statusText;
-                      switch (file.status) {
-                        case HostingContentComparisonStatus.localOnly:
-                          iconData = Iconsax.document;
-                          iconColor = Colors.orange;
-                          statusText =
-                              AppLocalizations.of(context)!.status_localOnly;
-                          break;
-                        case HostingContentComparisonStatus.remoteOnly:
-                          iconData = Iconsax.document_cloud;
-                          iconColor = Colors.blue;
-                          statusText =
-                              AppLocalizations.of(context)!.status_remoteOnly;
-                          break;
-                        case HostingContentComparisonStatus.differentContent:
-                          iconData = Iconsax.note_remove;
-                          iconColor = Colors.red;
-                          statusText = AppLocalizations.of(context)!
-                              .status_differentContent;
-                          break;
-                        case HostingContentComparisonStatus.sameContent:
-                          iconData = Iconsax.document_copy;
-                          iconColor = Colors.green;
-                          statusText =
-                              AppLocalizations.of(context)!.status_sameContent;
-                          break;
-                      }
-                      return Center(
-                        child: DecoratedBox(
-                          decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Theme.of(context)
-                                    .colorScheme
-                                    .background
-                                    .withOpacity(1),
-                                Theme.of(context)
-                                    .colorScheme
-                                    .background
-                                    .withOpacity(0.3),
-                              ],
-                              stops: const [0, 1],
-                            ),
-                            border: GradientBoxBorder(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .background
-                                      .withOpacity(0.5),
-                                  Theme.of(context)
-                                      .colorScheme
-                                      .background
-                                      .withOpacity(0.7),
-                                ],
-                                stops: const [0, 1],
-                              ),
-                            ),
-                            borderRadius: BorderRadius.circular(12),
+        LayoutBuilder(
+          builder: (context, constraints) {
+            return ArchethicScrollbar(
+              child: Container(
+                padding: const EdgeInsets.only(
+                    top: 10, left: 5, right: 5, bottom: 10),
+                child: Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        AppLocalizations.of(context)!.updateWebSiteDesc,
+                        style: textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          const Icon(
+                            Iconsax.warning_2,
+                            color: Colors.red,
                           ),
-                          child: ListTile(
-                            leading: SizedBox(
-                              height: double.infinity,
-                              child: Icon(iconData, color: iconColor),
-                            ),
-                            title: Text(
-                              file.path,
-                              style: const TextStyle(fontSize: 12),
-                            ),
-                            subtitle: Text(
-                              statusText,
-                              style: const TextStyle(fontSize: 10),
-                            ),
+                          const SizedBox(width: 5),
+                          Text(
+                            AppLocalizations.of(context)!.disclaimer,
+                            style: textTheme.bodyMedium,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 16),
+                      Text(
+                        AppLocalizations.of(context)!.updateWebSiteDisclaimer,
+                        style: textTheme.bodyMedium,
+                      ),
+                      const SizedBox(height: 16),
+                      Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: TextField(
+                          controller: _searchController,
+                          decoration: InputDecoration(
+                            hintText:
+                                AppLocalizations.of(context)!.hint_searchFiles,
                           ),
                         ),
-                      );
-                    },
+                      ),
+                      _buildFilterStatusWidget(),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 8, bottom: 8),
+                        child: Text(
+                          '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
+                          style: textTheme.bodyMedium,
+                        ),
+                      ),
+                      ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
+                        separatorBuilder: (context, index) => const SizedBox(
+                          height: 10,
+                        ),
+                        padding: EdgeInsets.zero,
+                        shrinkWrap: true,
+                        itemCount: filteredFiles.length,
+                        itemBuilder: (context, index) {
+                          final file = filteredFiles[index];
+                          IconData iconData;
+                          Color iconColor;
+                          String statusText;
+                          switch (file.status) {
+                            case HostingContentComparisonStatus.localOnly:
+                              iconData = Iconsax.document;
+                              iconColor = Colors.orange;
+                              statusText = AppLocalizations.of(context)!
+                                  .status_localOnly;
+                              break;
+                            case HostingContentComparisonStatus.remoteOnly:
+                              iconData = Iconsax.document_cloud;
+                              iconColor = Colors.blue;
+                              statusText = AppLocalizations.of(context)!
+                                  .status_remoteOnly;
+                              break;
+                            case HostingContentComparisonStatus
+                                  .differentContent:
+                              iconData = Iconsax.note_remove;
+                              iconColor = Colors.red;
+                              statusText = AppLocalizations.of(context)!
+                                  .status_differentContent;
+                              break;
+                            case HostingContentComparisonStatus.sameContent:
+                              iconData = Iconsax.document_copy;
+                              iconColor = Colors.green;
+                              statusText = AppLocalizations.of(context)!
+                                  .status_sameContent;
+                              break;
+                          }
+                          return Center(
+                            child: DecoratedBox(
+                              decoration: BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .background
+                                        .withOpacity(1),
+                                    Theme.of(context)
+                                        .colorScheme
+                                        .background
+                                        .withOpacity(0.3),
+                                  ],
+                                  stops: const [0, 1],
+                                ),
+                                border: GradientBoxBorder(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Theme.of(context)
+                                          .colorScheme
+                                          .background
+                                          .withOpacity(0.5),
+                                      Theme.of(context)
+                                          .colorScheme
+                                          .background
+                                          .withOpacity(0.7),
+                                    ],
+                                    stops: const [0, 1],
+                                  ),
+                                ),
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              child: ListTile(
+                                leading: SizedBox(
+                                  height: double.infinity,
+                                  child: Icon(iconData, color: iconColor),
+                                ),
+                                title: Text(
+                                  file.path,
+                                  style: const TextStyle(fontSize: 12),
+                                ),
+                                subtitle: Text(
+                                  statusText,
+                                  style: const TextStyle(fontSize: 10),
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            ),
-          ),
+              ),
+            );
+          },
         ),
       ],
     );

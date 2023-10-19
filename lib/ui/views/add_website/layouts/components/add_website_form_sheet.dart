@@ -7,6 +7,7 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_switch_gitignore.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_textfield_name.dart';
 import 'package:aeweb/ui/views/util/components/main_background.dart';
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:flutter/foundation.dart';
@@ -26,7 +27,7 @@ class AddWebsiteFormSheet extends ConsumerWidget {
     return Stack(
       children: [
         const MainBackground(),
-        SingleChildScrollView(
+        ArchethicScrollbar(
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 10,

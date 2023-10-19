@@ -1,5 +1,6 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,7 +15,7 @@ class WebsiteList extends ConsumerWidget {
 
     return websitesList.map(
       data: (data) {
-        return SingleChildScrollView(
+        return ArchethicScrollbar(
           child: Padding(
             padding: const EdgeInsets.only(
               top: 30,
