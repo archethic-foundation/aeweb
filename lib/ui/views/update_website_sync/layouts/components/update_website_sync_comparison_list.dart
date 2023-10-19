@@ -65,14 +65,15 @@ class UpdateWebsiteSyncComparisonSheetState
                   padding: const EdgeInsets.only(right: 10),
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         AppLocalizations.of(context)!.updateWebSiteDesc,
                         style: textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 30),
                       Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
                             Iconsax.warning_2,
@@ -81,7 +82,8 @@ class UpdateWebsiteSyncComparisonSheetState
                           const SizedBox(width: 5),
                           Text(
                             AppLocalizations.of(context)!.disclaimer,
-                            style: textTheme.bodyMedium,
+                            style: textTheme.titleMedium,
+                            textAlign: TextAlign.center,
                           ),
                         ],
                       ),
@@ -89,6 +91,7 @@ class UpdateWebsiteSyncComparisonSheetState
                       Text(
                         AppLocalizations.of(context)!.updateWebSiteDisclaimer,
                         style: textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 16),
                       Padding(
@@ -102,12 +105,19 @@ class UpdateWebsiteSyncComparisonSheetState
                         ),
                       ),
                       _buildFilterStatusWidget(),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 8, bottom: 8),
-                        child: Text(
-                          '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
-                          style: textTheme.bodyMedium,
-                        ),
+                      Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 8, bottom: 8),
+                            child: Expanded(
+                              child: Text(
+                                '${AppLocalizations.of(context)!.lbl_displayedFiles} ${filteredFiles.length}',
+                                style: textTheme.bodyMedium,
+                                textAlign: TextAlign.start,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       ListView.separated(
                         physics: const NeverScrollableScrollPhysics(),

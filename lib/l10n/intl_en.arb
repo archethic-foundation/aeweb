@@ -226,5 +226,6 @@
   "archethicDashboardMenuWalletOnWayDesc": "Send, Receive and Exchange UCO and Tokens",
   "addWebsite": "Add a website",
   "websitesListVersionsPopupBVisitWebsite": "Visit the website",
-  "addWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website creation process?"
+  "addWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website creation process?",
+  "updateWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website update process?"
 }
