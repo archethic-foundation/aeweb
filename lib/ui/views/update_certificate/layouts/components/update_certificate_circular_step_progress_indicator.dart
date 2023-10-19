@@ -53,7 +53,7 @@ class UpdateCertificateCircularStepProgressIndicator extends ConsumerWidget {
                     ),
                   ),
                 const Icon(
-                  Iconsax.arrow_right,
+                  Iconsax.timer,
                   size: 16,
                 ),
               ],

@@ -26,29 +26,34 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
             right: 5,
           ),
           child: ArchethicScrollbar(
-            child: SizedBox(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
-                        Iconsax.warning_2,
-                        color: Colors.red,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        AppLocalizations.of(context)!.disclaimer,
-                        style: textTheme.bodyMedium,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 16),
-                  Text(
-                    AppLocalizations.of(context)!.unpublishWebSiteDesc,
-                    style: textTheme.bodyMedium,
-                  ),
-                ],
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 820),
+                child: Column(
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(
+                          Iconsax.warning_2,
+                          color: Colors.red,
+                        ),
+                        const SizedBox(width: 5),
+                        Text(
+                          AppLocalizations.of(context)!.disclaimer,
+                          style: textTheme.bodyMedium,
+                          textAlign: TextAlign.center,
+                        ),
+                      ],
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      AppLocalizations.of(context)!.unpublishWebSiteDesc,
+                      style: textTheme.bodyMedium,
+                      textAlign: TextAlign.center,
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

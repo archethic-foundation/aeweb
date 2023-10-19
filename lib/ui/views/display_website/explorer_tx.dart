@@ -46,114 +46,117 @@ class ExplorerTxScreen extends ConsumerWidget {
               ),
             )
           else
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              child: ArchethicScrollbar(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
-                  child: LayoutBuilder(
-                    builder: (context, constraints) {
-                      return DataTable(
-                        horizontalMargin: 0,
-                        dividerThickness: 1,
-                        dataRowMaxHeight: 90,
-                        columns: [
-                          DataColumn(
-                            label: Expanded(
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .explorerTxTableHeaderType,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Expanded(
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .explorerTxTableHeaderAddress,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                          DataColumn(
-                            label: Expanded(
-                              child: Text(
-                                AppLocalizations.of(context)!
-                                    .explorerTxTableHeaderLink,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ),
-                        ],
-                        rows: websiteVersionTxList
-                            .asMap()
-                            .map(
-                              (index, websiteVersionTx) => MapEntry(
-                                index,
-                                DataRow(
-                                  cells: [
-                                    DataCell(
-                                      Align(
-                                        child: websiteVersionTx.typeHostingTx ==
-                                                'ref'
-                                            ? const Icon(
-                                                Iconsax.archive_book,
-                                              )
-                                            : const Icon(Iconsax.document),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      Align(
-                                        child: Container(
-                                          constraints: BoxConstraints(
-                                            // we need to make that because the text is going to have no space and be very long so no overflow methods work :(
-                                            maxWidth: min(
-                                              600, // Standard transaction address take 600 in space
-                                              MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  220, // Width - 220 (approximately the width of the other columns)
-                                            ),
-                                          ),
-                                          child: SelectableText(
-                                            websiteVersionTx.address
-                                                .toLowerCase(),
-                                            style: const TextStyle(
-                                              fontFamily: 'Roboto',
-                                            ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    DataCell(
-                                      Align(
-                                        child: IconButtonAnimated(
-                                          icon: const Icon(
-                                            Iconsax.export_3,
-                                          ),
-                                          onPressed: () {
-                                            launchUrl(
-                                              Uri.parse(
-                                                '${sl.get<ApiService>().endpoint}/explorer/transaction/${websiteVersionTx.address}',
-                                              ),
-                                            );
-                                          },
-                                          color: Theme.of(context)
-                                              .colorScheme
-                                              .primary,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
+            ArchethicScrollbar(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Center(
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 820),
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        return DataTable(
+                          horizontalMargin: 0,
+                          dividerThickness: 1,
+                          dataRowMaxHeight: 90,
+                          columns: [
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .explorerTxTableHeaderType,
+                                  textAlign: TextAlign.center,
                                 ),
                               ),
-                            )
-                            .values
-                            .toList(),
-                      );
-                    },
+                            ),
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .explorerTxTableHeaderAddress,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                            DataColumn(
+                              label: Expanded(
+                                child: Text(
+                                  AppLocalizations.of(context)!
+                                      .explorerTxTableHeaderLink,
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                            ),
+                          ],
+                          rows: websiteVersionTxList
+                              .asMap()
+                              .map(
+                                (index, websiteVersionTx) => MapEntry(
+                                  index,
+                                  DataRow(
+                                    cells: [
+                                      DataCell(
+                                        Align(
+                                          child: websiteVersionTx
+                                                      .typeHostingTx ==
+                                                  'ref'
+                                              ? const Icon(
+                                                  Iconsax.archive_book,
+                                                )
+                                              : const Icon(Iconsax.document),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Align(
+                                          child: Container(
+                                            constraints: BoxConstraints(
+                                              // we need to make that because the text is going to have no space and be very long so no overflow methods work :(
+                                              maxWidth: min(
+                                                600, // Standard transaction address take 600 in space
+                                                MediaQuery.of(context)
+                                                        .size
+                                                        .width -
+                                                    220, // Width - 220 (approximately the width of the other columns)
+                                              ),
+                                            ),
+                                            child: SelectableText(
+                                              websiteVersionTx.address
+                                                  .toLowerCase(),
+                                              style: const TextStyle(
+                                                fontFamily: 'Roboto',
+                                              ),
+                                              textAlign: TextAlign.center,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      DataCell(
+                                        Align(
+                                          child: IconButtonAnimated(
+                                            icon: const Icon(
+                                              Iconsax.export_3,
+                                            ),
+                                            onPressed: () {
+                                              launchUrl(
+                                                Uri.parse(
+                                                  '${sl.get<ApiService>().endpoint}/explorer/transaction/${websiteVersionTx.address}',
+                                                ),
+                                              );
+                                            },
+                                            color: Theme.of(context)
+                                                .colorScheme
+                                                .primary,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              )
+                              .values
+                              .toList(),
+                        );
+                      },
+                    ),
                   ),
                 ),
               ),

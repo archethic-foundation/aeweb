@@ -149,47 +149,52 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
               top: 20,
               bottom: 20,
             ),
-            child: TreeView(
-              controller: treeViewController,
-              onExpansionChanged: _expandNode,
-              onNodeTap: (key) {
-                setState(() {
-                  _selectedNode = key;
-                  treeViewController =
-                      treeViewController.copyWith(selectedKey: key);
-                });
-              },
-              theme: _treeViewTheme,
-              nodeBuilder: (BuildContext context, Node node) {
-                return Container(
-                  padding: const EdgeInsets.all(4),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 10,
-                        child: IconAnimated(
-                          icon: node.icon!,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                      ),
-                      Expanded(
-                        flex: 80,
-                        child: Text(node.label),
-                      ),
-                      Expanded(
-                        flex: 10,
-                        child: Align(
-                          child: _popupMenuButton(
-                            context,
-                            ref,
-                            node,
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 820),
+                child: TreeView(
+                  controller: treeViewController,
+                  onExpansionChanged: _expandNode,
+                  onNodeTap: (key) {
+                    setState(() {
+                      _selectedNode = key;
+                      treeViewController =
+                          treeViewController.copyWith(selectedKey: key);
+                    });
+                  },
+                  theme: _treeViewTheme,
+                  nodeBuilder: (BuildContext context, Node node) {
+                    return Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 10,
+                            child: IconAnimated(
+                              icon: node.icon!,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
                           ),
-                        ),
+                          Expanded(
+                            flex: 80,
+                            child: Text(node.label),
+                          ),
+                          Expanded(
+                            flex: 10,
+                            child: Align(
+                              child: _popupMenuButton(
+                                context,
+                                ref,
+                                node,
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ],
-                  ),
-                );
-              },
+                    );
+                  },
+                ),
+              ),
             ),
           ),
         ],

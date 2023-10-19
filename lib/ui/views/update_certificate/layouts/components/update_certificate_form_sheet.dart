@@ -31,71 +31,81 @@ class UpdateCertificateFormSheet extends ConsumerWidget {
           ),
           child: ArchethicScrollbar(
             child: Padding(
-              padding: const EdgeInsets.only(right: 10),
-              child: Column(
-                children: [
-                  Text(
-                    AppLocalizations.of(context)!.updateCertificateFormDesc,
-                    style: textTheme.bodyMedium,
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
+              padding: const EdgeInsets.only(
+                top: 10,
+                bottom: 10,
+                left: 5,
+                right: 5,
+              ),
+              child: Center(
+                child: Container(
+                  constraints: const BoxConstraints(maxWidth: 820),
+                  child: Column(
                     children: [
-                      Expanded(
-                        child: Transform.rotate(
-                          angle: -math.pi,
-                          child: Container(
-                            width: 50,
-                            height: 1,
-                            decoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [
-                                  Color(0x003C89B9),
-                                  Color(0xFFCC00FF),
-                                ],
-                                stops: [0, 1],
-                                begin: AlignmentDirectional.centerEnd,
-                                end: AlignmentDirectional.centerStart,
+                      Text(
+                        AppLocalizations.of(context)!.updateCertificateFormDesc,
+                        style: textTheme.bodyMedium,
+                        textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Transform.rotate(
+                              angle: -math.pi,
+                              child: Container(
+                                width: 50,
+                                height: 1,
+                                decoration: const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0x003C89B9),
+                                      Color(0xFFCC00FF),
+                                    ],
+                                    stops: [0, 1],
+                                    begin: AlignmentDirectional.centerEnd,
+                                    end: AlignmentDirectional.centerStart,
+                                  ),
+                                ),
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 15),
-                        child: SelectionArea(
-                          child: Text(
-                            AppLocalizations.of(context)!
-                                .updateCertificateRequiredInfo,
-                            style: Theme.of(context).textTheme.titleLarge,
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: Container(
-                          width: 50,
-                          height: 1,
-                          decoration: const BoxDecoration(
-                            gradient: LinearGradient(
-                              colors: [
-                                Color(0x003C89B9),
-                                Color(0xFFCC00FF),
-                              ],
-                              stops: [0, 1],
-                              begin: AlignmentDirectional.centerEnd,
-                              end: AlignmentDirectional.centerStart,
+                          Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 15),
+                            child: SelectionArea(
+                              child: Text(
+                                AppLocalizations.of(context)!
+                                    .updateCertificateRequiredInfo,
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
                             ),
                           ),
-                        ),
+                          Expanded(
+                            child: Container(
+                              width: 50,
+                              height: 1,
+                              decoration: const BoxDecoration(
+                                gradient: LinearGradient(
+                                  colors: [
+                                    Color(0x003C89B9),
+                                    Color(0xFFCC00FF),
+                                  ],
+                                  stops: [0, 1],
+                                  begin: AlignmentDirectional.centerEnd,
+                                  end: AlignmentDirectional.centerStart,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
+                      const SizedBox(height: 16),
+                      const UpdateCertificateSelectPublicCertPath(),
+                      const SizedBox(height: 16),
+                      const UpdateCertificateSelectPrivateKeyPath(),
                     ],
                   ),
-                  const SizedBox(height: 16),
-                  const UpdateCertificateSelectPublicCertPath(),
-                  const SizedBox(height: 16),
-                  const UpdateCertificateSelectPrivateKeyPath(),
-                ],
+                ),
               ),
             ),
           ),
