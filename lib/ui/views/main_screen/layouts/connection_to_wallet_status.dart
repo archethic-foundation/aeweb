@@ -265,12 +265,12 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    AppButton(
-                                      labelBtn:
-                                          AppLocalizations.of(context)!.no,
+                                    OutlinedButton(
                                       onPressed: () async {
                                         Navigator.of(context).pop();
                                       },
+                                      child: Text(
+                                          AppLocalizations.of(context)!.no),
                                     ),
                                     AppButton(
                                       labelBtn:

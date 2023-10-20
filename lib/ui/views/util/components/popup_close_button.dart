@@ -78,11 +78,12 @@ class PopupCloseButton extends StatelessWidget {
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  AppButton(
-                                    labelBtn: AppLocalizations.of(context)!.no,
-                                    onPressed: () {
+                                  OutlinedButton(
+                                    onPressed: () async {
                                       Navigator.of(context).pop();
                                     },
+                                    child:
+                                        Text(AppLocalizations.of(context)!.no),
                                   ),
                                   AppButton(
                                     labelBtn: AppLocalizations.of(context)!.yes,
