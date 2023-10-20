@@ -251,6 +251,20 @@ class AddWebsiteUseCases
     }
   }
 
+  String getConfirmLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 1:
+      case 4:
+      case 6:
+      case 9:
+        return AppLocalizations.of(context)!.pleaseConfirmWallet;
+    }
+    return '';
+  }
+
   String getStepLabel(
     BuildContext context,
     int step,

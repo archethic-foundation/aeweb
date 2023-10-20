@@ -6,6 +6,7 @@ import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/components/unpublish_website_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
+import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
@@ -19,36 +20,6 @@ class UnpublishWebsiteInProgressPopup {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    Widget _confirmedStep(
-      BuildContext context,
-      String text, {
-      IconData icon = Iconsax.tick_circle,
-    }) {
-      final textTheme = Theme.of(context)
-          .textTheme
-          .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-      return SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: textTheme.bodyMedium,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Icon(
-              icon,
-              color: Colors.green,
-              size: 14,
-            ),
-          ],
-        ),
-      );
-    }
-
     Widget _userConfirmStep(
       BuildContext context,
       WidgetRef ref,
@@ -63,13 +34,12 @@ class UnpublishWebsiteInProgressPopup {
 
       return Column(
         children: [
-          _confirmedStep(
-            context,
-            '${AppLocalizations.of(context)!.unpublishWebSiteConfirmedStep7.replaceAll(
+          Text(
+            '${AppLocalizations.of(context)!.addWebSiteConfirmedStep10.replaceAll(
                   '%1',
-                  unpublishWebsite.globalFeesUCO.toStringAsFixed(8),
+                  unpublishWebsite.globalFeesUCO.toStringAsFixed(2),
                 )} (=${unpublishWebsite.globalFeesFiat.toStringAsFixed(2)}\$)',
-            icon: Iconsax.calculator,
+            style: textTheme.bodyMedium,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -176,29 +146,19 @@ class UnpublishWebsiteInProgressPopup {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   const UnpublishWebsiteCircularStepProgressIndicator(),
-                                  if (unpublishWebsite.stepError.isEmpty)
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Text(
+                                  InProgressBanner(
+                                    stepLabel:
                                         UnpublishWebsiteUseCases().getStepLabel(
-                                          context,
-                                          unpublishWebsite.step,
-                                        ),
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
-                                    )
-                                  else
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        unpublishWebsite.stepError,
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
+                                      context,
+                                      unpublishWebsite.step,
                                     ),
+                                    infoMessage: UnpublishWebsiteUseCases()
+                                        .getConfirmLabel(
+                                      context,
+                                      unpublishWebsite.step,
+                                    ),
+                                    errorMessage: unpublishWebsite.stepError,
+                                  ),
                                   if (unpublishWebsite.stepError.isEmpty &&
                                       unpublishWebsite.step == 8 &&
                                       unpublishWebsite.globalFeesValidated ==

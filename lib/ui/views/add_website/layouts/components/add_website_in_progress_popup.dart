@@ -6,6 +6,7 @@ import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
+import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
@@ -19,36 +20,6 @@ class AddWebsiteInProgressPopup {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    Widget _confirmedStep(
-      BuildContext context,
-      String text, {
-      IconData icon = Iconsax.tick_circle,
-    }) {
-      final textTheme = Theme.of(context)
-          .textTheme
-          .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-      return SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: textTheme.bodyMedium,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Icon(
-              icon,
-              color: Colors.green,
-              size: 14,
-            ),
-          ],
-        ),
-      );
-    }
-
     Widget _userConfirmStep(
       BuildContext context,
       WidgetRef ref,
@@ -62,13 +33,12 @@ class AddWebsiteInProgressPopup {
 
       return Column(
         children: [
-          _confirmedStep(
-            context,
+          Text(
             '${AppLocalizations.of(context)!.addWebSiteConfirmedStep10.replaceAll(
                   '%1',
-                  addWebsite.globalFeesUCO.toStringAsFixed(8),
+                  addWebsite.globalFeesUCO.toStringAsFixed(2),
                 )} (=${addWebsite.globalFeesFiat.toStringAsFixed(2)}\$)',
-            icon: Iconsax.calculator,
+            style: textTheme.bodyMedium,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -169,29 +139,19 @@ class AddWebsiteInProgressPopup {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   const AddWebsiteCircularStepProgressIndicator(),
-                                  if (addWebsite.stepError.isEmpty)
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Text(
+                                  InProgressBanner(
+                                    stepLabel:
                                         AddWebsiteUseCases().getStepLabel(
-                                          context,
-                                          addWebsite.step,
-                                        ),
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
-                                    )
-                                  else
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        addWebsite.stepError,
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
+                                      context,
+                                      addWebsite.step,
                                     ),
+                                    infoMessage:
+                                        AddWebsiteUseCases().getConfirmLabel(
+                                      context,
+                                      addWebsite.step,
+                                    ),
+                                    errorMessage: addWebsite.stepError,
+                                  ),
                                   if (addWebsite.stepError.isEmpty &&
                                       addWebsite.step == 11 &&
                                       addWebsite.globalFeesValidated == null)

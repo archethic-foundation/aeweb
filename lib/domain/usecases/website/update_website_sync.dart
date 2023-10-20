@@ -363,4 +363,17 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
         return '';
     }
   }
+
+  String getConfirmLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 4:
+      case 6:
+      case 9:
+        return AppLocalizations.of(context)!.pleaseConfirmWallet;
+    }
+    return '';
+  }
 }

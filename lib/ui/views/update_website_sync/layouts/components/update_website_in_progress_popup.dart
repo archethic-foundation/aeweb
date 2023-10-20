@@ -6,6 +6,7 @@ import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
+import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
@@ -19,36 +20,6 @@ class UpdateWebsiteInProgressPopup {
     BuildContext context,
     WidgetRef ref,
   ) async {
-    Widget _confirmedStep(
-      BuildContext context,
-      String text, {
-      IconData icon = Iconsax.tick_circle,
-    }) {
-      final textTheme = Theme.of(context)
-          .textTheme
-          .apply(displayColor: Theme.of(context).colorScheme.onSurface);
-      return SizedBox(
-        height: 50,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              text,
-              style: textTheme.bodyMedium,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            Icon(
-              icon,
-              color: Colors.green,
-              size: 14,
-            ),
-          ],
-        ),
-      );
-    }
-
     Widget _userConfirmStep(
       BuildContext context,
       WidgetRef ref,
@@ -63,13 +34,12 @@ class UpdateWebsiteInProgressPopup {
 
       return Column(
         children: [
-          _confirmedStep(
-            context,
-            '${AppLocalizations.of(context)!.updateWebSiteConfirmedStep10.replaceAll(
+          Text(
+            '${AppLocalizations.of(context)!.addWebSiteConfirmedStep10.replaceAll(
                   '%1',
-                  updateWebsiteSync.globalFeesUCO.toStringAsFixed(8),
+                  updateWebsiteSync.globalFeesUCO.toStringAsFixed(2),
                 )} (=${updateWebsiteSync.globalFeesFiat.toStringAsFixed(2)}\$)',
-            icon: Iconsax.calculator,
+            style: textTheme.bodyMedium,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -176,30 +146,19 @@ class UpdateWebsiteInProgressPopup {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   const UpdateWebsiteCircularStepProgressIndicator(),
-                                  if (updateWebsiteSync.stepError.isEmpty)
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        UpdateWebsiteSyncUseCases()
-                                            .getStepLabel(
-                                          context,
-                                          updateWebsiteSync.step,
-                                        ),
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
-                                    )
-                                  else
-                                    Container(
-                                      alignment: Alignment.center,
-                                      padding:
-                                          const EdgeInsets.only(bottom: 10),
-                                      child: Text(
-                                        updateWebsiteSync.stepError,
-                                        style: const TextStyle(fontSize: 11),
-                                      ),
+                                  InProgressBanner(
+                                    stepLabel: UpdateWebsiteSyncUseCases()
+                                        .getStepLabel(
+                                      context,
+                                      updateWebsiteSync.step,
                                     ),
+                                    infoMessage: UpdateWebsiteSyncUseCases()
+                                        .getConfirmLabel(
+                                      context,
+                                      updateWebsiteSync.step,
+                                    ),
+                                    errorMessage: updateWebsiteSync.stepError,
+                                  ),
                                   if (updateWebsiteSync.stepError.isEmpty &&
                                       updateWebsiteSync.step == 11 &&
                                       updateWebsiteSync.globalFeesValidated ==

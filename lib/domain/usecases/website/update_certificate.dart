@@ -208,4 +208,16 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
         return '';
     }
   }
+
+  String getConfirmLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 3:
+      case 6:
+        return AppLocalizations.of(context)!.pleaseConfirmWallet;
+    }
+    return '';
+  }
 }
