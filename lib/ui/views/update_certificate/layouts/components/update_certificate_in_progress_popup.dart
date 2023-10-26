@@ -113,7 +113,7 @@ class UpdateCertificateInProgressPopup {
               return Consumer(
                 builder: (context, ref, _) {
                   final updateCertificate = ref.watch(
-                      UpdateCertificateFormProvider.updateCertificateForm);
+                      UpdateCertificateFormProvider.updateCertificateForm,);
 
                   return Scaffold(
                     backgroundColor: Colors.transparent.withAlpha(120),
