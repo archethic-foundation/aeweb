@@ -1,10 +1,9 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
+import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-
-import 'website_versions_list.dart';
 
 class WebsiteList extends ConsumerWidget {
   const WebsiteList({super.key});

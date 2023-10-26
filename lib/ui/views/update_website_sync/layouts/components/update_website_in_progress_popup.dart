@@ -113,7 +113,8 @@ class UpdateWebsiteInProgressPopup {
               return Consumer(
                 builder: (context, ref, _) {
                   final updateWebsiteSync = ref.watch(
-                      UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm);
+                    UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm,
+                  );
 
                   return Scaffold(
                     backgroundColor: Colors.transparent.withAlpha(120),
