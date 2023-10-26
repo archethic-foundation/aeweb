@@ -131,18 +131,24 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Lato
+    - family: PPTelegraf
       fonts:
-        - asset: assets/fonts/Lato-Regular.ttf
-        - asset: assets/fonts/Lato-Italic.ttf
-        - asset: assets/fonts/Lato-Bold.ttf
-    - family: Caveat
-      fonts:
-        - asset: assets/fonts/Caveat-Regular.ttf
-    - family: Equinox
-      fonts:
-        - asset: assets/fonts/Equinox Bold.otf
-        - asset: assets/fonts/Equinox Regular.otf
+        - asset: assets/fonts/PPTelegraf-Ultralight.otf
+          weight: 200
+        - asset: assets/fonts/PPTelegraf-Light.otf
+          weight: 300
+        - asset: assets/fonts/PPTelegraf-Regular.otf
+          weight: 400
+        - asset: assets/fonts/PPTelegraf-Medium.otf
+          weight: 500
+        - asset: assets/fonts/PPTelegraf-Semibold.otf
+          weight: 600
+        - asset: assets/fonts/PPTelegraf-Bold.otf
+          weight: 700
+        - asset: assets/fonts/PPTelegraf-Ultrabold.otf
+          weight: 800
+        - asset: assets/fonts/PPTelegraf-Black.otf
+          weight: 900
     - family: Roboto
       fonts:
         - asset: assets/fonts/RobotoMono-Regular.ttf
