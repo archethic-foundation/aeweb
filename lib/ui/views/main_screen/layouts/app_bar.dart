@@ -24,7 +24,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: Colors.transparent,
       elevation: 0,
       leading: const Header(),
-      leadingWidth: Responsive.isMobile(context) ? null : 150,
+      leadingWidth: Responsive.isMobile(context) ? null : 155,
       title: Text(
         AppLocalizations.of(context)!.websitesListTitle,
       ),
