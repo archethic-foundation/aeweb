@@ -37,61 +37,52 @@ class _AddWebsiteSwitchGitignoreState
       },
     );
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          children: [
-            Expanded(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: AppLocalizations.of(context)!
-                          .addWebsiteGitignoreLabel,
-                      style: textTheme.labelMedium,
+        Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(
+                text: AppLocalizations.of(context)!.addWebsiteGitignoreLabel,
+                style: textTheme.bodyMedium,
+              ),
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: Container(
+                  padding: const EdgeInsets.only(left: 2),
+                  height: 30,
+                  child: FittedBox(
+                    fit: BoxFit.fill,
+                    child: Switch(
+                      thumbIcon: thumbIcon,
+                      value: addWebsiteProvider.applyGitIgnoreRules ?? false,
+                      onChanged: addWebsiteProvider.applyGitIgnoreRules == null
+                          ? null
+                          : addWebsiteNotifier.setApplyGitIgnoreRules,
                     ),
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: Container(
-                        padding: const EdgeInsets.only(left: 2),
-                        height: 30,
-                        child: FittedBox(
-                          fit: BoxFit.fill,
-                          child: Switch(
-                            thumbIcon: thumbIcon,
-                            value:
-                                addWebsiteProvider.applyGitIgnoreRules ?? false,
-                            onChanged:
-                                addWebsiteProvider.applyGitIgnoreRules == null
-                                    ? null
-                                    : addWebsiteNotifier.setApplyGitIgnoreRules,
-                          ),
-                        ),
-                      ),
-                    ),
-                    WidgetSpan(
-                      alignment: PlaceholderAlignment.middle,
-                      child: IconButtonAnimated(
-                        icon: Icon(
-                          Icons.help,
-                          color: Theme.of(context).colorScheme.primary,
-                        ),
-                        onPressed: () {
-                          launchUrl(
-                            Uri.parse(
-                              'https://wiki.archethic.net/FAQ/aeweb#what-is-the-purpose-of-a-gitignore-file',
-                            ),
-                          );
-                        },
-                        color: Theme.of(context).colorScheme.primaryContainer,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
-            ),
-          ],
+              WidgetSpan(
+                alignment: PlaceholderAlignment.middle,
+                child: IconButtonAnimated(
+                  icon: Icon(
+                    Icons.help,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                  onPressed: () {
+                    launchUrl(
+                      Uri.parse(
+                        'https://wiki.archethic.net/FAQ/aeweb#what-is-the-purpose-of-a-gitignore-file',
+                      ),
+                    );
+                  },
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                ),
+              ),
+            ],
+          ),
         ),
       ],
     );

@@ -328,4 +328,52 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
         ..setStepError(e.toString().replaceAll('Exception: ', '').trim());
     }
   }
+
+  String getStepLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 1:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep1;
+      case 2:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep2;
+      case 3:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep3;
+      case 4:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep4;
+      case 5:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep5;
+      case 6:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep6;
+      case 7:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep7;
+      case 8:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep8;
+      case 9:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep9;
+      case 10:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep10;
+      // case 11 = user needs to validate
+      case 12:
+        return AppLocalizations.of(context)!.updateWebSiteWaitingStep12;
+      case 13:
+        return AppLocalizations.of(context)!.updateWebSiteConfirmedStep13;
+      default:
+        return '';
+    }
+  }
+
+  String getConfirmLabel(
+    BuildContext context,
+    int step,
+  ) {
+    switch (step) {
+      case 4:
+      case 6:
+      case 9:
+        return AppLocalizations.of(context)!.pleaseConfirmWallet;
+    }
+    return '';
+  }
 }

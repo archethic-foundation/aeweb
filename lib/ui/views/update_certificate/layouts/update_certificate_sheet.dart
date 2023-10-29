@@ -1,15 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
+import 'package:aeweb/application/session/provider.dart';
+import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/state.dart';
-import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_bottom_bar.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_form_sheet.dart';
-import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_steps.dart';
-import 'package:aeweb/ui/views/util/components/page_detail.dart';
+import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_in_progress_popup.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UpdateCertificateSheet extends ConsumerWidget {
+class UpdateCertificateSheet extends ConsumerStatefulWidget {
   const UpdateCertificateSheet({
     super.key,
     required this.websiteName,
@@ -18,28 +21,37 @@ class UpdateCertificateSheet extends ConsumerWidget {
   final String websiteName;
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ProviderScope(
-      overrides: [
-        UpdateCertificateFormProvider.initialUpdateCertificateForm
-            .overrideWithValue(
-          UpdateCertificateFormState(
-            name: websiteName,
-          ),
-        ),
-      ],
-      child: const UpdateCertificateSheetBody(),
-    );
-  }
+  ConsumerState<UpdateCertificateSheet> createState() =>
+      _UpdateCertificateSheetState();
 }
 
-class UpdateCertificateSheetBody extends ConsumerWidget {
-  const UpdateCertificateSheetBody({
-    super.key,
-  });
+class _UpdateCertificateSheetState
+    extends ConsumerState<UpdateCertificateSheet> {
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      ref
+          .read(UpdateCertificateFormProvider.updateCertificateForm.notifier)
+          .setName(widget.websiteName);
+    });
+  }
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
+    final session = ref.watch(SessionProviders.session);
+    final updateCertificate =
+        ref.watch(UpdateCertificateFormProvider.updateCertificateForm);
+
+    Future<bool> _submitForm() async {
+      final updateCertificateNotifier = ref
+          .watch(UpdateCertificateFormProvider.updateCertificateForm.notifier)
+        ..setControlInProgress(true);
+      final isCertOk = updateCertificateNotifier.controlCert(context);
+      updateCertificateNotifier.setControlInProgress(false);
+      return isCertOk;
+    }
+
     ref.listen<UpdateCertificateFormState>(
       UpdateCertificateFormProvider.updateCertificateForm,
       (_, updateCertificate) {
@@ -68,10 +80,55 @@ class UpdateCertificateSheetBody extends ConsumerWidget {
       },
     );
 
-    return const PageDetail(
-      firstChild: UpdateCertificateFormSheet(),
-      secondChild: UpdateCertificateSteps(),
-      bottomBar: UpdateCertificateBottomBar(),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.updateCertificateFormTitle,
+        ),
+        actions: const [
+          ConnectionToWalletStatus(),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+      body: const UpdateCertificateFormSheet(),
+      floatingActionButton: session.isConnected
+          ? FloatingActionButton.extended(
+              onPressed: updateCertificate.creationInProgress
+                  ? null
+                  : () async {
+                      final ctlOk = await _submitForm();
+                      if (ctlOk) {
+                        final updateCertificateNotifier = ref.watch(
+                          UpdateCertificateFormProvider
+                              .updateCertificateForm.notifier,
+                        );
+
+                        unawaited(
+                          updateCertificateNotifier.updateCertificate(
+                            context,
+                            ref,
+                          ),
+                        );
+
+                        if (!context.mounted) return;
+
+                        await UpdateCertificateInProgressPopup.getDialog(
+                          context,
+                          ref,
+                        );
+                      }
+                    },
+              icon: const Icon(
+                Iconsax.security_safe,
+              ),
+              label: Text(
+                AppLocalizations.of(context)!.btn_add_certificate,
+              ),
+            )
+          : null,
     );
   }
 }

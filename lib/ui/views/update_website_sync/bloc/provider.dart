@@ -9,21 +9,11 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final _initialUpdateWebsiteSyncFormProvider =
-    Provider<UpdateWebsiteSyncFormState>(
-  (ref) {
-    throw UnimplementedError();
-  },
-);
-
 final _updateWebsiteSyncFormProvider = NotifierProvider.autoDispose<
     UpdateWebsiteSyncFormNotifier, UpdateWebsiteSyncFormState>(
   () {
     return UpdateWebsiteSyncFormNotifier();
   },
-  dependencies: [
-    UpdateWebsiteSyncFormProvider.initialUpdateWebsiteSyncForm,
-  ],
 );
 
 class UpdateWebsiteSyncFormNotifier
@@ -31,15 +21,29 @@ class UpdateWebsiteSyncFormNotifier
   UpdateWebsiteSyncFormNotifier();
 
   @override
-  UpdateWebsiteSyncFormState build() => ref.watch(
-        UpdateWebsiteSyncFormProvider.initialUpdateWebsiteSyncForm,
-      );
+  UpdateWebsiteSyncFormState build() {
+    return const UpdateWebsiteSyncFormState();
+  }
+
+  void resetStep() {
+    setStep(0);
+    setError('');
+  }
 
   void setName(
     String name,
   ) {
     state = state.copyWith(
       name: name,
+    );
+    return;
+  }
+
+  void setLocalFiles(
+    Map<String, HostingRefContentMetaData> localFiles,
+  ) {
+    state = state.copyWith(
+      localFiles: localFiles,
     );
     return;
   }
@@ -159,7 +163,5 @@ class UpdateWebsiteSyncFormNotifier
 }
 
 abstract class UpdateWebsiteSyncFormProvider {
-  static final initialUpdateWebsiteSyncForm =
-      _initialUpdateWebsiteSyncFormProvider;
   static final updateWebsiteSyncForm = _updateWebsiteSyncFormProvider;
 }

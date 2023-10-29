@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
+import 'package:aeweb/ui/views/util/components/main_background.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -8,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_treeview/flutter_treeview.dart';
-import 'package:gradient_borders/gradient_borders.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExplorerFilesScreen extends ConsumerStatefulWidget {
@@ -132,107 +132,72 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       ),
     );
 
-    return Container(
-      height: MediaQuery.of(context).size.height - 380,
-      decoration: BoxDecoration(
-        border: const GradientBoxBorder(
-          gradient: LinearGradient(
-            colors: [
-              Color(0x003C89B9),
-              Color(0xFFCC00FF),
-            ],
-            stops: [0, 1],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.explorerTitle,
         ),
-        borderRadius: BorderRadius.circular(16),
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(
-          left: 30,
-          right: 30,
-          top: 20,
-          bottom: 20,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Row(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(right: 15),
-                  child: SelectionArea(
-                    child: Text(
-                      AppLocalizations.of(context)!.explorerTitle,
-                      style: Theme.of(context).textTheme.titleSmall,
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    width: 50,
-                    height: 1,
-                    decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          Color(0x003C89B9),
-                          Color(0xFFCC00FF),
-                        ],
-                        stops: [0, 1],
-                        begin: AlignmentDirectional.centerEnd,
-                        end: AlignmentDirectional.centerStart,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+      body: Stack(
+        children: [
+          const MainBackground(),
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 30,
+              right: 30,
+              top: 20,
+              bottom: 20,
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 460,
-              child: TreeView(
-                controller: treeViewController,
-                onExpansionChanged: _expandNode,
-                onNodeTap: (key) {
-                  setState(() {
-                    _selectedNode = key;
-                    treeViewController =
-                        treeViewController.copyWith(selectedKey: key);
-                  });
-                },
-                theme: _treeViewTheme,
-                nodeBuilder: (BuildContext context, Node node) {
-                  return Container(
-                    padding: const EdgeInsets.all(4),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 10,
-                          child: IconAnimated(
-                            icon: node.icon!,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                        ),
-                        Expanded(
-                          flex: 80,
-                          child: Text(node.label),
-                        ),
-                        Expanded(
-                          flex: 10,
-                          child: Align(
-                            child: _popupMenuButton(
-                              context,
-                              ref,
-                              node,
+            child: Center(
+              child: Container(
+                constraints: const BoxConstraints(maxWidth: 820),
+                child: TreeView(
+                  controller: treeViewController,
+                  onExpansionChanged: _expandNode,
+                  onNodeTap: (key) {
+                    setState(() {
+                      _selectedNode = key;
+                      treeViewController =
+                          treeViewController.copyWith(selectedKey: key);
+                    });
+                  },
+                  theme: _treeViewTheme,
+                  nodeBuilder: (BuildContext context, Node node) {
+                    return Container(
+                      padding: const EdgeInsets.all(4),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            flex: 10,
+                            child: IconAnimated(
+                              icon: node.icon!,
+                              color: Theme.of(context).colorScheme.primary,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
+                          Expanded(
+                            flex: 80,
+                            child: Text(node.label),
+                          ),
+                          Expanded(
+                            flex: 10,
+                            child: Align(
+                              child: _popupMenuButton(
+                                context,
+                                ref,
+                                node,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    );
+                  },
+                ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

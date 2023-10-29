@@ -1,10 +1,15 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:async';
+
+import 'package:aeweb/application/session/provider.dart';
+import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
-import 'package:aeweb/ui/views/add_website/layouts/components/add_website_bottom_bar.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_form_sheet.dart';
-import 'package:aeweb/ui/views/add_website/layouts/components/add_website_steps.dart';
-import 'package:aeweb/ui/views/util/components/page_detail.dart';
+import 'package:aeweb/ui/views/add_website/layouts/components/add_website_in_progress_popup.dart';
+import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
+import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
+import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,24 +21,33 @@ class AddWebsiteSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return ProviderScope(
-      overrides: [
-        AddWebsiteFormProvider.initialAddWebsiteForm.overrideWithValue(
-          const AddWebsiteFormState(),
-        ),
-      ],
-      child: const AddWebsiteSheetBody(),
-    );
-  }
-}
+    final session = ref.watch(SessionProviders.session);
+    final addWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 
-class AddWebsiteSheetBody extends ConsumerWidget {
-  const AddWebsiteSheetBody({
-    super.key,
-  });
+    Future<bool> _submitForm() async {
+      final addWebsiteNotifier = ref
+          .watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
+        ..setControlInProgress(true);
+      final isNameOk = addWebsiteNotifier.controlName(context);
+      final isPathOk = addWebsiteNotifier.controlPath(context);
+      final isCertOk = addWebsiteNotifier.controlCert(context);
+      var isSiteSizeOk = true;
+      if (FeatureFlags.websiteSizeLimit) {
+        isSiteSizeOk =
+            await addWebsiteNotifier.controlNbOfTransactionFiles(context);
+      }
+      addWebsiteNotifier.setControlInProgress(false);
+      if (isNameOk && isPathOk && isCertOk && isSiteSizeOk) {
+        final acceptRules = await ContentWebsiteWarningPopup.getDialog(
+          context,
+          AppLocalizations.of(context)!.addWebsiteContentWarningHeader,
+          AppLocalizations.of(context)!.addWebsiteContentWarningText,
+        );
+        return acceptRules ?? false;
+      }
+      return false;
+    }
 
-  @override
-  Widget build(BuildContext context, WidgetRef ref) {
     ref.listen<AddWebsiteFormState>(
       AddWebsiteFormProvider.addWebsiteForm,
       (_, addWebsite) {
@@ -60,10 +74,51 @@ class AddWebsiteSheetBody extends ConsumerWidget {
       },
     );
 
-    return const PageDetail(
-      firstChild: AddWebsiteFormSheet(),
-      secondChild: AddWebsiteSteps(),
-      bottomBar: AddWebsiteBottomBar(),
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: Text(
+          AppLocalizations.of(context)!.addWebSiteFormTitle,
+        ),
+        actions: const [
+          ConnectionToWalletStatus(),
+          SizedBox(
+            width: 10,
+          ),
+        ],
+      ),
+      body: const AddWebsiteFormSheet(),
+      floatingActionButton: session.isConnected
+          ? FloatingActionButton.extended(
+              onPressed: addWebsite.creationInProgress
+                  ? null
+                  : () async {
+                      final ctlOk = await _submitForm();
+                      if (ctlOk) {
+                        final addWebsiteNotifier = ref.watch(
+                          AddWebsiteFormProvider.addWebsiteForm.notifier,
+                        );
+
+                        unawaited(
+                          addWebsiteNotifier.addWebsite(context, ref),
+                        );
+
+                        if (!context.mounted) return;
+
+                        await AddWebsiteInProgressPopup.getDialog(
+                          context,
+                          ref,
+                        );
+                      }
+                    },
+              icon: const Icon(
+                Iconsax.global,
+              ),
+              label: Text(
+                AppLocalizations.of(context)!.btn_add_website,
+              ),
+            )
+          : null,
     );
   }
 }

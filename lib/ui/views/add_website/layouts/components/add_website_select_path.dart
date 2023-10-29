@@ -55,7 +55,6 @@ class _AddWebsiteSelectPathState extends ConsumerState<AddWebsiteSelectPath>
     final addWebsiteProvider = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         UploadFile(
           title: AppLocalizations.of(context)!.addWebsitePathLabel,

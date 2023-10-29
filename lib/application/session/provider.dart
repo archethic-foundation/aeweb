@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 import 'dart:developer';
-import 'package:aeweb/application/selected_website.dart';
+
 import 'package:aeweb/application/session/state.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
@@ -147,7 +147,6 @@ class _SessionNotifier extends Notifier<Session> {
                   );
                 }),
               );
-              ref.invalidate(SelectedWebsiteProviders.selectedWebsiteProvider);
             },
             failure: (failure) {
               state = state.copyWith(

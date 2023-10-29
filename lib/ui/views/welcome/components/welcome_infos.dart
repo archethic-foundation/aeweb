@@ -1,21 +1,33 @@
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
+import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gradient_borders/gradient_borders.dart';
 
-class WelcomeAdvert extends StatelessWidget {
-  const WelcomeAdvert({
+class WelcomeInfos extends StatelessWidget {
+  const WelcomeInfos({
     required this.welcomeArgTitle,
     required this.welcomeArgDesc,
+    this.animationDuration = 200,
     super.key,
   });
 
   final String welcomeArgTitle;
   final String welcomeArgDesc;
+  final int animationDuration;
 
   @override
   Widget build(BuildContext context) {
+    var width = MediaQuery.of(context).size.width * 0.9;
+    var height = 230.0;
+    if (Responsive.isDesktop(context) == true) {
+      width = MediaQuery.of(context).size.width / 6;
+      height = MediaQuery.of(context).size.height * 0.5;
+    }
+
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      width: width,
+      height: height,
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         gradient: LinearGradient(
@@ -57,6 +69,13 @@ class WelcomeAdvert extends StatelessWidget {
           ),
         ),
       ),
-    );
+    )
+        .animate()
+        .fade(
+          duration: Duration(milliseconds: animationDuration),
+        )
+        .scale(
+          duration: Duration(milliseconds: animationDuration),
+        );
   }
 }

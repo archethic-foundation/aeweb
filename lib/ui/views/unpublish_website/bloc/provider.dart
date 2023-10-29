@@ -6,21 +6,11 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final _initialUnpublishWebsiteFormProvider =
-    Provider<UnpublishWebsiteFormState>(
-  (ref) {
-    throw UnimplementedError();
-  },
-);
-
 final _unpublishWebsiteFormProvider = NotifierProvider.autoDispose<
     UnpublishWebsiteFormNotifier, UnpublishWebsiteFormState>(
   () {
     return UnpublishWebsiteFormNotifier();
   },
-  dependencies: [
-    UnpublishWebsiteFormProvider.initialUnpublishWebsiteForm,
-  ],
 );
 
 class UnpublishWebsiteFormNotifier
@@ -28,9 +18,22 @@ class UnpublishWebsiteFormNotifier
   UnpublishWebsiteFormNotifier();
 
   @override
-  UnpublishWebsiteFormState build() => ref.watch(
-        UnpublishWebsiteFormProvider.initialUnpublishWebsiteForm,
-      );
+  UnpublishWebsiteFormState build() {
+    return const UnpublishWebsiteFormState();
+  }
+
+  void resetStep() {
+    setStep(0);
+    setError('');
+  }
+
+  void setName(
+    String name,
+  ) {
+    state = state.copyWith(
+      name: name,
+    );
+  }
 
   void setError(
     String errorText,
@@ -75,7 +78,5 @@ class UnpublishWebsiteFormNotifier
 }
 
 abstract class UnpublishWebsiteFormProvider {
-  static final initialUnpublishWebsiteForm =
-      _initialUnpublishWebsiteFormProvider;
   static final unpublishWebsiteForm = _unpublishWebsiteFormProvider;
 }

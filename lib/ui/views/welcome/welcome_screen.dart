@@ -1,11 +1,12 @@
+import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/generic/responsive.dart';
-import 'package:aeweb/ui/views/util/header.dart';
-import 'package:aeweb/ui/views/welcome/components/welcome_advert.dart';
+import 'package:aeweb/ui/views/welcome/bloc/providers.dart';
 import 'package:aeweb/ui/views/welcome/components/welcome_connect_wallet_btn.dart';
 import 'package:aeweb/ui/views/welcome/components/welcome_info_version.dart';
-import 'package:aeweb/util/external/pageview_dot_indicator.dart';
+import 'package:aeweb/ui/views/welcome/components/welcome_infos.dart';
+import 'package:aeweb/ui/views/welcome/header_welcome_screen.dart';
+import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -32,294 +33,177 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    const pageCount = 4;
-
-    return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage(
-                  'assets/images/background-welcome.png',
+    return BusyScaffold(
+      isBusy: ref.watch(isLoadingWelcomeScreenProvider),
+      scaffold: Scaffold(
+        body: Stack(
+          children: [
+            Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage(
+                    'assets/images/background-welcome.png',
+                  ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               ),
             ),
-          ),
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [
-                  const Color(0x00000000),
-                  const Color(0xFFCC00FF).withOpacity(0.1),
-                ],
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    const Color(0x00000000),
+                    const Color(0xFFCC00FF).withOpacity(0.1),
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
               ),
             ),
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 20),
-                child: Header(
-                  forceAELogo: true,
-                ),
-              ),
-              Expanded(
-                child: Responsive(
-                  mobile: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(left: 20, right: 20),
-                        child: PageView(
-                          controller: pageController,
-                          onPageChanged: (page) {
-                            setState(() {
-                              selectedPage = page;
-                            });
-                          },
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg1Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg1Desc,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg2Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg2Desc,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg3Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg3Desc,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 10),
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg4Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg4Desc,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24),
-                        child: PageViewDotIndicator(
-                          currentItem: selectedPage,
-                          count: pageCount,
-                          unselectedColor: Colors.white,
-                          selectedColor: const Color(0xFF00A4DB),
-                          duration: const Duration(milliseconds: 200),
-                        ),
-                      ),
-                      const SizedBox(height: 20),
-                      const WelcomeConnectWalletBtn(),
-                      const SizedBox(height: 20),
-                      const WelcomeInfoVersion(),
-                    ],
-                  ),
-                  tablet: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 60),
-                        width: MediaQuery.of(context).size.width,
-                        height: 420,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg1Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg1Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 200),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 200),
-                                  ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg2Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg2Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 250),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 250),
-                                  ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg3Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg3Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 300),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 300),
-                                  ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg4Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg4Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 350),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 350),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const WelcomeConnectWalletBtn(),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width - 300,
-                        ),
-                        child: const WelcomeInfoVersion(),
-                      ),
-                    ],
-                  ),
-                  desktop: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.only(top: 60),
-                        width: MediaQuery.of(context).size.width,
-                        height: 420,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg1Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg1Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 200),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 200),
-                                  ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg2Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg2Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 250),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 250),
-                                  ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg3Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg3Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 300),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 300),
-                                  ),
-                            ),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width / 6,
-                              child: WelcomeAdvert(
-                                welcomeArgTitle: AppLocalizations.of(context)!
-                                    .welcomeArg4Title,
-                                welcomeArgDesc: AppLocalizations.of(context)!
-                                    .welcomeArg4Desc,
-                              )
-                                  .animate()
-                                  .fade(
-                                    duration: const Duration(milliseconds: 350),
-                                  )
-                                  .scale(
-                                    duration: const Duration(milliseconds: 350),
-                                  ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      const WelcomeConnectWalletBtn(),
-                      Padding(
-                        padding: EdgeInsets.only(
-                          left: MediaQuery.of(context).size.width - 300,
-                        ),
-                        child: const WelcomeInfoVersion(),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ],
+            _WelcomeScreenResponsiveWidget(),
+          ],
+        ),
       ),
     );
+  }
+}
+
+class _WelcomeScreenResponsiveWidget extends ConsumerWidget {
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Positioned.fill(
+      child: LayoutBuilder(
+        builder: (context, constraint) {
+          return ArchethicScrollbar(
+            child: Responsive(
+              mobile: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: HeaderWelcomeScreen(),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 60),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: _infosGroup(context),
+                    ),
+                  ),
+                  const WelcomeConnectWalletBtn(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width - 300,
+                    ),
+                    child: const WelcomeInfoVersion(),
+                  ),
+                ],
+              ),
+              tablet: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 20),
+                        child: HeaderWelcomeScreen(),
+                      ),
+                    ],
+                  ),
+                  Container(
+                    padding: const EdgeInsets.only(top: 60),
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: _infosGroup(context),
+                    ),
+                  ),
+                  const WelcomeConnectWalletBtn(),
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: MediaQuery.of(context).size.width - 300,
+                    ),
+                    child: const WelcomeInfoVersion(),
+                  ),
+                ],
+              ),
+              desktop: Container(
+                constraints: BoxConstraints(minHeight: constraint.maxHeight),
+                child: IntrinsicHeight(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      const Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(
+                            padding: EdgeInsets.only(top: 20),
+                            child: HeaderWelcomeScreen(),
+                          ),
+                        ],
+                      ),
+                      Container(
+                        constraints: const BoxConstraints(maxHeight: 420),
+                        padding: const EdgeInsets.only(top: 60),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisSize: MainAxisSize.min,
+                          children: _infosGroup(context),
+                        ),
+                      ),
+                      const Spacer(),
+                      const WelcomeConnectWalletBtn(),
+                      Padding(
+                        padding: EdgeInsets.only(
+                          left: MediaQuery.of(context).size.width - 300,
+                        ),
+                        child: const WelcomeInfoVersion(),
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  List<Widget> _infosGroup(BuildContext context) {
+    return [
+      WelcomeInfos(
+        welcomeArgTitle: AppLocalizations.of(context)!.welcomeArg1Title,
+        welcomeArgDesc: AppLocalizations.of(context)!.welcomeArg1Desc,
+      ),
+      const SizedBox(height: 10),
+      WelcomeInfos(
+        welcomeArgTitle: AppLocalizations.of(context)!.welcomeArg2Title,
+        welcomeArgDesc: AppLocalizations.of(context)!.welcomeArg2Desc,
+        animationDuration: 250,
+      ),
+      const SizedBox(height: 10),
+      WelcomeInfos(
+        welcomeArgTitle: AppLocalizations.of(context)!.welcomeArg3Title,
+        welcomeArgDesc: AppLocalizations.of(context)!.welcomeArg3Desc,
+        animationDuration: 300,
+      ),
+      const SizedBox(height: 10),
+      WelcomeInfos(
+        welcomeArgTitle: AppLocalizations.of(context)!.welcomeArg4Title,
+        welcomeArgDesc: AppLocalizations.of(context)!.welcomeArg4Desc,
+        animationDuration: 350,
+      ),
+    ];
   }
 }

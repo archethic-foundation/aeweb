@@ -9,22 +9,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final _initialUpdateCertificateFormProvider =
-    Provider<UpdateCertificateFormState>(
-  (ref) {
-    throw UnimplementedError();
-  },
-);
-
 final _updateCertificateFormProvider = NotifierProvider.autoDispose<
-    UpdateCertificateFormNotifier, UpdateCertificateFormState>(
-  () {
-    return UpdateCertificateFormNotifier();
-  },
-  dependencies: [
-    UpdateCertificateFormProvider.initialUpdateCertificateForm,
-  ],
-);
+    UpdateCertificateFormNotifier, UpdateCertificateFormState>(() {
+  return UpdateCertificateFormNotifier();
+});
 
 class UpdateCertificateFormNotifier
     extends AutoDisposeNotifier<UpdateCertificateFormState>
@@ -32,9 +20,22 @@ class UpdateCertificateFormNotifier
   UpdateCertificateFormNotifier();
 
   @override
-  UpdateCertificateFormState build() => ref.watch(
-        UpdateCertificateFormProvider.initialUpdateCertificateForm,
-      );
+  UpdateCertificateFormState build() {
+    return const UpdateCertificateFormState();
+  }
+
+  void resetStep() {
+    setStep(0);
+    setError('');
+  }
+
+  void setName(
+    String name,
+  ) {
+    state = state.copyWith(
+      name: name,
+    );
+  }
 
   void setPublicCertPath(
     String publicCertPath,
@@ -150,7 +151,5 @@ class UpdateCertificateFormNotifier
 }
 
 abstract class UpdateCertificateFormProvider {
-  static final initialUpdateCertificateForm =
-      _initialUpdateCertificateFormProvider;
   static final updateCertificateForm = _updateCertificateFormProvider;
 }

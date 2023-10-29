@@ -33,37 +33,39 @@ class UploadFile extends ConsumerWidget {
         .apply(displayColor: Theme.of(context).colorScheme.onSurface);
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Row(
           children: [
             Expanded(
-              child: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: title,
-                      style: textTheme.labelMedium,
-                    ),
-                    if (helpLink != null)
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: IconButtonAnimated(
-                          icon: Icon(
-                            Icons.help,
-                            color: Theme.of(context).colorScheme.primary,
-                          ),
-                          onPressed: () {
-                            launchUrl(
-                              Uri.parse(
-                                helpLink!,
-                              ),
-                            );
-                          },
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                        ),
+              child: Align(
+                child: Text.rich(
+                  TextSpan(
+                    children: [
+                      TextSpan(
+                        text: title,
+                        style: textTheme.bodyMedium,
                       ),
-                  ],
+                      if (helpLink != null)
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: IconButtonAnimated(
+                            icon: Icon(
+                              Icons.help,
+                              color: Theme.of(context).colorScheme.primary,
+                            ),
+                            onPressed: () {
+                              launchUrl(
+                                Uri.parse(
+                                  helpLink!,
+                                ),
+                              );
+                            },
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                        ),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -130,26 +132,28 @@ class UploadFile extends ConsumerWidget {
           Row(
             children: [
               Expanded(
-                child: Text.rich(
-                  TextSpan(
-                    children: [
-                      TextSpan(
-                        text: value,
-                        style: textTheme.labelSmall!
-                            .copyWith(fontWeight: FontWeight.w300),
-                      ),
-                      WidgetSpan(
-                        alignment: PlaceholderAlignment.middle,
-                        child: IconButtonAnimated(
-                          color: Theme.of(context).colorScheme.primary,
-                          onPressed: onDelete,
-                          icon: const Icon(
-                            Iconsax.trash4,
-                            size: 14,
+                child: Align(
+                  child: Text.rich(
+                    TextSpan(
+                      children: [
+                        TextSpan(
+                          text: value,
+                          style: textTheme.labelSmall!
+                              .copyWith(fontWeight: FontWeight.w300),
+                        ),
+                        WidgetSpan(
+                          alignment: PlaceholderAlignment.middle,
+                          child: IconButtonAnimated(
+                            color: Theme.of(context).colorScheme.primary,
+                            onPressed: onDelete,
+                            icon: const Icon(
+                              Iconsax.trash4,
+                              size: 14,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
