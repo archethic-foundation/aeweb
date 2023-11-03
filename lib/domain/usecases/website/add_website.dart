@@ -247,7 +247,7 @@ class AddWebsiteUseCases
 
       if (ref.read(AddWebsiteFormProvider.addWebsiteForm).stepError.isEmpty) {
         addWebsiteNotifier.setStep(13);
-        log('Website is deployed at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+        log('Website is deployed at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef');
       }
     } catch (e) {
       addWebsiteNotifier

@@ -160,7 +160,7 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
           .stepError
           .isEmpty) {
         unpublishWebsiteNotifier.setStep(10);
-        log('The Website is unpublished at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef');
+        log('The Website is unpublished at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef');
       }
     } catch (e) {
       unpublishWebsiteNotifier

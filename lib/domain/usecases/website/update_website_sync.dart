@@ -325,7 +325,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
           .stepError
           .isEmpty) {
         updateWebsiteSyncNotifier.setStep(13);
-        log("Website's update is deployed at : ${sl.get<ApiService>().endpoint}/api/web_hosting/$addressTxRef");
+        log("Website's update is deployed at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef");
       }
     } catch (e) {
       updateWebsiteSyncNotifier
