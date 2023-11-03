@@ -132,7 +132,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     var transactionsList = <Transaction>[];
     for (final content in contents) {
       transactionsList.add(
-        newTransactionFile(content),
+        await newTransactionFile(content),
       );
     }
     if (transactionsList.isNotEmpty) {
@@ -235,9 +235,14 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     log('keychainWebsiteService: $keychainWebsiteService');
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
-    var transactionTransfer =
-        Transaction(type: 'transfer', data: Transaction.initData())
-            .addUCOTransfer(addressTxRef, toBigInt(feesRef));
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+    var transactionTransfer = Transaction(
+      type: 'transfer',
+      version: blockchainTxVersion,
+      data: Transaction.initData(),
+    ).addUCOTransfer(addressTxRef, toBigInt(feesRef));
     if (feesFiles > 0) {
       transactionTransfer.addUCOTransfer(addressTxFiles, toBigInt(feesFiles));
     }

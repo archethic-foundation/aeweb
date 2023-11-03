@@ -37,10 +37,10 @@ packages:
     dependency: transitive
     description:
       name: archethic_lib_dart
-      sha256: d575a5c678cd012a646f4396fbafa9b6a7c8bcc2afffbf9a36a20c0316d0b62e
+      sha256: "7124dc00c050698313e7d330400145eb24d184ed4ce216fce3105131d1bf4e35"
       url: "https://pub.dev"
     source: hosted
-    version: "3.3.1"
+    version: "3.3.2"
   archethic_wallet_client:
     dependency: "direct main"
     description:

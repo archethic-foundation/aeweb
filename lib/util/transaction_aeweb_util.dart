@@ -29,10 +29,14 @@ mixin TransactionAEWebMixin {
         sslCertificate: utf8.decode(cert),
       );
     }
-
-    final transaction =
-        Transaction(type: 'hosting', data: Transaction.initData())
-            .setContent(jsonEncode(hosting));
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+    final transaction = Transaction(
+      type: 'hosting',
+      version: blockchainTxVersion,
+      data: Transaction.initData(),
+    ).setContent(jsonEncode(hosting));
 
     if (sslKey != null) {
       final storageNoncePublicKey =
@@ -55,17 +59,29 @@ mixin TransactionAEWebMixin {
     return transaction;
   }
 
-  Transaction newEmptyTransaction() {
-    return Transaction(type: 'data', data: Transaction.initData())
-        .setContent('website unpublished');
+  Future<Transaction> newEmptyTransaction() async {
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+    return Transaction(
+      type: 'data',
+      version: blockchainTxVersion,
+      data: Transaction.initData(),
+    ).setContent('website unpublished');
   }
 
-  Transaction newTransactionFile(
+  Future<Transaction> newTransactionFile(
     Map<String, dynamic> txsContent,
-  ) {
+  ) async {
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
     final content = txsContent['content'];
-    return Transaction(type: 'hosting', data: Transaction.initData())
-        .setContent(jsonEncode(content));
+    return Transaction(
+      type: 'hosting',
+      version: blockchainTxVersion,
+      data: Transaction.initData(),
+    ).setContent(jsonEncode(content));
   }
 
   Map<String, HostingRefContentMetaData> setAddressesInTxRef(

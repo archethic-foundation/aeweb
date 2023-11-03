@@ -48,7 +48,7 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
 
     log('Create empty transaction reference');
     unpublishWebsiteNotifier.setStep(2);
-    var transactionReference = newEmptyTransaction();
+    var transactionReference = await newEmptyTransaction();
 
     log('Sign empty transaction reference');
     unpublishWebsiteNotifier.setStep(3);
@@ -77,9 +77,14 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
 
     log('keychainWebsiteService: $keychainWebsiteService');
     log('addressTxRef: $addressTxRef');
-    var transactionTransfer =
-        Transaction(type: 'transfer', data: Transaction.initData())
-            .addUCOTransfer(addressTxRef, toBigInt(feesRef));
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+    var transactionTransfer = Transaction(
+      type: 'transfer',
+      version: blockchainTxVersion,
+      data: Transaction.initData(),
+    ).addUCOTransfer(addressTxRef, toBigInt(feesRef));
 
     unpublishWebsiteNotifier.setStep(6);
 
