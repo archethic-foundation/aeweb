@@ -10,13 +10,13 @@
 - Security access with your Archethic Wallet
 
 ## Application Initial Screen
-<img src=".github/images/Github-Img1.png?v=20230524" width="500"/>
+<img src=".github/images/aeweb-intro.png?v=20231106" width="500"/>
 <br/><br/>
-<img src=".github/images/Github-Img2.png?v=20230524" width="500"/>
+<img src=".github/images/aeweb-list-versions?v=20231106" width="500"/>
 <br/><br/>
-<img src=".github/images/Github-Img3.png?v=20230524" width="500"/>
+<img src=".github/images/aeweb-update?v=20231106" width="500"/>
 <br/><br/>
-<img src=".github/images/Github-Img4.png?v=20230524" width="500"/>
+<img src=".github/images/aeweb-assets?v=20231106" width="500"/>
 <br/><br/>
 ### Pre-requisites
 
