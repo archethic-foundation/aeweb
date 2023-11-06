@@ -1,5 +1,5 @@
 /// Simply activate/deactivate features.
 class FeatureFlags {
-  static const websiteSizeLimit = false;
+  static const websiteSizeLimit = true;
   static const mainnetActive = false;
 }
