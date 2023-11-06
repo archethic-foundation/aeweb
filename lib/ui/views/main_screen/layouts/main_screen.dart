@@ -92,7 +92,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
                             .archethicDashboardMenuWalletOnWayItem,
                         AppLocalizations.of(context)!
                             .archethicDashboardMenuWalletOnWayDesc,
-                        'https://www.archethic.net/aewallet.html',
+                        'https://www.archethic.net/wallet.html',
                       )
                           .animate(delay: 400.ms)
                           .fadeIn(duration: 400.ms, delay: 200.ms)
