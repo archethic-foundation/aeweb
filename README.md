@@ -12,11 +12,11 @@
 ## Application Initial Screen
 <img src=".github/images/aeweb-intro.png?v=20231106" width="500"/>
 <br/><br/>
-<img src=".github/images/aeweb-list-versions?v=20231106" width="500"/>
+<img src=".github/images/aeweb-list-versions.png?v=20231106" width="500"/>
 <br/><br/>
-<img src=".github/images/aeweb-update?v=20231106" width="500"/>
+<img src=".github/images/aeweb-update.png?v=20231106" width="500"/>
 <br/><br/>
-<img src=".github/images/aeweb-assets?v=20231106" width="500"/>
+<img src=".github/images/aeweb-assets.png?v=20231106" width="500"/>
 <br/><br/>
 ### Pre-requisites
 
