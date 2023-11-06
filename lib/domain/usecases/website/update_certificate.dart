@@ -95,9 +95,14 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     log('keychainWebsiteService: $keychainWebsiteService');
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
-    var transactionTransfer =
-        Transaction(type: 'transfer', data: Transaction.initData())
-            .addUCOTransfer(addressTxRef, toBigInt(feesRef));
+    final blockchainTxVersion = int.parse(
+      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+    );
+    var transactionTransfer = Transaction(
+      type: 'transfer',
+      version: blockchainTxVersion,
+      data: Transaction.initData(),
+    ).addUCOTransfer(addressTxRef, toBigInt(feesRef));
 
     updateCertificateNotifier.setStep(6);
 

@@ -125,7 +125,7 @@ class WelcomeConnectWalletBtnState
             onTap: () {
               launchUrl(
                 Uri.parse(
-                  'https://www.archethic.net/aewallet.html',
+                  'https://www.archethic.net/wallet.html',
                 ),
               );
             },

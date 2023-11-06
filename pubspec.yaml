@@ -2,11 +2,10 @@ name: aeweb
 description: Deploy websites on Archethic decentralized network to avoid censorship, increase security and have high-availability and resiliency.
 publish_to: "none"
 
-version: 0.0.9+4
+version: 0.0.10+5
 
 environment:
-  sdk: ">=3.0.5 <4.0.0"
-  flutter: "3.7.3"
+  sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
   # A client dart library to interact with Archethic Wallet RPC API.

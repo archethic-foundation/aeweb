@@ -406,8 +406,7 @@ Widget _popupMenuButton(
           break;
 
         case 'VisitWebsite':
-          final url =
-              '${sl.get<ApiService>().endpoint}/api/web_hosting/$genesisAddress';
+          final url = '${sl.get<ApiService>().endpoint}/aeweb/$genesisAddress';
           launchUrl(
             Uri.parse(
               url,

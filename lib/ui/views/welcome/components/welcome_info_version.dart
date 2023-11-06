@@ -32,6 +32,7 @@ class WelcomeInfoVersion extends ConsumerWidget {
             'assets/images/AELogo-Public Blockchain-White.svg',
             semanticsLabel: 'AE Logo',
             height: 22,
+            colorFilter: const ColorFilter.mode(Colors.white, BlendMode.srcIn),
           ),
           const SizedBox(
             height: 5,
