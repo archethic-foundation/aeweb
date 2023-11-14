@@ -41,7 +41,7 @@ class PathSyncPopup with FileMixin {
       builder: (context) {
         return PopupTemplate(
           popupTitle: AppLocalizations.of(context)!.pathSyncPopupTitle,
-          popupHeight: 210,
+          popupHeight: 240,
           popupContent: StatefulBuilder(
             builder: (context, setState) {
               return Column(

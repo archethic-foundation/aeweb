@@ -2,7 +2,7 @@ name: aeweb
 description: Deploy websites on Archethic decentralized network to avoid censorship, increase security and have high-availability and resiliency.
 publish_to: "none"
 
-version: 0.0.10+5
+version: 0.0.10+6
 
 environment:
   sdk: ">=3.1.0 <4.0.0"
