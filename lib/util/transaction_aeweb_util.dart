@@ -128,9 +128,6 @@ mixin TransactionAEWebMixin {
         transactions.map((Transaction x) => x.toJson()),
       ),
     };
-    log(
-      payload.toString(),
-    );
 
     final result =
         await sl.get<ArchethicDAppClient>().signTransactions(payload);
