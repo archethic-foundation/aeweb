@@ -1,0 +1,48 @@
+on:
+  push:
+    branches:
+      - testnet
+
+jobs:
+  deploy_to_aeweb:
+    runs-on: ubuntu-latest
+    name: A job to deploy file to AEweb
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: "stable"
+          flutter-version: '3.13.9'
+      - run: flutter --version
+
+      - name: Install dependencies
+        run: |
+          flutter clean
+          flutter pub get
+
+      - name: Check files
+        run: |
+          ls -R
+
+      - name: Build web app
+        run: flutter build web --web-renderer canvaskit --release
+
+      - name: Check files
+        run: |
+          ls -R
+
+      - name: Deploy to AEweb
+        id: deploy
+        uses: archethic-foundation/aeweb-github-action@v1.8.1
+        with:
+          seed: ${{ secrets.ARCH_BASE_SEED }}
+          endpoint: "https://testnet.archethic.net"
+          path: "build/web"
+          sslCertificateFile: "certificate_aeweb_testnet.crt"
+          sslKey: ${{ secrets.SSL_KEY_TESTNET }}
+          keychainFundingService: "archethic-wallet-ARCHETHIC.NET"
+          keychainWebsiteService: "aeweb-AEWEB-WEBAPP"
+       
