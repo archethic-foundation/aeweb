@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/components/main_background.dart';
+import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
@@ -54,7 +54,7 @@ class UpdateWebsiteSyncComparisonSheetState
 
     return Stack(
       children: [
-        const MainBackground(),
+        const AEWebBackground(),
         LayoutBuilder(
           builder: (context, constraints) {
             return ArchethicScrollbar(
@@ -67,6 +67,7 @@ class UpdateWebsiteSyncComparisonSheetState
                 ),
                 child: Center(
                   child: Container(
+                    padding: const EdgeInsets.only(top: 100),
                     constraints: const BoxConstraints(maxWidth: 820),
                     child: Column(
                       mainAxisSize: MainAxisSize.min,

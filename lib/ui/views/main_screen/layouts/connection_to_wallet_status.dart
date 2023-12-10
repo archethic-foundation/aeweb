@@ -72,7 +72,13 @@ class _ConnectionToWalletStatusState
             },
           );
         },
-        icon: const Icon(Iconsax.link),
+        icon: Text(
+          AppLocalizations.of(context)!.btn_connect_wallet,
+          style: TextStyle(
+            fontSize: 16,
+            color: ArchethicThemeBase.blue200,
+          ),
+        ),
       );
     }
 
@@ -270,7 +276,8 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
                                         Navigator.of(context).pop();
                                       },
                                       child: Text(
-                                          AppLocalizations.of(context)!.no,),
+                                        AppLocalizations.of(context)!.no,
+                                      ),
                                     ),
                                     AppButton(
                                       labelBtn:

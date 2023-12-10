@@ -3,7 +3,7 @@ import 'dart:math' as math;
 
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_private_key_path.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_public_cert_path.dart';
-import 'package:aeweb/ui/views/util/components/main_background.dart';
+import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -20,7 +20,7 @@ class UpdateCertificateFormSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const MainBackground(),
+        const AEWebBackground(),
         Container(
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.only(
@@ -39,6 +39,7 @@ class UpdateCertificateFormSheet extends ConsumerWidget {
               ),
               child: Center(
                 child: Container(
+                  padding: const EdgeInsets.only(top: 100),
                   constraints: const BoxConstraints(maxWidth: 820),
                   child: Column(
                     children: [

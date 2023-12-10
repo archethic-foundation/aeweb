@@ -29,9 +29,6 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // TODO(reddwarf03): use LanguageProviders
-    //const language = AvailableLanguage.english;
-
     // GoRouter configuration
     final _router = GoRouter(
       routes: RoutesPath().aeWebRoutes(ref),

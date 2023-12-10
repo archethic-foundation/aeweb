@@ -34,6 +34,15 @@ class AeWebThemeBase {
     stops: [0, 1],
   );
 
+  static Gradient gradientWelcomeTxt = LinearGradient(
+    colors: [
+      const Color(0xFF562FED).withOpacity(0.8),
+      const Color(0xFFD55CFF).withOpacity(0.8),
+    ],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
+
   static Gradient gradientBtn = LinearGradient(
     colors: <Color>[
       ArchethicThemeBase.blue500,

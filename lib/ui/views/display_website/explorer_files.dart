@@ -1,6 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'dart:ui';
+
+import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
-import 'package:aeweb/ui/views/util/components/main_background.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -133,15 +136,37 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          AppLocalizations.of(context)!.explorerTitle,
+      extendBodyBehindAppBar: true,
+      extendBody: true,
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(70),
+        child: ClipRRect(
+          child: BackdropFilter(
+            filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8),
+              child: AppBar(
+                bottom: PreferredSize(
+                  preferredSize: const Size.fromHeight(1),
+                  child: Container(
+                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    height: 1,
+                  ),
+                ),
+                centerTitle: true,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                title: Text(
+                  AppLocalizations.of(context)!.explorerTitle,
+                ),
+              ),
+            ),
+          ),
         ),
       ),
       body: Stack(
         children: [
-          const MainBackground(),
+          const AEWebBackground(),
           Padding(
             padding: const EdgeInsets.only(
               left: 30,
@@ -151,6 +176,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
             ),
             child: Center(
               child: Container(
+                padding: const EdgeInsets.only(top: 100),
                 constraints: const BoxConstraints(maxWidth: 820),
                 child: TreeView(
                   controller: treeViewController,

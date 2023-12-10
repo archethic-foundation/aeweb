@@ -6,7 +6,7 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_zip_file.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_switch_gitignore.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_textfield_name.dart';
-import 'package:aeweb/ui/views/util/components/main_background.dart';
+import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
@@ -26,7 +26,7 @@ class AddWebsiteFormSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const MainBackground(),
+        const AEWebBackground(),
         ArchethicScrollbar(
           child: Padding(
             padding: const EdgeInsets.symmetric(
@@ -35,6 +35,7 @@ class AddWebsiteFormSheet extends ConsumerWidget {
             ),
             child: Center(
               child: Container(
+                padding: const EdgeInsets.only(top: 100),
                 constraints: const BoxConstraints(maxWidth: 820),
                 child: Column(
                   children: [

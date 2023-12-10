@@ -1,4 +1,4 @@
-import 'package:aeweb/ui/views/util/components/main_background.dart';
+import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +16,7 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const MainBackground(),
+        const AEWebBackground(),
         Container(
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.only(
@@ -28,6 +28,7 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
           child: ArchethicScrollbar(
             child: Center(
               child: Container(
+                padding: const EdgeInsets.only(top: 100),
                 constraints: const BoxConstraints(maxWidth: 820),
                 child: Column(
                   children: [

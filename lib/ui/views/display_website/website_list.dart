@@ -17,7 +17,7 @@ class WebsiteList extends ConsumerWidget {
         return ArchethicScrollbar(
           child: Padding(
             padding: const EdgeInsets.only(
-              top: 30,
+              top: 130,
               bottom: 30,
               left: 10,
               right: 10,
@@ -33,6 +33,7 @@ class WebsiteList extends ConsumerWidget {
       error: (error) => const SizedBox(),
       loading: (loading) => const Padding(
         padding: EdgeInsets.only(
+          top: 130,
           left: 30,
           right: 30,
         ),
