@@ -123,7 +123,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {
                   launchUrl(
                     Uri.parse(
-                      'https://github.com/archethic-foundation/bridge',
+                      'https://github.com/archethic-foundation/aeweb',
                     ),
                   );
                 },

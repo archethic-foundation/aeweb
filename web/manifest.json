@@ -1,11 +1,11 @@
 {
-    "name": "aeweb",
-    "short_name": "AEWeb",
+    "name": "aeHosting",
+    "short_name": "aeHosting",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "AEWeb",
+    "description": "aeHosting",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
