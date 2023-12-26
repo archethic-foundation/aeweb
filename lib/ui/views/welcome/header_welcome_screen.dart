@@ -21,7 +21,7 @@ class HeaderWelcomeScreen extends StatelessWidget {
           width: 10,
         ),
         Text(
-          'AEWeb',
+          'aeHosting',
           style: TextStyle(
             fontSize: 45,
             color: ArchethicThemeBase.blue200,

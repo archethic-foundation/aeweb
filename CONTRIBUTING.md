@@ -2,7 +2,7 @@
 
 :+1::tada: First off, thanks for taking the time to contribute! :tada::+1:
 
-The following is a set of guidelines for contributing to AEWeb which is hosted in the [Archethic Foundation](https://github.com/archethic-foundation) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
+The following is a set of guidelines for contributing to aeHosting which is hosted in the [Archethic Foundation](https://github.com/archethic-foundation) on GitHub. These are mostly guidelines, not rules. Use your best judgment, and feel free to propose changes to this document in a pull request.
 
 #### Table Of Contents
 
@@ -36,7 +36,7 @@ We have an official message board with a detailed FAQ and where the community ch
 
 ### Reporting Bugs
 
-This section guides you through submitting a bug report for AEWeb. Following these guidelines helps maintainers and the community understand your report :pencil:, reproduce the behavior :computer: :computer:, and find related reports :mag_right:.
+This section guides you through submitting a bug report for aeHosting. Following these guidelines helps maintainers and the community understand your report :pencil:, reproduce the behavior :computer: :computer:, and find related reports :mag_right:.
 
 Before creating bug reports, please check [this list](#before-submitting-a-bug-report) as you might find out that you don't need to create one. When you are creating a bug report, please [include as many details as possible](#how-do-i-submit-a-good-bug-report). Fill out [the required template](https://github.com/archethic-foundation/.github/blob/master/.github/ISSUE_TEMPLATE/bug_report.yml), the information it asks for helps us resolve issues faster.
 
@@ -70,7 +70,7 @@ Provide more context by answering these questions:
 
 ### Suggesting Enhancements
 
-This section guides you through submitting an enhancement suggestion for AEWeb, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion :pencil: and find related suggestions :mag_right:.
+This section guides you through submitting an enhancement suggestion for aeHosting, including completely new features and minor improvements to existing functionality. Following these guidelines helps maintainers and the community understand your suggestion :pencil: and find related suggestions :mag_right:.
 
 Before creating enhancement suggestions, please check [this list](#before-submitting-an-enhancement-suggestion) as you might find out that you don't need to create one. When you are creating an enhancement suggestion, please [include as many details as possible](#how-do-i-submit-a-good-enhancement-suggestion). Fill in [the template](https://github.com/archethic-foundation/.github/blob/master/.github/ISSUE_TEMPLATE/feature_request.yml), including the steps that you imagine you would take if the feature you're requesting existed.
 
@@ -96,7 +96,7 @@ Both issue lists are sorted by total number of comments. While not perfect, numb
 
 The process described here has several goals:
 
-- Maintain AEWeb app's quality
+- Maintain aeHosting app's quality
 - Fix problems that are important
 - Enable a sustainable system for Archethic's maintainers to review contributions
 

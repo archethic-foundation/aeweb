@@ -1,6 +1,6 @@
 {
   "@@last_modified": "2021-12-07T12:33:16.270871",
-  "welcomeText": "Welcome to AEWeb",
+  "welcomeText": "Welcome to aeHosting",
   "systemDefault": "System Default",
   "addWebsiteNameMissing": "Please fill the name of the static site.",
   "addWebsitePathMissing": "Please fill the path containing the files to be uploaded.",
@@ -50,14 +50,6 @@
   "websitesListTitle": "My static sites",
   "tooltip_addNewWebsite": "Add new static site",
   "tooltip_refreshWebsite": "Refresh static sites",
-  "welcomeArg1Title": "Easy, Secure and Simple way to Build",
-  "welcomeArg1Desc": "The AEWeb experience enables you to deploy your static site with just a few clicks.\n\nThe interface is simple, secure, and user-friendly, making it easy for you to deploy your static site effortlessly, even if you have zero coding knowledge.",
-  "welcomeArg2Title": "100% Secure & Tamperproof",
-  "welcomeArg2Desc": "Do I have to worry about security and maintenance once I deploy my static site?\nNo!\n\nAEWeb is decentralized and backed by Arch Consensus, which has the capability to handle up to 90% of malicious activity in the network.",
-  "welcomeArg3Title": "Minimum Transaction and Maintenance Cost",
-  "welcomeArg3Desc": "Enjoy 3 to 5 times lower deployment and maintenance fees compared to well-known hosting services like AWS, Google Cloud, and more.\n\nAdditionally, the data will be geographically distributed across the globe, ensuring the highest level of data availability and security.",
-  "welcomeArg4Title": "Built-in Optimized Scalability",
-  "welcomeArg4Desc": "AEWeb, built on the Archethic blockchain, offers both linear and horizontal scalability for your static site.\n\nThere is no comparable product that can provide hassle-free deployment and simultaneous scalability like AEWeb does.",
   "welcomeNoWallet": "Unlock the full potential of our Web3 application - get the Archethic Wallet now!",
   "menu_websitesList": "Your static sites",
   "menu_addWebsite": "New static site",
@@ -205,5 +197,6 @@
   "addWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website creation process?",
   "updateWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website update process?",
   "updateCertificateProcessInterruptionWarning": "Are you sure you want to stop the certificate update process?",
-  "unpublishWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website unpublishing process?"
+  "unpublishWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website unpublishing process?",
+  "addressCopied": "Address copied"
 }

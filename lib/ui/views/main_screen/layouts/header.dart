@@ -24,7 +24,7 @@ class Header extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 5),
           child: Text(
-            'AEWeb',
+            'aeHosting',
             style: TextStyle(
               fontSize: 30,
               color: ArchethicThemeBase.blue200,

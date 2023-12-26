@@ -4,9 +4,9 @@ on:
       - testnet
 
 jobs:
-  deploy_to_aeweb:
+  deploy_to_aeHosting:
     runs-on: ubuntu-latest
-    name: A job to deploy file to AEweb
+    name: A job to deploy file to aeHosting
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -34,7 +34,7 @@ jobs:
         run: |
           ls -R
 
-      - name: Deploy to AEweb
+      - name: Deploy to aeHosting
         id: deploy
         uses: archethic-foundation/aeweb-github-action@v1.8.1
         with:

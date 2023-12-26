@@ -36,9 +36,9 @@ class _SessionNotifier extends Notifier<Session> {
 
       final archethicDAppClient = ArchethicDAppClient.auto(
         origin: const RequestOrigin(
-          name: 'AEWeb',
+          name: 'aeHosting',
         ),
-        replyBaseUrl: 'aeweb://archethic.tech',
+        replyBaseUrl: 'aehosting://archethic.tech',
       );
 
       final endpointResponse = await archethicDAppClient.getEndpoint();

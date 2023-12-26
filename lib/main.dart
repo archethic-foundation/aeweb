@@ -36,7 +36,7 @@ class MyApp extends ConsumerWidget {
 
     return MaterialApp.router(
       routerConfig: _router,
-      title: 'AEWeb',
+      title: 'aeHosting',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         brightness: Brightness.dark,
