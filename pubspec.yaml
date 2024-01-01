@@ -109,6 +109,9 @@ dependencies:
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
   url_launcher: ^6.1.12
 
+  # Wave animation
+  wave: ^0.2.2
+
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.
   build_runner: ^2.4.6

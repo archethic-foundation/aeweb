@@ -14,6 +14,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:wave/config.dart';
+import 'package:wave/wave.dart';
 
 class UnpublishWebsiteInProgressPopup {
   static Future<void> getDialog(
@@ -129,7 +131,6 @@ class UnpublishWebsiteInProgressPopup {
                                 right: 15,
                                 left: 8,
                               ),
-                              padding: const EdgeInsets.all(20),
                               height: 300,
                               width: AeWebThemeBase.sizeBoxComponentWidth,
                               decoration: BoxDecoration(
@@ -141,35 +142,110 @@ class UnpublishWebsiteInProgressPopup {
                                   ),
                                 ],
                               ),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  const UnpublishWebsiteCircularStepProgressIndicator(),
-                                  InProgressBanner(
-                                    stepLabel:
-                                        UnpublishWebsiteUseCases().getStepLabel(
-                                      context,
-                                      unpublishWebsite.step,
+                              child: Stack(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                      top: 200,
                                     ),
-                                    infoMessage: UnpublishWebsiteUseCases()
-                                        .getConfirmLabel(
-                                      context,
-                                      unpublishWebsite.step,
+                                    child: Card(
+                                      color: Colors.transparent,
+                                      clipBehavior: Clip.antiAlias,
+                                      elevation: 0,
+                                      margin: EdgeInsets.zero,
+                                      shape: const RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(16),
+                                          bottomRight: Radius.circular(16),
+                                        ),
+                                      ),
+                                      child: WaveWidget(
+                                        config: CustomConfig(
+                                          gradients: [
+                                            [
+                                              ArchethicThemeBase.blue800
+                                                  .withOpacity(0.1),
+                                              ArchethicThemeBase.purple800
+                                                  .withOpacity(0.1),
+                                            ],
+                                            [
+                                              ArchethicThemeBase.blue500
+                                                  .withOpacity(0.1),
+                                              ArchethicThemeBase.purple500
+                                                  .withOpacity(0.1),
+                                            ],
+                                            [
+                                              ArchethicThemeBase.blue300
+                                                  .withOpacity(0.1),
+                                              ArchethicThemeBase.purple300
+                                                  .withOpacity(0.1),
+                                            ],
+                                            [
+                                              ArchethicThemeBase.blue200
+                                                  .withOpacity(0.1),
+                                              ArchethicThemeBase.purple200
+                                                  .withOpacity(0.1),
+                                            ]
+                                          ],
+                                          durations: [
+                                            35000,
+                                            19440,
+                                            10800,
+                                            6000,
+                                          ],
+                                          heightPercentages: [
+                                            0.20,
+                                            0.23,
+                                            0.25,
+                                            0.30,
+                                          ],
+                                          gradientBegin: Alignment.bottomLeft,
+                                          gradientEnd: Alignment.topRight,
+                                        ),
+                                        size: Size.infinite,
+                                        waveAmplitude: 0,
+                                      ),
                                     ),
-                                    errorMessage: unpublishWebsite.stepError,
                                   ),
-                                  if (unpublishWebsite.stepError.isEmpty &&
-                                      unpublishWebsite.step == 8 &&
-                                      unpublishWebsite.globalFeesValidated ==
-                                          null)
-                                    _userConfirmStep(
-                                      context,
-                                      ref,
-                                      AppLocalizations.of(context)!
-                                          .unpublishWebSiteConfirmStep8,
+                                  Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        const UnpublishWebsiteCircularStepProgressIndicator(),
+                                        InProgressBanner(
+                                          stepLabel: UnpublishWebsiteUseCases()
+                                              .getStepLabel(
+                                            context,
+                                            unpublishWebsite.step,
+                                          ),
+                                          infoMessage:
+                                              UnpublishWebsiteUseCases()
+                                                  .getConfirmLabel(
+                                            context,
+                                            unpublishWebsite.step,
+                                          ),
+                                          errorMessage:
+                                              unpublishWebsite.stepError,
+                                        ),
+                                        if (unpublishWebsite
+                                                .stepError.isEmpty &&
+                                            unpublishWebsite.step == 8 &&
+                                            unpublishWebsite
+                                                    .globalFeesValidated ==
+                                                null)
+                                          _userConfirmStep(
+                                            context,
+                                            ref,
+                                            AppLocalizations.of(context)!
+                                                .unpublishWebSiteConfirmStep8,
+                                          ),
+                                        const Spacer(),
+                                      ],
                                     ),
-                                  const Spacer(),
+                                  ),
                                 ],
                               ),
                             ),
