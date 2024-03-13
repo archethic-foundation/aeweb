@@ -23,7 +23,9 @@ class GradientText extends StatelessWidget {
       child: Text(
         text,
         style: style,
-        textScaleFactor: ScaleSize.textScaleFactor(context),
+        textScaler: TextScaler.linear(
+          ScaleSize.textScaleFactor(context),
+        ),
       ),
     );
   }

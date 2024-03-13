@@ -44,7 +44,9 @@ class WelcomeTitle extends StatelessWidget {
                     fontSize: 40,
                     fontWeight: FontWeight.w400,
                   ),
-                  textScaleFactor: ScaleSize.textScaleFactor(context),
+                  textScaler: TextScaler.linear(
+                    ScaleSize.textScaleFactor(context),
+                  ),
                 )
                     .animate(delay: 200.ms)
                     .fadeIn(duration: 400.ms, delay: 300.ms)
