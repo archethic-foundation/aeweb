@@ -29,6 +29,8 @@ class UpdateWebsiteSyncSheet extends ConsumerStatefulWidget {
     required this.comparedFiles,
   });
 
+  static const routerPage = '/updatewebsitesync';
+
   final String websiteName;
   final String path;
   final Uint8List zipFile;

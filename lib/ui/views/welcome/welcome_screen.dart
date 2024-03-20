@@ -13,6 +13,8 @@ class WelcomeScreen extends ConsumerStatefulWidget {
     super.key,
   });
 
+  static const routerPage = '/welcome';
+
   @override
   ConsumerState<WelcomeScreen> createState() => _WelcomeScreenState();
 }

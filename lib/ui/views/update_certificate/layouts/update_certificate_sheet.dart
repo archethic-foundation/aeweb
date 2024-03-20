@@ -23,6 +23,8 @@ class UpdateCertificateSheet extends ConsumerStatefulWidget {
 
   final String websiteName;
 
+  static const routerPage = '/updatecertificate';
+
   @override
   ConsumerState<UpdateCertificateSheet> createState() =>
       _UpdateCertificateSheetState();

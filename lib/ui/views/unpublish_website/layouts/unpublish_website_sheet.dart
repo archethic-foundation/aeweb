@@ -23,6 +23,8 @@ class UnpublishWebsiteSheet extends ConsumerStatefulWidget {
 
   final String websiteName;
 
+  static const routerPage = '/unpublishwebsite';
+
   @override
   ConsumerState<UnpublishWebsiteSheet> createState() =>
       _UnpublishWebsiteSheetState();

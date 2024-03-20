@@ -22,6 +22,8 @@ class AddWebsiteSheet extends ConsumerWidget {
     super.key,
   });
 
+  static const routerPage = '/addwebsite';
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final session = ref.watch(SessionProviders.session);

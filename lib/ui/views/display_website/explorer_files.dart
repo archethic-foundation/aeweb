@@ -18,6 +18,8 @@ class ExplorerFilesScreen extends ConsumerStatefulWidget {
 
   final Map<String, archethic.HostingRefContentMetaData> filesAndFolders;
 
+  static const routerPage = '/explorefiles';
+
   @override
   ExplorerFilesScreenState createState() => ExplorerFilesScreenState();
 }

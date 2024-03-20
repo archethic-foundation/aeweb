@@ -14,6 +14,9 @@ import 'package:go_router/go_router.dart';
 
 class MainScreen extends ConsumerStatefulWidget {
   const MainScreen({super.key});
+
+  static const routerPage = '/main';
+
   @override
   ConsumerState<MainScreen> createState() => MainScreenState();
 }

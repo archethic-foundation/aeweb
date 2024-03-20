@@ -16,6 +16,8 @@ import 'package:url_launcher/url_launcher.dart';
 class ExplorerTxScreen extends ConsumerWidget {
   const ExplorerTxScreen({super.key, required this.websiteVersionTxList});
 
+  static const routerPage = '/explorertx';
+
   final List<WebsiteVersionTx> websiteVersionTxList;
 
   @override
