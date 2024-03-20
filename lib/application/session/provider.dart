@@ -5,10 +5,13 @@ import 'dart:developer';
 import 'package:aeweb/application/session/state.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
+import 'package:aeweb/util/browser_util_desktop.dart'
+    if (dart.library.js) 'package:aeweb/util/browser_util_web.dart';
 import 'package:aeweb/util/service_locator.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -27,7 +30,18 @@ class _SessionNotifier extends Notifier<Session> {
     return const Session();
   }
 
+  void _handleConnectionFailure(bool isBrave) {
+    state = state.copyWith(
+      isConnected: false,
+      error: isBrave
+          ? "Please, open your Archethic Wallet and disable Brave's shield."
+          : 'Please, open your Archethic Wallet.',
+    );
+  }
+
   Future<void> connectToWallet() async {
+    final isBrave = BrowserUtil().isBraveBrowser();
+
     try {
       await aedappfm.sl.get<DBHelper>().clearWebsites();
       state = state.copyWith(
@@ -35,30 +49,22 @@ class _SessionNotifier extends Notifier<Session> {
         error: '',
       );
 
-      final archethicDAppClient = ArchethicDAppClient.auto(
-        origin: const RequestOrigin(
-          name: 'aeHosting',
-        ),
-        replyBaseUrl: 'aehosting://archethic.tech',
-      );
+      awc.ArchethicDAppClient? archethicDAppClient;
+      try {
+        archethicDAppClient = awc.ArchethicDAppClient.websocket(
+          origin: const awc.RequestOrigin(
+            name: 'aeHosting',
+          ),
+        );
+      } catch (e) {
+        throw const aedappfm.Failure.connectivityArchethic();
+      }
 
+      await archethicDAppClient.connect();
       final endpointResponse = await archethicDAppClient.getEndpoint();
       await endpointResponse.when(
         failure: (failure) {
-          switch (failure.code) {
-            case 4901:
-              state = state.copyWith(
-                isConnected: false,
-                error: 'Please, open your Archethic Wallet.',
-              );
-              break;
-            default:
-              log(failure.message ?? 'Connection failed');
-              state = state.copyWith(
-                isConnected: false,
-                error: 'Please, open your Archethic Wallet.',
-              );
-          }
+          _handleConnectionFailure(isBrave);
         },
         success: (result) async {
           log('DApp is connected to archethic wallet.');
@@ -75,7 +81,7 @@ class _SessionNotifier extends Notifier<Session> {
 
           state = state.copyWith(endpoint: result.endpointUrl);
           connectionStatusSubscription =
-              archethicDAppClient.connectionStateStream.listen((event) {
+              archethicDAppClient!.connectionStateStream.listen((event) {
             event.when(
               disconnected: () {
                 log('Disconnected', name: 'Wallet connection');
@@ -118,7 +124,7 @@ class _SessionNotifier extends Notifier<Session> {
             aedappfm.sl.unregister<ArchethicDAppClient>();
           }
           aedappfm.sl.registerLazySingleton<ArchethicDAppClient>(
-            () => archethicDAppClient,
+            () => archethicDAppClient!,
           );
           setupServiceLocatorApiService(result.endpointUrl);
           final subscription =
