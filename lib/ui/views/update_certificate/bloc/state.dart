@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state.freezed.dart';
@@ -20,6 +21,7 @@ class UpdateCertificateFormState with _$UpdateCertificateFormState {
     bool? globalFeesValidated,
     @Default(false) bool? controlInProgress,
     @Default('') String errorText,
+    Failure? failure,
   }) = _UpdateCertificateFormState;
   const UpdateCertificateFormState._();
 

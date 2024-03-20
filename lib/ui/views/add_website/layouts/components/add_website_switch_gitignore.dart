@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -66,7 +67,7 @@ class _AddWebsiteSwitchGitignoreState
               ),
               WidgetSpan(
                 alignment: PlaceholderAlignment.middle,
-                child: IconButtonAnimated(
+                child: aedappfm.IconButtonAnimated(
                   icon: Icon(
                     Icons.help,
                     color: Theme.of(context).colorScheme.primary,

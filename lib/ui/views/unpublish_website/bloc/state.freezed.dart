@@ -12,7 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$UnpublishWebsiteFormState {
@@ -23,6 +23,7 @@ mixin _$UnpublishWebsiteFormState {
   double get globalFeesFiat => throw _privateConstructorUsedError;
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
+  Failure? get failure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UnpublishWebsiteFormStateCopyWith<UnpublishWebsiteFormState> get copyWith =>
@@ -42,7 +43,10 @@ abstract class $UnpublishWebsiteFormStateCopyWith<$Res> {
       double globalFeesUCO,
       double globalFeesFiat,
       bool? globalFeesValidated,
-      String errorText});
+      String errorText,
+      Failure? failure});
+
+  $FailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
@@ -66,6 +70,7 @@ class _$UnpublishWebsiteFormStateCopyWithImpl<$Res,
     Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? errorText = null,
+    Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
       name: null == name
@@ -96,17 +101,33 @@ class _$UnpublishWebsiteFormStateCopyWithImpl<$Res,
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as Failure?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $FailureCopyWith<$Res>? get failure {
+    if (_value.failure == null) {
+      return null;
+    }
+
+    return $FailureCopyWith<$Res>(_value.failure!, (value) {
+      return _then(_value.copyWith(failure: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-abstract class _$$_UnpublishWebsiteFormStateCopyWith<$Res>
+abstract class _$$UnpublishWebsiteFormStateImplCopyWith<$Res>
     implements $UnpublishWebsiteFormStateCopyWith<$Res> {
-  factory _$$_UnpublishWebsiteFormStateCopyWith(
-          _$_UnpublishWebsiteFormState value,
-          $Res Function(_$_UnpublishWebsiteFormState) then) =
-      __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>;
+  factory _$$UnpublishWebsiteFormStateImplCopyWith(
+          _$UnpublishWebsiteFormStateImpl value,
+          $Res Function(_$UnpublishWebsiteFormStateImpl) then) =
+      __$$UnpublishWebsiteFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -116,17 +137,21 @@ abstract class _$$_UnpublishWebsiteFormStateCopyWith<$Res>
       double globalFeesUCO,
       double globalFeesFiat,
       bool? globalFeesValidated,
-      String errorText});
+      String errorText,
+      Failure? failure});
+
+  @override
+  $FailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
-class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
+class __$$UnpublishWebsiteFormStateImplCopyWithImpl<$Res>
     extends _$UnpublishWebsiteFormStateCopyWithImpl<$Res,
-        _$_UnpublishWebsiteFormState>
-    implements _$$_UnpublishWebsiteFormStateCopyWith<$Res> {
-  __$$_UnpublishWebsiteFormStateCopyWithImpl(
-      _$_UnpublishWebsiteFormState _value,
-      $Res Function(_$_UnpublishWebsiteFormState) _then)
+        _$UnpublishWebsiteFormStateImpl>
+    implements _$$UnpublishWebsiteFormStateImplCopyWith<$Res> {
+  __$$UnpublishWebsiteFormStateImplCopyWithImpl(
+      _$UnpublishWebsiteFormStateImpl _value,
+      $Res Function(_$UnpublishWebsiteFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -139,8 +164,9 @@ class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
     Object? globalFeesFiat = null,
     Object? globalFeesValidated = freezed,
     Object? errorText = null,
+    Object? failure = freezed,
   }) {
-    return _then(_$_UnpublishWebsiteFormState(
+    return _then(_$UnpublishWebsiteFormStateImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -169,21 +195,26 @@ class __$$_UnpublishWebsiteFormStateCopyWithImpl<$Res>
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as Failure?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
-  const _$_UnpublishWebsiteFormState(
+class _$UnpublishWebsiteFormStateImpl extends _UnpublishWebsiteFormState {
+  const _$UnpublishWebsiteFormStateImpl(
       {this.name = '',
       this.step = 0,
       this.stepError = '',
       this.globalFeesUCO = 0.0,
       this.globalFeesFiat = 0.0,
       this.globalFeesValidated,
-      this.errorText = ''})
+      this.errorText = '',
+      this.failure})
       : super._();
 
   @override
@@ -206,17 +237,19 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
   @override
   @JsonKey()
   final String errorText;
+  @override
+  final Failure? failure;
 
   @override
   String toString() {
-    return 'UnpublishWebsiteFormState(name: $name, step: $step, stepError: $stepError, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, errorText: $errorText)';
+    return 'UnpublishWebsiteFormState(name: $name, step: $step, stepError: $stepError, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, errorText: $errorText, failure: $failure)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UnpublishWebsiteFormState &&
+            other is _$UnpublishWebsiteFormStateImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.step, step) || other.step == step) &&
             (identical(other.stepError, stepError) ||
@@ -228,19 +261,20 @@ class _$_UnpublishWebsiteFormState extends _UnpublishWebsiteFormState {
             (identical(other.globalFeesValidated, globalFeesValidated) ||
                 other.globalFeesValidated == globalFeesValidated) &&
             (identical(other.errorText, errorText) ||
-                other.errorText == errorText));
+                other.errorText == errorText) &&
+            (identical(other.failure, failure) || other.failure == failure));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, name, step, stepError,
-      globalFeesUCO, globalFeesFiat, globalFeesValidated, errorText);
+      globalFeesUCO, globalFeesFiat, globalFeesValidated, errorText, failure);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UnpublishWebsiteFormStateCopyWith<_$_UnpublishWebsiteFormState>
-      get copyWith => __$$_UnpublishWebsiteFormStateCopyWithImpl<
-          _$_UnpublishWebsiteFormState>(this, _$identity);
+  _$$UnpublishWebsiteFormStateImplCopyWith<_$UnpublishWebsiteFormStateImpl>
+      get copyWith => __$$UnpublishWebsiteFormStateImplCopyWithImpl<
+          _$UnpublishWebsiteFormStateImpl>(this, _$identity);
 }
 
 abstract class _UnpublishWebsiteFormState extends UnpublishWebsiteFormState {
@@ -251,7 +285,8 @@ abstract class _UnpublishWebsiteFormState extends UnpublishWebsiteFormState {
       final double globalFeesUCO,
       final double globalFeesFiat,
       final bool? globalFeesValidated,
-      final String errorText}) = _$_UnpublishWebsiteFormState;
+      final String errorText,
+      final Failure? failure}) = _$UnpublishWebsiteFormStateImpl;
   const _UnpublishWebsiteFormState._() : super._();
 
   @override
@@ -269,7 +304,9 @@ abstract class _UnpublishWebsiteFormState extends UnpublishWebsiteFormState {
   @override
   String get errorText;
   @override
+  Failure? get failure;
+  @override
   @JsonKey(ignore: true)
-  _$$_UnpublishWebsiteFormStateCopyWith<_$_UnpublishWebsiteFormState>
+  _$$UnpublishWebsiteFormStateImplCopyWith<_$UnpublishWebsiteFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

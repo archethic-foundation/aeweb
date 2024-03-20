@@ -3,25 +3,27 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UpdateCertificateUseCases with TransactionAEWebMixin {
+class UpdateCertificateUseCase with TransactionAEWebMixin {
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
   ) async {
     final updateCertificateNotifier =
-        ref.watch(UpdateCertificateFormProvider.updateCertificateForm.notifier)
-          ..setStep(0)
-          ..setStepError('')
-          ..setGlobalFeesUCO(0)
-          ..setGlobalFeesValidated(null);
+        ref.watch(UpdateCertificateFormProvider.updateCertificateForm.notifier);
+    await updateCertificateNotifier.setGlobalFeesUCO(0);
+    updateCertificateNotifier
+      ..setStep(0)
+      ..setStepError('')
+      ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UpdateCertificateFormProvider.updateCertificateForm).name}',
@@ -33,7 +35,7 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
 
     final lastTransactionReferenceMap =
-        await sl.get<ApiService>().getLastTransaction(
+        await aedappfm.sl.get<ApiService>().getLastTransaction(
       [addressTxRef],
       request:
           'data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } }',
@@ -96,7 +98,9 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await aedappfm.sl.get<ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
     );
     var transactionTransfer = Transaction(
       type: 'transfer',

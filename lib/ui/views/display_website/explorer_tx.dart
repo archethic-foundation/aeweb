@@ -3,12 +3,8 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:aeweb/model/website_version_tx.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -17,6 +13,8 @@ import 'package:url_launcher/url_launcher.dart';
 
 class ExplorerTxScreen extends ConsumerWidget {
   const ExplorerTxScreen({super.key, required this.websiteVersionTxList});
+
+  static const routerPage = '/explorertx';
 
   final List<WebsiteVersionTx> websiteVersionTxList;
 
@@ -36,7 +34,8 @@ class ExplorerTxScreen extends ConsumerWidget {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color:
+                        aedappfm.ArchethicThemeBase.neutral0.withOpacity(0.2),
                     height: 1,
                   ),
                 ),
@@ -53,13 +52,15 @@ class ExplorerTxScreen extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          const AEWebBackground(),
+          const aedappfm.AppBackground(
+            backgroundImage: 'assets/images/background-welcome.png',
+          ),
           if (websiteVersionTxList.isEmpty)
             Align(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(Iconsax.warning_2),
+                  const Icon(aedappfm.Iconsax.warning_2),
                   const SizedBox(
                     width: 5,
                   ),
@@ -70,7 +71,7 @@ class ExplorerTxScreen extends ConsumerWidget {
               ),
             )
           else
-            ArchethicScrollbar(
+            aedappfm.ArchethicScrollbar(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Center(
@@ -125,9 +126,11 @@ class ExplorerTxScreen extends ConsumerWidget {
                                                       .typeHostingTx ==
                                                   'ref'
                                               ? const Icon(
-                                                  Iconsax.archive_book,
+                                                  aedappfm.Iconsax.archive_book,
                                                 )
-                                              : const Icon(Iconsax.document),
+                                              : const Icon(
+                                                  aedappfm.Iconsax.document,
+                                                ),
                                         ),
                                       ),
                                       DataCell(
@@ -156,14 +159,14 @@ class ExplorerTxScreen extends ConsumerWidget {
                                       ),
                                       DataCell(
                                         Align(
-                                          child: IconButtonAnimated(
+                                          child: aedappfm.IconButtonAnimated(
                                             icon: const Icon(
-                                              Iconsax.export_3,
+                                              aedappfm.Iconsax.export_3,
                                             ),
                                             onPressed: () {
                                               launchUrl(
                                                 Uri.parse(
-                                                  '${sl.get<ApiService>().endpoint}/explorer/transaction/${websiteVersionTx.address}',
+                                                  '${aedappfm.sl.get<ApiService>().endpoint}/explorer/transaction/${websiteVersionTx.address}',
                                                 ),
                                               );
                                             },

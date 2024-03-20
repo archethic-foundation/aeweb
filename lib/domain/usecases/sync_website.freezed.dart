@@ -12,7 +12,7 @@ part of 'sync_website.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$HostingContentComparison {
@@ -65,24 +65,25 @@ class _$HostingContentComparisonCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_HostingContentComparisonCopyWith<$Res>
+abstract class _$$HostingContentComparisonImplCopyWith<$Res>
     implements $HostingContentComparisonCopyWith<$Res> {
-  factory _$$_HostingContentComparisonCopyWith(
-          _$_HostingContentComparison value,
-          $Res Function(_$_HostingContentComparison) then) =
-      __$$_HostingContentComparisonCopyWithImpl<$Res>;
+  factory _$$HostingContentComparisonImplCopyWith(
+          _$HostingContentComparisonImpl value,
+          $Res Function(_$HostingContentComparisonImpl) then) =
+      __$$HostingContentComparisonImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String path, HostingContentComparisonStatus status});
 }
 
 /// @nodoc
-class __$$_HostingContentComparisonCopyWithImpl<$Res>
+class __$$HostingContentComparisonImplCopyWithImpl<$Res>
     extends _$HostingContentComparisonCopyWithImpl<$Res,
-        _$_HostingContentComparison>
-    implements _$$_HostingContentComparisonCopyWith<$Res> {
-  __$$_HostingContentComparisonCopyWithImpl(_$_HostingContentComparison _value,
-      $Res Function(_$_HostingContentComparison) _then)
+        _$HostingContentComparisonImpl>
+    implements _$$HostingContentComparisonImplCopyWith<$Res> {
+  __$$HostingContentComparisonImplCopyWithImpl(
+      _$HostingContentComparisonImpl _value,
+      $Res Function(_$HostingContentComparisonImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -91,7 +92,7 @@ class __$$_HostingContentComparisonCopyWithImpl<$Res>
     Object? path = null,
     Object? status = null,
   }) {
-    return _then(_$_HostingContentComparison(
+    return _then(_$HostingContentComparisonImpl(
       path: null == path
           ? _value.path
           : path // ignore: cast_nullable_to_non_nullable
@@ -106,8 +107,9 @@ class __$$_HostingContentComparisonCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_HostingContentComparison implements _HostingContentComparison {
-  const _$_HostingContentComparison({required this.path, required this.status});
+class _$HostingContentComparisonImpl implements _HostingContentComparison {
+  const _$HostingContentComparisonImpl(
+      {required this.path, required this.status});
 
   @override
   final String path;
@@ -120,10 +122,10 @@ class _$_HostingContentComparison implements _HostingContentComparison {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_HostingContentComparison &&
+            other is _$HostingContentComparisonImpl &&
             (identical(other.path, path) || other.path == path) &&
             (identical(other.status, status) || other.status == status));
   }
@@ -134,16 +136,16 @@ class _$_HostingContentComparison implements _HostingContentComparison {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_HostingContentComparisonCopyWith<_$_HostingContentComparison>
-      get copyWith => __$$_HostingContentComparisonCopyWithImpl<
-          _$_HostingContentComparison>(this, _$identity);
+  _$$HostingContentComparisonImplCopyWith<_$HostingContentComparisonImpl>
+      get copyWith => __$$HostingContentComparisonImplCopyWithImpl<
+          _$HostingContentComparisonImpl>(this, _$identity);
 }
 
 abstract class _HostingContentComparison implements HostingContentComparison {
   const factory _HostingContentComparison(
           {required final String path,
           required final HostingContentComparisonStatus status}) =
-      _$_HostingContentComparison;
+      _$HostingContentComparisonImpl;
 
   @override
   String get path;
@@ -151,6 +153,6 @@ abstract class _HostingContentComparison implements HostingContentComparison {
   HostingContentComparisonStatus get status;
   @override
   @JsonKey(ignore: true)
-  _$$_HostingContentComparisonCopyWith<_$_HostingContentComparison>
+  _$$HostingContentComparisonImplCopyWith<_$HostingContentComparisonImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

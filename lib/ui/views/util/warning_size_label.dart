@@ -1,5 +1,6 @@
 import 'package:aeweb/domain/repositories/features_flags.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +21,7 @@ class WarningSizeLabel extends ConsumerWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             const Icon(
-              Iconsax.info_circle,
+              aedappfm.Iconsax.info_circle,
               color: Colors.yellow,
               size: 18,
             ),

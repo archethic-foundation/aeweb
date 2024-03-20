@@ -7,8 +7,9 @@ import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
@@ -16,18 +17,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddWebsiteUseCases
+class AddWebsiteUseCase
     with FileMixin, TransactionAEWebMixin, CertificateMixin {
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
   ) async {
     final addWebsiteNotifier =
-        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
-          ..setStep(0)
-          ..setStepError('')
-          ..setGlobalFeesUCO(0)
-          ..setGlobalFeesValidated(null);
+        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
+    await addWebsiteNotifier.setGlobalFeesUCO(0);
+    addWebsiteNotifier
+      ..setStep(0)
+      ..setStepError('')
+      ..setGlobalFeesValidated(null);
 
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
@@ -44,7 +46,7 @@ class AddWebsiteUseCases
       'aeweb-${ref.read(AddWebsiteFormProvider.addWebsiteForm).name}',
     );
     final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
-    await sl.get<DBHelper>().saveWebsite(
+    await aedappfm.sl.get<DBHelper>().saveWebsite(
           Website(
             name: ref.read(AddWebsiteFormProvider.addWebsiteForm).name,
             genesisAddress: addressTxRef,
@@ -169,7 +171,9 @@ class AddWebsiteUseCases
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await aedappfm.sl.get<ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
     );
     var transactionTransfer = Transaction(
       type: 'transfer',
@@ -247,7 +251,7 @@ class AddWebsiteUseCases
 
       if (ref.read(AddWebsiteFormProvider.addWebsiteForm).stepError.isEmpty) {
         addWebsiteNotifier.setStep(13);
-        log('Website is deployed at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef');
+        log('Website is deployed at : ${aedappfm.sl.get<ApiService>().endpoint}/aeweb/$addressTxRef');
       }
     } catch (e) {
       addWebsiteNotifier

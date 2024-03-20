@@ -1,10 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/ui/views/util/router.dart';
-import 'package:aeweb/ui/views/welcome/bloc/providers.dart';
-import 'package:busy/busy.dart';
+import 'package:aeweb/ui/views/main_screen/layouts/main_screen.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -49,43 +47,34 @@ class WelcomeConnectWalletBtnState
                   side: MaterialStateProperty.all(BorderSide.none),
                   overlayColor: MaterialStateProperty.all(Colors.transparent),
                 ),
-                onPressed: () {
-                  startBusyContext(
-                    () async {
-                      final sessionNotifier =
-                          ref.read(SessionProviders.session.notifier);
-                      await sessionNotifier.connectToWallet();
+                onPressed: () async {
+                  final sessionNotifier =
+                      ref.read(SessionProviders.session.notifier);
+                  await sessionNotifier.connectToWallet();
 
-                      final session = ref.read(SessionProviders.session);
-                      if (session.error.isNotEmpty) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            backgroundColor:
-                                Theme.of(context).snackBarTheme.backgroundColor,
-                            content: Text(
-                              session.error,
-                              style: Theme.of(context)
-                                  .snackBarTheme
-                                  .contentTextStyle,
-                            ),
-                            duration: const Duration(seconds: 2),
-                          ),
-                        );
-                      } else {
-                        context.go(RoutesPath().main());
-                      }
-                    },
-                    isBusyValueChanged: (isBusy) {
-                      ref.read(isLoadingWelcomeScreenProvider.notifier).state =
-                          isBusy;
-                    },
-                  );
+                  final session = ref.read(SessionProviders.session);
+                  if (session.error.isNotEmpty) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        backgroundColor:
+                            Theme.of(context).snackBarTheme.backgroundColor,
+                        content: Text(
+                          session.error,
+                          style:
+                              Theme.of(context).snackBarTheme.contentTextStyle,
+                        ),
+                        duration: const Duration(seconds: 2),
+                      ),
+                    );
+                  } else {
+                    context.go(MainScreen.routerPage);
+                  }
                 },
                 child: Container(
                   alignment: Alignment.center,
                   height: 50,
                   decoration: ShapeDecoration(
-                    gradient: AeWebThemeBase.gradientBtn,
+                    gradient: aedappfm.AppThemeBase.gradientBtn,
                     shape: const StadiumBorder(),
                     shadows: [
                       BoxShadow(
@@ -100,7 +89,7 @@ class WelcomeConnectWalletBtnState
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Icon(
-                        Iconsax.empty_wallet,
+                        aedappfm.Iconsax.empty_wallet,
                         color: Theme.of(context).textTheme.labelMedium!.color,
                         size: 20,
                       ),

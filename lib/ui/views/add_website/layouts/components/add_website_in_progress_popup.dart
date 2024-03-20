@@ -1,21 +1,16 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/add_website.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:aeweb/domain/usecases/add_website.usecase.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
-import 'package:aeweb/ui/views/add_website/layouts/components/add_website_circular_step_progress_indicator.dart';
-import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
 import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 
 class AddWebsiteInProgressPopup {
   static Future<void> getDialog(
@@ -71,7 +66,7 @@ class AddWebsiteInProgressPopup {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      Iconsax.close_square,
+                      aedappfm.Iconsax.close_square,
                       size: 11,
                     ),
                     const SizedBox(width: 4),
@@ -84,14 +79,13 @@ class AddWebsiteInProgressPopup {
               const SizedBox(
                 width: 10,
               ),
-              AppButton(
+              aedappfm.AppButton(
                 onPressed: () async {
                   ref
                       .read(AddWebsiteFormProvider.addWebsiteForm.notifier)
                       .setGlobalFeesValidated(true);
                 },
                 labelBtn: AppLocalizations.of(context)!.yes,
-                icon: Iconsax.tick_square,
               ),
             ],
           ),
@@ -117,7 +111,7 @@ class AddWebsiteInProgressPopup {
                       elevation: 0,
                       content: Stack(
                         children: <Widget>[
-                          ArchethicScrollbar(
+                          aedappfm.ArchethicScrollbar(
                             child: Container(
                               margin: const EdgeInsets.only(
                                 top: 30,
@@ -125,9 +119,11 @@ class AddWebsiteInProgressPopup {
                                 left: 8,
                               ),
                               height: 300,
-                              width: AeWebThemeBase.sizeBoxComponentWidth,
+                              width:
+                                  aedappfm.AppThemeBase.sizeBoxComponentWidth,
                               decoration: BoxDecoration(
-                                color: AeWebThemeBase.backgroundPopupColor,
+                                color:
+                                    aedappfm.AppThemeBase.backgroundPopupColor,
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: const <BoxShadow>[
                                   BoxShadow(
@@ -137,8 +133,8 @@ class AddWebsiteInProgressPopup {
                               ),
                               child: Stack(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                       top: 200,
                                     ),
                                     child: Card(
@@ -146,58 +142,13 @@ class AddWebsiteInProgressPopup {
                                       clipBehavior: Clip.antiAlias,
                                       elevation: 0,
                                       margin: EdgeInsets.zero,
-                                      shape: const RoundedRectangleBorder(
+                                      shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(16),
                                           bottomRight: Radius.circular(16),
                                         ),
                                       ),
-                                      child: WaveWidget(
-                                        config: CustomConfig(
-                                          gradients: [
-                                            [
-                                              ArchethicThemeBase.blue800
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple800
-                                                  .withOpacity(0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue500
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple500
-                                                  .withOpacity(0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue300
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple300
-                                                  .withOpacity(0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue200
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple200
-                                                  .withOpacity(0.1),
-                                            ]
-                                          ],
-                                          durations: [
-                                            35000,
-                                            19440,
-                                            10800,
-                                            6000,
-                                          ],
-                                          heightPercentages: [
-                                            0.20,
-                                            0.23,
-                                            0.25,
-                                            0.30,
-                                          ],
-                                          gradientBegin: Alignment.bottomLeft,
-                                          gradientEnd: Alignment.topRight,
-                                        ),
-                                        size: Size.infinite,
-                                        waveAmplitude: 0,
-                                      ),
+                                      child: aedappfm.PopupWaves(),
                                     ),
                                   ),
                                   Padding(
@@ -207,14 +158,21 @@ class AddWebsiteInProgressPopup {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        const AddWebsiteCircularStepProgressIndicator(),
+                                        aedappfm
+                                            .InProgressCircularStepProgressIndicator(
+                                          currentStep: addWebsite.step,
+                                          totalSteps: 13,
+                                          isProcessInProgress:
+                                              addWebsite.creationInProgress,
+                                          failure: addWebsite.failure,
+                                        ),
                                         InProgressBanner(
                                           stepLabel:
-                                              AddWebsiteUseCases().getStepLabel(
+                                              AddWebsiteUseCase().getStepLabel(
                                             context,
                                             addWebsite.step,
                                           ),
-                                          infoMessage: AddWebsiteUseCases()
+                                          infoMessage: AddWebsiteUseCase()
                                               .getConfirmLabel(
                                             context,
                                             addWebsite.step,

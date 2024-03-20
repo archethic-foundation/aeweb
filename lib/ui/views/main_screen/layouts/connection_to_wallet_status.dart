@@ -1,12 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/main_screen/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/format_address_link_copy.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/ui/views/util/router.dart';
-import 'package:busy/busy.dart';
+import 'package:aeweb/ui/views/welcome/welcome_screen.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -46,37 +43,35 @@ class _ConnectionToWalletStatusState
     }
 
     if (session.isConnected == false) {
-      return IconButton(
-        onPressed: () {
-          startBusyContext(
-            () async {
-              final sessionNotifier =
-                  ref.watch(SessionProviders.session.notifier);
-              await sessionNotifier.connectToWallet();
-              if (ref.read(SessionProviders.session).error.isNotEmpty) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    backgroundColor:
-                        Theme.of(context).snackBarTheme.backgroundColor,
-                    content: Text(
-                      ref.read(SessionProviders.session).error,
-                      style: Theme.of(context).snackBarTheme.contentTextStyle,
-                    ),
-                    duration: const Duration(seconds: 2),
-                  ),
-                );
-              }
-            },
-            isBusyValueChanged: (isBusy) async {
-              ref.read(isLoadingMainScreenProvider.notifier).state = isBusy;
-            },
-          );
+      return InkWell(
+        onTap: () async {
+          final sessionNotifier = ref.watch(SessionProviders.session.notifier);
+          await sessionNotifier.connectToWallet();
+          if (ref.read(SessionProviders.session).error.isNotEmpty) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                backgroundColor:
+                    Theme.of(context).snackBarTheme.backgroundColor,
+                content: Text(
+                  ref.read(SessionProviders.session).error,
+                  style: Theme.of(context).snackBarTheme.contentTextStyle,
+                ),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+          }
         },
-        icon: Text(
-          AppLocalizations.of(context)!.btn_connect_wallet,
-          style: TextStyle(
-            fontSize: 16,
-            color: ArchethicThemeBase.blue200,
+        child: ShaderMask(
+          blendMode: BlendMode.srcIn,
+          shaderCallback: (bounds) =>
+              aedappfm.AppThemeBase.gradientWelcomeTxt.createShader(
+            Rect.fromLTWH(0, 0, bounds.width, bounds.height),
+          ),
+          child: Text(
+            AppLocalizations.of(context)!.btn_connect_wallet,
+            style: const TextStyle(
+              fontSize: 16,
+            ),
           ),
         ),
       );
@@ -89,7 +84,7 @@ class _ConnectionToWalletStatusState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            Iconsax.user,
+            aedappfm.Iconsax.user,
             size: 18,
           ),
           const SizedBox(
@@ -163,7 +158,7 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
             child: Row(
               children: [
                 const Icon(
-                  Iconsax.logout,
+                  aedappfm.Iconsax.logout,
                   size: 16,
                 ),
                 const SizedBox(
@@ -181,7 +176,8 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
                   child: Builder(
                     builder: (context) {
                       return AlertDialog(
-                        backgroundColor: AeWebThemeBase.backgroundPopupColor,
+                        backgroundColor:
+                            aedappfm.AppThemeBase.backgroundPopupColor,
                         contentPadding: const EdgeInsets.only(
                           top: 10,
                         ),
@@ -230,13 +226,13 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
                                         AppLocalizations.of(context)!.no,
                                       ),
                                     ),
-                                    AppButton(
+                                    aedappfm.AppButton(
                                       labelBtn:
                                           AppLocalizations.of(context)!.yes,
                                       onPressed: () async {
                                         await sessionNotifier
                                             .cancelConnection();
-                                        context.go(RoutesPath().welcome());
+                                        context.go(WelcomeScreen.routerPage);
                                       },
                                     ),
                                   ],

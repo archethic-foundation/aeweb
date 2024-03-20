@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aeweb/domain/repositories/features_flags.dart';
-import 'package:aeweb/domain/usecases/website/sync_website.dart';
+import 'package:aeweb/domain/usecases/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/util/file_util.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/foundation.dart';
@@ -15,17 +16,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
+class UpdateWebsiteSyncUseCase with FileMixin, TransactionAEWebMixin {
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
   ) async {
     final updateWebsiteSyncNotifier =
-        ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier)
-          ..setStep(0)
-          ..setStepError('')
-          ..setGlobalFeesUCO(0)
-          ..setGlobalFeesValidated(null);
+        ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier);
+    await updateWebsiteSyncNotifier.setGlobalFeesUCO(0);
+    updateWebsiteSyncNotifier
+      ..setStep(0)
+      ..setStepError('')
+      ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).name}',
@@ -37,7 +39,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
 
     final lastTransactionReferenceMap =
-        await sl.get<ApiService>().getLastTransaction(
+        await aedappfm.sl.get<ApiService>().getLastTransaction(
       [addressTxRef],
       request:
           'data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } }',
@@ -236,7 +238,9 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await aedappfm.sl.get<ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
     );
     var transactionTransfer = Transaction(
       type: 'transfer',
@@ -325,7 +329,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
           .stepError
           .isEmpty) {
         updateWebsiteSyncNotifier.setStep(13);
-        log("Website's update is deployed at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef");
+        log("Website's update is deployed at : ${aedappfm.sl.get<ApiService>().endpoint}/aeweb/$addressTxRef");
       }
     } catch (e) {
       updateWebsiteSyncNotifier

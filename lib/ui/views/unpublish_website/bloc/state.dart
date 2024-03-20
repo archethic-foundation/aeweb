@@ -1,4 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state.freezed.dart';
@@ -13,6 +14,7 @@ class UnpublishWebsiteFormState with _$UnpublishWebsiteFormState {
     @Default(0.0) double globalFeesFiat,
     bool? globalFeesValidated,
     @Default('') String errorText,
+    Failure? failure,
   }) = _UnpublishWebsiteFormState;
   const UnpublishWebsiteFormState._();
 

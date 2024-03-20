@@ -1,14 +1,12 @@
 import 'dart:developer';
 
-import 'package:aeweb/domain/usecases/website/read_website_version.dart';
-import 'package:aeweb/domain/usecases/website/sync_website.dart';
-import 'package:aeweb/ui/views/util/components/app_button.dart';
-import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
-import 'package:aeweb/ui/views/util/components/popup_template.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/ui/views/util/router.dart';
+import 'package:aeweb/domain/usecases/read_website_version.usecase.dart';
+import 'package:aeweb/domain/usecases/sync_website.dart';
+import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -39,7 +37,7 @@ class PathSyncPopup with FileMixin {
     return showDialog(
       context: context,
       builder: (context) {
-        return PopupTemplate(
+        return aedappfm.PopupTemplate(
           popupTitle: AppLocalizations.of(context)!.pathSyncPopupTitle,
           popupHeight: 320,
           popupContent: StatefulBuilder(
@@ -160,7 +158,7 @@ class PathSyncPopup with FileMixin {
                           ),
                         ),
                       ),
-                      IconButtonAnimated(
+                      aedappfm.IconButtonAnimated(
                         icon: Icon(
                           Icons.help,
                           color: Theme.of(context).colorScheme.primary,
@@ -179,9 +177,8 @@ class PathSyncPopup with FileMixin {
                   const SizedBox(
                     height: 20,
                   ),
-                  AppButton(
+                  aedappfm.AppButton(
                     labelBtn: AppLocalizations.of(context)!.btn_sync,
-                    icon: Iconsax.refresh_circle,
                     onPressed: () async {
                       late final Map<String, HostingRefContentMetaData>?
                           localFiles;
@@ -244,7 +241,7 @@ class PathSyncPopup with FileMixin {
                       context
                         ..pop() // close popup
                         ..go(
-                          RoutesPath().updateWebsiteSync(genesisAddress),
+                          UpdateWebsiteSyncSheet.routerPage,
                           extra: {
                             'websiteName': websiteName,
                             'genesisAddress': genesisAddress,

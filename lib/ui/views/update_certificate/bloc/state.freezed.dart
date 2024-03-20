@@ -12,7 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$UpdateCertificateFormState {
@@ -28,6 +28,7 @@ mixin _$UpdateCertificateFormState {
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get controlInProgress => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
+  Failure? get failure => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $UpdateCertificateFormStateCopyWith<UpdateCertificateFormState>
@@ -53,7 +54,10 @@ abstract class $UpdateCertificateFormStateCopyWith<$Res> {
       double globalFeesFiat,
       bool? globalFeesValidated,
       bool? controlInProgress,
-      String errorText});
+      String errorText,
+      Failure? failure});
+
+  $FailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
@@ -82,6 +86,7 @@ class _$UpdateCertificateFormStateCopyWithImpl<$Res,
     Object? globalFeesValidated = freezed,
     Object? controlInProgress = freezed,
     Object? errorText = null,
+    Object? failure = freezed,
   }) {
     return _then(_value.copyWith(
       step: null == step
@@ -132,17 +137,33 @@ class _$UpdateCertificateFormStateCopyWithImpl<$Res,
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as Failure?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $FailureCopyWith<$Res>? get failure {
+    if (_value.failure == null) {
+      return null;
+    }
+
+    return $FailureCopyWith<$Res>(_value.failure!, (value) {
+      return _then(_value.copyWith(failure: value) as $Val);
+    });
   }
 }
 
 /// @nodoc
-abstract class _$$_UpdateCertificateFormStateCopyWith<$Res>
+abstract class _$$UpdateCertificateFormStateImplCopyWith<$Res>
     implements $UpdateCertificateFormStateCopyWith<$Res> {
-  factory _$$_UpdateCertificateFormStateCopyWith(
-          _$_UpdateCertificateFormState value,
-          $Res Function(_$_UpdateCertificateFormState) then) =
-      __$$_UpdateCertificateFormStateCopyWithImpl<$Res>;
+  factory _$$UpdateCertificateFormStateImplCopyWith(
+          _$UpdateCertificateFormStateImpl value,
+          $Res Function(_$UpdateCertificateFormStateImpl) then) =
+      __$$UpdateCertificateFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -157,17 +178,21 @@ abstract class _$$_UpdateCertificateFormStateCopyWith<$Res>
       double globalFeesFiat,
       bool? globalFeesValidated,
       bool? controlInProgress,
-      String errorText});
+      String errorText,
+      Failure? failure});
+
+  @override
+  $FailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
-class __$$_UpdateCertificateFormStateCopyWithImpl<$Res>
+class __$$UpdateCertificateFormStateImplCopyWithImpl<$Res>
     extends _$UpdateCertificateFormStateCopyWithImpl<$Res,
-        _$_UpdateCertificateFormState>
-    implements _$$_UpdateCertificateFormStateCopyWith<$Res> {
-  __$$_UpdateCertificateFormStateCopyWithImpl(
-      _$_UpdateCertificateFormState _value,
-      $Res Function(_$_UpdateCertificateFormState) _then)
+        _$UpdateCertificateFormStateImpl>
+    implements _$$UpdateCertificateFormStateImplCopyWith<$Res> {
+  __$$UpdateCertificateFormStateImplCopyWithImpl(
+      _$UpdateCertificateFormStateImpl _value,
+      $Res Function(_$UpdateCertificateFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -185,8 +210,9 @@ class __$$_UpdateCertificateFormStateCopyWithImpl<$Res>
     Object? globalFeesValidated = freezed,
     Object? controlInProgress = freezed,
     Object? errorText = null,
+    Object? failure = freezed,
   }) {
-    return _then(_$_UpdateCertificateFormState(
+    return _then(_$UpdateCertificateFormStateImpl(
       step: null == step
           ? _value.step
           : step // ignore: cast_nullable_to_non_nullable
@@ -235,14 +261,18 @@ class __$$_UpdateCertificateFormStateCopyWithImpl<$Res>
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as Failure?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
-  const _$_UpdateCertificateFormState(
+class _$UpdateCertificateFormStateImpl extends _UpdateCertificateFormState {
+  const _$UpdateCertificateFormStateImpl(
       {this.step = 0,
       this.stepError = '',
       this.name = '',
@@ -254,7 +284,8 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
       this.globalFeesFiat = 0.0,
       this.globalFeesValidated,
       this.controlInProgress = false,
-      this.errorText = ''})
+      this.errorText = '',
+      this.failure})
       : super._();
 
   @override
@@ -290,17 +321,19 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
   @override
   @JsonKey()
   final String errorText;
+  @override
+  final Failure? failure;
 
   @override
   String toString() {
-    return 'UpdateCertificateFormState(step: $step, stepError: $stepError, name: $name, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, controlInProgress: $controlInProgress, errorText: $errorText)';
+    return 'UpdateCertificateFormState(step: $step, stepError: $stepError, name: $name, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, controlInProgress: $controlInProgress, errorText: $errorText, failure: $failure)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateCertificateFormState &&
+            other is _$UpdateCertificateFormStateImpl &&
             (identical(other.step, step) || other.step == step) &&
             (identical(other.stepError, stepError) ||
                 other.stepError == stepError) &&
@@ -322,7 +355,8 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
             (identical(other.controlInProgress, controlInProgress) ||
                 other.controlInProgress == controlInProgress) &&
             (identical(other.errorText, errorText) ||
-                other.errorText == errorText));
+                other.errorText == errorText) &&
+            (identical(other.failure, failure) || other.failure == failure));
   }
 
   @override
@@ -339,14 +373,15 @@ class _$_UpdateCertificateFormState extends _UpdateCertificateFormState {
       globalFeesFiat,
       globalFeesValidated,
       controlInProgress,
-      errorText);
+      errorText,
+      failure);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UpdateCertificateFormStateCopyWith<_$_UpdateCertificateFormState>
-      get copyWith => __$$_UpdateCertificateFormStateCopyWithImpl<
-          _$_UpdateCertificateFormState>(this, _$identity);
+  _$$UpdateCertificateFormStateImplCopyWith<_$UpdateCertificateFormStateImpl>
+      get copyWith => __$$UpdateCertificateFormStateImplCopyWithImpl<
+          _$UpdateCertificateFormStateImpl>(this, _$identity);
 }
 
 abstract class _UpdateCertificateFormState extends UpdateCertificateFormState {
@@ -362,7 +397,8 @@ abstract class _UpdateCertificateFormState extends UpdateCertificateFormState {
       final double globalFeesFiat,
       final bool? globalFeesValidated,
       final bool? controlInProgress,
-      final String errorText}) = _$_UpdateCertificateFormState;
+      final String errorText,
+      final Failure? failure}) = _$UpdateCertificateFormStateImpl;
   const _UpdateCertificateFormState._() : super._();
 
   @override
@@ -390,7 +426,9 @@ abstract class _UpdateCertificateFormState extends UpdateCertificateFormState {
   @override
   String get errorText;
   @override
+  Failure? get failure;
+  @override
   @JsonKey(ignore: true)
-  _$$_UpdateCertificateFormStateCopyWith<_$_UpdateCertificateFormState>
+  _$$UpdateCertificateFormStateImplCopyWith<_$UpdateCertificateFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

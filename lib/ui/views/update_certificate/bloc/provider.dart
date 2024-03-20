@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/domain/usecases/website/update_certificate.dart';
+import 'package:aeweb/domain/usecases/update_certificate.usecase.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/state.dart';
 import 'package:aeweb/util/certificate_util.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,8 @@ class UpdateCertificateFormNotifier
   }
 
   Future<void> setGlobalFeesUCO(double globalFeesUCO) async {
-    final oracleUcoPrice = await sl.get<OracleService>().getOracleData();
+    final oracleUcoPrice =
+        await aedappfm.sl.get<OracleService>().getOracleData();
     state = state.copyWith(
       globalFeesUCO: globalFeesUCO,
       globalFeesFiat: globalFeesUCO * (oracleUcoPrice.uco?.usd ?? 0),
@@ -143,7 +145,7 @@ class UpdateCertificateFormNotifier
   }
 
   Future<void> updateCertificate(BuildContext context, WidgetRef ref) async {
-    await UpdateCertificateUseCases().run(
+    await UpdateCertificateUseCase().run(
       ref,
       context,
     );
