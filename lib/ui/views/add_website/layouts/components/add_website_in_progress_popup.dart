@@ -2,7 +2,6 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/domain/usecases/add_website.usecase.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
-import 'package:aeweb/ui/views/add_website/layouts/components/add_website_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
 import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
@@ -159,7 +158,14 @@ class AddWebsiteInProgressPopup {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        const AddWebsiteCircularStepProgressIndicator(),
+                                        aedappfm
+                                            .InProgressCircularStepProgressIndicator(
+                                          currentStep: addWebsite.step,
+                                          totalSteps: 13,
+                                          isProcessInProgress:
+                                              addWebsite.creationInProgress,
+                                          failure: addWebsite.failure,
+                                        ),
                                         InProgressBanner(
                                           stepLabel:
                                               AddWebsiteUseCase().getStepLabel(

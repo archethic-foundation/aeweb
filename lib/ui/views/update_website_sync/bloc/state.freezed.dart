@@ -31,6 +31,7 @@ mixin _$UpdateWebsiteSyncFormState {
   bool? get globalFeesValidated => throw _privateConstructorUsedError;
   bool? get applyGitIgnoreRules => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
+  Failure? get failure => throw _privateConstructorUsedError;
   Map<String, HostingRefContentMetaData> get localFiles =>
       throw _privateConstructorUsedError;
   List<HostingContentComparison> get comparedFiles =>
@@ -64,8 +65,11 @@ abstract class $UpdateWebsiteSyncFormStateCopyWith<$Res> {
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText,
+      Failure? failure,
       Map<String, HostingRefContentMetaData> localFiles,
       List<HostingContentComparison> comparedFiles});
+
+  $FailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
@@ -97,6 +101,7 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
+    Object? failure = freezed,
     Object? localFiles = null,
     Object? comparedFiles = null,
   }) {
@@ -161,6 +166,10 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as Failure?,
       localFiles: null == localFiles
           ? _value.localFiles
           : localFiles // ignore: cast_nullable_to_non_nullable
@@ -170,6 +179,18 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
           : comparedFiles // ignore: cast_nullable_to_non_nullable
               as List<HostingContentComparison>,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $FailureCopyWith<$Res>? get failure {
+    if (_value.failure == null) {
+      return null;
+    }
+
+    return $FailureCopyWith<$Res>(_value.failure!, (value) {
+      return _then(_value.copyWith(failure: value) as $Val);
+    });
   }
 }
 
@@ -198,8 +219,12 @@ abstract class _$$UpdateWebsiteSyncFormStateImplCopyWith<$Res>
       bool? globalFeesValidated,
       bool? applyGitIgnoreRules,
       String errorText,
+      Failure? failure,
       Map<String, HostingRefContentMetaData> localFiles,
       List<HostingContentComparison> comparedFiles});
+
+  @override
+  $FailureCopyWith<$Res>? get failure;
 }
 
 /// @nodoc
@@ -230,6 +255,7 @@ class __$$UpdateWebsiteSyncFormStateImplCopyWithImpl<$Res>
     Object? globalFeesValidated = freezed,
     Object? applyGitIgnoreRules = freezed,
     Object? errorText = null,
+    Object? failure = freezed,
     Object? localFiles = null,
     Object? comparedFiles = null,
   }) {
@@ -294,6 +320,10 @@ class __$$UpdateWebsiteSyncFormStateImplCopyWithImpl<$Res>
           ? _value.errorText
           : errorText // ignore: cast_nullable_to_non_nullable
               as String,
+      failure: freezed == failure
+          ? _value.failure
+          : failure // ignore: cast_nullable_to_non_nullable
+              as Failure?,
       localFiles: null == localFiles
           ? _value._localFiles
           : localFiles // ignore: cast_nullable_to_non_nullable
@@ -325,6 +355,7 @@ class _$UpdateWebsiteSyncFormStateImpl extends _UpdateWebsiteSyncFormState {
       this.globalFeesValidated,
       this.applyGitIgnoreRules,
       this.errorText = '',
+      this.failure,
       final Map<String, HostingRefContentMetaData> localFiles = const {},
       final List<HostingContentComparison> comparedFiles = const []})
       : _localFiles = localFiles,
@@ -371,6 +402,8 @@ class _$UpdateWebsiteSyncFormStateImpl extends _UpdateWebsiteSyncFormState {
   @override
   @JsonKey()
   final String errorText;
+  @override
+  final Failure? failure;
   final Map<String, HostingRefContentMetaData> _localFiles;
   @override
   @JsonKey()
@@ -391,7 +424,7 @@ class _$UpdateWebsiteSyncFormStateImpl extends _UpdateWebsiteSyncFormState {
 
   @override
   String toString() {
-    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, localFiles: $localFiles, comparedFiles: $comparedFiles)';
+    return 'UpdateWebsiteSyncFormState(step: $step, stepError: $stepError, name: $name, path: $path, publicCertPath: $publicCertPath, publicCert: $publicCert, privateKeyPath: $privateKeyPath, privateKey: $privateKey, zipFilePath: $zipFilePath, zipFile: $zipFile, globalFeesUCO: $globalFeesUCO, globalFeesFiat: $globalFeesFiat, globalFeesValidated: $globalFeesValidated, applyGitIgnoreRules: $applyGitIgnoreRules, errorText: $errorText, failure: $failure, localFiles: $localFiles, comparedFiles: $comparedFiles)';
   }
 
   @override
@@ -425,6 +458,7 @@ class _$UpdateWebsiteSyncFormStateImpl extends _UpdateWebsiteSyncFormState {
                 other.applyGitIgnoreRules == applyGitIgnoreRules) &&
             (identical(other.errorText, errorText) ||
                 other.errorText == errorText) &&
+            (identical(other.failure, failure) || other.failure == failure) &&
             const DeepCollectionEquality()
                 .equals(other._localFiles, _localFiles) &&
             const DeepCollectionEquality()
@@ -449,6 +483,7 @@ class _$UpdateWebsiteSyncFormStateImpl extends _UpdateWebsiteSyncFormState {
       globalFeesValidated,
       applyGitIgnoreRules,
       errorText,
+      failure,
       const DeepCollectionEquality().hash(_localFiles),
       const DeepCollectionEquality().hash(_comparedFiles));
 
@@ -477,6 +512,7 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
           final bool? globalFeesValidated,
           final bool? applyGitIgnoreRules,
           final String errorText,
+          final Failure? failure,
           final Map<String, HostingRefContentMetaData> localFiles,
           final List<HostingContentComparison> comparedFiles}) =
       _$UpdateWebsiteSyncFormStateImpl;
@@ -512,6 +548,8 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   bool? get applyGitIgnoreRules;
   @override
   String get errorText;
+  @override
+  Failure? get failure;
   @override
   Map<String, HostingRefContentMetaData> get localFiles;
   @override

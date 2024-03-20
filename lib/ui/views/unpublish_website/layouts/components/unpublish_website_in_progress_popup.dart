@@ -2,7 +2,6 @@
 import 'package:aeweb/application/website_versions.dart';
 import 'package:aeweb/domain/usecases/unpublish_website.usecase.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
-import 'package:aeweb/ui/views/unpublish_website/layouts/components/unpublish_website_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
 import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
@@ -166,7 +165,14 @@ class UnpublishWebsiteInProgressPopup {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        const UnpublishWebsiteCircularStepProgressIndicator(),
+                                        aedappfm
+                                            .InProgressCircularStepProgressIndicator(
+                                          currentStep: unpublishWebsite.step,
+                                          totalSteps: 10,
+                                          isProcessInProgress: unpublishWebsite
+                                              .unpublishInProgress,
+                                          failure: unpublishWebsite.failure,
+                                        ),
                                         InProgressBanner(
                                           stepLabel: UnpublishWebsiteUseCase()
                                               .getStepLabel(

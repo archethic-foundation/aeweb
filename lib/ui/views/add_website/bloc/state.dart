@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'state.freezed.dart';
@@ -24,6 +25,7 @@ class AddWebsiteFormState with _$AddWebsiteFormState {
     bool? applyGitIgnoreRules,
     @Default(false) bool? controlInProgress,
     @Default('') String errorText,
+    Failure? failure,
   }) = _AddWebsiteFormState;
   const AddWebsiteFormState._();
 

@@ -2,7 +2,6 @@
 import 'package:aeweb/application/website_versions.dart';
 import 'package:aeweb/domain/usecases/update_certificate.usecase.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
-import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
 import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
@@ -167,7 +166,14 @@ class UpdateCertificateInProgressPopup {
                                           CrossAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: <Widget>[
-                                        const UpdateCertificateCircularStepProgressIndicator(),
+                                        aedappfm
+                                            .InProgressCircularStepProgressIndicator(
+                                          currentStep: updateCertificate.step,
+                                          totalSteps: 10,
+                                          isProcessInProgress: updateCertificate
+                                              .creationInProgress,
+                                          failure: updateCertificate.failure,
+                                        ),
                                         InProgressBanner(
                                           stepLabel: UpdateCertificateUseCase()
                                               .getStepLabel(

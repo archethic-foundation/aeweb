@@ -2,6 +2,7 @@
 import 'dart:typed_data';
 
 import 'package:aeweb/domain/usecases/sync_website.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -25,6 +26,7 @@ class UpdateWebsiteSyncFormState with _$UpdateWebsiteSyncFormState {
     bool? globalFeesValidated,
     bool? applyGitIgnoreRules,
     @Default('') String errorText,
+    Failure? failure,
     @Default({}) Map<String, HostingRefContentMetaData> localFiles,
     @Default([]) List<HostingContentComparison> comparedFiles,
   }) = _UpdateWebsiteSyncFormState;
