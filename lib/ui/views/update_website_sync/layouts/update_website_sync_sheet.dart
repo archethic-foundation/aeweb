@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
@@ -114,7 +113,8 @@ class _UpdateWebsiteSyncSheetState
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color:
+                        aedappfm.ArchethicThemeBase.neutral0.withOpacity(0.2),
                     height: 1,
                   ),
                 ),

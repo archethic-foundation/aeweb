@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -54,7 +53,9 @@ class UpdateWebsiteSyncComparisonSheetState
 
     return Stack(
       children: [
-        const AEWebBackground(),
+        const aedappfm.AppBackground(
+          backgroundImage: 'assets/images/background-welcome.png',
+        ),
         LayoutBuilder(
           builder: (context, constraints) {
             return aedappfm.ArchethicScrollbar(

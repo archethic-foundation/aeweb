@@ -1,8 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
@@ -150,7 +148,8 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color:
+                        aedappfm.ArchethicThemeBase.neutral0.withOpacity(0.2),
                     height: 1,
                   ),
                 ),
@@ -167,7 +166,9 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       ),
       body: Stack(
         children: [
-          const AEWebBackground(),
+          const aedappfm.AppBackground(
+            backgroundImage: 'assets/images/background-welcome.png',
+          ),
           Padding(
             padding: const EdgeInsets.only(
               left: 30,

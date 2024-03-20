@@ -1,6 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/main_screen.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -75,7 +74,7 @@ class WelcomeConnectWalletBtnState
                   alignment: Alignment.center,
                   height: 50,
                   decoration: ShapeDecoration(
-                    gradient: AeWebThemeBase.gradientBtn,
+                    gradient: aedappfm.AppThemeBase.gradientBtn,
                     shape: const StadiumBorder(),
                     shadows: [
                       BoxShadow(

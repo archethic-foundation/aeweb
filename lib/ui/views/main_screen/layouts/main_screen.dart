@@ -2,11 +2,11 @@
 import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/body.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +29,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       extendBody: true,
-      backgroundColor: AeWebThemeBase.backgroundColor,
+      backgroundColor: aedappfm.AppThemeBase.backgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: ClipRRect(
@@ -42,7 +42,9 @@ class MainScreenState extends ConsumerState<MainScreen> {
       body: const Stack(
         alignment: Alignment.topCenter,
         children: [
-          AEWebBackground(),
+          aedappfm.AppBackground(
+            backgroundImage: 'assets/images/background-welcome.png',
+          ),
           Body(),
         ],
       ),

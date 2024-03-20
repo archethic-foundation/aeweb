@@ -6,7 +6,6 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select_zip_file.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_switch_gitignore.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_textfield_name.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -26,7 +25,9 @@ class AddWebsiteFormSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const AEWebBackground(),
+        const aedappfm.AppBackground(
+          backgroundImage: 'assets/images/background-welcome.png',
+        ),
         aedappfm.ArchethicScrollbar(
           child: Padding(
             padding: const EdgeInsets.symmetric(

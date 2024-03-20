@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_form_sheet.dart';
@@ -93,7 +92,8 @@ class AddWebsiteSheet extends ConsumerWidget {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color:
+                        aedappfm.ArchethicThemeBase.neutral0.withOpacity(0.2),
                     height: 1,
                   ),
                 ),

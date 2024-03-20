@@ -1,4 +1,3 @@
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -30,7 +29,7 @@ class WelcomeTitle extends StatelessWidget {
                     fontSize: 40,
                     fontWeight: FontWeight.w600,
                   ),
-                  gradient: AeWebThemeBase.gradientWelcomeTxt,
+                  gradient: aedappfm.AppThemeBase.gradientWelcomeTxt,
                 )
                     .animate(delay: 100.ms)
                     .fadeIn(duration: 400.ms, delay: 200.ms)
@@ -38,7 +37,7 @@ class WelcomeTitle extends StatelessWidget {
                       begin: const Offset(-16, 0),
                       curve: Curves.easeOutQuad,
                     ),
-                Text(
+                SelectableText(
                   ' Web Hosting',
                   style: const TextStyle(
                     fontSize: 40,

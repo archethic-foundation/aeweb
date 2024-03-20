@@ -1,30 +1,23 @@
 import 'dart:ui';
-
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar_welcome.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/welcome/components/welcome_connect_wallet_btn.dart';
 import 'package:aeweb/ui/views/welcome/components/welcome_title.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class WelcomeScreen extends ConsumerStatefulWidget {
+class WelcomeScreen extends ConsumerWidget {
   const WelcomeScreen({
     super.key,
   });
 
   static const routerPage = '/welcome';
-
   @override
-  ConsumerState<WelcomeScreen> createState() => _WelcomeScreenState();
-}
-
-class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AeWebThemeBase.backgroundColor,
+      backgroundColor: aedappfm.AppThemeBase.backgroundColor,
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(70),
         child: ClipRRect(
@@ -36,7 +29,10 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
       ),
       body: const Stack(
         children: [
-          AEWebBackground(withAnimation: true),
+          aedappfm.AppBackground(
+            withAnimation: true,
+            backgroundImage: 'assets/images/background-welcome.png',
+          ),
           Column(
             children: [
               WelcomeTitle(),

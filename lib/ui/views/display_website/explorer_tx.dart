@@ -3,8 +3,6 @@ import 'dart:math';
 import 'dart:ui';
 
 import 'package:aeweb/model/website_version_tx.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
@@ -36,7 +34,8 @@ class ExplorerTxScreen extends ConsumerWidget {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color:
+                        aedappfm.ArchethicThemeBase.neutral0.withOpacity(0.2),
                     height: 1,
                   ),
                 ),
@@ -53,7 +52,9 @@ class ExplorerTxScreen extends ConsumerWidget {
       ),
       body: Stack(
         children: [
-          const AEWebBackground(),
+          const aedappfm.AppBackground(
+            backgroundImage: 'assets/images/background-welcome.png',
+          ),
           if (websiteVersionTxList.isEmpty)
             Align(
               child: Row(

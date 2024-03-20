@@ -3,7 +3,6 @@ import 'dart:math' as math;
 
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_private_key_path.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_public_cert_path.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -21,7 +20,9 @@ class UpdateCertificateFormSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const AEWebBackground(),
+        const aedappfm.AppBackground(
+          backgroundImage: 'assets/images/background-welcome.png',
+        ),
         Container(
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.only(

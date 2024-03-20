@@ -1,4 +1,3 @@
-import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -16,7 +15,9 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
 
     return Stack(
       children: [
-        const AEWebBackground(),
+        const aedappfm.AppBackground(
+          backgroundImage: 'assets/images/background-welcome.png',
+        ),
         Container(
           height: MediaQuery.of(context).size.height,
           padding: const EdgeInsets.only(

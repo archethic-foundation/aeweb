@@ -102,9 +102,6 @@ dependencies:
   # Flutter package that allows setting the web app URL strategy with a single line of code.
   url_strategy: ^0.2.0
 
-  # Wave animation
-  wave: ^0.2.2
-
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.
   build_runner: ^2.4.8

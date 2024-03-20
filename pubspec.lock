@@ -1254,7 +1254,7 @@ packages:
     source: hosted
     version: "1.1.0"
   wave:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: wave
       sha256: "01ebccb4caa9b150cbe4763aa2a23501bb582843a1f96281868bbb23cb4db1f9"

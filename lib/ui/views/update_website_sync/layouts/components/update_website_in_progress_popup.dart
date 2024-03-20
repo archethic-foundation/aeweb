@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/website_versions.dart';
 import 'package:aeweb/domain/usecases/website/update_website_sync.usecase.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
@@ -13,8 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 
 class UpdateWebsiteInProgressPopup {
   static Future<void> getDialog(
@@ -131,9 +128,11 @@ class UpdateWebsiteInProgressPopup {
                                 left: 8,
                               ),
                               height: 300,
-                              width: AeWebThemeBase.sizeBoxComponentWidth,
+                              width:
+                                  aedappfm.AppThemeBase.sizeBoxComponentWidth,
                               decoration: BoxDecoration(
-                                color: AeWebThemeBase.backgroundPopupColor,
+                                color:
+                                    aedappfm.AppThemeBase.backgroundPopupColor,
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: const <BoxShadow>[
                                   BoxShadow(
@@ -143,8 +142,8 @@ class UpdateWebsiteInProgressPopup {
                               ),
                               child: Stack(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                       top: 200,
                                     ),
                                     child: Card(
@@ -152,58 +151,13 @@ class UpdateWebsiteInProgressPopup {
                                       clipBehavior: Clip.antiAlias,
                                       elevation: 0,
                                       margin: EdgeInsets.zero,
-                                      shape: const RoundedRectangleBorder(
+                                      shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(16),
                                           bottomRight: Radius.circular(16),
                                         ),
                                       ),
-                                      child: WaveWidget(
-                                        config: CustomConfig(
-                                          gradients: [
-                                            [
-                                              ArchethicThemeBase.blue800
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple800
-                                                  .withOpacity(0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue500
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple500
-                                                  .withOpacity(0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue300
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple300
-                                                  .withOpacity(0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue200
-                                                  .withOpacity(0.1),
-                                              ArchethicThemeBase.purple200
-                                                  .withOpacity(0.1),
-                                            ]
-                                          ],
-                                          durations: [
-                                            35000,
-                                            19440,
-                                            10800,
-                                            6000,
-                                          ],
-                                          heightPercentages: [
-                                            0.20,
-                                            0.23,
-                                            0.25,
-                                            0.30,
-                                          ],
-                                          gradientBegin: Alignment.bottomLeft,
-                                          gradientEnd: Alignment.topRight,
-                                        ),
-                                        size: Size.infinite,
-                                        waveAmplitude: 0,
-                                      ),
+                                      child: aedappfm.PopupWaves(),
                                     ),
                                   ),
                                   Padding(
