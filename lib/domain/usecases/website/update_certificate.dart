@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
+import 'package:aeweb/util/transaction_aeweb_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:aeweb/util/transaction_aeweb_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:flutter/material.dart';

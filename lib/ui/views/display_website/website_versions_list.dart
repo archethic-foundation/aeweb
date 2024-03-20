@@ -5,11 +5,11 @@ import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/model/website_version_tx.dart';
 import 'package:aeweb/ui/views/util/certificate_infos_popup.dart';
 import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';

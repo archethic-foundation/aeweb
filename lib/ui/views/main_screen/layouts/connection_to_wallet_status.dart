@@ -2,9 +2,9 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/format_address_link_copy.dart';
+import 'package:aeweb/ui/views/util/router.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
-import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';

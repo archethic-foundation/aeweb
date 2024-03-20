@@ -387,14 +387,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.2"
-  flutter_staggered_grid_view:
-    dependency: "direct main"
-    description:
-      name: flutter_staggered_grid_view
-      sha256: "19e7abb550c96fbfeb546b23f3ff356ee7c59a019a651f8f102a4ba9b7349395"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -656,14 +648,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.1.1"
-  loading_indicator:
-    dependency: "direct main"
-    description:
-      name: loading_indicator
-      sha256: a101ffb2aa3e646137d7810bfa90b50525dd3f72c01235b6df7491cf6af6f284
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.1.1"
   logging:
     dependency: transitive
     description:
@@ -841,7 +825,7 @@ packages:
     source: hosted
     version: "6.0.2"
   phoenix_socket:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: phoenix_socket
       sha256: a9d62b25291c3fea7c4439376f33860fb27ff39a7d69a96063fc356e78dee87f

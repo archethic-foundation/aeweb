@@ -1,8 +1,8 @@
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter/material.dart';
+import 'package:flutter_animate/flutter_animate.dart';
 
 class WelcomeTitle extends StatelessWidget {
   const WelcomeTitle({

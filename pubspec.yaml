@@ -56,9 +56,6 @@ dependencies:
   # State management
   flutter_riverpod: ^2.5.1
 
-  # Provides a collection of Flutter grids layouts (staggered, masonry, quilted, woven, etc.).
-  flutter_staggered_grid_view: ^0.7.0
-
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
   flutter_svg: ^2.0.10+1
 
@@ -87,17 +84,11 @@ dependencies:
   # A Flutter plugin for rendering an animated and customizable starfield on a dark background.
   lit_starfield: ^0.1.1
 
-  # A collection loading animations written in pure dart. Out of the box, no extra dependency.
-  loading_indicator: ^3.1.1
-
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
   package_info_plus: ^4.2.0
 
   # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
   path: ^1.9.0
-
-  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
-  phoenix_socket: ^0.7.0
 
   # A package exposing annotations for riverpod_generator
   riverpod_annotation: ^2.3.5

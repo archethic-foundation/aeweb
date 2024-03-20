@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
-import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
-    as aedappfm;
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';

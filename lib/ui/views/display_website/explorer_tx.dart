@@ -126,7 +126,8 @@ class ExplorerTxScreen extends ConsumerWidget {
                                                   aedappfm.Iconsax.archive_book,
                                                 )
                                               : const Icon(
-                                                  aedappfm.Iconsax.document),
+                                                  aedappfm.Iconsax.document,
+                                                ),
                                         ),
                                       ),
                                       DataCell(
