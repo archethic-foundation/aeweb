@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/update_certificate.dart';
+import 'package:aeweb/domain/usecases/website/update_certificate.usecase.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_circular_step_progress_indicator.dart';
@@ -215,13 +215,13 @@ class UpdateCertificateInProgressPopup {
                                       children: <Widget>[
                                         const UpdateCertificateCircularStepProgressIndicator(),
                                         InProgressBanner(
-                                          stepLabel: UpdateCertificateUseCases()
+                                          stepLabel: UpdateCertificateUseCase()
                                               .getStepLabel(
                                             context,
                                             updateCertificate.step,
                                           ),
                                           infoMessage:
-                                              UpdateCertificateUseCases()
+                                              UpdateCertificateUseCase()
                                                   .getConfirmLabel(
                                             context,
                                             updateCertificate.step,

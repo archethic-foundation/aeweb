@@ -17,7 +17,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddWebsiteUseCases
+class AddWebsiteUseCase
     with FileMixin, TransactionAEWebMixin, CertificateMixin {
   Future<void> run(
     WidgetRef ref,

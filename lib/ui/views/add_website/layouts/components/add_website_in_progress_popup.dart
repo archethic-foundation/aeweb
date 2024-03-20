@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/add_website.dart';
+import 'package:aeweb/domain/usecases/website/add_website.usecase.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_circular_step_progress_indicator.dart';
@@ -208,11 +208,11 @@ class AddWebsiteInProgressPopup {
                                         const AddWebsiteCircularStepProgressIndicator(),
                                         InProgressBanner(
                                           stepLabel:
-                                              AddWebsiteUseCases().getStepLabel(
+                                              AddWebsiteUseCase().getStepLabel(
                                             context,
                                             addWebsite.step,
                                           ),
-                                          infoMessage: AddWebsiteUseCases()
+                                          infoMessage: AddWebsiteUseCase()
                                               .getConfirmLabel(
                                             context,
                                             addWebsite.step,

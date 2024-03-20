@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:developer';
 
-import 'package:aeweb/domain/usecases/website/add_website.dart';
+import 'package:aeweb/domain/usecases/website/add_website.usecase.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
@@ -259,7 +259,7 @@ class AddWebsiteFormNotifier extends AutoDisposeNotifier<AddWebsiteFormState>
   }
 
   Future<void> addWebsite(BuildContext context, WidgetRef ref) async {
-    await AddWebsiteUseCases().run(
+    await AddWebsiteUseCase().run(
       ref,
       context,
     );

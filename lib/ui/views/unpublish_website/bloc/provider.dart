@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/domain/usecases/website/unpublish_website.dart';
+import 'package:aeweb/domain/usecases/website/unpublish_website.usecase.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
@@ -72,7 +72,7 @@ class UnpublishWebsiteFormNotifier
   }
 
   Future<void> unpublishWebsite(BuildContext context, WidgetRef ref) async {
-    await UnpublishWebsiteUseCases().run(
+    await UnpublishWebsiteUseCase().run(
       ref,
       context,
     );

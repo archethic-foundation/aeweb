@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:aeweb/domain/usecases/website/read_website_version.dart';
+import 'package:aeweb/domain/usecases/website/read_website_version.usecase.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';

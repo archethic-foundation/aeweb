@@ -12,7 +12,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UnpublishWebsiteUseCases with TransactionAEWebMixin {
+class UnpublishWebsiteUseCase with TransactionAEWebMixin {
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
