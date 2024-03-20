@@ -18,11 +18,12 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     BuildContext context,
   ) async {
     final updateCertificateNotifier =
-        ref.watch(UpdateCertificateFormProvider.updateCertificateForm.notifier)
-          ..setStep(0)
-          ..setStepError('')
-          ..setGlobalFeesUCO(0)
-          ..setGlobalFeesValidated(null);
+        ref.watch(UpdateCertificateFormProvider.updateCertificateForm.notifier);
+    await updateCertificateNotifier.setGlobalFeesUCO(0);
+    updateCertificateNotifier
+      ..setStep(0)
+      ..setStepError('')
+      ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UpdateCertificateFormProvider.updateCertificateForm).name}',

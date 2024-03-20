@@ -18,11 +18,12 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
     BuildContext context,
   ) async {
     final unpublishWebsiteNotifier =
-        ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm.notifier)
-          ..setStep(0)
-          ..setStepError('')
-          ..setGlobalFeesUCO(0)
-          ..setGlobalFeesValidated(null);
+        ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm.notifier);
+    await unpublishWebsiteNotifier.setGlobalFeesUCO(0);
+    unpublishWebsiteNotifier
+      ..setStep(0)
+      ..setStepError('')
+      ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UnpublishWebsiteFormProvider.unpublishWebsiteForm).name}',

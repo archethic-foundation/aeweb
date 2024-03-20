@@ -24,11 +24,12 @@ class AddWebsiteUseCases
     BuildContext context,
   ) async {
     final addWebsiteNotifier =
-        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
-          ..setStep(0)
-          ..setStepError('')
-          ..setGlobalFeesUCO(0)
-          ..setGlobalFeesValidated(null);
+        ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier);
+    await addWebsiteNotifier.setGlobalFeesUCO(0);
+    addWebsiteNotifier
+      ..setStep(0)
+      ..setStepError('')
+      ..setGlobalFeesValidated(null);
 
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);

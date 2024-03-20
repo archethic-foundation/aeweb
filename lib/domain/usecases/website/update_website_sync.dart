@@ -22,11 +22,12 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     BuildContext context,
   ) async {
     final updateWebsiteSyncNotifier =
-        ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier)
-          ..setStep(0)
-          ..setStepError('')
-          ..setGlobalFeesUCO(0)
-          ..setGlobalFeesValidated(null);
+        ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier);
+    await updateWebsiteSyncNotifier.setGlobalFeesUCO(0);
+    updateWebsiteSyncNotifier
+      ..setStep(0)
+      ..setStepError('')
+      ..setGlobalFeesValidated(null);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).name}',
