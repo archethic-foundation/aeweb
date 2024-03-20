@@ -1,6 +1,6 @@
 import 'dart:math';
 
-import 'package:aeweb/application/websites.dart';
+import 'package:aeweb/application/website_versions.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/model/website_version_tx.dart';
 import 'package:aeweb/ui/views/display_website/explorer_files.dart';
@@ -35,7 +35,7 @@ class WebsiteVersionsList extends ConsumerWidget with FileMixin {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final websiteVersionsList =
-        ref.watch(WebsitesProviders.fetchWebsiteVersions(genesisAddress));
+        ref.watch(WebsiteVersionProviders.fetchWebsiteVersions(genesisAddress));
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),

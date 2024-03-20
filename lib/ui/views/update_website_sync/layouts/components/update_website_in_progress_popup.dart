@@ -1,5 +1,5 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/application/websites.dart';
+import 'package:aeweb/application/website_versions.dart';
 import 'package:aeweb/domain/usecases/website/update_website_sync.usecase.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
@@ -262,7 +262,7 @@ class UpdateWebsiteInProgressPopup {
                                   : '',
                               warningCloseFunction: () async {
                                 ref.invalidate(
-                                  WebsitesProviders.fetchWebsiteVersions,
+                                  WebsiteVersionProviders.fetchWebsiteVersions,
                                 );
 
                                 ref

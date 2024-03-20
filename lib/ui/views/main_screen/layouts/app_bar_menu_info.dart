@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
-import 'package:aeweb/application/version.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -227,8 +226,8 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
           child: Consumer(
             builder: (context, ref, child) {
               final asyncVersionString = ref.watch(
-                versionStringProvider(
-                  AppLocalizations.of(context)!,
+                aedappfm.versionStringProvider(
+                  aedappfm.AppLocalizations.of(context)!,
                 ),
               );
               return Text(
