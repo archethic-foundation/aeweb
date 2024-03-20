@@ -20,8 +20,8 @@
 <br/><br/>
 ### Pre-requisites
 
-- Flutter 3.10+
-- Dart 3+
+- Flutter 3.19+
+- Dart 3.3+
 
 ### Note
 
