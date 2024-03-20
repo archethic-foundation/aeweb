@@ -12,7 +12,7 @@ part of 'website_selection.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$WebsiteSelection {
@@ -63,22 +63,22 @@ class _$WebsiteSelectionCopyWithImpl<$Res, $Val extends WebsiteSelection>
 }
 
 /// @nodoc
-abstract class _$$_WebsiteSelectionCopyWith<$Res>
+abstract class _$$WebsiteSelectionImplCopyWith<$Res>
     implements $WebsiteSelectionCopyWith<$Res> {
-  factory _$$_WebsiteSelectionCopyWith(
-          _$_WebsiteSelection value, $Res Function(_$_WebsiteSelection) then) =
-      __$$_WebsiteSelectionCopyWithImpl<$Res>;
+  factory _$$WebsiteSelectionImplCopyWith(_$WebsiteSelectionImpl value,
+          $Res Function(_$WebsiteSelectionImpl) then) =
+      __$$WebsiteSelectionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String name, String genesisAddress});
 }
 
 /// @nodoc
-class __$$_WebsiteSelectionCopyWithImpl<$Res>
-    extends _$WebsiteSelectionCopyWithImpl<$Res, _$_WebsiteSelection>
-    implements _$$_WebsiteSelectionCopyWith<$Res> {
-  __$$_WebsiteSelectionCopyWithImpl(
-      _$_WebsiteSelection _value, $Res Function(_$_WebsiteSelection) _then)
+class __$$WebsiteSelectionImplCopyWithImpl<$Res>
+    extends _$WebsiteSelectionCopyWithImpl<$Res, _$WebsiteSelectionImpl>
+    implements _$$WebsiteSelectionImplCopyWith<$Res> {
+  __$$WebsiteSelectionImplCopyWithImpl(_$WebsiteSelectionImpl _value,
+      $Res Function(_$WebsiteSelectionImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -87,7 +87,7 @@ class __$$_WebsiteSelectionCopyWithImpl<$Res>
     Object? name = null,
     Object? genesisAddress = null,
   }) {
-    return _then(_$_WebsiteSelection(
+    return _then(_$WebsiteSelectionImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -102,8 +102,9 @@ class __$$_WebsiteSelectionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_WebsiteSelection implements _WebsiteSelection {
-  const _$_WebsiteSelection({required this.name, required this.genesisAddress});
+class _$WebsiteSelectionImpl implements _WebsiteSelection {
+  const _$WebsiteSelectionImpl(
+      {required this.name, required this.genesisAddress});
 
   @override
   final String name;
@@ -116,10 +117,10 @@ class _$_WebsiteSelection implements _WebsiteSelection {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WebsiteSelection &&
+            other is _$WebsiteSelectionImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.genesisAddress, genesisAddress) ||
                 other.genesisAddress == genesisAddress));
@@ -131,14 +132,15 @@ class _$_WebsiteSelection implements _WebsiteSelection {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WebsiteSelectionCopyWith<_$_WebsiteSelection> get copyWith =>
-      __$$_WebsiteSelectionCopyWithImpl<_$_WebsiteSelection>(this, _$identity);
+  _$$WebsiteSelectionImplCopyWith<_$WebsiteSelectionImpl> get copyWith =>
+      __$$WebsiteSelectionImplCopyWithImpl<_$WebsiteSelectionImpl>(
+          this, _$identity);
 }
 
 abstract class _WebsiteSelection implements WebsiteSelection {
   const factory _WebsiteSelection(
       {required final String name,
-      required final String genesisAddress}) = _$_WebsiteSelection;
+      required final String genesisAddress}) = _$WebsiteSelectionImpl;
 
   @override
   String get name;
@@ -146,6 +148,6 @@ abstract class _WebsiteSelection implements WebsiteSelection {
   String get genesisAddress;
   @override
   @JsonKey(ignore: true)
-  _$$_WebsiteSelectionCopyWith<_$_WebsiteSelection> get copyWith =>
+  _$$WebsiteSelectionImplCopyWith<_$WebsiteSelectionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

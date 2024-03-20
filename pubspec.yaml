@@ -8,36 +8,38 @@ environment:
   sdk: ">=3.1.0 <4.0.0"
 
 dependencies:
+  archethic_dapp_framework_flutter: ^0.0.0
+  #archethic_dapp_framework_flutter:
+  #  git:
+  #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
+  #    ref: main
+  #archethic_dapp_framework_flutter:
+  #  path: ../archethic-dapp-framework-flutter
+
   # A client dart library to interact with Archethic Wallet RPC API.
-  archethic_wallet_client: ^1.0.7
+  archethic_wallet_client: ^1.0.0
   #archethic_wallet_client:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
   #    ref: dev
 
   # Compression
-  archive: ^3.3.7
+  archive: ^3.4.10
 
   # Common util classes for Strings, Dates, X509, PKCS, Cryptographie and more.
-  basic_utils: ^5.5.4
-
-  # Centralized loading widget management
-  busy: ^1.0.3
+  basic_utils: ^5.7.0
 
   # Collections and utilities functions and classes related to collections.
-  collection: ^1.17.0
+  collection: ^1.18.0
 
   # Implementations of SHA, MD5, and HMAC cryptographic functions
   crypto: ^3.0.3
 
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.5
-
   # A flutter package to let users easily add a dashed border around any widget.
-  dotted_border: ^2.0.0+3
+  dotted_border: ^2.1.0
 
   # A package that allows you to use a native file explorer to pick single or multiple absolute file paths, with extension filtering support.
-  file_picker: ^5.3.3
+  file_picker: ^8.0.0+1
 
   # A package to get humanized file sizes. Translate raw file size into human readable strings
   filesize: ^2.0.1
@@ -46,19 +48,19 @@ dependencies:
     sdk: flutter
 
   # Add beautiful animated effects & builders in Flutter, via an easy, customizable, unified API.
-  flutter_animate: ^4.2.0+1
+  flutter_animate: ^4.5.0
 
   flutter_localizations:
     sdk: flutter
 
   # State management
-  flutter_riverpod: ^2.3.7
+  flutter_riverpod: ^2.5.1
 
   # Provides a collection of Flutter grids layouts (staggered, masonry, quilted, woven, etc.).
   flutter_staggered_grid_view: ^0.7.0
 
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
-  flutter_svg: ^2.0.7
+  flutter_svg: ^2.0.10+1
 
   # A tree widget for Flutter that can be used to display nested, hierarchical data. It includes a number of features like styling labels, icons, and import and export utilities.
   flutter_treeview: ^1.0.7+1
@@ -67,10 +69,10 @@ dependencies:
   freezed_annotation: ^2.4.1
 
   # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
-  get_it: ^7.6.0
+  get_it: ^7.6.7
 
   # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
-  go_router: ^11.1.4
+  go_router: ^13.2.1
 
   # Gradient borders for inputs and containers. Borders package integrated with a basic flutter widgets as a container and input decorations. Easy in use, platform independent.
   gradient_borders: ^1.0.0
@@ -92,41 +94,39 @@ dependencies:
   loading_indicator: ^3.1.1
 
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
-  package_info_plus: ^4.1.0
+  package_info_plus: ^4.2.0
 
   # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
-  path: ^1.8.3
+  path: ^1.9.0
 
   # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
-  phoenix_socket: ^0.6.4
+  phoenix_socket: ^0.7.0
 
   # A package exposing annotations for riverpod_generator
-  riverpod_annotation: ^2.1.2
+  riverpod_annotation: ^2.3.5
 
   # Bar indicator made of a series of selected and unselected steps
   step_progress_indicator: ^1.0.2
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
-  url_launcher: ^6.1.12
+  url_launcher: ^6.2.5
 
   # Wave animation
   wave: ^0.2.2
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.
-  build_runner: ^2.4.6
-  # Recommended lints for Flutter apps, packages, and plugins to encourage good coding practices
-  flutter_lints: ^2.0.2
+  build_runner: ^2.4.8
   # Code generation for immutable classes that has a simple syntax/API without compromising on the features.
-  freezed: ^2.4.2
+  freezed: ^2.4.7
   # Extension for Hive. Automatically generates TypeAdapters to store any class.
   hive_generator: ^2.0.1
   # Automatically generate code for converting to and from JSON by annotating Dart classes.
   json_serializable: ^6.7.1
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
-  riverpod_generator: ^2.2.6
+  riverpod_generator: ^2.4.0
   # A full featured library for writing and running Dart tests across platforms.
-  test: ^1.24.6
+  test: ^1.25.2
 
 # The following section is specific to Flutter.
 flutter:

@@ -12,7 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$UpdateWebsiteSyncFormState {
@@ -174,12 +174,12 @@ class _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
 }
 
 /// @nodoc
-abstract class _$$_UpdateWebsiteSyncFormStateCopyWith<$Res>
+abstract class _$$UpdateWebsiteSyncFormStateImplCopyWith<$Res>
     implements $UpdateWebsiteSyncFormStateCopyWith<$Res> {
-  factory _$$_UpdateWebsiteSyncFormStateCopyWith(
-          _$_UpdateWebsiteSyncFormState value,
-          $Res Function(_$_UpdateWebsiteSyncFormState) then) =
-      __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>;
+  factory _$$UpdateWebsiteSyncFormStateImplCopyWith(
+          _$UpdateWebsiteSyncFormStateImpl value,
+          $Res Function(_$UpdateWebsiteSyncFormStateImpl) then) =
+      __$$UpdateWebsiteSyncFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -203,13 +203,13 @@ abstract class _$$_UpdateWebsiteSyncFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
+class __$$UpdateWebsiteSyncFormStateImplCopyWithImpl<$Res>
     extends _$UpdateWebsiteSyncFormStateCopyWithImpl<$Res,
-        _$_UpdateWebsiteSyncFormState>
-    implements _$$_UpdateWebsiteSyncFormStateCopyWith<$Res> {
-  __$$_UpdateWebsiteSyncFormStateCopyWithImpl(
-      _$_UpdateWebsiteSyncFormState _value,
-      $Res Function(_$_UpdateWebsiteSyncFormState) _then)
+        _$UpdateWebsiteSyncFormStateImpl>
+    implements _$$UpdateWebsiteSyncFormStateImplCopyWith<$Res> {
+  __$$UpdateWebsiteSyncFormStateImplCopyWithImpl(
+      _$UpdateWebsiteSyncFormStateImpl _value,
+      $Res Function(_$UpdateWebsiteSyncFormStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -233,7 +233,7 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
     Object? localFiles = null,
     Object? comparedFiles = null,
   }) {
-    return _then(_$_UpdateWebsiteSyncFormState(
+    return _then(_$UpdateWebsiteSyncFormStateImpl(
       step: null == step
           ? _value.step
           : step // ignore: cast_nullable_to_non_nullable
@@ -308,8 +308,8 @@ class __$$_UpdateWebsiteSyncFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
-  const _$_UpdateWebsiteSyncFormState(
+class _$UpdateWebsiteSyncFormStateImpl extends _UpdateWebsiteSyncFormState {
+  const _$UpdateWebsiteSyncFormStateImpl(
       {this.step = 0,
       this.stepError = '',
       this.name = '',
@@ -395,10 +395,10 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_UpdateWebsiteSyncFormState &&
+            other is _$UpdateWebsiteSyncFormStateImpl &&
             (identical(other.step, step) || other.step == step) &&
             (identical(other.stepError, stepError) ||
                 other.stepError == stepError) &&
@@ -455,9 +455,9 @@ class _$_UpdateWebsiteSyncFormState extends _UpdateWebsiteSyncFormState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$_UpdateWebsiteSyncFormStateCopyWith<_$_UpdateWebsiteSyncFormState>
-      get copyWith => __$$_UpdateWebsiteSyncFormStateCopyWithImpl<
-          _$_UpdateWebsiteSyncFormState>(this, _$identity);
+  _$$UpdateWebsiteSyncFormStateImplCopyWith<_$UpdateWebsiteSyncFormStateImpl>
+      get copyWith => __$$UpdateWebsiteSyncFormStateImplCopyWithImpl<
+          _$UpdateWebsiteSyncFormStateImpl>(this, _$identity);
 }
 
 abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
@@ -479,7 +479,7 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
           final String errorText,
           final Map<String, HostingRefContentMetaData> localFiles,
           final List<HostingContentComparison> comparedFiles}) =
-      _$_UpdateWebsiteSyncFormState;
+      _$UpdateWebsiteSyncFormStateImpl;
   const _UpdateWebsiteSyncFormState._() : super._();
 
   @override
@@ -518,6 +518,6 @@ abstract class _UpdateWebsiteSyncFormState extends UpdateWebsiteSyncFormState {
   List<HostingContentComparison> get comparedFiles;
   @override
   @JsonKey(ignore: true)
-  _$$_UpdateWebsiteSyncFormStateCopyWith<_$_UpdateWebsiteSyncFormState>
+  _$$UpdateWebsiteSyncFormStateImplCopyWith<_$UpdateWebsiteSyncFormStateImpl>
       get copyWith => throw _privateConstructorUsedError;
 }
