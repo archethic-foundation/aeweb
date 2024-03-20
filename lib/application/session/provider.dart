@@ -42,7 +42,7 @@ class _SessionNotifier extends Notifier<Session> {
       );
 
       final endpointResponse = await archethicDAppClient.getEndpoint();
-      endpointResponse.when(
+      await endpointResponse.when(
         failure: (failure) {
           switch (failure.code) {
             case 4901:
@@ -123,7 +123,7 @@ class _SessionNotifier extends Notifier<Session> {
           final subscription =
               await archethicDAppClient.subscribeCurrentAccount();
 
-          subscription.when(
+          await subscription.when(
             success: (success) async {
               state = state.copyWith(
                 accountSub: success,

@@ -60,7 +60,7 @@ class WebsitesRepository {
                 'index': 0,
                 'pathSuffix': '',
               });
-              response.when(
+              await response.when(
                 failure: (failure) {},
                 success: (result) async {
                   genesisAddress = result.address;
