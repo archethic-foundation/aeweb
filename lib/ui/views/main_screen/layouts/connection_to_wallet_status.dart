@@ -2,7 +2,7 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/format_address_link_copy.dart';
-import 'package:aeweb/ui/views/util/router.dart';
+import 'package:aeweb/ui/views/welcome/welcome_screen.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -226,7 +226,7 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
                                       onPressed: () async {
                                         await sessionNotifier
                                             .cancelConnection();
-                                        context.go(RoutesPath().welcome());
+                                        context.go(WelcomeScreen.routerPage);
                                       },
                                     ),
                                   ],

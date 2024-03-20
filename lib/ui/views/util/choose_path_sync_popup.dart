@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
-import 'package:aeweb/ui/views/util/router.dart';
+import 'package:aeweb/ui/views/update_website_sync/layouts/update_website_sync_sheet.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -241,7 +241,7 @@ class PathSyncPopup with FileMixin {
                       context
                         ..pop() // close popup
                         ..go(
-                          RoutesPath().updateWebsiteSync(genesisAddress),
+                          UpdateWebsiteSyncSheet.routerPage,
                           extra: {
                             'websiteName': websiteName,
                             'genesisAddress': genesisAddress,

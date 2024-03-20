@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/util/router.dart';
+import 'package:aeweb/ui/views/main_screen/layouts/main_screen.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
@@ -68,7 +68,7 @@ class WelcomeConnectWalletBtnState
                       ),
                     );
                   } else {
-                    context.go(RoutesPath().main());
+                    context.go(MainScreen.routerPage);
                   }
                 },
                 child: Container(

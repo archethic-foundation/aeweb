@@ -3,10 +3,10 @@ import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:aeweb/ui/views/add_website/layouts/add_website_sheet.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/body.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -49,7 +49,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
       floatingActionButton: session.isConnected
           ? FloatingActionButton.extended(
               onPressed: () {
-                context.go(RoutesPath().addWebsite());
+                context.go(AddWebsiteSheet.routerPage);
               },
               icon: const Icon(Icons.add),
               label: Text(

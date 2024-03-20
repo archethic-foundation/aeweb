@@ -3,9 +3,12 @@ import 'dart:math';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/model/website_version_tx.dart';
+import 'package:aeweb/ui/views/display_website/explorer_files.dart';
+import 'package:aeweb/ui/views/display_website/explorer_tx.dart';
+import 'package:aeweb/ui/views/unpublish_website/layouts/unpublish_website_sheet.dart';
+import 'package:aeweb/ui/views/update_certificate/layouts/update_certificate_sheet.dart';
 import 'package:aeweb/ui/views/util/certificate_infos_popup.dart';
 import 'package:aeweb/ui/views/util/choose_path_sync_popup.dart';
-import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
@@ -396,7 +399,7 @@ Widget _popupMenuButton(
           final filesAndFolders = websiteVersion.content!.metaData;
 
           context.go(
-            RoutesPath().exploreFiles(genesisAddress),
+            ExplorerFilesScreen.routerPage,
             extra: {
               'filesAndFolders': filesAndFolders,
             },
@@ -441,7 +444,7 @@ Widget _popupMenuButton(
             );
           }
           context.go(
-            RoutesPath().exploreTransactions(genesisAddress),
+            ExplorerTxScreen.routerPage,
             extra: {'websiteVersionTxList': websiteVersionTxList},
           );
 
@@ -456,13 +459,13 @@ Widget _popupMenuButton(
           break;
         case 'ManageCert':
           context.go(
-            RoutesPath().updateCert(genesisAddress),
+            UpdateCertificateSheet.routerPage,
             extra: {'websiteName': websiteName},
           );
           break;
         case 'Unpublish':
           context.go(
-            RoutesPath().unpublishWebsite(genesisAddress),
+            UnpublishWebsiteSheet.routerPage,
             extra: {'websiteName': websiteName},
           );
           break;
