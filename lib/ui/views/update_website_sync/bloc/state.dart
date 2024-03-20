@@ -1,7 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
-import 'package:aeweb/domain/usecases/website/sync_website.dart';
+import 'package:aeweb/domain/usecases/sync_website.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 

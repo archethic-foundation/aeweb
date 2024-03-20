@@ -3,7 +3,7 @@ import 'dart:async';
 import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/domain/usecases/website/sync_website.dart';
+import 'package:aeweb/domain/usecases/sync_website.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';

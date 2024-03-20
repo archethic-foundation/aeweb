@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/website_versions.dart';
-import 'package:aeweb/domain/usecases/website/update_certificate.usecase.dart';
+import 'package:aeweb/domain/usecases/update_certificate.usecase.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
@@ -147,17 +147,18 @@ class UpdateCertificateInProgressPopup {
                                       top: 200,
                                     ),
                                     child: Card(
-                                        color: Colors.transparent,
-                                        clipBehavior: Clip.antiAlias,
-                                        elevation: 0,
-                                        margin: EdgeInsets.zero,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.only(
-                                            bottomLeft: Radius.circular(16),
-                                            bottomRight: Radius.circular(16),
-                                          ),
+                                      color: Colors.transparent,
+                                      clipBehavior: Clip.antiAlias,
+                                      elevation: 0,
+                                      margin: EdgeInsets.zero,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.only(
+                                          bottomLeft: Radius.circular(16),
+                                          bottomRight: Radius.circular(16),
                                         ),
-                                        child: aedappfm.PopupWaves()),
+                                      ),
+                                      child: aedappfm.PopupWaves(),
+                                    ),
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.all(20),

@@ -1,8 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:typed_data';
 
-import 'package:aeweb/domain/usecases/website/sync_website.dart';
-import 'package:aeweb/domain/usecases/website/update_website_sync.usecase.dart';
+import 'package:aeweb/domain/usecases/sync_website.dart';
+import 'package:aeweb/domain/usecases/update_website_sync.usecase.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;

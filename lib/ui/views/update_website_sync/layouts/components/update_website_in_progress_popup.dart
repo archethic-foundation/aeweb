@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/website_versions.dart';
-import 'package:aeweb/domain/usecases/website/update_website_sync.usecase.dart';
+import 'package:aeweb/domain/usecases/update_website_sync.usecase.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';

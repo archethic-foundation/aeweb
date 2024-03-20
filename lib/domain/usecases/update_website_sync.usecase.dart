@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aeweb/domain/repositories/features_flags.dart';
-import 'package:aeweb/domain/usecases/website/sync_website.dart';
+import 'package:aeweb/domain/usecases/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/util/file_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
