@@ -4,7 +4,8 @@ import 'dart:math' as math;
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_private_key_path.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_select_public_cert_path.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -29,7 +30,7 @@ class UpdateCertificateFormSheet extends ConsumerWidget {
             left: 5,
             right: 5,
           ),
-          child: ArchethicScrollbar(
+          child: aedappfm.ArchethicScrollbar(
             child: Padding(
               padding: const EdgeInsets.only(
                 top: 10,

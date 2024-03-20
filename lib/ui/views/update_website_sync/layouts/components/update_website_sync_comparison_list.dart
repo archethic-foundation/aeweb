@@ -2,8 +2,8 @@
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -57,7 +57,7 @@ class UpdateWebsiteSyncComparisonSheetState
         const AEWebBackground(),
         LayoutBuilder(
           builder: (context, constraints) {
-            return ArchethicScrollbar(
+            return aedappfm.ArchethicScrollbar(
               child: Padding(
                 padding: const EdgeInsets.only(
                   top: 10,
@@ -82,7 +82,7 @@ class UpdateWebsiteSyncComparisonSheetState
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Icon(
-                              Iconsax.warning_2,
+                              aedappfm.Iconsax.warning_2,
                               color: Colors.red,
                             ),
                             const SizedBox(width: 5),
@@ -138,26 +138,26 @@ class UpdateWebsiteSyncComparisonSheetState
                             String statusText;
                             switch (file.status) {
                               case HostingContentComparisonStatus.localOnly:
-                                iconData = Iconsax.document;
+                                iconData = aedappfm.Iconsax.document;
                                 iconColor = Colors.orange;
                                 statusText = AppLocalizations.of(context)!
                                     .status_localOnly;
                                 break;
                               case HostingContentComparisonStatus.remoteOnly:
-                                iconData = Iconsax.document_cloud;
+                                iconData = aedappfm.Iconsax.document_cloud;
                                 iconColor = Colors.blue;
                                 statusText = AppLocalizations.of(context)!
                                     .status_remoteOnly;
                                 break;
                               case HostingContentComparisonStatus
                                     .differentContent:
-                                iconData = Iconsax.note_remove;
+                                iconData = aedappfm.Iconsax.note_remove;
                                 iconColor = Colors.red;
                                 statusText = AppLocalizations.of(context)!
                                     .status_differentContent;
                                 break;
                               case HostingContentComparisonStatus.sameContent:
-                                iconData = Iconsax.document_copy;
+                                iconData = aedappfm.Iconsax.document_copy;
                                 iconColor = Colors.green;
                                 statusText = AppLocalizations.of(context)!
                                     .status_sameContent;
@@ -272,7 +272,7 @@ class UpdateWebsiteSyncComparisonSheetState
             });
           },
           icon: const Icon(
-            Iconsax.filter,
+            aedappfm.Iconsax.filter,
             size: 16,
           ),
           label: Text(
@@ -294,7 +294,7 @@ class UpdateWebsiteSyncComparisonSheetState
             });
           },
           icon: const Icon(
-            Iconsax.document,
+            aedappfm.Iconsax.document,
             color: Colors.orange,
             size: 16,
           ),
@@ -318,7 +318,7 @@ class UpdateWebsiteSyncComparisonSheetState
             });
           },
           icon: const Icon(
-            Iconsax.document_cloud,
+            aedappfm.Iconsax.document_cloud,
             color: Colors.blue,
             size: 16,
           ),
@@ -342,7 +342,7 @@ class UpdateWebsiteSyncComparisonSheetState
             });
           },
           icon: const Icon(
-            Iconsax.note_remove,
+            aedappfm.Iconsax.note_remove,
             color: Colors.red,
             size: 16,
           ),
@@ -364,7 +364,7 @@ class UpdateWebsiteSyncComparisonSheetState
             });
           },
           icon: const Icon(
-            Iconsax.document_copy,
+            aedappfm.Iconsax.document_copy,
             color: Colors.green,
             size: 16,
           ),

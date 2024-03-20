@@ -2,7 +2,8 @@
 import 'dart:ui';
 
 import 'package:aeweb/application/version.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -65,7 +66,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
               child: Row(
                 children: [
                   const Icon(
-                    Iconsax.document_text,
+                    aedappfm.Iconsax.document_text,
                     size: 16,
                   ),
                   const SizedBox(
@@ -76,7 +77,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
                     width: 8,
                   ),
                   const Icon(
-                    Iconsax.export_3,
+                    aedappfm.Iconsax.export_3,
                     size: 12,
                   ),
                 ],
@@ -97,7 +98,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
             child: Row(
               children: [
                 const Icon(
-                  Iconsax.code_circle,
+                  aedappfm.Iconsax.code_circle,
                   size: 16,
                 ),
                 const SizedBox(
@@ -108,7 +109,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
                   width: 8,
                 ),
                 const Icon(
-                  Iconsax.export_3,
+                  aedappfm.Iconsax.export_3,
                   size: 12,
                 ),
               ],
@@ -128,7 +129,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
             child: Row(
               children: [
                 const Icon(
-                  Iconsax.message_question,
+                  aedappfm.Iconsax.message_question,
                   size: 16,
                 ),
                 const SizedBox(
@@ -139,7 +140,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
                   width: 8,
                 ),
                 const Icon(
-                  Iconsax.export_3,
+                  aedappfm.Iconsax.export_3,
                   size: 12,
                 ),
               ],
@@ -159,7 +160,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
             child: Row(
               children: [
                 const Icon(
-                  Iconsax.video_play,
+                  aedappfm.Iconsax.video_play,
                   size: 16,
                 ),
                 const SizedBox(
@@ -170,7 +171,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
                   width: 8,
                 ),
                 const Icon(
-                  Iconsax.export_3,
+                  aedappfm.Iconsax.export_3,
                   size: 12,
                 ),
               ],
@@ -190,7 +191,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
             child: Row(
               children: [
                 const Icon(
-                  Iconsax.reserve,
+                  aedappfm.Iconsax.reserve,
                   size: 16,
                 ),
                 const SizedBox(
@@ -201,7 +202,7 @@ class _AppBarMenuInfoState extends ConsumerState<AppBarMenuInfo> {
                   width: 8,
                 ),
                 const Icon(
-                  Iconsax.export_3,
+                  aedappfm.Iconsax.export_3,
                   size: 12,
                 ),
               ],

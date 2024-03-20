@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -53,7 +54,7 @@ class UpdateCertificateCircularStepProgressIndicator extends ConsumerWidget {
                     ),
                   ),
                 const Icon(
-                  Iconsax.timer,
+                  aedappfm.Iconsax.timer,
                   size: 16,
                 ),
               ],

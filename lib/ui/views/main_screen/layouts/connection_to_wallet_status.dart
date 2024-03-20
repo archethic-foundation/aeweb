@@ -1,9 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/format_address_link_copy.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -79,7 +79,7 @@ class _ConnectionToWalletStatusState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Icon(
-            Iconsax.user,
+            aedappfm.Iconsax.user,
             size: 18,
           ),
           const SizedBox(
@@ -153,7 +153,7 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
             child: Row(
               children: [
                 const Icon(
-                  Iconsax.logout,
+                  aedappfm.Iconsax.logout,
                   size: 16,
                 ),
                 const SizedBox(
@@ -220,7 +220,7 @@ class MenuConnectionToWalletStatus extends ConsumerWidget {
                                         AppLocalizations.of(context)!.no,
                                       ),
                                     ),
-                                    AppButton(
+                                    aedappfm.AppButton(
                                       labelBtn:
                                           AppLocalizations.of(context)!.yes,
                                       onPressed: () async {

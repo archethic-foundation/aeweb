@@ -11,7 +11,8 @@ import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_in_progress_popup.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_comparison_list.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -166,7 +167,7 @@ class _UpdateWebsiteSyncSheetState
                       );
                     },
               icon: const Icon(
-                Iconsax.global_edit,
+                aedappfm.Iconsax.global_edit,
               ),
               label: Text(
                 AppLocalizations.of(context)!.btn_update_website,

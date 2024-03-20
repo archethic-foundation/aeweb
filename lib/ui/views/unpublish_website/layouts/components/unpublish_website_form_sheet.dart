@@ -1,6 +1,6 @@
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -25,7 +25,7 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
             left: 5,
             right: 5,
           ),
-          child: ArchethicScrollbar(
+          child: aedappfm.ArchethicScrollbar(
             child: Center(
               child: Container(
                 padding: const EdgeInsets.only(top: 100),
@@ -36,7 +36,7 @@ class UnpublishWebsiteFormSheet extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(
-                          Iconsax.warning_2,
+                          aedappfm.Iconsax.warning_2,
                           color: Colors.red,
                         ),
                         const SizedBox(width: 5),

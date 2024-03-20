@@ -1,8 +1,9 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/ui/views/util/router.dart';
-import 'package:aeweb/util/generic/providers_observer.dart';
 import 'package:aeweb/util/service_locator.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -17,7 +18,7 @@ Future<void> main() async {
   runApp(
     ProviderScope(
       observers: [
-        ProvidersLogger(),
+        aedappfm.ProvidersLogger(logger: false),
       ],
       child: const MyApp(),
     ),

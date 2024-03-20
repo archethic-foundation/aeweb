@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/version.dart';
-import 'package:aeweb/ui/views/util/generic/responsive.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -20,7 +21,7 @@ class WelcomeInfoVersion extends ConsumerWidget {
     );
 
     var width = MediaQuery.of(context).size.width * 0.9;
-    if (Responsive.isDesktop(context) == true) {
+    if (aedappfm.Responsive.isDesktop(context) == true) {
       width = MediaQuery.of(context).size.width / 6;
     }
 

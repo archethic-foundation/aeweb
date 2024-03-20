@@ -1,5 +1,5 @@
-import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/util/address_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -36,7 +36,7 @@ class FormatAddressLinkCopy extends ConsumerWidget {
           Tooltip(
             message: address,
             child: SelectableText(
-              '$header ${reduceAddress ? AddressUtil.reduceAddress(address) : address}',
+              '$header ${reduceAddress ? aedappfm.AddressUtil.reduceAddress(address) : address}',
               style: TextStyle(
                 fontSize: fontSize,
               ),
@@ -46,7 +46,9 @@ class FormatAddressLinkCopy extends ConsumerWidget {
           Tooltip(
             message: address,
             child: SelectableText(
-              reduceAddress ? AddressUtil.reduceAddress(address) : address,
+              reduceAddress
+                  ? aedappfm.AddressUtil.reduceAddress(address)
+                  : address,
               style: TextStyle(
                 fontSize: fontSize,
               ),
@@ -78,13 +80,13 @@ class FormatAddressLinkCopy extends ConsumerWidget {
             padding: const EdgeInsets.only(bottom: 3),
             child: tooltipCopy == null
                 ? Icon(
-                    Iconsax.copy,
+                    aedappfm.Iconsax.copy,
                     size: fontSize - 1,
                   )
                 : Tooltip(
                     message: tooltipCopy,
                     child: Icon(
-                      Iconsax.copy,
+                      aedappfm.Iconsax.copy,
                       size: fontSize - 1,
                     ),
                   ),

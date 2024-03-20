@@ -1,8 +1,8 @@
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
-import 'package:aeweb/ui/views/util/components/gradient_text.dart';
-import 'package:aeweb/ui/views/util/components/scale_size.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 
 class WelcomeTitle extends StatelessWidget {
   const WelcomeTitle({
@@ -24,7 +24,7 @@ class WelcomeTitle extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                GradientText(
+                aedappfm.GradientText(
                   'Decentralized',
                   style: const TextStyle(
                     fontSize: 40,
@@ -45,7 +45,7 @@ class WelcomeTitle extends StatelessWidget {
                     fontWeight: FontWeight.w400,
                   ),
                   textScaler: TextScaler.linear(
-                    ScaleSize.textScaleFactor(context),
+                    aedappfm.ScaleSize.textScaleFactor(context),
                   ),
                 )
                     .animate(delay: 200.ms)

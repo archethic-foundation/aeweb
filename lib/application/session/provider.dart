@@ -5,8 +5,9 @@ import 'dart:developer';
 import 'package:aeweb/application/session/state.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:aeweb/util/service_locator.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -28,7 +29,7 @@ class _SessionNotifier extends Notifier<Session> {
 
   Future<void> connectToWallet() async {
     try {
-      await sl.get<DBHelper>().clearWebsites();
+      await aedappfm.sl.get<DBHelper>().clearWebsites();
       state = state.copyWith(
         isConnected: false,
         error: '',
@@ -107,16 +108,16 @@ class _SessionNotifier extends Notifier<Session> {
               },
             );
           });
-          if (sl.isRegistered<ApiService>()) {
-            sl.unregister<ApiService>();
+          if (aedappfm.sl.isRegistered<ApiService>()) {
+            aedappfm.sl.unregister<ApiService>();
           }
-          if (sl.isRegistered<OracleService>()) {
-            sl.unregister<OracleService>();
+          if (aedappfm.sl.isRegistered<OracleService>()) {
+            aedappfm.sl.unregister<OracleService>();
           }
-          if (sl.isRegistered<ArchethicDAppClient>()) {
-            sl.unregister<ArchethicDAppClient>();
+          if (aedappfm.sl.isRegistered<ArchethicDAppClient>()) {
+            aedappfm.sl.unregister<ArchethicDAppClient>();
           }
-          sl.registerLazySingleton<ArchethicDAppClient>(
+          aedappfm.sl.registerLazySingleton<ArchethicDAppClient>(
             () => archethicDAppClient,
           );
           setupServiceLocatorApiService(result.endpointUrl);
@@ -171,11 +172,11 @@ class _SessionNotifier extends Notifier<Session> {
   }
 
   Future<void> cancelConnection() async {
-    await sl.get<ArchethicDAppClient>().close();
-    await sl.get<DBHelper>().clearWebsites();
+    await aedappfm.sl.get<ArchethicDAppClient>().close();
+    await aedappfm.sl.get<DBHelper>().clearWebsites();
     log('Unregister', name: 'ApiService');
-    if (sl.isRegistered<ApiService>()) {
-      sl.unregister<ApiService>();
+    if (aedappfm.sl.isRegistered<ApiService>()) {
+      aedappfm.sl.unregister<ApiService>();
     }
 
     state = state.copyWith(

@@ -7,8 +7,8 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_select
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_switch_gitignore.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_textfield_name.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +27,7 @@ class AddWebsiteFormSheet extends ConsumerWidget {
     return Stack(
       children: [
         const AEWebBackground(),
-        ArchethicScrollbar(
+        aedappfm.ArchethicScrollbar(
           child: Padding(
             padding: const EdgeInsets.symmetric(
               vertical: 10,
@@ -49,7 +49,7 @@ class AddWebsiteFormSheet extends ConsumerWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         const Icon(
-                          Iconsax.warning_2,
+                          aedappfm.Iconsax.warning_2,
                           color: Colors.red,
                           size: 18,
                         ),

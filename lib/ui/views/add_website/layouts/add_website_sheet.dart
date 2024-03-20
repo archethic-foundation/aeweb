@@ -11,7 +11,8 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_form_s
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_in_progress_popup.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -136,7 +137,7 @@ class AddWebsiteSheet extends ConsumerWidget {
                       }
                     },
               icon: const Icon(
-                Iconsax.global,
+                aedappfm.Iconsax.global,
               ),
               label: Text(
                 AppLocalizations.of(context)!.btn_add_website,

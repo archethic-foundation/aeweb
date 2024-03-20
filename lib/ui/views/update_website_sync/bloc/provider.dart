@@ -4,7 +4,8 @@ import 'dart:typed_data';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/domain/usecases/website/update_website_sync.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -125,7 +126,8 @@ class UpdateWebsiteSyncFormNotifier
   }
 
   Future<void> setGlobalFeesUCO(double globalFeesUCO) async {
-    final oracleUcoPrice = await sl.get<OracleService>().getOracleData();
+    final oracleUcoPrice =
+        await aedappfm.sl.get<OracleService>().getOracleData();
     state = state.copyWith(
       globalFeesUCO: globalFeesUCO,
       globalFeesFiat: globalFeesUCO * (oracleUcoPrice.uco?.usd ?? 0),

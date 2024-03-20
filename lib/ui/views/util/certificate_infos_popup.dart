@@ -1,6 +1,5 @@
-import 'package:aeweb/ui/views/util/components/popup_template.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
@@ -15,10 +14,10 @@ class CertificateInfosPopup with CertificateMixin {
     return showDialog(
       context: context,
       builder: (context) {
-        return PopupTemplate(
+        return aedappfm.PopupTemplate(
           popupTitle: AppLocalizations.of(context)!.certificateInfosTitle,
           popupHeight: 400,
-          popupContent: ArchethicScrollbar(
+          popupContent: aedappfm.ArchethicScrollbar(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
@@ -27,7 +26,7 @@ class CertificateInfosPopup with CertificateMixin {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Icon(Iconsax.warning_2),
+                      const Icon(aedappfm.Iconsax.warning_2),
                       const SizedBox(
                         width: 5,
                       ),

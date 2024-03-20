@@ -3,9 +3,8 @@ import 'dart:ui';
 
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/components/icon_animated.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +68,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
             data: metaData,
             key: currentKey.toString(),
             children: [],
-            icon: isFolder ? Iconsax.folder : Icons.insert_drive_file,
+            icon: isFolder ? aedappfm.Iconsax.folder : Icons.insert_drive_file,
           );
           siblings.add(node);
           return node;
@@ -99,7 +98,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
       key,
       node.copyWith(
         expanded: expanded,
-        icon: expanded ? Iconsax.folder_open : Iconsax.folder,
+        icon: expanded ? aedappfm.Iconsax.folder_open : aedappfm.Iconsax.folder,
       ),
     );
 
@@ -196,7 +195,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                         children: [
                           Expanded(
                             flex: 10,
-                            child: IconAnimated(
+                            child: aedappfm.IconAnimated(
                               icon: node.icon!,
                               color: Theme.of(context).colorScheme.primary,
                             ),
@@ -243,7 +242,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
             value: 'Download',
             child: Row(
               children: [
-                const Icon(Iconsax.document_download),
+                const Icon(aedappfm.Iconsax.document_download),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
@@ -257,7 +256,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
             value: 'SeeFilesTx',
             child: Row(
               children: [
-                const Icon(Iconsax.document),
+                const Icon(aedappfm.Iconsax.document),
                 const SizedBox(width: 8),
                 Flexible(
                   child: Text(
@@ -266,7 +265,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                 ),
                 const SizedBox(width: 5),
                 const Icon(
-                  Iconsax.export_3,
+                  aedappfm.Iconsax.export_3,
                   size: 12,
                 ),
               ],
@@ -283,7 +282,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
             for (final address in metaData.addresses) {
               launchUrl(
                 Uri.parse(
-                  '${sl.get<archethic.ApiService>().endpoint}/explorer/transaction/$address',
+                  '${aedappfm.sl.get<archethic.ApiService>().endpoint}/explorer/transaction/$address',
                 ),
               );
             }

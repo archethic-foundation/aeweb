@@ -1,7 +1,8 @@
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/display_website/website_versions_list.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -14,7 +15,7 @@ class WebsiteList extends ConsumerWidget {
 
     return websitesList.map(
       data: (data) {
-        return ArchethicScrollbar(
+        return aedappfm.ArchethicScrollbar(
           child: Padding(
             padding: const EdgeInsets.only(
               top: 130,

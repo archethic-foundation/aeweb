@@ -2,7 +2,8 @@
 import 'package:aeweb/domain/usecases/website/update_certificate.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/state.dart';
 import 'package:aeweb/util/certificate_util.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -96,7 +97,8 @@ class UpdateCertificateFormNotifier
   }
 
   Future<void> setGlobalFeesUCO(double globalFeesUCO) async {
-    final oracleUcoPrice = await sl.get<OracleService>().getOracleData();
+    final oracleUcoPrice =
+        await aedappfm.sl.get<OracleService>().getOracleData();
     state = state.copyWith(
       globalFeesUCO: globalFeesUCO,
       globalFeesFiat: globalFeesUCO * (oracleUcoPrice.uco?.usd ?? 0),

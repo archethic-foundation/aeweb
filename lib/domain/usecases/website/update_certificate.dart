@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:aeweb/util/transaction_aeweb_util.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
@@ -33,7 +34,7 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
 
     final lastTransactionReferenceMap =
-        await sl.get<ApiService>().getLastTransaction(
+        await aedappfm.sl.get<ApiService>().getLastTransaction(
       [addressTxRef],
       request:
           'data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } }',
@@ -96,7 +97,9 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await aedappfm.sl.get<ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
     );
     var transactionTransfer = Transaction(
       type: 'transfer',

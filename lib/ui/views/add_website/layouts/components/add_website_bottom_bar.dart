@@ -1,9 +1,9 @@
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
-import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -48,38 +48,33 @@ class AddWebsiteBottomBar extends ConsumerWidget {
       child: Row(
         children: [
           if (addWebsite.creationInProgress)
-            AppButton(
+            aedappfm.AppButton(
               labelBtn: AppLocalizations.of(context)!.btn_cancel,
-              icon: Iconsax.close_square,
               disabled: true,
             )
           else if (addWebsite.processFinished)
-            AppButton(
+            aedappfm.AppButton(
               labelBtn: AppLocalizations.of(context)!.btn_close,
-              icon: Iconsax.close_square,
               onPressed: () {
                 context.go(RoutesPath().home());
               },
             )
           else
-            AppButton(
+            aedappfm.AppButton(
               labelBtn: AppLocalizations.of(context)!.btn_cancel,
-              icon: Iconsax.close_square,
               onPressed: () {
                 context.go(RoutesPath().home());
               },
             ),
           if (session.isConnected)
             if (addWebsite.creationInProgress)
-              AppButton(
+              aedappfm.AppButton(
                 labelBtn: AppLocalizations.of(context)!.btn_add_website,
-                icon: Iconsax.global,
                 disabled: true,
               )
             else
-              AppButton(
+              aedappfm.AppButton(
                 labelBtn: AppLocalizations.of(context)!.btn_add_website,
-                icon: Iconsax.global,
                 onPressed: () async {
                   final ctlOk = await _submitForm();
                   if (ctlOk) {

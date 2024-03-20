@@ -2,14 +2,15 @@
 import 'dart:convert';
 
 import 'package:aeweb/model/website_version.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 
 class ReadWebsiteVersionUseCases {
   Future<WebsiteVersion?> getRemote(String transactionRefAddress) async {
     late WebsiteVersion websiteVersion;
 
-    final transactionMap = await sl.get<ApiService>().getTransaction(
+    final transactionMap = await aedappfm.sl.get<ApiService>().getTransaction(
       [transactionRefAddress],
       request:
           'address, validationStamp { timestamp, ledgerOperations { fee } } data { content }',

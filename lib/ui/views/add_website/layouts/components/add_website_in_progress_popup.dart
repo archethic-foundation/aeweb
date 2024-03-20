@@ -4,12 +4,11 @@ import 'package:aeweb/domain/usecases/website/add_website.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_circular_step_progress_indicator.dart';
-import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/countdown.dart';
 import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -71,7 +70,7 @@ class AddWebsiteInProgressPopup {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Icon(
-                      Iconsax.close_square,
+                      aedappfm.Iconsax.close_square,
                       size: 11,
                     ),
                     const SizedBox(width: 4),
@@ -84,14 +83,13 @@ class AddWebsiteInProgressPopup {
               const SizedBox(
                 width: 10,
               ),
-              AppButton(
+              aedappfm.AppButton(
                 onPressed: () async {
                   ref
                       .read(AddWebsiteFormProvider.addWebsiteForm.notifier)
                       .setGlobalFeesValidated(true);
                 },
                 labelBtn: AppLocalizations.of(context)!.yes,
-                icon: Iconsax.tick_square,
               ),
             ],
           ),
@@ -117,7 +115,7 @@ class AddWebsiteInProgressPopup {
                       elevation: 0,
                       content: Stack(
                         children: <Widget>[
-                          ArchethicScrollbar(
+                          aedappfm.ArchethicScrollbar(
                             child: Container(
                               margin: const EdgeInsets.only(
                                 top: 30,

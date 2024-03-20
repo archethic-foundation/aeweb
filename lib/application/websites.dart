@@ -4,7 +4,8 @@ import 'dart:convert';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/model/website_version.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:basic_utils/basic_utils.dart';
@@ -33,10 +34,11 @@ Future<List<WebsiteVersion>> _fetchWebsiteVersions(
 
 class WebsitesRepository {
   Future<List<Website>> getWebsites() async {
-    final websites = await sl.get<DBHelper>().getLocalWebsites();
+    final websites = await aedappfm.sl.get<DBHelper>().getLocalWebsites();
     if (websites.isEmpty) {
-      final services =
-          await sl.get<ArchethicDAppClient>().getServicesFromKeychain();
+      final services = await aedappfm.sl
+          .get<ArchethicDAppClient>()
+          .getServicesFromKeychain();
 
       await services.when(
         success: (success) async {
@@ -54,8 +56,9 @@ class WebsitesRepository {
 
               var genesisAddress = '';
               // Get genesis address
-              final response =
-                  await sl.get<ArchethicDAppClient>().keychainDeriveAddress({
+              final response = await aedappfm.sl
+                  .get<ArchethicDAppClient>()
+                  .keychainDeriveAddress({
                 'serviceName': 'aeweb-$name',
                 'index': 0,
                 'pathSuffix': '',
@@ -80,7 +83,7 @@ class WebsitesRepository {
         },
       );
 
-      await sl.get<DBHelper>().saveWebsites(websites);
+      await aedappfm.sl.get<DBHelper>().saveWebsites(websites);
     }
 
     return websites;
@@ -90,7 +93,8 @@ class WebsitesRepository {
     final websiteVersions = <WebsiteVersion>[];
 
     var fees = 0;
-    final transactionChainMap = await sl.get<ApiService>().getTransactionChain(
+    final transactionChainMap =
+        await aedappfm.sl.get<ApiService>().getTransactionChain(
       {genesisAddress: ''},
       request:
           'type, address, validationStamp { timestamp, ledgerOperations { fee } } data { content , }',
@@ -120,10 +124,11 @@ class WebsitesRepository {
           size = size + value.size;
         });
 
-        final transactionsFeesMap = await sl.get<ApiService>().getTransaction(
-              filesTxAddress.toList(),
-              request: 'validationStamp { ledgerOperations { fee } } ',
-            );
+        final transactionsFeesMap =
+            await aedappfm.sl.get<ApiService>().getTransaction(
+                  filesTxAddress.toList(),
+                  request: 'validationStamp { ledgerOperations { fee } } ',
+                );
         transactionsFeesMap.forEach((key, value) {
           if (value.validationStamp != null &&
               value.validationStamp!.ledgerOperations != null &&

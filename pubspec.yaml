@@ -68,9 +68,6 @@ dependencies:
   # Annotations for freezed
   freezed_annotation: ^2.4.1
 
-  # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
-  get_it: ^7.6.7
-
   # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
   go_router: ^13.2.1
 
@@ -159,4 +156,4 @@ flutter:
         - asset: assets/fonts/RobotoMono-Regular.ttf
     - family: Iconsax
       fonts:
-        - asset: assets/fonts/Iconsax.ttf
+        - asset: assets/fonts/aedappfm.Iconsax.ttf

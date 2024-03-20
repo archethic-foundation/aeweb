@@ -3,7 +3,8 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
 import 'dart:typed_data';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 
@@ -30,7 +31,9 @@ mixin TransactionAEWebMixin {
       );
     }
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await aedappfm.sl.get<ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
     );
     final transaction = Transaction(
       type: 'hosting',
@@ -40,7 +43,7 @@ mixin TransactionAEWebMixin {
 
     if (sslKey != null) {
       final storageNoncePublicKey =
-          await sl.get<ApiService>().getStorageNoncePublicKey();
+          await aedappfm.sl.get<ApiService>().getStorageNoncePublicKey();
       final aesKey = uint8ListToHex(
         Uint8List.fromList(
           List<int>.generate(32, (int i) => math.Random.secure().nextInt(256)),
@@ -61,7 +64,9 @@ mixin TransactionAEWebMixin {
 
   Future<Transaction> newEmptyTransaction() async {
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await aedappfm.sl.get<ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
     );
     return Transaction(
       type: 'data',
@@ -74,7 +79,9 @@ mixin TransactionAEWebMixin {
     Map<String, dynamic> txsContent,
   ) async {
     final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
+      (await aedappfm.sl.get<ApiService>().getBlockchainVersion())
+          .version
+          .transaction,
     );
     final content = txsContent['content'];
     return Transaction(
@@ -130,7 +137,7 @@ mixin TransactionAEWebMixin {
     };
 
     final result =
-        await sl.get<ArchethicDAppClient>().signTransactions(payload);
+        await aedappfm.sl.get<ArchethicDAppClient>().signTransactions(payload);
     result.when(
       failure: (failure) {
         log(
@@ -159,7 +166,7 @@ mixin TransactionAEWebMixin {
   Future<double> calculateFees(Transaction transaction) async {
     const slippage = 1.01;
     final transactionFee =
-        await sl.get<ApiService>().getTransactionFee(transaction);
+        await aedappfm.sl.get<ApiService>().getTransactionFee(transaction);
     final fees = fromBigInt(transactionFee.fee) * slippage;
     log(
       'Transaction ${transaction.address} : $fees UCO',
@@ -169,7 +176,7 @@ mixin TransactionAEWebMixin {
 
   Future<String> getDeriveAddress(String serviceName, String pathSuffix) async {
     var address = '';
-    (await sl.get<ArchethicDAppClient>().keychainDeriveAddress(
+    (await aedappfm.sl.get<ArchethicDAppClient>().keychainDeriveAddress(
       {'serviceName': serviceName, 'pathSuffix': pathSuffix},
     ))
         .when(
@@ -185,7 +192,8 @@ mixin TransactionAEWebMixin {
 
   Future<String> getCurrentAccount() async {
     var accountName = '';
-    final result = await sl.get<ArchethicDAppClient>().getCurrentAccount();
+    final result =
+        await aedappfm.sl.get<ArchethicDAppClient>().getCurrentAccount();
 
     result.when(
       failure: (failure) {
@@ -199,7 +207,7 @@ mixin TransactionAEWebMixin {
   }
 
   Future<dynamic> createWebsiteServiceInKeychain(String websiteName) async {
-    final responseAddService = await sl
+    final responseAddService = await aedappfm.sl
         .get<ArchethicDAppClient>()
         .addService({'name': 'aeweb-$websiteName'});
     return responseAddService.when(
@@ -218,10 +226,11 @@ mixin TransactionAEWebMixin {
 
   ArchethicTransactionSender getArchethicTransactionSender() {
     return ArchethicTransactionSender(
-      apiService: sl.get<ApiService>(),
-      phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
+      apiService: aedappfm.sl.get<ApiService>(),
+      phoenixHttpEndpoint:
+          '${aedappfm.sl.get<ApiService>().endpoint}/socket/websocket',
       websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
+          '${aedappfm.sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
     );
   }
 
@@ -235,22 +244,22 @@ mixin TransactionAEWebMixin {
       }
       var next = false;
       String websocketEndpoint;
-      switch (sl.get<ApiService>().endpoint) {
+      switch (aedappfm.sl.get<ApiService>().endpoint) {
         case 'https://mainnet.archethic.net':
         case 'https://testnet.archethic.net':
           websocketEndpoint =
-              "${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket";
+              "${aedappfm.sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket";
           break;
         default:
           websocketEndpoint =
-              "${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket";
+              "${aedappfm.sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket";
           break;
       }
 
       final transactionRepository = ArchethicTransactionSender(
-        apiService: sl.get<ApiService>(),
+        apiService: aedappfm.sl.get<ApiService>(),
         phoenixHttpEndpoint:
-            '${sl.get<ApiService>().endpoint}/socket/websocket',
+            '${aedappfm.sl.get<ApiService>().endpoint}/socket/websocket',
         websocketEndpoint: websocketEndpoint,
       );
       log('Send ${transaction.address!.address}');

@@ -1,5 +1,5 @@
-import 'package:aeweb/ui/views/util/components/scrollbar.dart';
-import 'package:aeweb/ui/views/util/generic/responsive.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:gradient_borders/gradient_borders.dart';
@@ -20,7 +20,7 @@ class WelcomeInfos extends StatelessWidget {
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width * 0.9;
     var height = 230.0;
-    if (Responsive.isDesktop(context) == true) {
+    if (aedappfm.Responsive.isDesktop(context) == true) {
       width = MediaQuery.of(context).size.width / 6;
       height = MediaQuery.of(context).size.height * 0.5;
     }
@@ -50,7 +50,7 @@ class WelcomeInfos extends StatelessWidget {
         ),
         borderRadius: BorderRadius.circular(16),
       ),
-      child: ArchethicScrollbar(
+      child: aedappfm.ArchethicScrollbar(
         child: SizedBox(
           child: Column(
             children: [

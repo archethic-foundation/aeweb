@@ -1,7 +1,7 @@
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/views/util/components/app_button.dart';
-import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/util/router.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,7 +16,7 @@ class IconCloseConnection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final sessionNotifier = ref.watch(SessionProviders.session.notifier);
 
-    return IconButtonAnimated(
+    return aedappfm.IconButtonAnimated(
       onPressed: () async {
         return showDialog(
           context: context,
@@ -71,7 +71,7 @@ class IconCloseConnection extends ConsumerWidget {
                                   },
                                   child: Text(AppLocalizations.of(context)!.no),
                                 ),
-                                AppButton(
+                                aedappfm.AppButton(
                                   labelBtn: AppLocalizations.of(context)!.yes,
                                   onPressed: () async {
                                     await sessionNotifier.cancelConnection();
