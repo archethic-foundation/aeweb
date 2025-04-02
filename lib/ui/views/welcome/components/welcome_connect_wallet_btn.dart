@@ -46,8 +46,8 @@ class WelcomeConnectWalletBtnState
               },
               child: OutlinedButton(
                 style: ButtonStyle(
-                  side: MaterialStateProperty.all(BorderSide.none),
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  side: WidgetStateProperty.all(BorderSide.none),
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
                 ),
                 onPressed: () {
                   startBusyContext(
@@ -89,7 +89,7 @@ class WelcomeConnectWalletBtnState
                     shape: const StadiumBorder(),
                     shadows: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         blurRadius: 7,
                         spreadRadius: 1,
                         offset: const Offset(0, 5),

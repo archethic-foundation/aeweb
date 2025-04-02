@@ -22,6 +22,8 @@ final _websitesRepositoryProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _WebsitesRepositoryRef = AutoDisposeProviderRef<WebsitesRepository>;
 String _$fetchWebsitesHash() => r'5df5cdc5be89b73c14e82e73bf7918c9d14894bb';
 
@@ -38,6 +40,8 @@ final _fetchWebsitesProvider =
   allTransitiveDependencies: null,
 );
 
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
 typedef _FetchWebsitesRef = AutoDisposeFutureProviderRef<List<Website>>;
 String _$fetchWebsiteVersionsHash() =>
     r'8d92709a0eb444847c6ae196deb4585b7b30bc15';
@@ -62,9 +66,6 @@ class _SystemHash {
     return 0x1fffffff & (hash + ((0x00003fff & hash) << 15));
   }
 }
-
-typedef _FetchWebsiteVersionsRef
-    = AutoDisposeFutureProviderRef<List<WebsiteVersion>>;
 
 /// See also [_fetchWebsiteVersions].
 @ProviderFor(_fetchWebsiteVersions)
@@ -114,10 +115,10 @@ class _FetchWebsiteVersionsProvider
     extends AutoDisposeFutureProvider<List<WebsiteVersion>> {
   /// See also [_fetchWebsiteVersions].
   _FetchWebsiteVersionsProvider(
-    this.genesisAddress,
-  ) : super.internal(
+    dynamic genesisAddress,
+  ) : this._internal(
           (ref) => _fetchWebsiteVersions(
-            ref,
+            ref as _FetchWebsiteVersionsRef,
             genesisAddress,
           ),
           from: _fetchWebsiteVersionsProvider,
@@ -129,9 +130,44 @@ class _FetchWebsiteVersionsProvider
           dependencies: _FetchWebsiteVersionsFamily._dependencies,
           allTransitiveDependencies:
               _FetchWebsiteVersionsFamily._allTransitiveDependencies,
+          genesisAddress: genesisAddress,
         );
 
+  _FetchWebsiteVersionsProvider._internal(
+    super._createNotifier, {
+    required super.name,
+    required super.dependencies,
+    required super.allTransitiveDependencies,
+    required super.debugGetCreateSourceHash,
+    required super.from,
+    required this.genesisAddress,
+  }) : super.internal();
+
   final dynamic genesisAddress;
+
+  @override
+  Override overrideWith(
+    FutureOr<List<WebsiteVersion>> Function(_FetchWebsiteVersionsRef provider)
+        create,
+  ) {
+    return ProviderOverride(
+      origin: this,
+      override: _FetchWebsiteVersionsProvider._internal(
+        (ref) => create(ref as _FetchWebsiteVersionsRef),
+        from: from,
+        name: null,
+        dependencies: null,
+        allTransitiveDependencies: null,
+        debugGetCreateSourceHash: null,
+        genesisAddress: genesisAddress,
+      ),
+    );
+  }
+
+  @override
+  AutoDisposeFutureProviderElement<List<WebsiteVersion>> createElement() {
+    return _FetchWebsiteVersionsProviderElement(this);
+  }
 
   @override
   bool operator ==(Object other) {
@@ -147,5 +183,23 @@ class _FetchWebsiteVersionsProvider
     return _SystemHash.finish(hash);
   }
 }
+
+@Deprecated('Will be removed in 3.0. Use Ref instead')
+// ignore: unused_element
+mixin _FetchWebsiteVersionsRef
+    on AutoDisposeFutureProviderRef<List<WebsiteVersion>> {
+  /// The parameter `genesisAddress` of this provider.
+  dynamic get genesisAddress;
+}
+
+class _FetchWebsiteVersionsProviderElement
+    extends AutoDisposeFutureProviderElement<List<WebsiteVersion>>
+    with _FetchWebsiteVersionsRef {
+  _FetchWebsiteVersionsProviderElement(super.provider);
+
+  @override
+  dynamic get genesisAddress =>
+      (origin as _FetchWebsiteVersionsProvider).genesisAddress;
+}
 // ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member
+// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

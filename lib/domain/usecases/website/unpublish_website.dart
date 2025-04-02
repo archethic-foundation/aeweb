@@ -20,8 +20,9 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
         ref.watch(UnpublishWebsiteFormProvider.unpublishWebsiteForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
+
+    await unpublishWebsiteNotifier.setGlobalFeesUCO(0);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UnpublishWebsiteFormProvider.unpublishWebsiteForm).name}',
@@ -60,7 +61,7 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
       ))
           .first;
     } catch (e) {
-      unpublishWebsiteNotifier.setStepError((e as Failure).message!);
+      unpublishWebsiteNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }
@@ -98,7 +99,7 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
       ))
           .first;
     } catch (e) {
-      unpublishWebsiteNotifier.setStepError((e as Failure).message!);
+      unpublishWebsiteNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }

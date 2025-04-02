@@ -20,8 +20,9 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
         ref.watch(UpdateCertificateFormProvider.updateCertificateForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
+
+    await updateCertificateNotifier.setGlobalFeesUCO(0);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UpdateCertificateFormProvider.updateCertificateForm).name}',
@@ -75,7 +76,7 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
       ))
           .first;
     } catch (e) {
-      updateCertificateNotifier.setStepError((e as Failure).message!);
+      updateCertificateNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }
@@ -116,7 +117,7 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
       ))
           .first;
     } catch (e) {
-      updateCertificateNotifier.setStepError((e as Failure).message!);
+      updateCertificateNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }

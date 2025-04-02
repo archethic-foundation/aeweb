@@ -10,11 +10,11 @@ void setupServiceLocator() {
 
 void setupServiceLocatorApiService(String endpoint) {
   sl.registerLazySingleton<ApiService>(
-    () => ApiService(endpoint, logsActivation: false),
+    () => ApiService(endpoint),
   );
   log('Register', name: 'ApiService');
   sl.registerLazySingleton<OracleService>(
-    () => OracleService(endpoint, logsActivation: false),
+    () => OracleService(endpoint),
   );
   log('Register', name: 'OracleService');
 }

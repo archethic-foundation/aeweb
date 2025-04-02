@@ -121,13 +121,19 @@ mixin TransactionAEWebMixin {
   ) async {
     final newTransactions = <Transaction>[];
 
-    final payload = {
-      'serviceName': serviceName,
-      'pathSuffix': pathSuffix,
-      'transactions': List<dynamic>.from(
-        transactions.map((Transaction x) => x.toJson()),
-      ),
-    };
+    final payload = SignTransactionRequest(
+      serviceName: serviceName,
+      pathSuffix: pathSuffix,
+      transactions: transactions
+          .map(
+            (Transaction x) => SignTransactionRequestData(
+              data: x.data!,
+              type: x.type!,
+              version: x.version,
+            ),
+          )
+          .toList(),
+    );
 
     final result =
         await sl.get<ArchethicDAppClient>().signTransactions(payload);
@@ -170,8 +176,11 @@ mixin TransactionAEWebMixin {
   Future<String> getDeriveAddress(String serviceName, String pathSuffix) async {
     var address = '';
     (await sl.get<ArchethicDAppClient>().keychainDeriveAddress(
-      {'serviceName': serviceName, 'pathSuffix': pathSuffix},
-    ))
+              KeychainDeriveAddressRequest(
+                serviceName: serviceName,
+                pathSuffix: pathSuffix,
+              ),
+            ))
         .when(
       failure: (failure) {
         throw Exception('An error occurs');
@@ -199,9 +208,9 @@ mixin TransactionAEWebMixin {
   }
 
   Future<dynamic> createWebsiteServiceInKeychain(String websiteName) async {
-    final responseAddService = await sl
-        .get<ArchethicDAppClient>()
-        .addService({'name': 'aeweb-$websiteName'});
+    final responseAddService = await sl.get<ArchethicDAppClient>().addService(
+          AddServiceRequest(name: 'aeweb-$websiteName'),
+        );
     return responseAddService.when(
       failure: (failure) {
         log(
@@ -214,92 +223,5 @@ mixin TransactionAEWebMixin {
         return result;
       },
     );
-  }
-
-  ArchethicTransactionSender getArchethicTransactionSender() {
-    return ArchethicTransactionSender(
-      apiService: sl.get<ApiService>(),
-      phoenixHttpEndpoint: '${sl.get<ApiService>().endpoint}/socket/websocket',
-      websocketEndpoint:
-          '${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket',
-    );
-  }
-
-  Future<void> sendTransactions(
-    List<Transaction> transactions,
-  ) async {
-    var errorDetail = '';
-    for (final transaction in transactions) {
-      if (errorDetail.isNotEmpty) {
-        break;
-      }
-      var next = false;
-      String websocketEndpoint;
-      switch (sl.get<ApiService>().endpoint) {
-        case 'https://mainnet.archethic.net':
-        case 'https://testnet.archethic.net':
-          websocketEndpoint =
-              "${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'wss:')}/socket/websocket";
-          break;
-        default:
-          websocketEndpoint =
-              "${sl.get<ApiService>().endpoint.replaceAll('https:', 'wss:').replaceAll('http:', 'ws:')}/socket/websocket";
-          break;
-      }
-
-      final transactionRepository = ArchethicTransactionSender(
-        apiService: sl.get<ApiService>(),
-        phoenixHttpEndpoint:
-            '${sl.get<ApiService>().endpoint}/socket/websocket',
-        websocketEndpoint: websocketEndpoint,
-      );
-      log('Send ${transaction.address!.address}');
-
-      await transactionRepository.send(
-        transaction: transaction,
-        onConfirmation: (confirmation) async {
-          if (confirmation.isEnoughConfirmed) {
-            log('nbConfirmations: ${confirmation.nbConfirmations}, transactionAddress: ${confirmation.transactionAddress}, maxConfirmations: ${confirmation.maxConfirmations}');
-            transactionRepository.close();
-            next = true;
-          }
-        },
-        onError: (error) async {
-          transactionRepository.close();
-          error.maybeMap(
-            connectivity: (_) {
-              errorDetail = 'No connection';
-            },
-            consensusNotReached: (_) {
-              errorDetail = 'Consensus not reached';
-            },
-            timeout: (_) {
-              errorDetail = 'Timeout';
-            },
-            invalidConfirmation: (_) {
-              errorDetail = 'Invalid Confirmation';
-            },
-            insufficientFunds: (_) {
-              errorDetail = 'Insufficient funds';
-            },
-            other: (error) {
-              errorDetail = error.message;
-            },
-            orElse: () {
-              errorDetail = 'An error is occured';
-            },
-          );
-        },
-      );
-
-      while (next == false && errorDetail.isEmpty) {
-        await Future.delayed(const Duration(seconds: 1));
-        log('wait...');
-      }
-    }
-
-    if (errorDetail.isNotEmpty) {
-      throw Exception(errorDetail);
-    }
   }
 }

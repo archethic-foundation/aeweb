@@ -52,13 +52,14 @@ class InfoBanner extends StatelessWidget {
                               ? Theme.of(context)
                                   .colorScheme
                                   .error
-                                  .withOpacity(0.6)
+                                  .withValues(alpha: 0.6)
                               : infoBannerType == InfoBannerType.request
                                   ? Theme.of(context)
                                       .colorScheme
                                       .primary
-                                      .withOpacity(0.6)
-                                  : AeWebThemeBase.statusOK.withOpacity(0.6),
+                                      .withValues(alpha: 0.6)
+                                  : AeWebThemeBase.statusOK
+                                      .withValues(alpha: 0.6),
                           width: 0.5,
                         ),
                         gradient: AeWebThemeBase.gradientInfoBannerBackground,

@@ -12,7 +12,7 @@ part of 'website.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Website {
@@ -21,7 +21,9 @@ mixin _$Website {
   List<WebsiteVersion> get websiteVersionList =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Website
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WebsiteCopyWith<Website> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -46,6 +48,8 @@ class _$WebsiteCopyWithImpl<$Res, $Val extends Website>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Website
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -71,10 +75,10 @@ class _$WebsiteCopyWithImpl<$Res, $Val extends Website>
 }
 
 /// @nodoc
-abstract class _$$_WebsiteCopyWith<$Res> implements $WebsiteCopyWith<$Res> {
-  factory _$$_WebsiteCopyWith(
-          _$_Website value, $Res Function(_$_Website) then) =
-      __$$_WebsiteCopyWithImpl<$Res>;
+abstract class _$$WebsiteImplCopyWith<$Res> implements $WebsiteCopyWith<$Res> {
+  factory _$$WebsiteImplCopyWith(
+          _$WebsiteImpl value, $Res Function(_$WebsiteImpl) then) =
+      __$$WebsiteImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -84,12 +88,15 @@ abstract class _$$_WebsiteCopyWith<$Res> implements $WebsiteCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_WebsiteCopyWithImpl<$Res>
-    extends _$WebsiteCopyWithImpl<$Res, _$_Website>
-    implements _$$_WebsiteCopyWith<$Res> {
-  __$$_WebsiteCopyWithImpl(_$_Website _value, $Res Function(_$_Website) _then)
+class __$$WebsiteImplCopyWithImpl<$Res>
+    extends _$WebsiteCopyWithImpl<$Res, _$WebsiteImpl>
+    implements _$$WebsiteImplCopyWith<$Res> {
+  __$$WebsiteImplCopyWithImpl(
+      _$WebsiteImpl _value, $Res Function(_$WebsiteImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Website
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -97,7 +104,7 @@ class __$$_WebsiteCopyWithImpl<$Res>
     Object? genesisAddress = null,
     Object? websiteVersionList = null,
   }) {
-    return _then(_$_Website(
+    return _then(_$WebsiteImpl(
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -116,8 +123,8 @@ class __$$_WebsiteCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Website implements _Website {
-  const _$_Website(
+class _$WebsiteImpl implements _Website {
+  const _$WebsiteImpl(
       {required this.name,
       required this.genesisAddress,
       final List<WebsiteVersion> websiteVersionList = const []})
@@ -143,10 +150,10 @@ class _$_Website implements _Website {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Website &&
+            other is _$WebsiteImpl &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.genesisAddress, genesisAddress) ||
                 other.genesisAddress == genesisAddress) &&
@@ -158,18 +165,20 @@ class _$_Website implements _Website {
   int get hashCode => Object.hash(runtimeType, name, genesisAddress,
       const DeepCollectionEquality().hash(_websiteVersionList));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Website
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WebsiteCopyWith<_$_Website> get copyWith =>
-      __$$_WebsiteCopyWithImpl<_$_Website>(this, _$identity);
+  _$$WebsiteImplCopyWith<_$WebsiteImpl> get copyWith =>
+      __$$WebsiteImplCopyWithImpl<_$WebsiteImpl>(this, _$identity);
 }
 
 abstract class _Website implements Website {
   const factory _Website(
       {required final String name,
       required final String genesisAddress,
-      final List<WebsiteVersion> websiteVersionList}) = _$_Website;
+      final List<WebsiteVersion> websiteVersionList}) = _$WebsiteImpl;
 
   @override
   String get name;
@@ -177,8 +186,11 @@ abstract class _Website implements Website {
   String get genesisAddress;
   @override
   List<WebsiteVersion> get websiteVersionList;
+
+  /// Create a copy of Website
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_WebsiteCopyWith<_$_Website> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$WebsiteImplCopyWith<_$WebsiteImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

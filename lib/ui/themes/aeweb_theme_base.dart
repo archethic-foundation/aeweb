@@ -20,8 +20,8 @@ class AeWebThemeBase {
 
   static Gradient gradient = LinearGradient(
     colors: [
-      ArchethicThemeBase.neutral0.withOpacity(0.2),
-      ArchethicThemeBase.neutral0.withOpacity(0),
+      ArchethicThemeBase.neutral0.withValues(alpha: 0.2),
+      ArchethicThemeBase.neutral0.withValues(alpha: 0),
     ],
     stops: const [0, 1],
   );
@@ -36,8 +36,8 @@ class AeWebThemeBase {
 
   static Gradient gradientWelcomeTxt = LinearGradient(
     colors: [
-      const Color(0xFF562FED).withOpacity(0.8),
-      const Color(0xFFD55CFF).withOpacity(0.8),
+      const Color(0xFF562FED).withValues(alpha: 0.8),
+      const Color(0xFFD55CFF).withValues(alpha: 0.8),
     ],
     begin: Alignment.topLeft,
     end: Alignment.bottomRight,
@@ -53,8 +53,8 @@ class AeWebThemeBase {
 
   static Gradient gradientSheetBackground = LinearGradient(
     colors: [
-      ArchethicThemeBase.purple500.withOpacity(1),
-      ArchethicThemeBase.purple500.withOpacity(1),
+      ArchethicThemeBase.purple500.withValues(alpha: 1),
+      ArchethicThemeBase.purple500.withValues(alpha: 1),
     ],
     stops: const [0, 1],
     begin: Alignment.topLeft,
@@ -63,24 +63,24 @@ class AeWebThemeBase {
 
   static Gradient gradientSheetBorder = LinearGradient(
     colors: [
-      ArchethicThemeBase.neutral900.withOpacity(0.7),
-      ArchethicThemeBase.neutral900.withOpacity(1),
+      ArchethicThemeBase.neutral900.withValues(alpha: 0.7),
+      ArchethicThemeBase.neutral900.withValues(alpha: 1),
     ],
     stops: const [0, 1],
   );
 
   static Gradient gradientInputFormBackground = LinearGradient(
     colors: [
-      ArchethicThemeBase.neutral900.withOpacity(1),
-      ArchethicThemeBase.neutral900.withOpacity(0.3),
+      ArchethicThemeBase.neutral900.withValues(alpha: 1),
+      ArchethicThemeBase.neutral900.withValues(alpha: 0.3),
     ],
     stops: const [0, 1],
   );
 
   static Gradient gradientInfoBannerBackground = LinearGradient(
     colors: [
-      ArchethicThemeBase.neutral900.withOpacity(1),
-      ArchethicThemeBase.neutral900.withOpacity(0.3),
+      ArchethicThemeBase.neutral900.withValues(alpha: 1),
+      ArchethicThemeBase.neutral900.withValues(alpha: 0.3),
     ],
     stops: const [0, 1],
   );

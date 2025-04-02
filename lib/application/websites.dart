@@ -8,22 +8,22 @@ import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 import 'package:basic_utils/basic_utils.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'websites.g.dart';
 
 @riverpod
-WebsitesRepository _websitesRepository(_WebsitesRepositoryRef ref) =>
-    WebsitesRepository();
+WebsitesRepository _websitesRepository(Ref ref) => WebsitesRepository();
 
 @riverpod
-Future<List<Website>> _fetchWebsites(_FetchWebsitesRef ref) async {
+Future<List<Website>> _fetchWebsites(Ref ref) async {
   return ref.watch(_websitesRepositoryProvider).getWebsites();
 }
 
 @riverpod
 Future<List<WebsiteVersion>> _fetchWebsiteVersions(
-  _FetchWebsiteVersionsRef ref,
+  Ref ref,
   genesisAddress,
 ) async {
   return ref
@@ -55,12 +55,12 @@ class WebsitesRepository {
               var genesisAddress = '';
               // Get genesis address
               final response =
-                  await sl.get<ArchethicDAppClient>().keychainDeriveAddress({
-                'serviceName': 'aeweb-$name',
-                'index': 0,
-                'pathSuffix': '',
-              });
-              response.when(
+                  await sl.get<ArchethicDAppClient>().keychainDeriveAddress(
+                        KeychainDeriveAddressRequest(
+                          serviceName: 'aeweb-$name',
+                        ),
+                      );
+              await response.when(
                 failure: (failure) {},
                 success: (result) async {
                   genesisAddress = result.address;

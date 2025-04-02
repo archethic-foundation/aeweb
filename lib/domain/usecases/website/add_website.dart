@@ -26,8 +26,9 @@ class AddWebsiteUseCases
         ref.watch(AddWebsiteFormProvider.addWebsiteForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
+
+    await addWebsiteNotifier.setGlobalFeesUCO(0);
 
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
@@ -35,7 +36,7 @@ class AddWebsiteUseCases
       ref.read(AddWebsiteFormProvider.addWebsiteForm).name,
     );
     if (resultCreate is Failure) {
-      addWebsiteNotifier.setStepError(resultCreate.message!);
+      addWebsiteNotifier.setStepError(resultCreate.message);
       log('Transaction failed');
       return;
     }
@@ -110,7 +111,7 @@ class AddWebsiteUseCases
         transactionsList,
       );
     } catch (e) {
-      addWebsiteNotifier.setStepError((e as Failure).message!);
+      addWebsiteNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }
@@ -140,7 +141,7 @@ class AddWebsiteUseCases
       ))
           .first;
     } catch (e) {
-      addWebsiteNotifier.setStepError((e as Failure).message!);
+      addWebsiteNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }
@@ -191,7 +192,7 @@ class AddWebsiteUseCases
       ))
           .first;
     } catch (e) {
-      addWebsiteNotifier.setStepError((e as Failure).message!);
+      addWebsiteNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }

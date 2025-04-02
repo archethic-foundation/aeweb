@@ -130,8 +130,10 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
         size: 12,
       ),
       colorScheme: ColorScheme.light(
-        primary:
-            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+        primary: Theme.of(context)
+            .colorScheme
+            .primaryContainer
+            .withValues(alpha: 0.5),
       ),
     );
 
@@ -149,7 +151,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color: ArchethicThemeBase.neutral0.withValues(alpha: 0.2),
                     height: 1,
                   ),
                 ),

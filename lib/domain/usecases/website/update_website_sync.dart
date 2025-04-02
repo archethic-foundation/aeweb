@@ -24,8 +24,9 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
         ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
+
+    await updateWebsiteSyncNotifier.setGlobalFeesUCO(0);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).name}',
@@ -145,7 +146,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
           transactionsList,
         );
       } catch (e) {
-        updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+        updateWebsiteSyncNotifier.setStepError((e as Failure).message);
         log('Signature failed');
         return;
       }
@@ -206,7 +207,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
       ))
           .first;
     } catch (e) {
-      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+      updateWebsiteSyncNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }
@@ -259,7 +260,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
       ))
           .first;
     } catch (e) {
-      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+      updateWebsiteSyncNotifier.setStepError((e as Failure).message);
       log('Signature failed');
       return;
     }

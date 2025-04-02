@@ -164,27 +164,27 @@ class UnpublishWebsiteInProgressPopup {
                                           gradients: [
                                             [
                                               ArchethicThemeBase.blue800
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                               ArchethicThemeBase.purple800
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                             ],
                                             [
                                               ArchethicThemeBase.blue500
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                               ArchethicThemeBase.purple500
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                             ],
                                             [
                                               ArchethicThemeBase.blue300
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                               ArchethicThemeBase.purple300
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                             ],
                                             [
                                               ArchethicThemeBase.blue200
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                               ArchethicThemeBase.purple200
-                                                  .withOpacity(0.1),
+                                                  .withValues(alpha: 0.1),
                                             ]
                                           ],
                                           durations: [

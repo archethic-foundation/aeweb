@@ -12,7 +12,7 @@ part of 'website_version.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$WebsiteVersion {
@@ -26,7 +26,9 @@ mixin _$WebsiteVersion {
   HostingRef? get content => throw _privateConstructorUsedError;
   X509CertificateData? get sslCertificate => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WebsiteVersion
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $WebsiteVersionCopyWith<WebsiteVersion> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -61,6 +63,8 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of WebsiteVersion
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -114,6 +118,8 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
     ) as $Val);
   }
 
+  /// Create a copy of WebsiteVersion
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $HostingRefCopyWith<$Res>? get content {
@@ -128,11 +134,11 @@ class _$WebsiteVersionCopyWithImpl<$Res, $Val extends WebsiteVersion>
 }
 
 /// @nodoc
-abstract class _$$_WebsiteVersionCopyWith<$Res>
+abstract class _$$WebsiteVersionImplCopyWith<$Res>
     implements $WebsiteVersionCopyWith<$Res> {
-  factory _$$_WebsiteVersionCopyWith(
-          _$_WebsiteVersion value, $Res Function(_$_WebsiteVersion) then) =
-      __$$_WebsiteVersionCopyWithImpl<$Res>;
+  factory _$$WebsiteVersionImplCopyWith(_$WebsiteVersionImpl value,
+          $Res Function(_$WebsiteVersionImpl) then) =
+      __$$WebsiteVersionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -151,13 +157,15 @@ abstract class _$$_WebsiteVersionCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_WebsiteVersionCopyWithImpl<$Res>
-    extends _$WebsiteVersionCopyWithImpl<$Res, _$_WebsiteVersion>
-    implements _$$_WebsiteVersionCopyWith<$Res> {
-  __$$_WebsiteVersionCopyWithImpl(
-      _$_WebsiteVersion _value, $Res Function(_$_WebsiteVersion) _then)
+class __$$WebsiteVersionImplCopyWithImpl<$Res>
+    extends _$WebsiteVersionCopyWithImpl<$Res, _$WebsiteVersionImpl>
+    implements _$$WebsiteVersionImplCopyWith<$Res> {
+  __$$WebsiteVersionImplCopyWithImpl(
+      _$WebsiteVersionImpl _value, $Res Function(_$WebsiteVersionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of WebsiteVersion
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -171,7 +179,7 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
     Object? content = freezed,
     Object? sslCertificate = freezed,
   }) {
-    return _then(_$_WebsiteVersion(
+    return _then(_$WebsiteVersionImpl(
       transactionRefAddress: null == transactionRefAddress
           ? _value.transactionRefAddress
           : transactionRefAddress // ignore: cast_nullable_to_non_nullable
@@ -214,8 +222,8 @@ class __$$_WebsiteVersionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_WebsiteVersion implements _WebsiteVersion {
-  const _$_WebsiteVersion(
+class _$WebsiteVersionImpl implements _WebsiteVersion {
+  const _$WebsiteVersionImpl(
       {required this.transactionRefAddress,
       required this.timestamp,
       this.publisher = '',
@@ -256,10 +264,10 @@ class _$_WebsiteVersion implements _WebsiteVersion {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_WebsiteVersion &&
+            other is _$WebsiteVersionImpl &&
             (identical(other.transactionRefAddress, transactionRefAddress) ||
                 other.transactionRefAddress == transactionRefAddress) &&
             (identical(other.timestamp, timestamp) ||
@@ -281,11 +289,14 @@ class _$_WebsiteVersion implements _WebsiteVersion {
   int get hashCode => Object.hash(runtimeType, transactionRefAddress, timestamp,
       publisher, filesCount, size, fees, published, content, sslCertificate);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of WebsiteVersion
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_WebsiteVersionCopyWith<_$_WebsiteVersion> get copyWith =>
-      __$$_WebsiteVersionCopyWithImpl<_$_WebsiteVersion>(this, _$identity);
+  _$$WebsiteVersionImplCopyWith<_$WebsiteVersionImpl> get copyWith =>
+      __$$WebsiteVersionImplCopyWithImpl<_$WebsiteVersionImpl>(
+          this, _$identity);
 }
 
 abstract class _WebsiteVersion implements WebsiteVersion {
@@ -298,7 +309,7 @@ abstract class _WebsiteVersion implements WebsiteVersion {
       final int fees,
       final bool published,
       final HostingRef? content,
-      final X509CertificateData? sslCertificate}) = _$_WebsiteVersion;
+      final X509CertificateData? sslCertificate}) = _$WebsiteVersionImpl;
 
   @override
   String get transactionRefAddress;
@@ -318,8 +329,11 @@ abstract class _WebsiteVersion implements WebsiteVersion {
   HostingRef? get content;
   @override
   X509CertificateData? get sslCertificate;
+
+  /// Create a copy of WebsiteVersion
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_WebsiteVersionCopyWith<_$_WebsiteVersion> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$WebsiteVersionImplCopyWith<_$WebsiteVersionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

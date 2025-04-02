@@ -45,7 +45,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
           ),
           body: Stack(
             children: [
-              const AEWebBackground(withAnimation: true),
+              const AEWebBackground(),
               const Column(
                 children: [
                   WelcomeTitle(),

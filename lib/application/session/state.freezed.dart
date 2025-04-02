@@ -12,7 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Session {
@@ -26,7 +26,9 @@ mixin _$Session {
   StreamSubscription<Account>? get accountStreamSub =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SessionCopyWith<Session> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -58,6 +60,8 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -106,6 +110,8 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
     ) as $Val);
   }
 
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SubscriptionCopyWith<Account, $Res>? get accountSub {
@@ -120,10 +126,10 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
 }
 
 /// @nodoc
-abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
-  factory _$$_SessionCopyWith(
-          _$_Session value, $Res Function(_$_Session) then) =
-      __$$_SessionCopyWithImpl<$Res>;
+abstract class _$$SessionImplCopyWith<$Res> implements $SessionCopyWith<$Res> {
+  factory _$$SessionImplCopyWith(
+          _$SessionImpl value, $Res Function(_$SessionImpl) then) =
+      __$$SessionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -141,12 +147,15 @@ abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$$_SessionCopyWithImpl<$Res>
-    extends _$SessionCopyWithImpl<$Res, _$_Session>
-    implements _$$_SessionCopyWith<$Res> {
-  __$$_SessionCopyWithImpl(_$_Session _value, $Res Function(_$_Session) _then)
+class __$$SessionImplCopyWithImpl<$Res>
+    extends _$SessionCopyWithImpl<$Res, _$SessionImpl>
+    implements _$$SessionImplCopyWith<$Res> {
+  __$$SessionImplCopyWithImpl(
+      _$SessionImpl _value, $Res Function(_$SessionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -159,7 +168,7 @@ class __$$_SessionCopyWithImpl<$Res>
     Object? accountSub = freezed,
     Object? accountStreamSub = freezed,
   }) {
-    return _then(_$_Session(
+    return _then(_$SessionImpl(
       endpoint: null == endpoint
           ? _value.endpoint
           : endpoint // ignore: cast_nullable_to_non_nullable
@@ -198,8 +207,8 @@ class __$$_SessionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Session extends _Session {
-  const _$_Session(
+class _$SessionImpl extends _Session {
+  const _$SessionImpl(
       {this.endpoint = '',
       this.nameAccount = '',
       this.oldNameAccount = '',
@@ -239,10 +248,10 @@ class _$_Session extends _Session {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Session &&
+            other is _$SessionImpl &&
             (identical(other.endpoint, endpoint) ||
                 other.endpoint == endpoint) &&
             (identical(other.nameAccount, nameAccount) ||
@@ -272,11 +281,13 @@ class _$_Session extends _Session {
       accountSub,
       accountStreamSub);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SessionCopyWith<_$_Session> get copyWith =>
-      __$$_SessionCopyWithImpl<_$_Session>(this, _$identity);
+  _$$SessionImplCopyWith<_$SessionImpl> get copyWith =>
+      __$$SessionImplCopyWithImpl<_$SessionImpl>(this, _$identity);
 }
 
 abstract class _Session extends Session {
@@ -288,7 +299,7 @@ abstract class _Session extends Session {
       final String error,
       final bool isConnected,
       final Subscription<Account>? accountSub,
-      final StreamSubscription<Account>? accountStreamSub}) = _$_Session;
+      final StreamSubscription<Account>? accountStreamSub}) = _$SessionImpl;
   const _Session._() : super._();
 
   @override
@@ -307,8 +318,11 @@ abstract class _Session extends Session {
   Subscription<Account>? get accountSub;
   @override
   StreamSubscription<Account>? get accountStreamSub;
+
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_SessionCopyWith<_$_Session> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SessionImplCopyWith<_$SessionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

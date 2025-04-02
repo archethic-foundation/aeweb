@@ -111,7 +111,7 @@ class _UpdateWebsiteSyncSheetState
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color: ArchethicThemeBase.neutral0.withValues(alpha: 0.2),
                     height: 1,
                   ),
                 ),
