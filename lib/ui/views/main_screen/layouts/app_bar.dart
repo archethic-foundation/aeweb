@@ -13,10 +13,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
   const AppBarMainScreen({
     super.key,
-    required this.onAEMenuTapped,
   });
-
-  final Function() onAEMenuTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -244,13 +241,6 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ],
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          IconButton(
-            icon: const Icon(Iconsax.element_3),
-            onPressed: onAEMenuTapped,
           ),
           const SizedBox(
             width: 16,

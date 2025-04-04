@@ -2,14 +2,19 @@
 import 'dart:convert';
 
 import 'package:aeweb/model/website_version.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 
-class ReadWebsiteVersionUseCases {
+class ReadWebsiteVersionUseCase {
+  ReadWebsiteVersionUseCase({
+    required this.apiService,
+  });
+
+  final archethic.ApiService apiService;
+
   Future<WebsiteVersion?> getRemote(String transactionRefAddress) async {
     late WebsiteVersion websiteVersion;
 
-    final transactionMap = await sl.get<ApiService>().getTransaction(
+    final transactionMap = await apiService.getTransaction(
       [transactionRefAddress],
       request:
           'address, validationStamp { timestamp, ledgerOperations { fee } } data { content }',
@@ -19,7 +24,7 @@ class ReadWebsiteVersionUseCases {
         transaction.data != null &&
         transaction.data!.content != null) {
       var size = 0;
-      final hosting = HostingRef.fromJson(
+      final hosting = archethic.HostingRef.fromJson(
         jsonDecode(transaction.data!.content!),
       );
 

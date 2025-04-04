@@ -7,7 +7,7 @@ part of 'websites.dart';
 // **************************************************************************
 
 String _$websitesRepositoryHash() =>
-    r'2d2a0ff7a595ecfa5b7c4f44f4460f6f9289984c';
+    r'1bc1a30d31197ea83ab96a78d8017c37dfe171a6';
 
 /// See also [_websitesRepository].
 @ProviderFor(_websitesRepository)
@@ -25,7 +25,7 @@ final _websitesRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _WebsitesRepositoryRef = AutoDisposeProviderRef<WebsitesRepository>;
-String _$fetchWebsitesHash() => r'5df5cdc5be89b73c14e82e73bf7918c9d14894bb';
+String _$fetchWebsitesHash() => r'ee78234727161b47a0804ca69801c64876956080';
 
 /// See also [_fetchWebsites].
 @ProviderFor(_fetchWebsites)
@@ -44,7 +44,7 @@ final _fetchWebsitesProvider =
 // ignore: unused_element
 typedef _FetchWebsitesRef = AutoDisposeFutureProviderRef<List<Website>>;
 String _$fetchWebsiteVersionsHash() =>
-    r'8d92709a0eb444847c6ae196deb4585b7b30bc15';
+    r'1e0ae564e48b9f7ac0ed30981221298fc3affb54';
 
 /// Copied from Dart SDK
 class _SystemHash {

@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/application/usecases.dart';
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/update_website_sync.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_circular_step_progress_indicator.dart';
@@ -217,17 +217,22 @@ class UpdateWebsiteInProgressPopup {
                                       children: <Widget>[
                                         const UpdateWebsiteCircularStepProgressIndicator(),
                                         InProgressBanner(
-                                          stepLabel: UpdateWebsiteSyncUseCases()
+                                          stepLabel: ref
+                                              .watch(
+                                                updateWebsiteSyncUseCaseProvider,
+                                              )
                                               .getStepLabel(
-                                            context,
-                                            updateWebsiteSync.step,
-                                          ),
-                                          infoMessage:
-                                              UpdateWebsiteSyncUseCases()
-                                                  .getConfirmLabel(
-                                            context,
-                                            updateWebsiteSync.step,
-                                          ),
+                                                context,
+                                                updateWebsiteSync.step,
+                                              ),
+                                          infoMessage: ref
+                                              .watch(
+                                                updateWebsiteSyncUseCaseProvider,
+                                              )
+                                              .getConfirmLabel(
+                                                context,
+                                                updateWebsiteSync.step,
+                                              ),
                                           errorMessage:
                                               updateWebsiteSync.stepError,
                                         ),

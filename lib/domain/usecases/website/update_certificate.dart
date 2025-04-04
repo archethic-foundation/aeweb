@@ -3,15 +3,26 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:aeweb/util/string_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UpdateCertificateUseCases with TransactionAEWebMixin {
+class UpdateCertificateUseCase
+    with TransactionAEWebMixin, aedappfm.TransactionMixin {
+  UpdateCertificateUseCase({
+    required this.apiService,
+    required this.dappClient,
+  });
+
+  final awc.ArchethicDAppClient dappClient;
+  final archethic.ApiService apiService;
+
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
@@ -31,10 +42,10 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     log('Get last transaction reference');
     updateCertificateNotifier.setStep(1);
 
-    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
+    final addressTxRef =
+        await getDeriveAddress(dappClient, keychainWebsiteService, '');
 
-    final lastTransactionReferenceMap =
-        await sl.get<ApiService>().getLastTransaction(
+    final lastTransactionReferenceMap = await apiService.getLastTransaction(
       [addressTxRef],
       request:
           'data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } }',
@@ -48,7 +59,7 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
       return;
     }
 
-    final lastHostingTransactionReference = HostingRef.fromJson(
+    final lastHostingTransactionReference = archethic.HostingRef.fromJson(
       jsonDecode(lastTransactionReference.data!.content!),
     );
 
@@ -62,6 +73,7 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
         .publicCert;
     var transactionReference = await newTransactionReference(
       lastHostingTransactionReference.metaData,
+      apiService,
       sslKey: privateKey,
       cert: publicCert,
     );
@@ -70,13 +82,20 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     updateCertificateNotifier.setStep(3);
     try {
       transactionReference = (await signTx(
+        dappClient,
         keychainWebsiteService,
         '',
         [transactionReference],
       ))
           .first;
     } catch (e) {
-      updateCertificateNotifier.setStepError((e as Failure).message);
+      updateCertificateNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
@@ -84,7 +103,10 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     log('Fees calculation');
     updateCertificateNotifier.setStep(4);
 
-    final feesRef = await calculateFees(transactionReference);
+    final feesRef = await calculateFees(
+      transactionReference,
+      apiService,
+    );
     log('feesRef: $feesRef');
 
     updateCertificateNotifier.setStep(5);
@@ -92,38 +114,45 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     log('Create transfer transaction to manage fees');
 
     final addressTxFiles =
-        await getDeriveAddress(keychainWebsiteService, 'files');
+        await getDeriveAddress(dappClient, keychainWebsiteService, 'files');
     log('keychainWebsiteService: $keychainWebsiteService');
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
-    final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
-    );
-    var transactionTransfer = Transaction(
+
+    var transactionTransfer = archethic.Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
-      data: Transaction.initData(),
-    ).addUCOTransfer(addressTxRef, toBigInt(feesRef));
+      data: archethic.Transaction.initData(),
+    ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
 
     updateCertificateNotifier.setStep(6);
 
-    final currentNameAccount = await getCurrentAccount();
+    final currentNameAccount = await getCurrentAccount(dappClient);
     log('Sign transaction transfer');
     try {
       transactionTransfer = (await signTx(
+        dappClient,
         Uri.encodeFull('archethic-wallet-$currentNameAccount'),
         '',
         [transactionTransfer],
       ))
           .first;
     } catch (e) {
-      updateCertificateNotifier.setStepError((e as Failure).message);
+      updateCertificateNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
 
     updateCertificateNotifier.setStep(7);
-    final feesTrf = await calculateFees(transactionTransfer);
+    final feesTrf = await calculateFees(
+      transactionTransfer,
+      apiService,
+    );
     log('feesTrf: $feesTrf');
 
     await updateCertificateNotifier.setGlobalFeesUCO(feesTrf + feesRef);
@@ -170,7 +199,11 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
 
     try {
       await sendTransactions(
-        <Transaction>[transactionTransfer, transactionReference],
+        <archethic.Transaction>[
+          transactionTransfer,
+          transactionReference,
+        ],
+        apiService,
       );
 
       if (ref
@@ -182,7 +215,13 @@ class UpdateCertificateUseCases with TransactionAEWebMixin {
     } catch (e) {
       updateCertificateNotifier
         ..setStep(11)
-        ..setStepError(e.toString().replaceAll('Exception: ', '').trim());
+        ..setStepError(
+          (e as aedappfm.Failure)
+                  .toString()
+                  .replaceAll('Exception: ', '')
+                  .capitalize() ??
+              e.toString(),
+        );
     }
   }
 

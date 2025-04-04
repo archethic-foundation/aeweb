@@ -90,7 +90,7 @@ class RoutesPath {
       GoRoute(
         path: RoutesPath().home(),
         builder: (BuildContext context, GoRouterState state) {
-          final session = ref.read(SessionProviders.session);
+          final session = ref.read(sessionNotifierProvider);
 
           if (session.isConnected) {
             return const MainScreen();

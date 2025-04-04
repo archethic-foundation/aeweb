@@ -1,17 +1,17 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
+import 'package:aeweb/application/api_service.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_treeview/flutter_treeview.dart';
+import 'package:flutter_treeview2/flutter_treeview2.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExplorerFilesScreen extends ConsumerStatefulWidget {
@@ -285,7 +285,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
             for (final address in metaData.addresses) {
               launchUrl(
                 Uri.parse(
-                  '${sl.get<archethic.ApiService>().endpoint}/explorer/transaction/$address',
+                  '${ref.watch(apiServiceProvider).endpoint}/explorer/transaction/$address',
                 ),
               );
             }

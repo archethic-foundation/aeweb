@@ -52,11 +52,11 @@ class WelcomeConnectWalletBtnState
                 onPressed: () {
                   startBusyContext(
                     () async {
-                      final sessionNotifier =
-                          ref.read(SessionProviders.session.notifier);
-                      await sessionNotifier.connectToWallet();
+                      await ref
+                          .read(sessionNotifierProvider.notifier)
+                          .connectWallet();
 
-                      final session = ref.read(SessionProviders.session);
+                      final session = ref.read(sessionNotifierProvider);
                       if (session.error.isNotEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(

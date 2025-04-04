@@ -1,6 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
+import 'package:aeweb/application/usecases.dart';
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/domain/usecases/website/unpublish_website.dart';
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/unpublish_website/layouts/components/unpublish_website_circular_step_progress_indicator.dart';
@@ -216,17 +216,22 @@ class UnpublishWebsiteInProgressPopup {
                                       children: <Widget>[
                                         const UnpublishWebsiteCircularStepProgressIndicator(),
                                         InProgressBanner(
-                                          stepLabel: UnpublishWebsiteUseCases()
+                                          stepLabel: ref
+                                              .watch(
+                                                unpublishWebsiteUseCaseProvider,
+                                              )
                                               .getStepLabel(
-                                            context,
-                                            unpublishWebsite.step,
-                                          ),
-                                          infoMessage:
-                                              UnpublishWebsiteUseCases()
-                                                  .getConfirmLabel(
-                                            context,
-                                            unpublishWebsite.step,
-                                          ),
+                                                context,
+                                                unpublishWebsite.step,
+                                              ),
+                                          infoMessage: ref
+                                              .watch(
+                                                unpublishWebsiteUseCaseProvider,
+                                              )
+                                              .getConfirmLabel(
+                                                context,
+                                                unpublishWebsite.step,
+                                              ),
                                           errorMessage:
                                               unpublishWebsite.stepError,
                                         ),

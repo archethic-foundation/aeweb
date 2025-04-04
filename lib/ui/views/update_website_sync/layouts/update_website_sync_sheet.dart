@@ -65,7 +65,7 @@ class _UpdateWebsiteSyncSheetState
 
   @override
   Widget build(BuildContext context) {
-    final session = ref.watch(SessionProviders.session);
+    final session = ref.watch(sessionNotifierProvider);
     final updateWebsiteSync =
         ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm);
 

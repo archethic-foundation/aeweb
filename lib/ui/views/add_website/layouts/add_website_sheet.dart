@@ -23,7 +23,7 @@ class AddWebsiteSheet extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final session = ref.watch(SessionProviders.session);
+    final session = ref.watch(sessionNotifierProvider);
     final addWebsite = ref.watch(AddWebsiteFormProvider.addWebsiteForm);
 
     Future<bool> _submitForm() async {

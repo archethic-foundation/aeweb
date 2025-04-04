@@ -9,7 +9,7 @@ environment:
   flutter: ">=3.27.0"
 
 dependencies:
-  archethic_dapp_framework_flutter: ^3.0.1
+  archethic_dapp_framework_flutter: ^3.4.2
   
   # A client dart library to interact with Archethic Wallet RPC API.
   archethic_wallet_client: ^2.2.1
@@ -30,7 +30,7 @@ dependencies:
   # Collections and utilities functions and classes related to collections.
   collection: ^1.18.0
 
-  # Implementations of SHA, MD5, and HMAC cryptographic functions
+  # Implementations of SHflutteA, MD5, and HMAC cryptographic functions
   crypto: ^3.0.3
 
   # A flutter package to let users easily add a dashed border around any widget.
@@ -61,7 +61,7 @@ dependencies:
   flutter_svg: ^2.0.17
 
   # A tree widget for Flutter that can be used to display nested, hierarchical data. It includes a number of features like styling labels, icons, and import and export utilities.
-  flutter_treeview: ^1.0.7+1
+  flutter_treeview2: ^1.0.0+2
 
   # Annotations for freezed
   freezed_annotation: ^2.4.4

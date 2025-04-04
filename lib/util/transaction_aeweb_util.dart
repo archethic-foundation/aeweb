@@ -3,13 +3,16 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:math' as math;
 import 'dart:typed_data';
-import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+
+const blockchainTxVersion = 3;
 
 mixin TransactionAEWebMixin {
   Future<Transaction> newTransactionReference(
-    Map<String, HostingRefContentMetaData> metaData, {
+    Map<String, HostingRefContentMetaData> metaData,
+    ApiService apiService, {
     Uint8List? sslKey,
     Uint8List? cert,
   }) async {
@@ -29,18 +32,14 @@ mixin TransactionAEWebMixin {
         sslCertificate: utf8.decode(cert),
       );
     }
-    final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
-    );
+
     final transaction = Transaction(
       type: 'hosting',
-      version: blockchainTxVersion,
       data: Transaction.initData(),
     ).setContent(jsonEncode(hosting));
 
     if (sslKey != null) {
-      final storageNoncePublicKey =
-          await sl.get<ApiService>().getStorageNoncePublicKey();
+      final storageNoncePublicKey = await apiService.getStorageNoncePublicKey();
       final aesKey = uint8ListToHex(
         Uint8List.fromList(
           List<int>.generate(32, (int i) => math.Random.secure().nextInt(256)),
@@ -60,12 +59,8 @@ mixin TransactionAEWebMixin {
   }
 
   Future<Transaction> newEmptyTransaction() async {
-    final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
-    );
     return Transaction(
       type: 'data',
-      version: blockchainTxVersion,
       data: Transaction.initData(),
     ).setContent('website unpublished');
   }
@@ -73,13 +68,9 @@ mixin TransactionAEWebMixin {
   Future<Transaction> newTransactionFile(
     Map<String, dynamic> txsContent,
   ) async {
-    final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
-    );
     final content = txsContent['content'];
     return Transaction(
       type: 'hosting',
-      version: blockchainTxVersion,
       data: Transaction.initData(),
     ).setContent(jsonEncode(content));
   }
@@ -114,73 +105,18 @@ mixin TransactionAEWebMixin {
     return metaData;
   }
 
-  Future<List<Transaction>> signTx(
+  Future<String> getDeriveAddress(
+    awc.ArchethicDAppClient dappClient,
     String serviceName,
     String pathSuffix,
-    List<Transaction> transactions,
   ) async {
-    final newTransactions = <Transaction>[];
-
-    final payload = SignTransactionRequest(
-      serviceName: serviceName,
-      pathSuffix: pathSuffix,
-      transactions: transactions
-          .map(
-            (Transaction x) => SignTransactionRequestData(
-              data: x.data!,
-              type: x.type!,
-              version: x.version,
-            ),
-          )
-          .toList(),
-    );
-
-    final result =
-        await sl.get<ArchethicDAppClient>().signTransactions(payload);
-    result.when(
-      failure: (failure) {
-        log(
-          'Signature failed',
-          error: failure,
-        );
-        throw failure;
-      },
-      success: (result) {
-        for (var i = 0; i < transactions.length; i++) {
-          newTransactions.add(
-            transactions[i]
-                .setAddress(Address(address: result.signedTxs[i].address))
-                .setPreviousSignatureAndPreviousPublicKey(
-                  result.signedTxs[i].previousSignature,
-                  result.signedTxs[i].previousPublicKey,
-                )
-                .setOriginSignature(result.signedTxs[i].originSignature),
-          );
-        }
-      },
-    );
-    return newTransactions;
-  }
-
-  Future<double> calculateFees(Transaction transaction) async {
-    const slippage = 1.01;
-    final transactionFee =
-        await sl.get<ApiService>().getTransactionFee(transaction);
-    final fees = fromBigInt(transactionFee.fee) * slippage;
-    log(
-      'Transaction ${transaction.address} : $fees UCO',
-    );
-    return fees;
-  }
-
-  Future<String> getDeriveAddress(String serviceName, String pathSuffix) async {
     var address = '';
-    (await sl.get<ArchethicDAppClient>().keychainDeriveAddress(
-              KeychainDeriveAddressRequest(
-                serviceName: serviceName,
-                pathSuffix: pathSuffix,
-              ),
-            ))
+    (await dappClient.keychainDeriveAddress(
+      KeychainDeriveAddressRequest(
+        serviceName: serviceName,
+        pathSuffix: pathSuffix,
+      ),
+    ))
         .when(
       failure: (failure) {
         throw Exception('An error occurs');
@@ -192,25 +128,13 @@ mixin TransactionAEWebMixin {
     return address;
   }
 
-  Future<String> getCurrentAccount() async {
-    var accountName = '';
-    final result = await sl.get<ArchethicDAppClient>().getCurrentAccount();
-
-    result.when(
-      failure: (failure) {
-        throw Exception('An error occurs');
-      },
-      success: (result) {
-        accountName = result.shortName;
-      },
+  Future<dynamic> createWebsiteServiceInKeychain(
+    awc.ArchethicDAppClient dappClient,
+    String websiteName,
+  ) async {
+    final responseAddService = await dappClient.addService(
+      AddServiceRequest(name: 'aeweb-$websiteName'),
     );
-    return accountName;
-  }
-
-  Future<dynamic> createWebsiteServiceInKeychain(String websiteName) async {
-    final responseAddService = await sl.get<ArchethicDAppClient>().addService(
-          AddServiceRequest(name: 'aeweb-$websiteName'),
-        );
     return responseAddService.when(
       failure: (failure) {
         log(

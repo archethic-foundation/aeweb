@@ -1,14 +1,14 @@
 import 'dart:developer';
 
-import 'package:aeweb/domain/usecases/website/read_website_version.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
-import 'package:aeweb/ui/views/util/components/popup_template.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -39,7 +39,7 @@ class PathSyncPopup with FileMixin {
     return showDialog(
       context: context,
       builder: (context) {
-        return PopupTemplate(
+        return aedappfm.PopupTemplate(
           popupTitle: AppLocalizations.of(context)!.pathSyncPopupTitle,
           popupHeight: 320,
           popupContent: StatefulBuilder(
@@ -233,13 +233,17 @@ class PathSyncPopup with FileMixin {
                           applyGitIgnoreRules: applyGitIgnoreRules ?? false,
                         );
                       }
-
-                      final remoteFiles =
-                          (await ReadWebsiteVersionUseCases().getRemote(
-                        transactionRefAddress,
-                      ))!
-                              .content!
-                              .metaData;
+                      // TODO(reddwarf): supp
+                      /*
+                      final remoteFiles = (await ref
+                              .watch(
+                                readWebsiteVersionUseCaseProvider,
+                              )
+                              .getRemote(
+                                transactionRefAddress,
+                              ))!
+                          .content!
+                          .metaData;
 
                       context
                         ..pop() // close popup
@@ -257,7 +261,7 @@ class PathSyncPopup with FileMixin {
                               remoteFiles,
                             ),
                           },
-                        );
+                        );*/
                     },
                   ),
                 ],

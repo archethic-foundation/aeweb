@@ -14,7 +14,7 @@ class IconCloseConnection extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final sessionNotifier = ref.watch(SessionProviders.session.notifier);
+    final sessionNotifier = ref.watch(sessionNotifierProvider.notifier);
 
     return IconButtonAnimated(
       onPressed: () async {

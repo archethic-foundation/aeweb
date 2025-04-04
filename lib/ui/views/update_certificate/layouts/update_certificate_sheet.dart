@@ -41,7 +41,7 @@ class _UpdateCertificateSheetState
 
   @override
   Widget build(BuildContext context) {
-    final session = ref.watch(SessionProviders.session);
+    final session = ref.watch(sessionNotifierProvider);
     final updateCertificate =
         ref.watch(UpdateCertificateFormProvider.updateCertificateForm);
 

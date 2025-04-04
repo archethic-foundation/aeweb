@@ -1,6 +1,5 @@
 import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/header.dart';
-import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,9 +7,7 @@ class AppBarWelcome extends ConsumerStatefulWidget
     implements PreferredSizeWidget {
   const AppBarWelcome({
     super.key,
-    required this.onAEMenuTapped,
   });
-  final Function() onAEMenuTapped;
   @override
   Size get preferredSize => AppBar().preferredSize;
 
@@ -35,15 +32,6 @@ class _AppBarWelcomeState extends ConsumerState<AppBarWelcome> {
         elevation: 0,
         leading: const Header(),
         leadingWidth: MediaQuery.of(context).size.width,
-        actions: [
-          IconButton(
-            icon: const Icon(Iconsax.element_3),
-            onPressed: widget.onAEMenuTapped,
-          ),
-          const SizedBox(
-            width: 16,
-          ),
-        ],
       ),
     );
   }

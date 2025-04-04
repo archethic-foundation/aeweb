@@ -41,7 +41,7 @@ class AddWebsiteBottomBar extends ConsumerWidget {
       return false;
     }
 
-    final session = ref.watch(SessionProviders.session);
+    final session = ref.watch(sessionNotifierProvider);
 
     return Padding(
       padding: const EdgeInsets.only(left: 10, top: 10, bottom: 20),

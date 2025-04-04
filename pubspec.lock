@@ -456,14 +456,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.17"
-  flutter_treeview:
+  flutter_treeview2:
     dependency: "direct main"
     description:
-      name: flutter_treeview
-      sha256: ce7a66452e02877700890cb674773ea0af28d914192acfb5bf55a50ce35b5819
+      name: flutter_treeview2
+      sha256: "6cd1b3aabc9ff53540a2f4569ba33ce4d79b754243a5d99ad50c7cd84caa7499"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.7+1"
+    version: "1.0.0+2"
   flutter_web_plugins:
     dependency: transitive
     description: flutter

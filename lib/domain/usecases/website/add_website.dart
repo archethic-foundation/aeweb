@@ -7,17 +7,31 @@ import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:aeweb/util/string_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class AddWebsiteUseCases
-    with FileMixin, TransactionAEWebMixin, CertificateMixin {
+class AddWebsiteUseCase
+    with
+        FileMixin,
+        TransactionAEWebMixin,
+        CertificateMixin,
+        aedappfm.TransactionMixin {
+  AddWebsiteUseCase({
+    required this.apiService,
+    required this.dappClient,
+  });
+
+  final awc.ArchethicDAppClient dappClient;
+  final archethic.ApiService apiService;
+
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
@@ -33,10 +47,11 @@ class AddWebsiteUseCases
     log('Create service in the keychain');
     addWebsiteNotifier.setStep(1);
     final resultCreate = await createWebsiteServiceInKeychain(
+      dappClient,
       ref.read(AddWebsiteFormProvider.addWebsiteForm).name,
     );
-    if (resultCreate is Failure) {
-      addWebsiteNotifier.setStepError(resultCreate.message);
+    if (resultCreate is aedappfm.Failure) {
+      addWebsiteNotifier.setStepError(resultCreate.toString());
       log('Transaction failed');
       return;
     }
@@ -44,8 +59,9 @@ class AddWebsiteUseCases
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(AddWebsiteFormProvider.addWebsiteForm).name}',
     );
-    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
-    await sl.get<DBHelper>().saveWebsite(
+    final addressTxRef =
+        await getDeriveAddress(dappClient, keychainWebsiteService, '');
+    await aedappfm.sl.get<DBHelper>().saveWebsite(
           Website(
             name: ref.read(AddWebsiteFormProvider.addWebsiteForm).name,
             genesisAddress: addressTxRef,
@@ -54,7 +70,7 @@ class AddWebsiteUseCases
 
     log('Get the list of files in the path');
     addWebsiteNotifier.setStep(2);
-    late final Map<String, HostingRefContentMetaData>? files;
+    late final Map<String, archethic.HostingRefContentMetaData>? files;
     if (kIsWeb) {
       files = await FileMixin.listFilesFromZip(
         ref.read(AddWebsiteFormProvider.addWebsiteForm).zipFile!,
@@ -95,7 +111,7 @@ class AddWebsiteUseCases
       );
     }
 
-    var transactionsList = <Transaction>[];
+    var transactionsList = <archethic.Transaction>[];
     for (final content in contents) {
       transactionsList.add(
         await newTransactionFile(content),
@@ -106,12 +122,19 @@ class AddWebsiteUseCases
     addWebsiteNotifier.setStep(4);
     try {
       transactionsList = await signTx(
+        dappClient,
         keychainWebsiteService,
         'files',
         transactionsList,
       );
     } catch (e) {
-      addWebsiteNotifier.setStepError((e as Failure).message);
+      addWebsiteNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
@@ -126,6 +149,7 @@ class AddWebsiteUseCases
         ref.read(AddWebsiteFormProvider.addWebsiteForm).publicCert;
     var transactionReference = await newTransactionReference(
       filesWithAddress,
+      apiService,
       sslKey: privateKey,
       cert: publicCert,
     );
@@ -135,13 +159,20 @@ class AddWebsiteUseCases
 
     try {
       transactionReference = (await signTx(
+        dappClient,
         keychainWebsiteService,
         '',
         [transactionReference],
       ))
           .first;
     } catch (e) {
-      addWebsiteNotifier.setStepError((e as Failure).message);
+      addWebsiteNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
@@ -152,53 +183,66 @@ class AddWebsiteUseCases
     for (var i = 0; i < transactionsList.length; i++) {
       log('previousPublicKey: ${transactionsList[i].previousPublicKey!}');
 
-      final _fees = await calculateFees(transactionsList[i]);
+      final _fees = await calculateFees(
+        transactionsList[i],
+        apiService,
+      );
       feesFiles = feesFiles + _fees;
       log('feesFiles: ${transactionsList[i].address} $_fees');
     }
     log('feesFiles: $feesFiles');
 
-    final feesRef = await calculateFees(transactionReference);
+    final feesRef = await calculateFees(
+      transactionReference,
+      apiService,
+    );
     log('feesRef: $feesRef');
 
     log('Create transfer transaction to manage fees');
     addWebsiteNotifier.setStep(8);
 
     final addressTxFiles =
-        await getDeriveAddress(keychainWebsiteService, 'files');
+        await getDeriveAddress(dappClient, keychainWebsiteService, 'files');
     log('keychainWebsiteService: $keychainWebsiteService');
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
-    final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
-    );
-    var transactionTransfer = Transaction(
+
+    var transactionTransfer = archethic.Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
-      data: Transaction.initData(),
-    ).addUCOTransfer(addressTxRef, toBigInt(feesRef));
+      data: archethic.Transaction.initData(),
+    ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
     if (feesFiles > 0) {
-      transactionTransfer.addUCOTransfer(addressTxFiles, toBigInt(feesFiles));
+      transactionTransfer.addUCOTransfer(
+        addressTxFiles,
+        archethic.toBigInt(feesFiles),
+      );
     }
 
-    final currentNameAccount = await getCurrentAccount();
+    final currentNameAccount = await getCurrentAccount(dappClient);
     log('Sign transaction transfer');
     addWebsiteNotifier.setStep(9);
     try {
       transactionTransfer = (await signTx(
+        dappClient,
         Uri.encodeFull('archethic-wallet-$currentNameAccount'),
         '',
         [transactionTransfer],
       ))
           .first;
     } catch (e) {
-      addWebsiteNotifier.setStepError((e as Failure).message);
+      addWebsiteNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
 
     addWebsiteNotifier.setStep(10);
-    final feesTrf = await calculateFees(transactionTransfer);
+    final feesTrf = await calculateFees(transactionTransfer, apiService);
     log('feesTrf: $feesTrf');
 
     await addWebsiteNotifier.setGlobalFeesUCO(feesFiles + feesTrf + feesRef);
@@ -239,16 +283,17 @@ class AddWebsiteUseCases
     addWebsiteNotifier.setStep(12);
     try {
       await sendTransactions(
-        <Transaction>[
+        <archethic.Transaction>[
           transactionTransfer,
           ...transactionsList,
           transactionReference,
         ],
+        apiService,
       );
 
       if (ref.read(AddWebsiteFormProvider.addWebsiteForm).stepError.isEmpty) {
         addWebsiteNotifier.setStep(13);
-        log('Website is deployed at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef');
+        log('Website is deployed at : ${apiService.endpoint}/aeweb/$addressTxRef');
       }
     } catch (e) {
       addWebsiteNotifier

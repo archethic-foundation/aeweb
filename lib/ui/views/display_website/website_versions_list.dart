@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:aeweb/application/api_service.dart';
 import 'package:aeweb/application/websites.dart';
 import 'package:aeweb/model/website_version.dart';
 import 'package:aeweb/model/website_version_tx.dart';
@@ -11,7 +12,6 @@ import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/util/certificate_util.dart';
 import 'package:aeweb/util/file_util.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
@@ -406,7 +406,8 @@ Widget _popupMenuButton(
           break;
 
         case 'VisitWebsite':
-          final url = '${sl.get<ApiService>().endpoint}/aeweb/$genesisAddress';
+          final url =
+              '${ref.watch(apiServiceProvider).endpoint}/aeweb/$genesisAddress';
           launchUrl(
             Uri.parse(
               url,
@@ -470,7 +471,7 @@ Widget _popupMenuButton(
         case 'refTx':
           launchUrl(
             Uri.parse(
-              '${sl.get<ApiService>().endpoint}/explorer/transaction/${websiteVersion.transactionRefAddress}',
+              '${ref.watch(apiServiceProvider).endpoint}/explorer/transaction/${websiteVersion.transactionRefAddress}',
             ),
           );
           break;

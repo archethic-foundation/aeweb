@@ -3,15 +3,26 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:aeweb/util/string_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/widgets.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UnpublishWebsiteUseCases with TransactionAEWebMixin {
+class UnpublishWebsiteUseCase
+    with TransactionAEWebMixin, aedappfm.TransactionMixin {
+  UnpublishWebsiteUseCase({
+    required this.apiService,
+    required this.dappClient,
+  });
+
+  final awc.ArchethicDAppClient dappClient;
+  final archethic.ApiService apiService;
+
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
@@ -31,10 +42,10 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
     log('Get last transaction reference');
     unpublishWebsiteNotifier.setStep(1);
 
-    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
+    final addressTxRef =
+        await getDeriveAddress(dappClient, keychainWebsiteService, '');
 
-    final lastTransactionReferenceMap =
-        await sl.get<ApiService>().getLastTransaction(
+    final lastTransactionReferenceMap = await apiService.getLastTransaction(
       [addressTxRef],
       request: 'data {content}',
     );
@@ -55,13 +66,20 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
     unpublishWebsiteNotifier.setStep(3);
     try {
       transactionReference = (await signTx(
+        dappClient,
         keychainWebsiteService,
         '',
         [transactionReference],
       ))
           .first;
     } catch (e) {
-      unpublishWebsiteNotifier.setStepError((e as Failure).message);
+      unpublishWebsiteNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
@@ -69,7 +87,7 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
     log('Fees calculation');
     unpublishWebsiteNotifier.setStep(4);
 
-    final feesRef = await calculateFees(transactionReference);
+    final feesRef = await calculateFees(transactionReference, apiService);
     log('feesRef: $feesRef');
 
     unpublishWebsiteNotifier.setStep(5);
@@ -78,34 +96,41 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
 
     log('keychainWebsiteService: $keychainWebsiteService');
     log('addressTxRef: $addressTxRef');
-    final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
-    );
-    var transactionTransfer = Transaction(
+
+    var transactionTransfer = archethic.Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
-      data: Transaction.initData(),
-    ).addUCOTransfer(addressTxRef, toBigInt(feesRef));
+      data: archethic.Transaction.initData(),
+    ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
 
     unpublishWebsiteNotifier.setStep(6);
 
-    final currentNameAccount = await getCurrentAccount();
+    final currentNameAccount = await getCurrentAccount(dappClient);
     log('Sign transaction transfer');
     try {
       transactionTransfer = (await signTx(
+        dappClient,
         Uri.encodeFull('archethic-wallet-$currentNameAccount'),
         '',
         [transactionTransfer],
       ))
           .first;
     } catch (e) {
-      unpublishWebsiteNotifier.setStepError((e as Failure).message);
+      unpublishWebsiteNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
 
     unpublishWebsiteNotifier.setStep(7);
-    final feesTrf = await calculateFees(transactionTransfer);
+    final feesTrf = await calculateFees(
+      transactionTransfer,
+      apiService,
+    );
     log('feesTrf: $feesTrf');
 
     await unpublishWebsiteNotifier.setGlobalFeesUCO(feesTrf + feesRef);
@@ -153,7 +178,8 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
 
     try {
       await sendTransactions(
-        <Transaction>[transactionTransfer, transactionReference],
+        <archethic.Transaction>[transactionTransfer, transactionReference],
+        apiService,
       );
 
       if (ref
@@ -161,7 +187,7 @@ class UnpublishWebsiteUseCases with TransactionAEWebMixin {
           .stepError
           .isEmpty) {
         unpublishWebsiteNotifier.setStep(10);
-        log('The Website is unpublished at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef');
+        log('The Website is unpublished at : ${apiService.endpoint}/aeweb/$addressTxRef');
       }
     } catch (e) {
       unpublishWebsiteNotifier
