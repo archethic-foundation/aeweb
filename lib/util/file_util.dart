@@ -182,14 +182,14 @@ mixin FileMixin {
   }
 
   String encodeContent(Uint8List rawData) {
-    final compressedData = GZipEncoder().encode(rawData);
-    return base64Url.encode(compressedData!);
+    final compressedData = const GZipEncoder().encode(rawData);
+    return base64Url.encode(compressedData);
   }
 
   Uint8List decodeContent(String data) {
     final compressedData = base64Url.decode(data);
     return Uint8List.fromList(
-      GZipDecoder().decodeBytes(compressedData),
+      const GZipDecoder().decodeBytes(compressedData),
     );
   }
 

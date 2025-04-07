@@ -174,8 +174,6 @@
     "btn_decline": "I decline",
     "betaVersionMaxFiles": "During the beta phase, please note that the maximum file upload size should not exceed 3 MB.",
     "logout": "Logout",
-    "archethicDashboardMenuWalletOnWayItem": "Archethic Wallet",
-    "archethicDashboardMenuWalletOnWayDesc": "Securely store, transfer and swap tokens and collectibles",
     "addWebsite": "Add a website",
     "websitesListVersionsPopupBVisitWebsite": "Visit the website",
     "addWebsiteProcessInterruptionWarning": "Are you sure you want to stop the website creation process?",

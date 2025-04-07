@@ -40,6 +40,7 @@ class SessionNotifier extends _$SessionNotifier {
 
     ref.watch(dappClientProvider).when(
       data: (dappClient) {
+        print('data');
         _listenConnectionState(dappClient);
 
         Future.delayed(

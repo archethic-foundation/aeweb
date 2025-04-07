@@ -9,20 +9,19 @@ environment:
   flutter: ">=3.27.0"
 
 dependencies:
-  archethic_dapp_framework_flutter: ^3.4.2
-  
-  # A client dart library to interact with Archethic Wallet RPC API.
-  archethic_wallet_client: ^2.2.1
-  #archethic_wallet_client:
+  #archethic_dapp_framework_flutter: ^3.4.3
+  #archethic_dapp_framework_flutter:
   #  git:
-  #    url: https://github.com/archethic-foundation/archethic-wallet-client-dart.git
-  #    ref: dev
+  #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
+  #    ref: main
+  archethic_dapp_framework_flutter:
+    path: ../archethic-dapp-framework-flutter
 
   # Compression
-  archive: ^3.6.1
+  archive: ^4.0.2
 
   # Common util classes for Strings, Dates, X509, PKCS, Cryptographie and more.
-  basic_utils: ^5.7.0
+  basic_utils: ^5.8.0
 
   # Centralized loading widget management
   busy: ^1.0.3
@@ -54,9 +53,6 @@ dependencies:
   # State management
   flutter_riverpod: ^2.6.1
 
-  # Provides a collection of Flutter grids layouts (staggered, masonry, quilted, woven, etc.).
-  flutter_staggered_grid_view: ^0.7.0
-
   # An SVG rendering and widget library for Flutter, which allows painting and displaying Scalable Vector Graphics 1.1 files.
   flutter_svg: ^2.0.17
 
@@ -65,9 +61,6 @@ dependencies:
 
   # Annotations for freezed
   freezed_annotation: ^2.4.4
-
-  # Simple direct Service Locator that allows to decouple the interface from a concrete implementation and to access the concrete implementation from everywhere in your App
-  get_it: ^7.2.0
 
   # A declarative router for Flutter based on Navigation 2 supporting deep linking, data-driven routes and more
   go_router: ^14.6.2
@@ -85,17 +78,8 @@ dependencies:
   # Classes and helper functions that support JSON code generation via the `json_serializable` package.
   json_annotation: ^4.8.1
 
-  # A collection loading animations written in pure dart. Out of the box, no extra dependency.
-  loading_indicator: ^3.1.1
-
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
   package_info_plus: ^8.0.2
-
-  # A string-based path manipulation library. All of the path operations you know and love, with solid support for Windows, POSIX (Linux and Mac OS X), and the web.
-  path: ^1.9.0
-
-  # PhoenixSocket provides a feature-complete implementation of Phoenix Sockets, using a single API based on StreamChannels compatible with any deployment of Flutter
-  phoenix_socket: ^0.7.7
 
   # A package exposing annotations for riverpod_generator
   riverpod_annotation: ^2.6.1
@@ -112,7 +96,6 @@ dependencies:
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.
   build_runner: ^2.4.6
-  custom_lint: ^0.7.0
   # Code generation for immutable classes that has a simple syntax/API without compromising on the features.
   freezed: ^2.5.7
   # Extension for Hive. Automatically generates TypeAdapters to store any class.
@@ -121,10 +104,8 @@ dev_dependencies:
   json_serializable: ^6.7.1
   # A code generator for Riverpod. This both simplifies the syntax empowers it, such as allowing stateful hot-reload.
   riverpod_generator: ^2.6.3
-  riverpod_lint: ^2.6.3
   # A full featured library for writing and running Dart tests across platforms.
   test: ^1.24.6
-  translations_cleaner: ^0.0.5
 
 # The following section is specific to Flutter.
 flutter:
