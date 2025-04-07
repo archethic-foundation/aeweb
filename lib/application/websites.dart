@@ -2,6 +2,7 @@
 import 'dart:convert';
 
 import 'package:aeweb/application/api_service.dart';
+import 'package:aeweb/application/dapp_client.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/model/website_version.dart';
@@ -20,7 +21,8 @@ WebsitesRepository _websitesRepository(Ref ref) => WebsitesRepository();
 
 @riverpod
 Future<List<Website>> _fetchWebsites(Ref ref) async {
-  return ref.watch(_websitesRepositoryProvider).getWebsites();
+  final dAppClient = await ref.watch(dappClientProvider.future);
+  return ref.watch(_websitesRepositoryProvider).getWebsites(dAppClient);
 }
 
 @riverpod
@@ -34,12 +36,10 @@ Future<List<WebsiteVersion>> _fetchWebsiteVersions(
 }
 
 class WebsitesRepository {
-  Future<List<Website>> getWebsites() async {
+  Future<List<Website>> getWebsites(ArchethicDAppClient dAppClient) async {
     final websites = await aedappfm.sl.get<DBHelper>().getLocalWebsites();
     if (websites.isEmpty) {
-      final services = await aedappfm.sl
-          .get<ArchethicDAppClient>()
-          .getServicesFromKeychain();
+      final services = await dAppClient.getServicesFromKeychain();
 
       await services.when(
         success: (success) async {
@@ -57,13 +57,11 @@ class WebsitesRepository {
 
               var genesisAddress = '';
               // Get genesis address
-              final response = await aedappfm.sl
-                  .get<ArchethicDAppClient>()
-                  .keychainDeriveAddress(
-                    KeychainDeriveAddressRequest(
-                      serviceName: 'aeweb-$name',
-                    ),
-                  );
+              final response = await dAppClient.keychainDeriveAddress(
+                KeychainDeriveAddressRequest(
+                  serviceName: 'aeweb-$name',
+                ),
+              );
               await response.when(
                 failure: (failure) {},
                 success: (result) async {
