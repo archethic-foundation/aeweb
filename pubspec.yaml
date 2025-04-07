@@ -9,13 +9,13 @@ environment:
   flutter: ">=3.27.0"
 
 dependencies:
-  #archethic_dapp_framework_flutter: ^3.4.3
+  archethic_dapp_framework_flutter: ^3.4.3
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git
   #    ref: main
-  archethic_dapp_framework_flutter:
-    path: ../archethic-dapp-framework-flutter
+  #archethic_dapp_framework_flutter:
+  #  path: ../archethic-dapp-framework-flutter
 
   # Compression
   archive: ^4.0.2

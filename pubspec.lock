@@ -41,23 +41,26 @@ packages:
   archethic_dapp_framework_flutter:
     dependency: "direct main"
     description:
-      path: "../archethic-dapp-framework-flutter"
-      relative: true
-    source: path
+      name: archethic_dapp_framework_flutter
+      sha256: "787827d5af35bc9c606d45c06360dc060608b87d1f39f46df83519d0fd8a3357"
+      url: "https://pub.dev"
+    source: hosted
     version: "3.4.3"
   archethic_lib_dart:
     dependency: transitive
     description:
-      path: "../libdart-2"
-      relative: true
-    source: path
+      name: archethic_lib_dart
+      sha256: c75cccdda2929412d543b2a0cfd8bf6d22b8a4ac507836ded2c50c56e2355024
+      url: "https://pub.dev"
+    source: hosted
     version: "7.7.2"
   archethic_wallet_client:
     dependency: transitive
     description:
-      path: "../archethic-wallet-client-dart"
-      relative: true
-    source: path
+      name: archethic_wallet_client
+      sha256: "1d44ed525733ed5b2403f3a92f4f349a645e74c32fa3d33d2bac67be6ab318bc"
+      url: "https://pub.dev"
+    source: hosted
     version: "2.2.3"
   archive:
     dependency: "direct main"
@@ -294,9 +297,10 @@ packages:
   deeplink_rpc:
     dependency: transitive
     description:
-      path: "../lib-deeplink-rpc"
-      relative: true
-    source: path
+      name: deeplink_rpc
+      sha256: "4154eda5520b59e033f101c23d3af3e35de0c29cee456a745736c2ec97472a62"
+      url: "https://pub.dev"
+    source: hosted
     version: "2.0.0-beta.2"
   dotted_border:
     dependency: "direct main"
