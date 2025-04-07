@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/util/generic/providers_observer.dart';
@@ -38,6 +39,7 @@ class ProvidersInitialization extends ConsumerWidget {
   final Widget child;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(sessionNotifierProvider);
     return child;
   }
 }
