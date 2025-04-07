@@ -1,12 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:async';
 
+import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/util/generic/providers_observer.dart';
 import 'package:aeweb/util/service_locator.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -38,6 +40,7 @@ class ProvidersInitialization extends ConsumerWidget {
   final Widget child;
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.watch(sessionNotifierProvider);
     return child;
   }
 }
@@ -70,6 +73,7 @@ class MyAppState extends ConsumerState<MyApp> {
     // GoRouter configuration
     final _router = GoRouter(
       routes: RoutesPath().aeWebRoutes(ref),
+      debugLogDiagnostics: kDebugMode,
     );
 
     return MaterialApp.router(

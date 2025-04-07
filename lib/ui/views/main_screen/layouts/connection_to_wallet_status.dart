@@ -2,13 +2,11 @@
 import 'package:aeweb/application/app_embedded.dart';
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/ui/views/util/components/format_address_link_copy.dart';
-import 'package:aeweb/ui/views/util/router.dart';
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
     as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 
 class ConnectionToWalletStatus extends ConsumerStatefulWidget {
   const ConnectionToWalletStatus({
@@ -56,7 +54,6 @@ class _ConnectionToWalletStatusState
             duration: const Duration(seconds: 3),
           ),
         );
-        context.go(RoutesPath().home());
       }
     });
 

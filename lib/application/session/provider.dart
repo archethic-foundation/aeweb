@@ -72,13 +72,14 @@ class SessionNotifier extends _$SessionNotifier {
         ref.read(dappClientProvider).hasError) {
       ref.invalidate(dappClientProvider);
     }
-    final dappClientAsync = ref.read(dappClientProvider);
 
-    if (dappClientAsync is! AsyncData || dappClientAsync.value == null) {
-      return Future.error('Dapp client not ready or null');
-    }
-
-    final dappClient = dappClientAsync.value!;
+    final dappClient = await (ref.read(dappClientProvider.future)
+            as Future<ArchethicDAppClient?>)
+        .onError((e, stack) {
+      _handleConnectionFailure();
+      return null;
+    });
+    if (dappClient == null) return;
 
     _connectionCompleter = Completer();
     _connectionTaskStateSubscription =
@@ -90,12 +91,13 @@ class SessionNotifier extends _$SessionNotifier {
           _connectionTaskStateSubscription?.cancel();
           _connectionTaskStateSubscription = null;
         },
-        orElse: () {
+        disconnected: () {
           _connectionCompleter?.complete();
           _connectionCompleter = null;
           _connectionTaskStateSubscription?.cancel();
           _connectionTaskStateSubscription = null;
         },
+        orElse: () {},
       );
     });
 
@@ -203,7 +205,7 @@ class SessionNotifier extends _$SessionNotifier {
     await dappClientAsync.value!.close();
   }
 
-  Future<void> update(FutureOr<Session> Function(Session previous) func) async {
-    state = await func(state);
+  void update(Session Function(Session previous) func) {
+    state = func(state);
   }
 }
