@@ -1,10 +1,11 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/version.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/header.dart';
 import 'package:aeweb/ui/views/util/generic/responsive.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,10 +14,7 @@ import 'package:url_launcher/url_launcher.dart';
 class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
   const AppBarMainScreen({
     super.key,
-    required this.onAEMenuTapped,
   });
-
-  final Function() onAEMenuTapped;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +24,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(1),
           child: Container(
-            color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+            color: aedappfm.ArchethicThemeBase.neutral0.withValues(alpha: 0.2),
             height: 1,
           ),
         ),
@@ -46,7 +44,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
           ),
           MenuAnchor(
             style: MenuStyle(
-              shape: MaterialStateProperty.all(
+              shape: WidgetStateProperty.all(
                 RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20),
                 ),
@@ -92,7 +90,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {
                   launchUrl(
                     Uri.parse(
-                      'https://wiki.archethic.net',
+                      'https://wiki.archethic.net/participate/aeweb/',
                     ),
                   );
                 },
@@ -154,7 +152,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {
                   launchUrl(
                     Uri.parse(
-                      'https://wiki.archethic.net/category/FAQ',
+                      'https://wiki.archethic.net/FAQ/aeweb',
                     ),
                   );
                 },
@@ -185,7 +183,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {
                   launchUrl(
                     Uri.parse(
-                      'https://wiki.archethic.net',
+                      'https://wiki.archethic.net/participate/aeweb/usage/aeweb-front',
                     ),
                   );
                 },
@@ -216,7 +214,7 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
                 onPressed: () {
                   launchUrl(
                     Uri.parse(
-                      'https://github.com/archethic-foundation/aeweb/issues/new?assignees=&labels=bug&projects=&template=bug_report.yml',
+                      'https://github.com/archethic-foundation/aeweb/issues',
                     ),
                   );
                 },
@@ -244,13 +242,6 @@ class AppBarMainScreen extends StatelessWidget implements PreferredSizeWidget {
                 ),
               ),
             ],
-          ),
-          const SizedBox(
-            width: 8,
-          ),
-          IconButton(
-            icon: const Icon(Iconsax.element_3),
-            onPressed: onAEMenuTapped,
           ),
           const SizedBox(
             width: 16,

@@ -1,0 +1,47 @@
+[
+    {
+        "family": "PPTelegraf",
+        "fonts": [
+            {
+                "asset": "assets/fonts/PPTelegraf-Ultralight.otf",
+                "weight": 200,
+                "style": "normal"
+            },
+            {
+                "asset": "assets/fonts/PPTelegraf-Light.otf",
+                "weight": 300,
+                "style": "normal"
+            },
+            {
+                "asset": "assets/fonts/PPTelegraf-Regular.otf",
+                "weight": 400,
+                "style": "normal"
+            },
+            {
+                "asset": "assets/fonts/PPTelegraf-Medium.otf",
+                "weight": 500,
+                "style": "normal"
+            },
+            {
+                "asset": "assets/fonts/PPTelegraf-Semibold.otf",
+                "weight": 600,
+                "style": "normal"
+            },
+            {
+                "asset": "assets/fonts/PPTelegraf-Bold.otf",
+                "weight": 700,
+                "style": "normal"
+            },
+            {
+                "asset": "assets/fonts/PPTelegraf-Ultrabold.otf",
+                "weight": 800,
+                "style": "normal"
+            },
+            {
+                "asset": "assets/fonts/PPTelegraf-Black.otf",
+                "weight": 900,
+                "style": "normal"
+            }
+        ]
+    }
+]

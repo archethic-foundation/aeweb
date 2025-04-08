@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -41,8 +42,8 @@ class AppButtonState extends State<AppButton> {
       child: widget.disabled
           ? OutlinedButton(
               style: ButtonStyle(
-                side: MaterialStateProperty.all(BorderSide.none),
-                overlayColor: MaterialStateProperty.all(Colors.transparent),
+                side: WidgetStateProperty.all(BorderSide.none),
+                overlayColor: WidgetStateProperty.all(Colors.transparent),
               ),
               onPressed: null,
               child: _buttonContent(),
@@ -50,16 +51,16 @@ class AppButtonState extends State<AppButton> {
           : widget.onPressed == null
               ? OutlinedButton(
                   style: ButtonStyle(
-                    side: MaterialStateProperty.all(BorderSide.none),
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    side: WidgetStateProperty.all(BorderSide.none),
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
                   ),
                   onPressed: null,
                   child: _buttonContent(),
                 ).animate(target: _over ? 0 : 1).fade(end: 0.8)
               : OutlinedButton(
                   style: ButtonStyle(
-                    side: MaterialStateProperty.all(BorderSide.none),
-                    overlayColor: MaterialStateProperty.all(Colors.transparent),
+                    side: WidgetStateProperty.all(BorderSide.none),
+                    overlayColor: WidgetStateProperty.all(Colors.transparent),
                   ),
                   onPressed: () {
                     widget.onPressed!();
@@ -77,11 +78,11 @@ class AppButtonState extends State<AppButton> {
         horizontal: 20,
       ),
       decoration: ShapeDecoration(
-        gradient: AeWebThemeBase.gradientBtn,
+        gradient: aedappfm.AppThemeBase.gradientBtn,
         shape: const StadiumBorder(),
         shadows: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.5),
+            color: Colors.black.withValues(alpha: 0.5),
             blurRadius: 7,
             spreadRadius: 1,
             offset: const Offset(0, 5),
@@ -95,7 +96,7 @@ class AppButtonState extends State<AppButton> {
             Icon(
               widget.icon,
               color: widget.disabled
-                  ? Colors.white.withOpacity(0.5)
+                  ? Colors.white.withValues(alpha: 0.5)
                   : Colors.white,
               size: 12,
             ),
@@ -104,7 +105,7 @@ class AppButtonState extends State<AppButton> {
             widget.labelBtn,
             style: TextStyle(
               color: widget.disabled
-                  ? Colors.white.withOpacity(0.5)
+                  ? Colors.white.withValues(alpha: 0.5)
                   : Colors.white,
               fontSize: 12,
               fontWeight: FontWeight.w400,

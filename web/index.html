@@ -20,29 +20,57 @@
   <link rel="manifest" href="manifest.json">
 
   <script>
-    // The value below is injected by flutter build, do not touch.
-    var serviceWorkerVersion = 20230093;
+    var serviceWorkerVersion = '{{flutter_service_worker_version}}';
   </script>
   <script src="flutter.js" defer></script>
-  <script defer data-domain="aeweb.archethic.net" src="https://plausible.io/js/script.js"></script>
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport">
 </head>
 
 <body>
   <script>
-    window.addEventListener('load', function (ev) {
+    window.addEventListener("load", function (ev) {
       // Download main.dart.js
       _flutter.loader.loadEntrypoint({
+        entrypointUrl: "main.dart.js?v=" + serviceWorkerVersion,
         serviceWorker: {
           serviceWorkerVersion: serviceWorkerVersion,
         },
         onEntrypointLoaded: function (engineInitializer) {
-          engineInitializer.initializeEngine().then(function (appRunner) {
-            appRunner.runApp();
-          });
-        }
+          engineInitializer
+            .initializeEngine({
+              useColorEmoji: true,
+            })
+            .then(function (appRunner) {
+              appRunner.runApp();
+            });
+        },
       });
     });
   </script>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      var domain = window.location.hostname;
+      console.log("Plausible - Retrieved Domain:", domain);
+
+      var script = document.createElement('script');
+      script.defer = true;
+      script.setAttribute('data-domain', domain);
+      script.src = 'https://plausible.io/js/script.js';
+
+      document.head.appendChild(script);
+
+      script.onload = function () {
+        console.log("Plausible - Script successfully loaded.");
+      };
+
+      script.onerror = function (error) {
+        console.log("Plausible - Error loading the script:", error);
+      };
+    });
+  </script>
+
 </body>
 
 </html>

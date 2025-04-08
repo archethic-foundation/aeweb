@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/foundation.dart';
+import 'package:pem/pem.dart';
 
 mixin CertificateMixin {
   static List<Map<String, String>> getCertificateProperties() {
@@ -46,7 +47,8 @@ mixin CertificateMixin {
 
   static (bool, String) validPrivateKeyFromFile(Uint8List privateKey) {
     try {
-      CryptoUtils.rsaPrivateKeyFromPem(utf8.decode(privateKey));
+      PemCodec(PemLabel.privateKey).decode(utf8.decode(privateKey));
+
       return (true, '');
     } catch (e) {
       log(e.toString());

@@ -1,15 +1,14 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/ui/views/welcome/bloc/providers.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class WelcomeConnectWalletBtn extends ConsumerStatefulWidget {
@@ -46,17 +45,17 @@ class WelcomeConnectWalletBtnState
               },
               child: OutlinedButton(
                 style: ButtonStyle(
-                  side: MaterialStateProperty.all(BorderSide.none),
-                  overlayColor: MaterialStateProperty.all(Colors.transparent),
+                  side: WidgetStateProperty.all(BorderSide.none),
+                  overlayColor: WidgetStateProperty.all(Colors.transparent),
                 ),
                 onPressed: () {
                   startBusyContext(
                     () async {
-                      final sessionNotifier =
-                          ref.read(SessionProviders.session.notifier);
-                      await sessionNotifier.connectToWallet();
+                      await ref
+                          .read(sessionNotifierProvider.notifier)
+                          .connectWallet();
 
-                      final session = ref.read(SessionProviders.session);
+                      final session = ref.read(sessionNotifierProvider);
                       if (session.error.isNotEmpty) {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
@@ -71,8 +70,6 @@ class WelcomeConnectWalletBtnState
                             duration: const Duration(seconds: 2),
                           ),
                         );
-                      } else {
-                        context.go(RoutesPath().main());
                       }
                     },
                     isBusyValueChanged: (isBusy) {
@@ -85,11 +82,11 @@ class WelcomeConnectWalletBtnState
                   alignment: Alignment.center,
                   height: 50,
                   decoration: ShapeDecoration(
-                    gradient: AeWebThemeBase.gradientBtn,
+                    gradient: aedappfm.AppThemeBase.gradientBtn,
                     shape: const StadiumBorder(),
                     shadows: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.5),
+                        color: Colors.black.withValues(alpha: 0.5),
                         blurRadius: 7,
                         spreadRadius: 1,
                         offset: const Offset(0, 5),

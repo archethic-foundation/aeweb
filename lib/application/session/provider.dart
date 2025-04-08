@@ -2,191 +2,211 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aeweb/application/dapp_client.dart';
 import 'package:aeweb/application/session/state.dart';
-import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
-import 'package:aeweb/util/service_locator.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:aeweb/util/browser_util_desktop.dart'
+    if (dart.library.js) 'package:aeweb/util/browser_util_web.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 part 'provider.g.dart';
 
-@Riverpod(keepAlive: true)
-class _SessionNotifier extends Notifier<Session> {
-  StreamSubscription? connectionStatusSubscription;
+@riverpod
+Environment environment(Ref ref) => ref.watch(
+      sessionNotifierProvider.select(
+        (session) => session.environment,
+      ),
+    );
+
+@riverpod
+class SessionNotifier extends _$SessionNotifier {
+  SessionNotifier();
+
+  StreamSubscription<ArchethicDappConnectionState>?
+      _connectionStateSubscription;
+
+  Completer? _connectionCompleter;
+  StreamSubscription<ArchethicDappConnectionState>?
+      _connectionTaskStateSubscription;
 
   @override
   Session build() {
     ref.onDispose(() {
-      log('dispose SessionNotifier');
-      connectionStatusSubscription?.cancel();
+      _connectionStateSubscription?.cancel();
     });
-    return const Session();
+
+    ref.watch(dappClientProvider).when(
+          data: (dappClient) {
+            _listenConnectionState(dappClient);
+
+            Future.delayed(
+              const Duration(milliseconds: 50),
+              connectWallet,
+            );
+          },
+          loading: () {},
+          error: (error, stack) {},
+        );
+    return const Session(
+      environment: Environment.mainnet,
+      walletConnectionState: awc.ArchethicDappConnectionState.disconnected(),
+    );
   }
 
-  Future<void> connectToWallet() async {
-    try {
-      await sl.get<DBHelper>().clearWebsites();
-      state = state.copyWith(
-        isConnected: false,
-        error: '',
-      );
+  /// Connects to AEWallet, and waits for
+  /// connection to succeed or fail.
+  Future<void> connectWallet() async {
+    if (_connectionCompleter != null) return _connectionCompleter!.future;
 
-      final archethicDAppClient = ArchethicDAppClient.auto(
-        origin: const RequestOrigin(
-          name: 'aeHosting',
-        ),
-        replyBaseUrl: 'aehosting://archethic.tech',
-      );
+    /// In case there was no transport available on previous connection attempt,
+    /// We force a new client creation from scratch.
+    if (ref.exists(dappClientProvider) &&
+        ref.read(dappClientProvider).hasError) {
+      ref.invalidate(dappClientProvider);
+    }
 
-      final endpointResponse = await archethicDAppClient.getEndpoint();
-      endpointResponse.when(
-        failure: (failure) {
-          switch (failure.code) {
-            case 4901:
-              state = state.copyWith(
-                isConnected: false,
-                error: 'Please, open your Archethic Wallet.',
-              );
-              break;
-            default:
-              log(failure.message ?? 'Connection failed');
-              state = state.copyWith(
-                isConnected: false,
-                error: 'Please, open your Archethic Wallet.',
-              );
-          }
+    final dappClient = await (ref.read(dappClientProvider.future)
+            as Future<ArchethicDAppClient?>)
+        .onError((e, stack) {
+      _handleConnectionFailure();
+      return null;
+    });
+    if (dappClient == null) return;
+
+    _connectionCompleter = Completer();
+    _connectionTaskStateSubscription =
+        dappClient.connectionStateStream.listen((connectionState) {
+      connectionState.maybeWhen(
+        connected: () {
+          _connectionCompleter?.complete();
+          _connectionCompleter = null;
+          _connectionTaskStateSubscription?.cancel();
+          _connectionTaskStateSubscription = null;
         },
-        success: (result) async {
-          log('DApp is connected to archethic wallet.');
+        disconnected: () {
+          _connectionCompleter?.complete();
+          _connectionCompleter = null;
+          _connectionTaskStateSubscription?.cancel();
+          _connectionTaskStateSubscription = null;
+        },
+        orElse: () {},
+      );
+    });
 
-          if (FeatureFlags.mainnetActive == false &&
-              result.endpointUrl == 'https://mainnet.archethic.net') {
-            state = state.copyWith(
-              isConnected: false,
-              error:
-                  'AEWeb is not currently available on the Archethic mainnet.',
-            );
-            return;
-          }
+    try {
+      await dappClient.connect();
+    } catch (e) {
+      _handleConnectionFailure();
+    }
 
-          state = state.copyWith(endpoint: result.endpointUrl);
-          connectionStatusSubscription =
-              archethicDAppClient.connectionStateStream.listen((event) {
-            event.when(
-              disconnected: () {
-                log('Disconnected', name: 'Wallet connection');
-                state = state.copyWith(
-                  endpoint: '',
-                  error: '',
-                  genesisAddress: '',
-                  nameAccount: '',
-                  oldNameAccount: '',
-                  isConnected: false,
-                );
-              },
-              connected: () async {
-                log('Connected', name: 'Wallet connection');
-                state = state.copyWith(
-                  isConnected: true,
-                  error: '',
-                );
-              },
-              connecting: () {
-                log('Connecting', name: 'Wallet connection');
-                state = state.copyWith(
-                  endpoint: '',
-                  error: '',
-                  genesisAddress: '',
-                  nameAccount: '',
-                  oldNameAccount: '',
-                  isConnected: false,
-                );
-              },
-            );
-          });
-          if (sl.isRegistered<ApiService>()) {
-            sl.unregister<ApiService>();
-          }
-          if (sl.isRegistered<OracleService>()) {
-            sl.unregister<OracleService>();
-          }
-          if (sl.isRegistered<ArchethicDAppClient>()) {
-            sl.unregister<ArchethicDAppClient>();
-          }
-          sl.registerLazySingleton<ArchethicDAppClient>(
-            () => archethicDAppClient,
-          );
-          setupServiceLocatorApiService(result.endpointUrl);
-          final subscription =
-              await archethicDAppClient.subscribeCurrentAccount();
+    return _connectionCompleter?.future;
+  }
 
-          subscription.when(
-            success: (success) async {
-              state = state.copyWith(
-                accountSub: success,
-                error: '',
-                isConnected: true,
-                accountStreamSub: success.updates.listen((event) {
-                  if (event.name.isEmpty && event.genesisAddress.isEmpty) {
-                    state = state.copyWith(
-                      oldNameAccount: state.nameAccount,
-                      genesisAddress: event.genesisAddress,
-                      nameAccount: event.name,
-                      error: 'Please, open your Archethic Wallet.',
-                      isConnected: false,
-                    );
-                    return;
-                  }
-                  state = state.copyWith(
-                    oldNameAccount: state.nameAccount,
+  void _listenConnectionState(ArchethicDAppClient dappClient) {
+    _connectionStateSubscription =
+        dappClient.connectionStateStream.listen((connectionState) {
+      connectionState.maybeWhen(
+        disconnected: _onWalletDisconnected,
+        connected: () => _onWalletConnected(dappClient),
+        orElse: () => update(
+          (state) => state.copyWith(walletConnectionState: connectionState),
+        ),
+      );
+    });
+  }
+
+  Future<void> _onWalletDisconnected() async {
+    state = const Session(
+      environment: Environment.mainnet,
+      walletConnectionState: awc.ArchethicDappConnectionState.disconnected(),
+    );
+    await aedappfm.sl.get<DBHelper>().clearWebsites();
+  }
+
+  Future<void> _onWalletConnected(ArchethicDAppClient dappClient) async {
+    log('Wallet connected');
+    try {
+      final endpointResult = await dappClient.getEndpoint().valueOrThrow;
+      final environment = Environment.byEndpoint(endpointResult.endpointUrl);
+
+      final currentAccount = await dappClient.getCurrentAccount().valueOrNull;
+
+      await aedappfm.sl.get<DBHelper>().clearWebsites();
+
+      final subscription = await dappClient.subscribeCurrentAccount();
+
+      await subscription.when(
+        success: (success) async => update(
+          (state) => state.copyWith(
+            environment: environment,
+            walletConnectionState:
+                const awc.ArchethicDappConnectionState.connected(),
+            error: '',
+            genesisAddress:
+                currentAccount?.genesisAddress ?? state.genesisAddress,
+            nameAccount: currentAccount?.shortName ?? state.nameAccount,
+            accountSub: success,
+            accountStreamSub: success.updates.listen(
+              (event) {
+                update(
+                  (state) => state.copyWith(
                     genesisAddress: event.genesisAddress,
                     nameAccount: event.name,
-                  );
-                }),
-              );
-            },
-            failure: (failure) {
-              state = state.copyWith(
-                isConnected: false,
-                error: failure.message ?? 'Connection failed',
-              );
-            },
+                  ),
+                );
+              },
+            ),
+          ),
+        ),
+        failure: (failure) async {
+          state = state.copyWith(
+            walletConnectionState:
+                const awc.ArchethicDappConnectionState.disconnected(),
+            error: failure.message,
           );
         },
       );
     } catch (e) {
-      log(e.toString());
-      state = state.copyWith(
-        isConnected: false,
-        error: 'Please, open your Archethic Wallet.',
-      );
+      log('Error Wallet connection $e');
+      _handleConnectionFailure();
     }
   }
 
-  void setOldNameAccount() {
-    state = state.copyWith(oldNameAccount: state.nameAccount);
+  void _handleConnectionFailure() {
+    update((state) {
+      final isBrave = BrowserUtil().isBraveBrowser();
+      return state.copyWith(
+        walletConnectionState:
+            const awc.ArchethicDappConnectionState.disconnected(),
+        error: isBrave
+            ? "Please, open your Archethic Wallet and disable Brave's shield."
+            : 'Please, open your Archethic Wallet.',
+      );
+    });
   }
 
   Future<void> cancelConnection() async {
-    await sl.get<ArchethicDAppClient>().close();
-    await sl.get<DBHelper>().clearWebsites();
-    log('Unregister', name: 'ApiService');
-    if (sl.isRegistered<ApiService>()) {
-      sl.unregister<ApiService>();
+    state = state.copyWith(
+      walletConnectionState:
+          const awc.ArchethicDappConnectionState.disconnected(),
+    );
+
+    final dappClientAsync = ref.read(dappClientProvider);
+
+    if (dappClientAsync is! AsyncData || dappClientAsync.value == null) {
+      return Future.error('Wallet connection not ready or null');
     }
 
-    state = state.copyWith(
-      accountSub: null,
-      accountStreamSub: null,
-      nameAccount: '',
-      genesisAddress: '',
-    );
+    await dappClientAsync.value!.close();
   }
-}
 
-abstract class SessionProviders {
-  static final session = _sessionNotifierProvider;
+  void update(Session Function(Session previous) func) {
+    state = func(state);
+  }
 }

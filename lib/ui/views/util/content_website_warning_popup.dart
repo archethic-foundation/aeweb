@@ -1,7 +1,8 @@
 import 'package:aeweb/ui/views/util/components/app_button.dart';
-import 'package:aeweb/ui/views/util/components/popup_template.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
@@ -14,7 +15,7 @@ class ContentWebsiteWarningPopup {
     return showDialog<bool>(
       context: context,
       builder: (BuildContext context) {
-        return PopupTemplate(
+        return aedappfm.PopupTemplate(
           popupContent: ArchethicScrollbar(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

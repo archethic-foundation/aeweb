@@ -170,12 +170,12 @@ class UpdateWebsiteSyncComparisonSheetState
                                     colors: [
                                       Theme.of(context)
                                           .colorScheme
-                                          .background
-                                          .withOpacity(1),
+                                          .surface
+                                          .withValues(alpha: 1),
                                       Theme.of(context)
                                           .colorScheme
-                                          .background
-                                          .withOpacity(0.3),
+                                          .surface
+                                          .withValues(alpha: 0.3),
                                     ],
                                     stops: const [0, 1],
                                   ),
@@ -184,12 +184,12 @@ class UpdateWebsiteSyncComparisonSheetState
                                       colors: [
                                         Theme.of(context)
                                             .colorScheme
-                                            .background
-                                            .withOpacity(0.5),
+                                            .surface
+                                            .withValues(alpha: 0.5),
                                         Theme.of(context)
                                             .colorScheme
-                                            .background
-                                            .withOpacity(0.7),
+                                            .surface
+                                            .withValues(alpha: 0.7),
                                       ],
                                       stops: const [0, 1],
                                     ),
@@ -281,8 +281,8 @@ class UpdateWebsiteSyncComparisonSheetState
           ),
           style: ButtonStyle(
             backgroundColor: _selectedStatus == null
-                ? MaterialStateProperty.all(
-                    Colors.blue[100]!.withOpacity(0.2),
+                ? WidgetStateProperty.all(
+                    Colors.blue[100]!.withValues(alpha: 0.2),
                   )
                 : null,
           ),
@@ -305,8 +305,8 @@ class UpdateWebsiteSyncComparisonSheetState
           style: ButtonStyle(
             backgroundColor:
                 _selectedStatus == HostingContentComparisonStatus.localOnly
-                    ? MaterialStateProperty.all(
-                        Colors.orange[100]!.withOpacity(0.2),
+                    ? WidgetStateProperty.all(
+                        Colors.orange[100]!.withValues(alpha: 0.2),
                       )
                     : null,
           ),
@@ -329,8 +329,8 @@ class UpdateWebsiteSyncComparisonSheetState
           style: ButtonStyle(
             backgroundColor:
                 _selectedStatus == HostingContentComparisonStatus.remoteOnly
-                    ? MaterialStateProperty.all(
-                        Colors.blue[100]!.withOpacity(0.2),
+                    ? WidgetStateProperty.all(
+                        Colors.blue[100]!.withValues(alpha: 0.2),
                       )
                     : null,
           ),
@@ -353,7 +353,9 @@ class UpdateWebsiteSyncComparisonSheetState
           style: ButtonStyle(
             backgroundColor: _selectedStatus ==
                     HostingContentComparisonStatus.differentContent
-                ? MaterialStateProperty.all(Colors.red[100]!.withOpacity(0.2))
+                ? WidgetStateProperty.all(
+                    Colors.red[100]!.withValues(alpha: 0.2),
+                  )
                 : null,
           ),
         ),
@@ -375,8 +377,8 @@ class UpdateWebsiteSyncComparisonSheetState
           style: ButtonStyle(
             backgroundColor:
                 _selectedStatus == HostingContentComparisonStatus.sameContent
-                    ? MaterialStateProperty.all(
-                        Colors.green[100]!.withOpacity(0.2),
+                    ? WidgetStateProperty.all(
+                        Colors.green[100]!.withValues(alpha: 0.2),
                       )
                     : null,
           ),

@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 
 class Header extends StatelessWidget {
@@ -22,12 +23,15 @@ class Header extends StatelessWidget {
           width: 8,
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 5),
-          child: Text(
+          padding: const EdgeInsets.only(bottom: 4),
+          child: SelectableText(
             'aeHosting',
             style: TextStyle(
-              fontSize: 30,
-              color: ArchethicThemeBase.blue200,
+              fontSize: aedappfm.Responsive.fontSizeFromValue(
+                context,
+                desktopValue: 33,
+              ),
+              color: aedappfm.ArchethicThemeBase.neutral0,
             ),
           ),
         ),

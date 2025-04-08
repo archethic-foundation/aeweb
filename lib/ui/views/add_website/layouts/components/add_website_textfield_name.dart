@@ -72,12 +72,12 @@ class _AddWebsiteTextFieldNameState
                           colors: [
                             Theme.of(context)
                                 .colorScheme
-                                .background
-                                .withOpacity(1),
+                                .surface
+                                .withValues(alpha: 1),
                             Theme.of(context)
                                 .colorScheme
-                                .background
-                                .withOpacity(0.3),
+                                .surface
+                                .withValues(alpha: 0.3),
                           ],
                           stops: const [0, 1],
                         ),

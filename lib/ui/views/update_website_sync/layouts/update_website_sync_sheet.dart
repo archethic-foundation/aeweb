@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/state.dart';
@@ -12,6 +11,8 @@ import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_web
 import 'package:aeweb/ui/views/update_website_sync/layouts/components/update_website_sync_comparison_list.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +66,7 @@ class _UpdateWebsiteSyncSheetState
 
   @override
   Widget build(BuildContext context) {
-    final session = ref.watch(SessionProviders.session);
+    final session = ref.watch(sessionNotifierProvider);
     final updateWebsiteSync =
         ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm);
 
@@ -111,7 +112,8 @@ class _UpdateWebsiteSyncSheetState
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color: aedappfm.ArchethicThemeBase.neutral0
+                        .withValues(alpha: 0.2),
                     height: 1,
                   ),
                 ),

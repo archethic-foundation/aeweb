@@ -2,13 +2,13 @@
 import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:aeweb/ui/views/display_website/website_list.dart';
 import 'package:aeweb/ui/views/main_screen/bloc/provider.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar.dart';
-import 'package:aeweb/ui/views/main_screen/layouts/body.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
-import 'package:aeweb/ui/views/util/components/aeweb_main_menu_app.dart';
 import 'package:aeweb/ui/views/util/router.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -22,64 +22,43 @@ class MainScreen extends ConsumerStatefulWidget {
 }
 
 class MainScreenState extends ConsumerState<MainScreen> {
-  bool _isSubMenuOpen = false;
-
-  void _toggleSubMenu() {
-    setState(() {
-      _isSubMenuOpen = !_isSubMenuOpen;
-    });
-    return;
-  }
-
-  void _closeSubMenu() {
-    setState(() {
-      _isSubMenuOpen = false;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
-    final session = ref.watch(SessionProviders.session);
+    final session = ref.watch(sessionNotifierProvider);
 
-    return GestureDetector(
-      onTap: _closeSubMenu,
-      child: BusyScaffold(
-        isBusy: ref.watch(isLoadingMainScreenProvider),
-        scaffold: Scaffold(
-          extendBodyBehindAppBar: true,
-          extendBody: true,
-          backgroundColor: AeWebThemeBase.backgroundColor,
-          appBar: PreferredSize(
-            preferredSize: const Size.fromHeight(70),
-            child: ClipRRect(
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: AppBarMainScreen(
-                  onAEMenuTapped: _toggleSubMenu,
-                ),
-              ),
+    return BusyScaffold(
+      isBusy: ref.watch(isLoadingMainScreenProvider),
+      scaffold: Scaffold(
+        extendBodyBehindAppBar: true,
+        extendBody: true,
+        backgroundColor: aedappfm.AppThemeBase.backgroundColor,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(70),
+          child: ClipRRect(
+            child: BackdropFilter(
+              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+              child: const AppBarMainScreen(),
             ),
           ),
-          body: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              const AEWebBackground(),
-              const Body(),
-              if (_isSubMenuOpen) const AEWebMainMenuApp(),
-            ],
-          ),
-          floatingActionButton: session.isConnected
-              ? FloatingActionButton.extended(
-                  onPressed: () {
-                    context.go(RoutesPath().addWebsite());
-                  },
-                  icon: const Icon(Icons.add),
-                  label: Text(
-                    AppLocalizations.of(context)!.addWebsite,
-                  ),
-                )
-              : null,
         ),
+        body: const Stack(
+          alignment: Alignment.topCenter,
+          children: [
+            AEWebBackground(),
+            WebsiteList(),
+          ],
+        ),
+        floatingActionButton: session.isConnected
+            ? FloatingActionButton.extended(
+                onPressed: () {
+                  context.push(RoutesPath().addWebsite());
+                },
+                icon: const Icon(Icons.add),
+                label: Text(
+                  AppLocalizations.of(context)!.addWebsite,
+                ),
+              )
+            : null,
       ),
     );
   }

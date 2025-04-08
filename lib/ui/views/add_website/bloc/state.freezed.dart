@@ -12,7 +12,7 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$AddWebsiteFormState {
@@ -33,7 +33,9 @@ mixin _$AddWebsiteFormState {
   bool? get controlInProgress => throw _privateConstructorUsedError;
   String get errorText => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddWebsiteFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $AddWebsiteFormStateCopyWith<AddWebsiteFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -73,6 +75,8 @@ class _$AddWebsiteFormStateCopyWithImpl<$Res, $Val extends AddWebsiteFormState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of AddWebsiteFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -163,11 +167,11 @@ class _$AddWebsiteFormStateCopyWithImpl<$Res, $Val extends AddWebsiteFormState>
 }
 
 /// @nodoc
-abstract class _$$_AddWebsiteFormStateCopyWith<$Res>
+abstract class _$$AddWebsiteFormStateImplCopyWith<$Res>
     implements $AddWebsiteFormStateCopyWith<$Res> {
-  factory _$$_AddWebsiteFormStateCopyWith(_$_AddWebsiteFormState value,
-          $Res Function(_$_AddWebsiteFormState) then) =
-      __$$_AddWebsiteFormStateCopyWithImpl<$Res>;
+  factory _$$AddWebsiteFormStateImplCopyWith(_$AddWebsiteFormStateImpl value,
+          $Res Function(_$AddWebsiteFormStateImpl) then) =
+      __$$AddWebsiteFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -190,13 +194,15 @@ abstract class _$$_AddWebsiteFormStateCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
-    extends _$AddWebsiteFormStateCopyWithImpl<$Res, _$_AddWebsiteFormState>
-    implements _$$_AddWebsiteFormStateCopyWith<$Res> {
-  __$$_AddWebsiteFormStateCopyWithImpl(_$_AddWebsiteFormState _value,
-      $Res Function(_$_AddWebsiteFormState) _then)
+class __$$AddWebsiteFormStateImplCopyWithImpl<$Res>
+    extends _$AddWebsiteFormStateCopyWithImpl<$Res, _$AddWebsiteFormStateImpl>
+    implements _$$AddWebsiteFormStateImplCopyWith<$Res> {
+  __$$AddWebsiteFormStateImplCopyWithImpl(_$AddWebsiteFormStateImpl _value,
+      $Res Function(_$AddWebsiteFormStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of AddWebsiteFormState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -217,7 +223,7 @@ class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
     Object? controlInProgress = freezed,
     Object? errorText = null,
   }) {
-    return _then(_$_AddWebsiteFormState(
+    return _then(_$AddWebsiteFormStateImpl(
       step: null == step
           ? _value.step
           : step // ignore: cast_nullable_to_non_nullable
@@ -288,8 +294,8 @@ class __$$_AddWebsiteFormStateCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_AddWebsiteFormState extends _AddWebsiteFormState {
-  const _$_AddWebsiteFormState(
+class _$AddWebsiteFormStateImpl extends _AddWebsiteFormState {
+  const _$AddWebsiteFormStateImpl(
       {this.step = 0,
       this.stepError = '',
       this.name = '',
@@ -358,10 +364,10 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_AddWebsiteFormState &&
+            other is _$AddWebsiteFormStateImpl &&
             (identical(other.step, step) || other.step == step) &&
             (identical(other.stepError, stepError) ||
                 other.stepError == stepError) &&
@@ -412,11 +418,13 @@ class _$_AddWebsiteFormState extends _AddWebsiteFormState {
       controlInProgress,
       errorText);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of AddWebsiteFormState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_AddWebsiteFormStateCopyWith<_$_AddWebsiteFormState> get copyWith =>
-      __$$_AddWebsiteFormStateCopyWithImpl<_$_AddWebsiteFormState>(
+  _$$AddWebsiteFormStateImplCopyWith<_$AddWebsiteFormStateImpl> get copyWith =>
+      __$$AddWebsiteFormStateImplCopyWithImpl<_$AddWebsiteFormStateImpl>(
           this, _$identity);
 }
 
@@ -437,7 +445,7 @@ abstract class _AddWebsiteFormState extends AddWebsiteFormState {
       final bool? globalFeesValidated,
       final bool? applyGitIgnoreRules,
       final bool? controlInProgress,
-      final String errorText}) = _$_AddWebsiteFormState;
+      final String errorText}) = _$AddWebsiteFormStateImpl;
   const _AddWebsiteFormState._() : super._();
 
   @override
@@ -472,8 +480,11 @@ abstract class _AddWebsiteFormState extends AddWebsiteFormState {
   bool? get controlInProgress;
   @override
   String get errorText;
+
+  /// Create a copy of AddWebsiteFormState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_AddWebsiteFormStateCopyWith<_$_AddWebsiteFormState> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$AddWebsiteFormStateImplCopyWith<_$AddWebsiteFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

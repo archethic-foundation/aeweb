@@ -6,16 +6,27 @@ import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
 import 'package:aeweb/util/file_util.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:aeweb/util/string_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
-import 'package:archethic_wallet_client/archethic_wallet_client.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
+import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
+import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
+class UpdateWebsiteSyncUseCase
+    with FileMixin, TransactionAEWebMixin, aedappfm.TransactionMixin {
+  UpdateWebsiteSyncUseCase({
+    required this.apiService,
+    required this.dappClient,
+  });
+
+  final awc.ArchethicDAppClient dappClient;
+  final archethic.ApiService apiService;
+
   Future<void> run(
     WidgetRef ref,
     BuildContext context,
@@ -24,8 +35,9 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
         ref.watch(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm.notifier)
           ..setStep(0)
           ..setStepError('')
-          ..setGlobalFeesUCO(0)
           ..setGlobalFeesValidated(null);
+
+    await updateWebsiteSyncNotifier.setGlobalFeesUCO(0);
 
     final keychainWebsiteService = Uri.encodeFull(
       'aeweb-${ref.read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm).name}',
@@ -34,10 +46,10 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     log('Get last transaction reference');
     updateWebsiteSyncNotifier.setStep(1);
 
-    final addressTxRef = await getDeriveAddress(keychainWebsiteService, '');
+    final addressTxRef =
+        await getDeriveAddress(dappClient, keychainWebsiteService, '');
 
-    final lastTransactionReferenceMap =
-        await sl.get<ApiService>().getLastTransaction(
+    final lastTransactionReferenceMap = await apiService.getLastTransaction(
       [addressTxRef],
       request:
           'data { content,  ownerships {  authorizedPublicKeys { encryptedSecretKey, publicKey } secret } }',
@@ -51,13 +63,13 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
       return;
     }
 
-    final lastHostingTransactionReference = HostingRef.fromJson(
+    final lastHostingTransactionReference = archethic.HostingRef.fromJson(
       jsonDecode(lastTransactionReference.data!.content!),
     );
 
     updateWebsiteSyncNotifier.setStep(2);
 
-    final newMetaData = <String, HostingRefContentMetaData>{};
+    final newMetaData = <String, archethic.HostingRefContentMetaData>{};
     final filesNewOrUpdated = <String>[];
     var refChanged = false;
     for (final comparedFile in ref
@@ -72,7 +84,8 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
               .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
               .localFiles[comparedFile.path];
           if (localFile != null) {
-            newMetaData[comparedFile.path] = HostingRefContentMetaData(
+            newMetaData[comparedFile.path] =
+                archethic.HostingRefContentMetaData(
               hash: localFile.hash,
               encoding: localFile.encoding,
               size: localFile.size,
@@ -85,7 +98,8 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
               .read(UpdateWebsiteSyncFormProvider.updateWebsiteSyncForm)
               .localFiles[comparedFile.path];
           if (localFile != null) {
-            newMetaData[comparedFile.path] = HostingRefContentMetaData(
+            newMetaData[comparedFile.path] =
+                archethic.HostingRefContentMetaData(
               hash: localFile.hash,
               encoding: localFile.encoding,
               size: localFile.size,
@@ -129,7 +143,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
       return;
     }
 
-    var transactionsList = <Transaction>[];
+    var transactionsList = <archethic.Transaction>[];
     for (final content in contents) {
       transactionsList.add(
         await newTransactionFile(content),
@@ -140,12 +154,19 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
       updateWebsiteSyncNotifier.setStep(4);
       try {
         transactionsList = await signTx(
+          dappClient,
           keychainWebsiteService,
           'files',
           transactionsList,
         );
       } catch (e) {
-        updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+        updateWebsiteSyncNotifier.setStepError(
+          (e as aedappfm.Failure)
+                  .toString()
+                  .replaceAll('Exception: ', '')
+                  .capitalize() ??
+              e.toString(),
+        );
         log('Signature failed');
         return;
       }
@@ -154,12 +175,13 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     final filesWithAddressNew =
         setAddressesInTxRef(transactionsList, newMetaData);
 
-    final filesWithAddressWithLast = <String, HostingRefContentMetaData>{};
+    final filesWithAddressWithLast =
+        <String, archethic.HostingRefContentMetaData>{};
     filesWithAddressNew.forEach((key, value) {
       if (value.addresses.isEmpty) {
         if (newMetaData[key] != null &&
             lastHostingTransactionReference.metaData[key] != null) {
-          filesWithAddressWithLast[key] = HostingRefContentMetaData(
+          filesWithAddressWithLast[key] = archethic.HostingRefContentMetaData(
             addresses: lastHostingTransactionReference.metaData[key]!.addresses,
             encoding: lastHostingTransactionReference.metaData[key]!.encoding,
             hash: lastHostingTransactionReference.metaData[key]!.hash,
@@ -167,7 +189,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
           );
         }
       } else {
-        filesWithAddressWithLast[key] = HostingRefContentMetaData(
+        filesWithAddressWithLast[key] = archethic.HostingRefContentMetaData(
           addresses: value.addresses,
           encoding: value.encoding,
           hash: value.hash,
@@ -181,6 +203,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
 
     var transactionReference = await newTransactionReference(
       filesWithAddressWithLast,
+      apiService,
       cert: Uint8List.fromList(
         utf8.encode(
           lastHostingTransactionReference.sslCertificate,
@@ -200,13 +223,20 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     updateWebsiteSyncNotifier.setStep(6);
     try {
       transactionReference = (await signTx(
+        dappClient,
         keychainWebsiteService,
         '',
         [transactionReference],
       ))
           .first;
     } catch (e) {
-      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+      updateWebsiteSyncNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
@@ -217,13 +247,13 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     for (var i = 0; i < transactionsList.length; i++) {
       log('previousPublicKey: ${transactionsList[i].previousPublicKey!}');
 
-      final _fees = await calculateFees(transactionsList[i]);
+      final _fees = await calculateFees(transactionsList[i], apiService);
       feesFiles = feesFiles + _fees;
       log('feesFiles: ${transactionsList[i].address} $_fees');
     }
     log('feesFiles: $feesFiles');
 
-    final feesRef = await calculateFees(transactionReference);
+    final feesRef = await calculateFees(transactionReference, apiService);
     log('feesRef: $feesRef');
 
     updateWebsiteSyncNotifier.setStep(8);
@@ -231,41 +261,48 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
     log('Create transfer transaction to manage fees');
 
     final addressTxFiles =
-        await getDeriveAddress(keychainWebsiteService, 'files');
+        await getDeriveAddress(dappClient, keychainWebsiteService, 'files');
     log('keychainWebsiteService: $keychainWebsiteService');
     log('addressTxRef: $addressTxRef');
     log('addressTxFiles: $addressTxFiles');
-    final blockchainTxVersion = int.parse(
-      (await sl.get<ApiService>().getBlockchainVersion()).version.transaction,
-    );
-    var transactionTransfer = Transaction(
+
+    var transactionTransfer = archethic.Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
-      data: Transaction.initData(),
-    ).addUCOTransfer(addressTxRef, toBigInt(feesRef));
+      data: archethic.Transaction.initData(),
+    ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
     if (feesFiles > 0) {
-      transactionTransfer.addUCOTransfer(addressTxFiles, toBigInt(feesFiles));
+      transactionTransfer.addUCOTransfer(
+        addressTxFiles,
+        archethic.toBigInt(feesFiles),
+      );
     }
 
     updateWebsiteSyncNotifier.setStep(9);
 
-    final currentNameAccount = await getCurrentAccount();
+    final currentNameAccount = await getCurrentAccount(dappClient);
     log('Sign transaction transfer');
     try {
       transactionTransfer = (await signTx(
+        dappClient,
         Uri.encodeFull('archethic-wallet-$currentNameAccount'),
         '',
         [transactionTransfer],
       ))
           .first;
     } catch (e) {
-      updateWebsiteSyncNotifier.setStepError((e as Failure).message!);
+      updateWebsiteSyncNotifier.setStepError(
+        (e as aedappfm.Failure)
+                .toString()
+                .replaceAll('Exception: ', '')
+                .capitalize() ??
+            e.toString(),
+      );
       log('Signature failed');
       return;
     }
 
     updateWebsiteSyncNotifier.setStep(10);
-    final feesTrf = await calculateFees(transactionTransfer);
+    final feesTrf = await calculateFees(transactionTransfer, apiService);
     log('feesTrf: $feesTrf');
 
     await updateWebsiteSyncNotifier
@@ -313,11 +350,12 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
 
     try {
       await sendTransactions(
-        <Transaction>[
+        <archethic.Transaction>[
           transactionTransfer,
           ...transactionsList,
           transactionReference,
         ],
+        apiService,
       );
 
       if (ref
@@ -325,7 +363,7 @@ class UpdateWebsiteSyncUseCases with FileMixin, TransactionAEWebMixin {
           .stepError
           .isEmpty) {
         updateWebsiteSyncNotifier.setStep(13);
-        log("Website's update is deployed at : ${sl.get<ApiService>().endpoint}/aeweb/$addressTxRef");
+        log("Website's update is deployed at : ${apiService.endpoint}/aeweb/$addressTxRef");
       }
     } catch (e) {
       updateWebsiteSyncNotifier

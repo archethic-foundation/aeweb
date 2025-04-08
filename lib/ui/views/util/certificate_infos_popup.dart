@@ -1,7 +1,8 @@
-import 'package:aeweb/ui/views/util/components/popup_template.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/util/certificate_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:basic_utils/basic_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -15,7 +16,7 @@ class CertificateInfosPopup with CertificateMixin {
     return showDialog(
       context: context,
       builder: (context) {
-        return PopupTemplate(
+        return aedappfm.PopupTemplate(
           popupTitle: AppLocalizations.of(context)!.certificateInfosTitle,
           popupHeight: 400,
           popupContent: ArchethicScrollbar(

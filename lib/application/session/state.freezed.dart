@@ -12,21 +12,23 @@ part of 'state.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Session {
-  String get endpoint => throw _privateConstructorUsedError;
+  Environment get environment => throw _privateConstructorUsedError;
   String get nameAccount => throw _privateConstructorUsedError;
-  String get oldNameAccount => throw _privateConstructorUsedError;
   String get genesisAddress => throw _privateConstructorUsedError;
   String get error => throw _privateConstructorUsedError;
-  bool get isConnected => throw _privateConstructorUsedError;
+  ArchethicDappConnectionState get walletConnectionState =>
+      throw _privateConstructorUsedError;
   Subscription<Account>? get accountSub => throw _privateConstructorUsedError;
   StreamSubscription<Account>? get accountStreamSub =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SessionCopyWith<Session> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -36,15 +38,15 @@ abstract class $SessionCopyWith<$Res> {
       _$SessionCopyWithImpl<$Res, Session>;
   @useResult
   $Res call(
-      {String endpoint,
+      {Environment environment,
       String nameAccount,
-      String oldNameAccount,
       String genesisAddress,
       String error,
-      bool isConnected,
+      ArchethicDappConnectionState walletConnectionState,
       Subscription<Account>? accountSub,
       StreamSubscription<Account>? accountStreamSub});
 
+  $ArchethicDappConnectionStateCopyWith<$Res> get walletConnectionState;
   $SubscriptionCopyWith<Account, $Res>? get accountSub;
 }
 
@@ -58,30 +60,27 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? endpoint = null,
+    Object? environment = null,
     Object? nameAccount = null,
-    Object? oldNameAccount = null,
     Object? genesisAddress = null,
     Object? error = null,
-    Object? isConnected = null,
+    Object? walletConnectionState = null,
     Object? accountSub = freezed,
     Object? accountStreamSub = freezed,
   }) {
     return _then(_value.copyWith(
-      endpoint: null == endpoint
-          ? _value.endpoint
-          : endpoint // ignore: cast_nullable_to_non_nullable
-              as String,
+      environment: null == environment
+          ? _value.environment
+          : environment // ignore: cast_nullable_to_non_nullable
+              as Environment,
       nameAccount: null == nameAccount
           ? _value.nameAccount
           : nameAccount // ignore: cast_nullable_to_non_nullable
-              as String,
-      oldNameAccount: null == oldNameAccount
-          ? _value.oldNameAccount
-          : oldNameAccount // ignore: cast_nullable_to_non_nullable
               as String,
       genesisAddress: null == genesisAddress
           ? _value.genesisAddress
@@ -91,10 +90,10 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      isConnected: null == isConnected
-          ? _value.isConnected
-          : isConnected // ignore: cast_nullable_to_non_nullable
-              as bool,
+      walletConnectionState: null == walletConnectionState
+          ? _value.walletConnectionState
+          : walletConnectionState // ignore: cast_nullable_to_non_nullable
+              as ArchethicDappConnectionState,
       accountSub: freezed == accountSub
           ? _value.accountSub
           : accountSub // ignore: cast_nullable_to_non_nullable
@@ -106,6 +105,19 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
     ) as $Val);
   }
 
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ArchethicDappConnectionStateCopyWith<$Res> get walletConnectionState {
+    return $ArchethicDappConnectionStateCopyWith<$Res>(
+        _value.walletConnectionState, (value) {
+      return _then(_value.copyWith(walletConnectionState: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
   $SubscriptionCopyWith<Account, $Res>? get accountSub {
@@ -120,57 +132,56 @@ class _$SessionCopyWithImpl<$Res, $Val extends Session>
 }
 
 /// @nodoc
-abstract class _$$_SessionCopyWith<$Res> implements $SessionCopyWith<$Res> {
-  factory _$$_SessionCopyWith(
-          _$_Session value, $Res Function(_$_Session) then) =
-      __$$_SessionCopyWithImpl<$Res>;
+abstract class _$$SessionImplCopyWith<$Res> implements $SessionCopyWith<$Res> {
+  factory _$$SessionImplCopyWith(
+          _$SessionImpl value, $Res Function(_$SessionImpl) then) =
+      __$$SessionImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String endpoint,
+      {Environment environment,
       String nameAccount,
-      String oldNameAccount,
       String genesisAddress,
       String error,
-      bool isConnected,
+      ArchethicDappConnectionState walletConnectionState,
       Subscription<Account>? accountSub,
       StreamSubscription<Account>? accountStreamSub});
 
+  @override
+  $ArchethicDappConnectionStateCopyWith<$Res> get walletConnectionState;
   @override
   $SubscriptionCopyWith<Account, $Res>? get accountSub;
 }
 
 /// @nodoc
-class __$$_SessionCopyWithImpl<$Res>
-    extends _$SessionCopyWithImpl<$Res, _$_Session>
-    implements _$$_SessionCopyWith<$Res> {
-  __$$_SessionCopyWithImpl(_$_Session _value, $Res Function(_$_Session) _then)
+class __$$SessionImplCopyWithImpl<$Res>
+    extends _$SessionCopyWithImpl<$Res, _$SessionImpl>
+    implements _$$SessionImplCopyWith<$Res> {
+  __$$SessionImplCopyWithImpl(
+      _$SessionImpl _value, $Res Function(_$SessionImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? endpoint = null,
+    Object? environment = null,
     Object? nameAccount = null,
-    Object? oldNameAccount = null,
     Object? genesisAddress = null,
     Object? error = null,
-    Object? isConnected = null,
+    Object? walletConnectionState = null,
     Object? accountSub = freezed,
     Object? accountStreamSub = freezed,
   }) {
-    return _then(_$_Session(
-      endpoint: null == endpoint
-          ? _value.endpoint
-          : endpoint // ignore: cast_nullable_to_non_nullable
-              as String,
+    return _then(_$SessionImpl(
+      environment: null == environment
+          ? _value.environment
+          : environment // ignore: cast_nullable_to_non_nullable
+              as Environment,
       nameAccount: null == nameAccount
           ? _value.nameAccount
           : nameAccount // ignore: cast_nullable_to_non_nullable
-              as String,
-      oldNameAccount: null == oldNameAccount
-          ? _value.oldNameAccount
-          : oldNameAccount // ignore: cast_nullable_to_non_nullable
               as String,
       genesisAddress: null == genesisAddress
           ? _value.genesisAddress
@@ -180,10 +191,10 @@ class __$$_SessionCopyWithImpl<$Res>
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
               as String,
-      isConnected: null == isConnected
-          ? _value.isConnected
-          : isConnected // ignore: cast_nullable_to_non_nullable
-              as bool,
+      walletConnectionState: null == walletConnectionState
+          ? _value.walletConnectionState
+          : walletConnectionState // ignore: cast_nullable_to_non_nullable
+              as ArchethicDappConnectionState,
       accountSub: freezed == accountSub
           ? _value.accountSub
           : accountSub // ignore: cast_nullable_to_non_nullable
@@ -198,27 +209,22 @@ class __$$_SessionCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_Session extends _Session {
-  const _$_Session(
-      {this.endpoint = '',
+class _$SessionImpl extends _Session {
+  const _$SessionImpl(
+      {required this.environment,
       this.nameAccount = '',
-      this.oldNameAccount = '',
       this.genesisAddress = '',
       this.error = '',
-      this.isConnected = false,
+      required this.walletConnectionState,
       this.accountSub,
       this.accountStreamSub})
       : super._();
 
   @override
-  @JsonKey()
-  final String endpoint;
+  final Environment environment;
   @override
   @JsonKey()
   final String nameAccount;
-  @override
-  @JsonKey()
-  final String oldNameAccount;
   @override
   @JsonKey()
   final String genesisAddress;
@@ -226,8 +232,7 @@ class _$_Session extends _Session {
   @JsonKey()
   final String error;
   @override
-  @JsonKey()
-  final bool isConnected;
+  final ArchethicDappConnectionState walletConnectionState;
   @override
   final Subscription<Account>? accountSub;
   @override
@@ -235,25 +240,23 @@ class _$_Session extends _Session {
 
   @override
   String toString() {
-    return 'Session(endpoint: $endpoint, nameAccount: $nameAccount, oldNameAccount: $oldNameAccount, genesisAddress: $genesisAddress, error: $error, isConnected: $isConnected, accountSub: $accountSub, accountStreamSub: $accountStreamSub)';
+    return 'Session(environment: $environment, nameAccount: $nameAccount, genesisAddress: $genesisAddress, error: $error, walletConnectionState: $walletConnectionState, accountSub: $accountSub, accountStreamSub: $accountStreamSub)';
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_Session &&
-            (identical(other.endpoint, endpoint) ||
-                other.endpoint == endpoint) &&
+            other is _$SessionImpl &&
+            (identical(other.environment, environment) ||
+                other.environment == environment) &&
             (identical(other.nameAccount, nameAccount) ||
                 other.nameAccount == nameAccount) &&
-            (identical(other.oldNameAccount, oldNameAccount) ||
-                other.oldNameAccount == oldNameAccount) &&
             (identical(other.genesisAddress, genesisAddress) ||
                 other.genesisAddress == genesisAddress) &&
             (identical(other.error, error) || other.error == error) &&
-            (identical(other.isConnected, isConnected) ||
-                other.isConnected == isConnected) &&
+            (identical(other.walletConnectionState, walletConnectionState) ||
+                other.walletConnectionState == walletConnectionState) &&
             (identical(other.accountSub, accountSub) ||
                 other.accountSub == accountSub) &&
             (identical(other.accountStreamSub, accountStreamSub) ||
@@ -263,52 +266,53 @@ class _$_Session extends _Session {
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      endpoint,
+      environment,
       nameAccount,
-      oldNameAccount,
       genesisAddress,
       error,
-      isConnected,
+      walletConnectionState,
       accountSub,
       accountStreamSub);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_SessionCopyWith<_$_Session> get copyWith =>
-      __$$_SessionCopyWithImpl<_$_Session>(this, _$identity);
+  _$$SessionImplCopyWith<_$SessionImpl> get copyWith =>
+      __$$SessionImplCopyWithImpl<_$SessionImpl>(this, _$identity);
 }
 
 abstract class _Session extends Session {
   const factory _Session(
-      {final String endpoint,
+      {required final Environment environment,
       final String nameAccount,
-      final String oldNameAccount,
       final String genesisAddress,
       final String error,
-      final bool isConnected,
+      required final ArchethicDappConnectionState walletConnectionState,
       final Subscription<Account>? accountSub,
-      final StreamSubscription<Account>? accountStreamSub}) = _$_Session;
+      final StreamSubscription<Account>? accountStreamSub}) = _$SessionImpl;
   const _Session._() : super._();
 
   @override
-  String get endpoint;
+  Environment get environment;
   @override
   String get nameAccount;
-  @override
-  String get oldNameAccount;
   @override
   String get genesisAddress;
   @override
   String get error;
   @override
-  bool get isConnected;
+  ArchethicDappConnectionState get walletConnectionState;
   @override
   Subscription<Account>? get accountSub;
   @override
   StreamSubscription<Account>? get accountStreamSub;
+
+  /// Create a copy of Session
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
-  _$$_SessionCopyWith<_$_Session> get copyWith =>
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$SessionImplCopyWith<_$SessionImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

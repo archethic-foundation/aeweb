@@ -1,17 +1,18 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'dart:ui';
 
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:aeweb/application/api_service.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_treeview/flutter_treeview.dart';
+import 'package:flutter_treeview2/flutter_treeview2.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ExplorerFilesScreen extends ConsumerStatefulWidget {
@@ -130,8 +131,10 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
         size: 12,
       ),
       colorScheme: ColorScheme.light(
-        primary:
-            Theme.of(context).colorScheme.primaryContainer.withOpacity(0.5),
+        primary: Theme.of(context)
+            .colorScheme
+            .primaryContainer
+            .withValues(alpha: 0.5),
       ),
     );
 
@@ -149,7 +152,8 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withOpacity(0.2),
+                    color: aedappfm.ArchethicThemeBase.neutral0
+                        .withValues(alpha: 0.2),
                     height: 1,
                   ),
                 ),
@@ -283,7 +287,7 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
             for (final address in metaData.addresses) {
               launchUrl(
                 Uri.parse(
-                  '${sl.get<archethic.ApiService>().endpoint}/explorer/transaction/$address',
+                  '${ref.watch(apiServiceProvider).endpoint}/explorer/transaction/$address',
                 ),
               );
             }

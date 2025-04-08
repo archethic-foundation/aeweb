@@ -1,20 +1,13 @@
-import 'dart:developer';
-
 import 'package:aeweb/model/hive/db_helper.dart';
-import 'package:aeweb/util/generic/get_it_instance.dart';
-import 'package:archethic_lib_dart/archethic_lib_dart.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 
 void setupServiceLocator() {
-  sl.registerLazySingleton<DBHelper>(DBHelper.new);
-}
-
-void setupServiceLocatorApiService(String endpoint) {
-  sl.registerLazySingleton<ApiService>(
-    () => ApiService(endpoint, logsActivation: false),
-  );
-  log('Register', name: 'ApiService');
-  sl.registerLazySingleton<OracleService>(
-    () => OracleService(endpoint, logsActivation: false),
-  );
-  log('Register', name: 'OracleService');
+  aedappfm.sl
+    ..registerLazySingleton<DBHelper>(DBHelper.new)
+    ..registerLazySingleton<aedappfm.LogManager>(() {
+      return aedappfm.LogManager(
+        url: '',
+      );
+    });
 }

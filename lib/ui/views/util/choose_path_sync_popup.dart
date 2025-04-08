@@ -1,25 +1,28 @@
 import 'dart:developer';
 
-import 'package:aeweb/domain/usecases/website/read_website_version.dart';
+import 'package:aeweb/application/usecases.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
-import 'package:aeweb/ui/views/util/components/popup_template.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
 import 'package:aeweb/ui/views/util/router.dart';
 import 'package:aeweb/ui/views/util/warning_size_label.dart';
 import 'package:aeweb/util/file_util.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PathSyncPopup with FileMixin {
   static Future<void> getDialog(
     BuildContext context,
+    WidgetRef ref,
     String transactionRefAddress,
     String websiteName,
     String genesisAddress,
@@ -27,9 +30,9 @@ class PathSyncPopup with FileMixin {
     String? path;
     Uint8List? zipFile;
     bool? applyGitIgnoreRules;
-    final thumbIcon = MaterialStateProperty.resolveWith<Icon?>(
-      (Set<MaterialState> states) {
-        if (states.contains(MaterialState.selected)) {
+    final thumbIcon = WidgetStateProperty.resolveWith<Icon?>(
+      (Set<WidgetState> states) {
+        if (states.contains(WidgetState.selected)) {
           return const Icon(Icons.check);
         }
         return const Icon(Icons.close);
@@ -39,7 +42,7 @@ class PathSyncPopup with FileMixin {
     return showDialog(
       context: context,
       builder: (context) {
-        return PopupTemplate(
+        return aedappfm.PopupTemplate(
           popupTitle: AppLocalizations.of(context)!.pathSyncPopupTitle,
           popupHeight: 320,
           popupContent: StatefulBuilder(
@@ -234,12 +237,15 @@ class PathSyncPopup with FileMixin {
                         );
                       }
 
-                      final remoteFiles =
-                          (await ReadWebsiteVersionUseCases().getRemote(
-                        transactionRefAddress,
-                      ))!
-                              .content!
-                              .metaData;
+                      final remoteFiles = (await ref
+                              .watch(
+                                readWebsiteVersionUseCaseProvider,
+                              )
+                              .getRemote(
+                                transactionRefAddress,
+                              ))!
+                          .content!
+                          .metaData;
 
                       context
                         ..pop() // close popup

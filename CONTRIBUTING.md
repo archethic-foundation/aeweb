@@ -142,7 +142,7 @@ Rather than reinventing the wheel, I encourage you to check [this excellent diag
 ### Libraries / Technical choices
 
 - **Application state management** heavily relies on [Riverpod](https://riverpod.dev/).
-- **Dependency injection** relies on [Riverpod](https://riverpod.dev/) too. There is still a non neglectable part using the excellent [GetIt](https://pub.dev/packages/get_it) library.
+- **Dependency injection** relies on [Riverpod](https://riverpod.dev/) too. 
 - **Blockchain interaction** is extracted to the [archethic_lib_dart](https://pub.dev/packages/archethic_lib_dart) package.
 
 
