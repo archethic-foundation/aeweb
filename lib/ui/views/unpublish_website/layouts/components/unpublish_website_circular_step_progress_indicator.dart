@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:step_progress_indicator/step_progress_indicator.dart';
@@ -31,11 +32,11 @@ class UnpublishWebsiteCircularStepProgressIndicator extends ConsumerWidget {
               roundedCap: (_, isSelected) => isSelected,
               gradientColor: unpublishWebsite.unpublishInProgress == false
                   ? unpublishWebsite.stepError.isEmpty
-                      ? AeWebThemeBase
+                      ? aedappfm.AppThemeBase
                           .gradientCircularStepProgressIndicatorFinished
-                      : AeWebThemeBase
+                      : aedappfm.AppThemeBase
                           .gradientCircularStepProgressIndicatorError
-                  : AeWebThemeBase.gradientCircularStepProgressIndicator,
+                  : aedappfm.AppThemeBase.gradientCircularStepProgressIndicator,
               selectedColor: Colors.white,
               unselectedColor: Colors.white.withValues(alpha: 0.2),
               removeRoundedCapExtraAngle: true,

@@ -98,7 +98,7 @@ class WebsitesRepository {
     final transactionChainMap = await apiService.getTransactionChain(
       {genesisAddress: ''},
       request:
-          'type, address, validationStamp { timestamp, ledgerOperations { fee } } data { content , }',
+          'type, address, validationStamp { timestamp, ledgerOperations { fee } } data { content }',
       orderAsc: false,
     );
 

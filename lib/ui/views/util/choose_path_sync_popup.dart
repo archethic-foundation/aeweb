@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:aeweb/application/usecases.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
@@ -14,12 +15,14 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PathSyncPopup with FileMixin {
   static Future<void> getDialog(
     BuildContext context,
+    WidgetRef ref,
     String transactionRefAddress,
     String websiteName,
     String genesisAddress,
@@ -233,8 +236,7 @@ class PathSyncPopup with FileMixin {
                           applyGitIgnoreRules: applyGitIgnoreRules ?? false,
                         );
                       }
-                      // TODO(reddwarf): supp
-                      /*
+
                       final remoteFiles = (await ref
                               .watch(
                                 readWebsiteVersionUseCaseProvider,
@@ -261,7 +263,7 @@ class PathSyncPopup with FileMixin {
                               remoteFiles,
                             ),
                           },
-                        );*/
+                        );
                     },
                   ),
                 ],

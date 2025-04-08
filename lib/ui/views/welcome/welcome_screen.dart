@@ -1,11 +1,12 @@
 import 'dart:ui';
 
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar_welcome.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/welcome/bloc/providers.dart';
 import 'package:aeweb/ui/views/welcome/components/welcome_connect_wallet_btn.dart';
 import 'package:aeweb/ui/views/welcome/components/welcome_title.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -26,7 +27,7 @@ class _WelcomeScreenState extends ConsumerState<WelcomeScreen> {
       isBusy: ref.watch(isLoadingWelcomeScreenProvider),
       scaffold: Scaffold(
         extendBodyBehindAppBar: true,
-        backgroundColor: AeWebThemeBase.backgroundColor,
+        backgroundColor: aedappfm.AppThemeBase.backgroundColor,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(70),
           child: ClipRRect(

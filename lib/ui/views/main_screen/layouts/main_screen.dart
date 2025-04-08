@@ -2,12 +2,13 @@
 import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/display_website/website_list.dart';
 import 'package:aeweb/ui/views/main_screen/bloc/provider.dart';
 import 'package:aeweb/ui/views/main_screen/layouts/app_bar.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/router.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:busy/busy.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
@@ -30,7 +31,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
       scaffold: Scaffold(
         extendBodyBehindAppBar: true,
         extendBody: true,
-        backgroundColor: AeWebThemeBase.backgroundColor,
+        backgroundColor: aedappfm.AppThemeBase.backgroundColor,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(70),
           child: ClipRRect(
@@ -50,7 +51,7 @@ class MainScreenState extends ConsumerState<MainScreen> {
         floatingActionButton: session.isConnected
             ? FloatingActionButton.extended(
                 onPressed: () {
-                  context.go(RoutesPath().addWebsite());
+                  context.push(RoutesPath().addWebsite());
                 },
                 icon: const Icon(Icons.add),
                 label: Text(

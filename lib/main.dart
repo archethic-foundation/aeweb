@@ -20,6 +20,7 @@ Future<void> main() async {
 
   await DBHelper.setupDatabase();
   setupServiceLocator();
+  await aedappfm.sl.get<DBHelper>().clearWebsites();
   runApp(
     ProviderScope(
       observers: [

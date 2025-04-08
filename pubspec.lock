@@ -837,6 +837,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.0"
+  pem:
+    dependency: "direct main"
+    description:
+      name: pem
+      sha256: "3dfb24524f805ad694ba3cdbb6387ab31ab661fdb8ea873052ed88487fcfef86"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   petitparser:
     dependency: transitive
     description:
@@ -1275,7 +1283,7 @@ packages:
     source: hosted
     version: "1.1.1"
   wave:
-    dependency: "direct main"
+    dependency: transitive
     description:
       name: wave
       sha256: "01ebccb4caa9b150cbe4763aa2a23501bb582843a1f96281868bbb23cb4db1f9"

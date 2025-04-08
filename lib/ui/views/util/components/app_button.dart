@@ -1,5 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -77,7 +78,7 @@ class AppButtonState extends State<AppButton> {
         horizontal: 20,
       ),
       decoration: ShapeDecoration(
-        gradient: AeWebThemeBase.gradientBtn,
+        gradient: aedappfm.AppThemeBase.gradientBtn,
         shape: const StadiumBorder(),
         shadows: [
           BoxShadow(

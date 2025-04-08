@@ -451,6 +451,7 @@ Widget _popupMenuButton(
         case 'Sync':
           PathSyncPopup.getDialog(
             context,
+            ref,
             websiteVersion.transactionRefAddress,
             websiteName,
             genesisAddress,

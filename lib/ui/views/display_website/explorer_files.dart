@@ -2,10 +2,11 @@
 import 'dart:ui';
 
 import 'package:aeweb/application/api_service.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_lib_dart/archethic_lib_dart.dart' as archethic;
 import 'package:filesize/filesize.dart';
 import 'package:flutter/material.dart';
@@ -151,7 +152,8 @@ class ExplorerFilesScreenState extends ConsumerState<ExplorerFilesScreen> {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withValues(alpha: 0.2),
+                    color: aedappfm.ArchethicThemeBase.neutral0
+                        .withValues(alpha: 0.2),
                     height: 1,
                   ),
                 ),

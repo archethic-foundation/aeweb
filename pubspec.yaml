@@ -21,7 +21,7 @@ dependencies:
   archive: ^4.0.2
 
   # Common util classes for Strings, Dates, X509, PKCS, Cryptographie and more.
-  basic_utils: ^5.8.0
+  basic_utils: ^5.8.2
 
   # Centralized loading widget management
   busy: ^1.0.3
@@ -81,6 +81,9 @@ dependencies:
   # Flutter plugin for querying information about the application package, such as CFBundleVersion on iOS or versionCode on Android
   package_info_plus: ^8.0.2
 
+  # Encoding/decoding of PEM (Privacy-Enhanced Mail) textual key encoding following RFC 7468.
+  pem: ^2.0.5
+
   # A package exposing annotations for riverpod_generator
   riverpod_annotation: ^2.6.1
 
@@ -89,9 +92,6 @@ dependencies:
 
   # Flutter plugin for launching a URL. Supports web, phone, SMS, and email schemes
   url_launcher: ^6.2.5
-
-  # Wave animation
-  wave: ^0.2.2
 
 dev_dependencies:
   # A build system for Dart code generation and modular compilation.

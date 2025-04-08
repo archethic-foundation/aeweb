@@ -62,7 +62,15 @@ mixin TransactionAEWebMixin {
     return Transaction(
       type: 'data',
       data: Transaction.initData(),
-    ).setContent('website unpublished');
+    ).setContent(
+      jsonEncode(
+        {
+          'aeip': [8, 13],
+          'aewebVersion': 1,
+          'publicationStatus': 'UNPUBLISHED',
+        },
+      ),
+    );
   }
 
   Future<Transaction> newTransactionFile(

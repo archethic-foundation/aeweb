@@ -1,7 +1,6 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
 import 'package:aeweb/application/usecases.dart';
 import 'package:aeweb/application/websites.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/ui/views/update_certificate/layouts/components/update_certificate_circular_step_progress_indicator.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
@@ -10,12 +9,13 @@ import 'package:aeweb/ui/views/util/components/in_progress_banner.dart';
 import 'package:aeweb/ui/views/util/components/popup_close_button.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:aeweb/ui/views/util/router.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:wave/config.dart';
-import 'package:wave/wave.dart';
 
 class UpdateCertificateInProgressPopup {
   static Future<void> getDialog(
@@ -133,9 +133,11 @@ class UpdateCertificateInProgressPopup {
                                 left: 8,
                               ),
                               height: 300,
-                              width: AeWebThemeBase.sizeBoxComponentWidth,
+                              width:
+                                  aedappfm.AppThemeBase.sizeBoxComponentWidth,
                               decoration: BoxDecoration(
-                                color: AeWebThemeBase.backgroundPopupColor,
+                                color:
+                                    aedappfm.AppThemeBase.backgroundPopupColor,
                                 borderRadius: BorderRadius.circular(16),
                                 boxShadow: const <BoxShadow>[
                                   BoxShadow(
@@ -145,8 +147,8 @@ class UpdateCertificateInProgressPopup {
                               ),
                               child: Stack(
                                 children: [
-                                  Padding(
-                                    padding: const EdgeInsets.only(
+                                  const Padding(
+                                    padding: EdgeInsets.only(
                                       top: 200,
                                     ),
                                     child: Card(
@@ -154,58 +156,13 @@ class UpdateCertificateInProgressPopup {
                                       clipBehavior: Clip.antiAlias,
                                       elevation: 0,
                                       margin: EdgeInsets.zero,
-                                      shape: const RoundedRectangleBorder(
+                                      shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(16),
                                           bottomRight: Radius.circular(16),
                                         ),
                                       ),
-                                      child: WaveWidget(
-                                        config: CustomConfig(
-                                          gradients: [
-                                            [
-                                              ArchethicThemeBase.blue800
-                                                  .withValues(alpha: 0.1),
-                                              ArchethicThemeBase.purple800
-                                                  .withValues(alpha: 0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue500
-                                                  .withValues(alpha: 0.1),
-                                              ArchethicThemeBase.purple500
-                                                  .withValues(alpha: 0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue300
-                                                  .withValues(alpha: 0.1),
-                                              ArchethicThemeBase.purple300
-                                                  .withValues(alpha: 0.1),
-                                            ],
-                                            [
-                                              ArchethicThemeBase.blue200
-                                                  .withValues(alpha: 0.1),
-                                              ArchethicThemeBase.purple200
-                                                  .withValues(alpha: 0.1),
-                                            ]
-                                          ],
-                                          durations: [
-                                            35000,
-                                            19440,
-                                            10800,
-                                            6000,
-                                          ],
-                                          heightPercentages: [
-                                            0.20,
-                                            0.23,
-                                            0.25,
-                                            0.30,
-                                          ],
-                                          gradientBegin: Alignment.bottomLeft,
-                                          gradientEnd: Alignment.topRight,
-                                        ),
-                                        size: Size.infinite,
-                                        waveAmplitude: 0,
-                                      ),
+                                      child: aedappfm.PopupWaves(),
                                     ),
                                   ),
                                   Padding(
@@ -282,7 +239,7 @@ class UpdateCertificateInProgressPopup {
                                 if (updateCertificate.creationInProgress ==
                                         false &&
                                     updateCertificate.processFinished) {
-                                  context.pop(); // go to main screen
+                                  context.go(RoutesPath().home());
                                 }
                               },
                             ),

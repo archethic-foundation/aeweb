@@ -3,5 +3,11 @@ import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutte
     as aedappfm;
 
 void setupServiceLocator() {
-  aedappfm.sl.registerLazySingleton<DBHelper>(DBHelper.new);
+  aedappfm.sl
+    ..registerLazySingleton<DBHelper>(DBHelper.new)
+    ..registerLazySingleton<aedappfm.LogManager>(() {
+      return aedappfm.LogManager(
+        url: '',
+      );
+    });
 }

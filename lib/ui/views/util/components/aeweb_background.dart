@@ -1,4 +1,5 @@
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 
 class AEWebBackground extends StatelessWidget {
@@ -17,7 +18,7 @@ class AEWebBackground extends StatelessWidget {
           decoration: BoxDecoration(
             image: DecorationImage(
               colorFilter: ColorFilter.mode(
-                ArchethicThemeBase.purple500.withValues(alpha: 0.8),
+                aedappfm.ArchethicThemeBase.purple500.withValues(alpha: 0.8),
                 BlendMode.modulate,
               ),
               image: const AssetImage(

@@ -22,7 +22,7 @@ final environmentProvider = AutoDisposeProvider<Environment>.internal(
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef EnvironmentRef = AutoDisposeProviderRef<Environment>;
-String _$sessionNotifierHash() => r'd044d48980bd2403283a934f2d46a24dde6c8438';
+String _$sessionNotifierHash() => r'c03060e9fb371d45d5f4cb9501699471fa70aa74';
 
 /// See also [SessionNotifier].
 @ProviderFor(SessionNotifier)

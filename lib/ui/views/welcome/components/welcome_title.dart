@@ -1,6 +1,7 @@
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/gradient_text.dart';
 import 'package:aeweb/ui/views/util/components/scale_size.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -30,7 +31,7 @@ class WelcomeTitle extends StatelessWidget {
                     fontSize: 40,
                     fontWeight: FontWeight.w600,
                   ),
-                  gradient: AeWebThemeBase.gradientWelcomeTxt,
+                  gradient: aedappfm.AppThemeBase.gradientWelcomeTxt,
                 )
                     .animate(delay: 100.ms)
                     .fadeIn(duration: 400.ms, delay: 200.ms)

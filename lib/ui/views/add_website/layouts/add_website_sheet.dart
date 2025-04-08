@@ -4,7 +4,6 @@ import 'dart:ui';
 
 import 'package:aeweb/application/session/provider.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
 import 'package:aeweb/ui/views/add_website/bloc/state.dart';
 import 'package:aeweb/ui/views/add_website/layouts/components/add_website_form_sheet.dart';
@@ -12,6 +11,8 @@ import 'package:aeweb/ui/views/add_website/layouts/components/add_website_in_pro
 import 'package:aeweb/ui/views/main_screen/layouts/connection_to_wallet_status.dart';
 import 'package:aeweb/ui/views/util/content_website_warning_popup.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -90,7 +91,8 @@ class AddWebsiteSheet extends ConsumerWidget {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withValues(alpha: 0.2),
+                    color: aedappfm.ArchethicThemeBase.neutral0
+                        .withValues(alpha: 0.2),
                     height: 1,
                   ),
                 ),

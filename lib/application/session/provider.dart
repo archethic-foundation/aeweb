@@ -4,8 +4,11 @@ import 'dart:developer';
 
 import 'package:aeweb/application/dapp_client.dart';
 import 'package:aeweb/application/session/state.dart';
+import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/util/browser_util_desktop.dart'
     if (dart.library.js) 'package:aeweb/util/browser_util_web.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
@@ -39,22 +42,17 @@ class SessionNotifier extends _$SessionNotifier {
     });
 
     ref.watch(dappClientProvider).when(
-      data: (dappClient) {
-        print('data');
-        _listenConnectionState(dappClient);
+          data: (dappClient) {
+            _listenConnectionState(dappClient);
 
-        Future.delayed(
-          const Duration(milliseconds: 50),
-          connectWallet,
+            Future.delayed(
+              const Duration(milliseconds: 50),
+              connectWallet,
+            );
+          },
+          loading: () {},
+          error: (error, stack) {},
         );
-      },
-      loading: () {
-        print('loading');
-      },
-      error: (error, stack) {
-        print('error');
-      },
-    );
     return const Session(
       environment: Environment.mainnet,
       walletConnectionState: awc.ArchethicDappConnectionState.disconnected(),
@@ -128,6 +126,7 @@ class SessionNotifier extends _$SessionNotifier {
       environment: Environment.mainnet,
       walletConnectionState: awc.ArchethicDappConnectionState.disconnected(),
     );
+    await aedappfm.sl.get<DBHelper>().clearWebsites();
   }
 
   Future<void> _onWalletConnected(ArchethicDAppClient dappClient) async {
@@ -137,6 +136,8 @@ class SessionNotifier extends _$SessionNotifier {
       final environment = Environment.byEndpoint(endpointResult.endpointUrl);
 
       final currentAccount = await dappClient.getCurrentAccount().valueOrNull;
+
+      await aedappfm.sl.get<DBHelper>().clearWebsites();
 
       final subscription = await dappClient.subscribeCurrentAccount();
 

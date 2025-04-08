@@ -1,7 +1,8 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/app_button.dart';
 import 'package:aeweb/ui/views/util/components/icon_animated.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 
@@ -39,7 +40,8 @@ class PopupCloseButton extends StatelessWidget {
                 child: Builder(
                   builder: (context) {
                     return AlertDialog(
-                      backgroundColor: AeWebThemeBase.backgroundPopupColor,
+                      backgroundColor:
+                          aedappfm.AppThemeBase.backgroundPopupColor,
                       contentPadding: const EdgeInsets.only(
                         top: 10,
                       ),
@@ -112,7 +114,7 @@ class PopupCloseButton extends StatelessWidget {
         },
         child: CircleAvatar(
           radius: 20,
-          backgroundColor: AeWebThemeBase.backgroundPopupColor,
+          backgroundColor: aedappfm.AppThemeBase.backgroundPopupColor,
           child: const CircleAvatar(
             foregroundColor: Colors.white,
             radius: 12,

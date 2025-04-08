@@ -4,11 +4,12 @@ import 'dart:ui';
 
 import 'package:aeweb/application/api_service.dart';
 import 'package:aeweb/model/website_version_tx.dart';
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/components/aeweb_background.dart';
 import 'package:aeweb/ui/views/util/components/icon_button_animated.dart';
 import 'package:aeweb/ui/views/util/components/scrollbar.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -35,7 +36,8 @@ class ExplorerTxScreen extends ConsumerWidget {
                 bottom: PreferredSize(
                   preferredSize: const Size.fromHeight(1),
                   child: Container(
-                    color: ArchethicThemeBase.neutral0.withValues(alpha: 0.2),
+                    color: aedappfm.ArchethicThemeBase.neutral0
+                        .withValues(alpha: 0.2),
                     height: 1,
                   ),
                 ),

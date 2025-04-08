@@ -1,6 +1,7 @@
 /// SPDX-License-Identifier: AGPL-3.0-or-later
-import 'package:aeweb/ui/themes/aeweb_theme_base.dart';
 import 'package:aeweb/ui/views/util/iconsax.dart';
+import 'package:archethic_dapp_framework_flutter/archethic_dapp_framework_flutter.dart'
+    as aedappfm;
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -11,7 +12,7 @@ class InfoBanner extends StatelessWidget {
     this.message,
     this.infoBannerType, {
     this.height = 40,
-    this.width = AeWebThemeBase.sizeBoxComponentWidth,
+    this.width = aedappfm.AppThemeBase.sizeBoxComponentWidth,
     super.key,
   });
 
@@ -58,11 +59,12 @@ class InfoBanner extends StatelessWidget {
                                       .colorScheme
                                       .primary
                                       .withValues(alpha: 0.6)
-                                  : AeWebThemeBase.statusOK
+                                  : aedappfm.AppThemeBase.statusOK
                                       .withValues(alpha: 0.6),
                           width: 0.5,
                         ),
-                        gradient: AeWebThemeBase.gradientInfoBannerBackground,
+                        gradient:
+                            aedappfm.AppThemeBase.gradientInfoBannerBackground,
                       ),
                       child: Container(
                         padding: const EdgeInsets.only(left: 10),
@@ -87,7 +89,7 @@ class InfoBanner extends StatelessWidget {
                                           ? Theme.of(context)
                                               .colorScheme
                                               .primary
-                                          : AeWebThemeBase.statusOK,
+                                          : aedappfm.AppThemeBase.statusOK,
                                 ),
                               ),
                             ),

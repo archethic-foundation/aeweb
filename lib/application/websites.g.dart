@@ -25,7 +25,7 @@ final _websitesRepositoryProvider =
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
 typedef _WebsitesRepositoryRef = AutoDisposeProviderRef<WebsitesRepository>;
-String _$fetchWebsitesHash() => r'ee78234727161b47a0804ca69801c64876956080';
+String _$fetchWebsitesHash() => r'e31f26d577bb2de904234a8d4d794f20bba5b7d8';
 
 /// See also [_fetchWebsites].
 @ProviderFor(_fetchWebsites)
