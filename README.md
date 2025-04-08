@@ -1,27 +1,17 @@
 [![Platform](https://img.shields.io/badge/Platform-Flutter-02569B?logo=flutter)](https://flutter.dev) [![CodeFactor](https://www.codefactor.io/repository/github/archethic-foundation/aeweb/badge?s=810cd469a6616c8595c8691096e21af5d1238a85)](https://www.codefactor.io/repository/github/archethic-foundation/aeweb)
 
-# AE Web
+# aeWeb/aeHosting
 
 ### Main features
 - Deploy and update static sites on the Archethic Blockchain
 - SSL Certificate management
 
 ### Security
-- Security access with your Archethic Wallet
+- Security access with your Archethic Wallet >= 4.14.1
 
-## Application Initial Screen
-<img src=".github/images/aeweb-intro.png?v=20231106" width="500"/>
-<br/><br/>
-<img src=".github/images/aeweb-list-versions.png?v=20231106" width="500"/>
-<br/><br/>
-<img src=".github/images/aeweb-update.png?v=20231106" width="500"/>
-<br/><br/>
-<img src=".github/images/aeweb-assets.png?v=20231106" width="500"/>
-<br/><br/>
 ### Pre-requisites
-
 - Flutter 3.27+
-- Dart 3.3+
+- Dart 3.6+
 
 ### Note
 
