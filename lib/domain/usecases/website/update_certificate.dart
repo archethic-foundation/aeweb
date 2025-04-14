@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:aeweb/application/blockchain_tx_version.dart';
 import 'package:aeweb/ui/views/update_certificate/bloc/provider.dart';
 import 'package:aeweb/util/string_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
@@ -32,6 +33,9 @@ class UpdateCertificateUseCase
           ..setStep(0)
           ..setStepError('')
           ..setGlobalFeesValidated(null);
+
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
 
     await updateCertificateNotifier.setGlobalFeesUCO(0);
 
@@ -74,6 +78,7 @@ class UpdateCertificateUseCase
     var transactionReference = await newTransactionReference(
       lastHostingTransactionReference.metaData,
       apiService,
+      blockchainTxVersion,
       sslKey: privateKey,
       cert: publicCert,
     );
@@ -121,6 +126,7 @@ class UpdateCertificateUseCase
 
     var transactionTransfer = archethic.Transaction(
       type: 'transfer',
+      version: blockchainTxVersion,
       data: archethic.Transaction.initData(),
     ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
 

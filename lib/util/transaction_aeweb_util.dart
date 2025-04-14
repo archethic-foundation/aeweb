@@ -12,7 +12,8 @@ const blockchainTxVersion = 3;
 mixin TransactionAEWebMixin {
   Future<Transaction> newTransactionReference(
     Map<String, HostingRefContentMetaData> metaData,
-    ApiService apiService, {
+    ApiService apiService,
+    int blockchainTxVersion, {
     Uint8List? sslKey,
     Uint8List? cert,
   }) async {
@@ -35,6 +36,7 @@ mixin TransactionAEWebMixin {
 
     final transaction = Transaction(
       type: 'hosting',
+      version: blockchainTxVersion,
       data: Transaction.initData(),
     ).setContent(jsonEncode(hosting));
 
@@ -58,9 +60,12 @@ mixin TransactionAEWebMixin {
     return transaction;
   }
 
-  Future<Transaction> newEmptyTransaction() async {
+  Future<Transaction> newEmptyTransaction(
+    int blockchainTxVersion,
+  ) async {
     return Transaction(
       type: 'data',
+      version: blockchainTxVersion,
       data: Transaction.initData(),
     ).setContent(
       jsonEncode(
@@ -75,10 +80,12 @@ mixin TransactionAEWebMixin {
 
   Future<Transaction> newTransactionFile(
     Map<String, dynamic> txsContent,
+    int blockchainTxVersion,
   ) async {
     final content = txsContent['content'];
     return Transaction(
       type: 'hosting',
+      version: blockchainTxVersion,
       data: Transaction.initData(),
     ).setContent(jsonEncode(content));
   }

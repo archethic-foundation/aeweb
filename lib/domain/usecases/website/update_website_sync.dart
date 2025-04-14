@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:aeweb/application/blockchain_tx_version.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
@@ -36,6 +37,9 @@ class UpdateWebsiteSyncUseCase
           ..setStep(0)
           ..setStepError('')
           ..setGlobalFeesValidated(null);
+
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
 
     await updateWebsiteSyncNotifier.setGlobalFeesUCO(0);
 
@@ -146,7 +150,10 @@ class UpdateWebsiteSyncUseCase
     var transactionsList = <archethic.Transaction>[];
     for (final content in contents) {
       transactionsList.add(
-        await newTransactionFile(content),
+        await newTransactionFile(
+          content,
+          blockchainTxVersion,
+        ),
       );
     }
     if (transactionsList.isNotEmpty) {
@@ -204,6 +211,7 @@ class UpdateWebsiteSyncUseCase
     var transactionReference = await newTransactionReference(
       filesWithAddressWithLast,
       apiService,
+      blockchainTxVersion,
       cert: Uint8List.fromList(
         utf8.encode(
           lastHostingTransactionReference.sslCertificate,
@@ -268,6 +276,7 @@ class UpdateWebsiteSyncUseCase
 
     var transactionTransfer = archethic.Transaction(
       type: 'transfer',
+      version: blockchainTxVersion,
       data: archethic.Transaction.initData(),
     ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
     if (feesFiles > 0) {
