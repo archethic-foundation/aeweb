@@ -36,7 +36,8 @@ mixin TransactionAEWebMixin {
 
     final transaction = Transaction(
       type: 'hosting',
-      version: blockchainTxVersion,
+      // Interpreted SC // No WASM
+      version: 3,
       data: Transaction.initData(),
     ).setContent(jsonEncode(hosting));
 
@@ -65,7 +66,8 @@ mixin TransactionAEWebMixin {
   ) async {
     return Transaction(
       type: 'data',
-      version: blockchainTxVersion,
+      // Interpreted SC // No WASM
+      version: 3,
       data: Transaction.initData(),
     ).setContent(
       jsonEncode(
@@ -85,7 +87,8 @@ mixin TransactionAEWebMixin {
     final content = txsContent['content'];
     return Transaction(
       type: 'hosting',
-      version: blockchainTxVersion,
+      // Interpreted SC // No WASM
+      version: 3,
       data: Transaction.initData(),
     ).setContent(jsonEncode(content));
   }

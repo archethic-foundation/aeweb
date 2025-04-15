@@ -126,7 +126,8 @@ class UpdateCertificateUseCase
 
     var transactionTransfer = archethic.Transaction(
       type: 'transfer',
-      version: blockchainTxVersion,
+      // Interpreted SC // No WASM
+      version: 3,
       data: archethic.Transaction.initData(),
     ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
 
