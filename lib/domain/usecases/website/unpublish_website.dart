@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:aeweb/application/blockchain_tx_version.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/util/string_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
@@ -62,10 +61,7 @@ class UnpublishWebsiteUseCase
     log('Create empty transaction reference');
     unpublishWebsiteNotifier.setStep(2);
 
-    final blockchainTxVersion =
-        await ref.read(blockchainTxCurrentVersionProvider.future);
-
-    var transactionReference = await newEmptyTransaction(blockchainTxVersion);
+    var transactionReference = await newEmptyTransaction(3);
 
     log('Sign empty transaction reference');
     unpublishWebsiteNotifier.setStep(3);

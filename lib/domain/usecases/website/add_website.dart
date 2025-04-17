@@ -2,7 +2,6 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:aeweb/application/blockchain_tx_version.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
@@ -113,13 +112,11 @@ class AddWebsiteUseCase
     }
 
     var transactionsList = <archethic.Transaction>[];
-    final blockchainTxVersion =
-        await ref.read(blockchainTxCurrentVersionProvider.future);
     for (final content in contents) {
       transactionsList.add(
         await newTransactionFile(
           content,
-          blockchainTxVersion,
+          3,
         ),
       );
     }
@@ -157,7 +154,7 @@ class AddWebsiteUseCase
     var transactionReference = await newTransactionReference(
       filesWithAddress,
       apiService,
-      blockchainTxVersion,
+      3,
       sslKey: privateKey,
       cert: publicCert,
     );

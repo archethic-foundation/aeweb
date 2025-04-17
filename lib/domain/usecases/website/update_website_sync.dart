@@ -2,7 +2,6 @@
 import 'dart:convert';
 import 'dart:developer';
 
-import 'package:aeweb/application/blockchain_tx_version.dart';
 import 'package:aeweb/domain/repositories/features_flags.dart';
 import 'package:aeweb/domain/usecases/website/sync_website.dart';
 import 'package:aeweb/ui/views/update_website_sync/bloc/provider.dart';
@@ -37,9 +36,6 @@ class UpdateWebsiteSyncUseCase
           ..setStep(0)
           ..setStepError('')
           ..setGlobalFeesValidated(null);
-
-    final blockchainTxVersion =
-        await ref.read(blockchainTxCurrentVersionProvider.future);
 
     await updateWebsiteSyncNotifier.setGlobalFeesUCO(0);
 
@@ -152,7 +148,7 @@ class UpdateWebsiteSyncUseCase
       transactionsList.add(
         await newTransactionFile(
           content,
-          blockchainTxVersion,
+          3,
         ),
       );
     }
@@ -211,7 +207,7 @@ class UpdateWebsiteSyncUseCase
     var transactionReference = await newTransactionReference(
       filesWithAddressWithLast,
       apiService,
-      blockchainTxVersion,
+      3,
       cert: Uint8List.fromList(
         utf8.encode(
           lastHostingTransactionReference.sslCertificate,

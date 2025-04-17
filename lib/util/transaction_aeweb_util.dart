@@ -7,8 +7,6 @@ import 'package:archethic_lib_dart/archethic_lib_dart.dart';
 import 'package:archethic_wallet_client/archethic_wallet_client.dart' as awc;
 import 'package:archethic_wallet_client/archethic_wallet_client.dart';
 
-const blockchainTxVersion = 3;
-
 mixin TransactionAEWebMixin {
   Future<Transaction> newTransactionReference(
     Map<String, HostingRefContentMetaData> metaData,
