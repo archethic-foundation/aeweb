@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aeweb/application/blockchain_tx_version.dart';
 import 'package:aeweb/model/hive/db_helper.dart';
 import 'package:aeweb/model/website.dart';
 import 'package:aeweb/ui/views/add_website/bloc/provider.dart';
@@ -112,9 +113,14 @@ class AddWebsiteUseCase
     }
 
     var transactionsList = <archethic.Transaction>[];
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
     for (final content in contents) {
       transactionsList.add(
-        await newTransactionFile(content),
+        await newTransactionFile(
+          content,
+          blockchainTxVersion,
+        ),
       );
     }
 
@@ -147,9 +153,11 @@ class AddWebsiteUseCase
         ref.read(AddWebsiteFormProvider.addWebsiteForm).privateKey;
     final publicCert =
         ref.read(AddWebsiteFormProvider.addWebsiteForm).publicCert;
+
     var transactionReference = await newTransactionReference(
       filesWithAddress,
       apiService,
+      blockchainTxVersion,
       sslKey: privateKey,
       cert: publicCert,
     );
@@ -209,6 +217,8 @@ class AddWebsiteUseCase
 
     var transactionTransfer = archethic.Transaction(
       type: 'transfer',
+      // Interpreted SC // No WASM
+      version: 3,
       data: archethic.Transaction.initData(),
     ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
     if (feesFiles > 0) {

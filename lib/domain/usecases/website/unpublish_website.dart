@@ -2,6 +2,7 @@
 import 'dart:async';
 import 'dart:developer';
 
+import 'package:aeweb/application/blockchain_tx_version.dart';
 import 'package:aeweb/ui/views/unpublish_website/bloc/provider.dart';
 import 'package:aeweb/util/string_util.dart';
 import 'package:aeweb/util/transaction_aeweb_util.dart';
@@ -60,7 +61,11 @@ class UnpublishWebsiteUseCase
 
     log('Create empty transaction reference');
     unpublishWebsiteNotifier.setStep(2);
-    var transactionReference = await newEmptyTransaction();
+
+    final blockchainTxVersion =
+        await ref.read(blockchainTxCurrentVersionProvider.future);
+
+    var transactionReference = await newEmptyTransaction(blockchainTxVersion);
 
     log('Sign empty transaction reference');
     unpublishWebsiteNotifier.setStep(3);
@@ -99,6 +104,8 @@ class UnpublishWebsiteUseCase
 
     var transactionTransfer = archethic.Transaction(
       type: 'transfer',
+      // Interpreted SC // No WASM
+      version: 3,
       data: archethic.Transaction.initData(),
     ).addUCOTransfer(addressTxRef, archethic.toBigInt(feesRef));
 

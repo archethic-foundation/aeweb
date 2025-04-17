@@ -2,14 +2,14 @@ name: aeweb
 description: Deploy websites on Archethic decentralized network to avoid censorship, increase security and have high-availability and resiliency.
 publish_to: "none"
 
-version: 0.1.0+10
+version: 0.1.1+11
 
 environment:
   sdk: ">=3.6.0 <4.0.0"
   flutter: ">=3.27.0"
 
 dependencies:
-  archethic_dapp_framework_flutter: ^3.4.3
+  archethic_dapp_framework_flutter: ^3.5.0
   #archethic_dapp_framework_flutter:
   #  git:
   #    url: https://github.com/archethic-foundation/archethic-dapp-framework-flutter.git

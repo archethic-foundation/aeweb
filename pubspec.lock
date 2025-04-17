@@ -42,26 +42,26 @@ packages:
     dependency: "direct main"
     description:
       name: archethic_dapp_framework_flutter
-      sha256: "787827d5af35bc9c606d45c06360dc060608b87d1f39f46df83519d0fd8a3357"
+      sha256: "5f657d6a8f131138818863bc4d58550c53ae4740daff01fde75f3fcd2e77c250"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.3"
+    version: "3.5.0"
   archethic_lib_dart:
     dependency: transitive
     description:
       name: archethic_lib_dart
-      sha256: c75cccdda2929412d543b2a0cfd8bf6d22b8a4ac507836ded2c50c56e2355024
+      sha256: "20f3fc9ed073e182cddff60e90f754ea0408a09dec9975921fc4f5c5490a70e8"
       url: "https://pub.dev"
     source: hosted
-    version: "7.7.2"
+    version: "7.8.1"
   archethic_wallet_client:
     dependency: transitive
     description:
       name: archethic_wallet_client
-      sha256: "1d44ed525733ed5b2403f3a92f4f349a645e74c32fa3d33d2bac67be6ab318bc"
+      sha256: beed3581fe4437ee24176ae4934c2d212e9faa84b5f8afa22eea3dbef88487ef
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.3"
+    version: "2.3.0"
   archive:
     dependency: "direct main"
     description:
@@ -198,6 +198,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  cli_config:
+    dependency: transitive
+    description:
+      name: cli_config
+      sha256: ac20a183a07002b700f0c25e61b7ee46b23c309d76ab7b7640a028f18e4d99ec
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.2.0"
   clock:
     dependency: transitive
     description:
@@ -234,10 +242,10 @@ packages:
     dependency: transitive
     description:
       name: coverage
-      sha256: e3493833ea012784c740e341952298f1cc77f1f01b1bbc3eb4eecf6984fb7f43
+      sha256: "9086475ef2da7102a0c0a4e37e1e30707e7fb7b6d28c209f559a9c5f8ce42016"
       url: "https://pub.dev"
     source: hosted
-    version: "1.11.1"
+    version: "1.12.0"
   cross_file:
     dependency: transitive
     description:
@@ -346,10 +354,10 @@ packages:
     dependency: "direct main"
     description:
       name: file_picker
-      sha256: "36a1652d99cb6bf8ccc8b9f43aded1fd60b234d23ce78af422c07f950a436ef7"
+      sha256: "8986dec4581b4bcd4b6df5d75a2ea0bede3db802f500635d05fa8be298f9467f"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.0"
+    version: "10.1.2"
   filesize:
     dependency: "direct main"
     description:
